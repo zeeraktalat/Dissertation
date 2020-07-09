@@ -1,0 +1,78 @@
+\chapter{Thesis Outline}
+\label{chap:ddp}
+
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Outline/Figs/Raster/}{Outline/Figs/PDF/}{Outline/Figs/}}
+\else
+    \graphicspath{{Outline/Figs/Vector/}{Outline/Figs/}}
+\fi
+
+In this chapter we provide the thesis outline, and note which chapters are yet to be undertaken.
+
+\section{Introduction}
+
+Here we provide introducing text stemming from each of the different areas and provide an overview of the thesis aims.
+
+\section{Literature Review}
+
+\subsection{NLP and Computer Science}
+
+Here we present the previous works in NLP and computer science on fairness, abusive language detection, computational social science, and fake news detection. While a great deal of this has been written, an updated version is warranted to address the latest literature and the added areas from the draft version below. 
+
+\subsection{Social Science and Policy}
+In this section we present the social scientific work on fairness, intersectional feminism and oppression, notions of acceptability of dialects, law, policy and platform policy, ethics of research into abuse, and moderation practices. A large part of this has been written but further detail for many of the topics covered in this draft would benefit from further attention.
+
+\section{The Socio-technical realities of abuse}
+
+In this chapter, we consider the formal and informal social systems and processes which govern the production and responses to abuse.
+
+\subsection{Do You Care? Content Moderation in the Frame of Caring}
+Here we detail our work on framing content moderation in the light of systems of care. By viewing content moderation in this framing, it is then possible to consider the work of the content moderator in the tradition of intersectional feminist scholarship, giving access to considerations of how the burden of moderating harmful content - and in fact the outcomes of said moderation - is placed disproportionately on marginalised bodies.\footnote{In review for a special issue in Big Data and Society.}
+
+\subsection{That is the Law - Developments of legal realities for content moderation}
+Here we detail the current state of platform policy and legal developments. We examine the state of content moderation technology for abusive langauge and address the ways in which these may interact with proposed and implemented European regulation.\footnote{Status: In initial draft stages.}
+
+\section{Towards Fairer NLP}
+
+This chapter will consist of work on extending fairness methods to NLP and allowing for fair fake news and abusive language detection. Additionally, we will incorporate our considerations of how natural language processing can incorporate considerations of critical studies in a practical sense, allowing for an examination of how systems are built. This will be apparent from the other works in this chapter. Methods found in this chapter will be used in the subsequent chapters, where appropriate.
+
+\subsection{Fairness in NLP Classification}
+
+In this section we will introduce our methods for building fair NLP models. We extend the method for fair classification proposed by \citep{Agarwal:2018} to Natural Language Processing. We apply the method to two problems: Fake news detection and hate speech detection.
+
+\subsubsection{Fairly Fake: Investigating the Influence of Party Affiliation on Fake News Classification}
+Here we consider the influence of political affiliation on fake news detection models. We use this task to show the viability of the model by showing that unrestricted, a model for fake news detection learns a bias towards a political direction.\footnote{Status: Finalizing submissions.}
+
+\subsubsection{''Walking Contradiction``: De-marginalizing AAVE in Abusive Language Detection}
+In this section we describe our annotation experiment for labelling African-American Vernacular English (AAVE), and the subsequent experiments to build a classifier to distinguish between AAVE and Standard American English. The resulting classifier will then be used to augment datasets labeled for abuse with dialectical annotations. Following the augmentation of abusive language datasets, we seek to identify bias against AAVE speakers and investigate methods to minimise the influence of bias introduced by disproportionate representation of AAVE in the positive classes.\footnote{Status: Recruiting annotators.}
+
+\subsubsection{Critical NLP}
+Here we discuss how content moderation systems, and widely NLP systems, may influence the people they are meant to serve. Here we aim to investigate how choices throughout the process of building NLP systems and tasks can allow for marginalisation and how, by borrowing from critical studies, practitioners and researchers can divulge and analyse their choices and the potential impacts of them.\footnote{Status: In early draft version.}
+
+\section{''In the Beginning there was Jack!`` The Temporal Developments of Abuse}
+
+In this chapter, we investigate the temporal patterns and influences on the production of abuse towards British Members of Parliament.\footnote{Status of experiments in this chapter: Planning - application for Ethical Approval Submitted}
+
+\subsection{About Time: Analyzing the Temporal Patterns in Abusive Responses to British Members of Parliament}
+In this project, we aim to analyse the temporal patterns of abuse against British Members of Parliament. We describe here how abuse develops temporaly in its intensity and volume - and seek to understand the linguistic developments of abuse as function of the identified temporal patterns.
+
+\subsection{Timing is Everything: Using Temporal Patterns of Abuse for Early Detection of Abusive Moments}
+Here, we describe how we apply the temporal patterns in aims to predict moments of high-volume abusive responses. Further, we analyze tweets and their volume of abusive responses in efforts to predict and analyse which tweets are likely to receive a high volume of abusive responses.
+
+\subsection{Out of Time: Identifying External Tensions through Abuse Detection}
+
+Here we seek to use the spikes of abuse identified to identify candidates for examination of external influences such as elections, public debates, and violence on the volume of abuse.
+
+
+\section{Generalizing Abusive Language Detection}
+In this chapter, we will seek to address the heavy reliance on words for detection of abuse, seeking to allow for the use of meta-information and linguistic patterns and using multi-task learning for abusive language detection.
+
+\subsection{Multi-task learning for hate speech detection}
+Here we seek to map out which auxilliary tasks are condusive to identifying abuse. Specifically, we aim to use tasks which have large scale resources available to allow for higher generalizability of the resulting model than many approaches to identifying abuse allow for.
+
+\subsection{Classifying Abusive Documents using Linguistic Information and Meta data}
+Here we aim to provide some critical consderation into which kind of metadata to use for building models for detecing abuse. Additionally, we aim for building a more generalizable model by using linguistic information rather than the words themselves.
+
+\section{Conclusion}
+In this chapter, we will conclude the findings of the thesis with a specific focus on how the methods described in the thesis may interact with both regulation and platform policies.

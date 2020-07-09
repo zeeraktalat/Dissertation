@@ -1,0 +1,175 @@
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Chapter5/Figs/Raster/}{Chapter5/Figs/PDF/}{Chapter5/Figs/}}
+\else
+    \graphicspath{{Chapter5/Figs/Vector/}{Chapter5/Figs/}}
+\fi
+
+\chapter{Work Plan and Timetable}\label{chap:experiments}
+
+In this chapter, we detail the experiments we will be working on, their components, and provide a time line for the completion of each experiment. Recall from Chapter \autoref{chap:intro}, that the research questions we'll be investigating are:
+
+\begin{questions}
+  \item{What are the implications of the legal realities, socio-technological and cultural contexts within which technology for abusive language detection exists for machine learning tools and what is the consequence for building tools for content moderation of abuse?}
+  \item{How can we identify correlations between classes and protected variables (e.g. race, gender, and political affiliation) in machine learning methods and can we minimise the bias in classifiers for NLP systems?}
+  \item{What are the temporal developments of abusive language production towards British MPs and can these patterns be used for early detection of abusive responses.}
+  \item{How can embeddings, weak supervision, linguistic annotation, and meta data help improve platform and topic independent detection of abusive language and hate speech?}
+\end{questions}
+
+In each subsection of the experiments planned, we provide an explanation as to how each experiment and its components build towards these aims.
+
+\section{Experiments planned}\label{sec:experiments}
+
+To answer the four research questions, we will conduct experiments which we believe will give insight into the answers to each question. 
+
+\subsection{Overview}\label{sub:overview}
+
+Here we provide an overview of how the individual experiments connect together to a cohesive answer to the overall questions of how to detect abusive language using machine learning and how we can seek to detect and address the potential of oppressed groups being overrepresented in the positive classes in abusive language data sets.\vspace{5mm}
+
+\subsubsection{Research Questions and Experiments}
+Considering first {\bf RQ1}, we note that there are no experiments that we seek to perform, here instead we focus on qualitative work investigating the legal and socio-technical aspects of content moderation. We here consider two papers which seek to address the legal and the socio-technical aspect of content moderation, respectively (see \autoref{sub:sociotech} for more detail).\vspace{5mm}
+
+Next, we seek to answer {\bf RQ2} using a mixture of experiments and position papers. The experiments outlined for this are:
+
+\begin{enumerate}
+  \item{Extend the \cite{Agarwal:2018} method for use in NLP settings, seeking to prevent the influence of bias in fake news detection (see \autoref{sub:fakenews}).}
+  \item{Conduct an annotation experiment, annotating documents for dialect, then use the resulting classifier to predict dialect for abusive documents and apply our extended method (see \autoref{sub:aave}).}
+  \item{Write a position piece or a quip on the need for critical NLP, suggesting an emphasis on care in and divulging of the choices leading up to building classifiers (see \autoref{sub:critical}).}
+\end{enumerate}
+
+Moving on to {\bf RQ3}, this research question seeks to address the lack of knowledge of the temporal developments of abuse. We will seek to highlight it through the following experiments:
+
+\begin{enumerate}
+  \item{Develop machine learning methods to identify external moments of tension through the detection of abuse received by British Members of Parliament (see \autoref{sub:external}).}
+  \item{Analyse the temporal patterns of abuse towards British Members of Parliament (see \autoref{sub:temporal}).}
+  \item{Develop methods for early prediction of high tension moments which are likely to produce abusive content (see \autoref{sub:timing}).}
+\end{enumerate}
+
+Finally, looking at the experiments addressing {\bf RQ4}, we have outlined the following experiments:
+\begin{enumerate}
+  % \item{Embedding Spaces for Abusive Language Detection (see section \autoref{sub:embeddings}).}
+  \item{Multi-Task Learning for Abusive Language Detection (see section \autoref{sub:mtl}).}
+  \item{Classifying Abusive Documents using Linguistic Information and Meta data (see section \autoref{sub:structuredpred}).}
+\end{enumerate}
+These three experiment address three different ways of classifying abusive language documents such that there is a greater chance of generalisability of the machine learning classifiers built.\vspace{5mm}
+
+\subsubsection{Cohesiveness of Experiments and Research Questions}
+\noindent Considering the experiments for each research question, we show that this thesis has 3 central focus areas: How to generate data for abusive language, how to build generalizable abusive language classifiers, and how to generate responses to abusive language. These aims, while independent of one another, are planned such that they each rely on the previous steps and the answer to each question leads to the next.
+
+\subsection{RQ1: The legal and socio-techincal contexts of abuse - Ongoing}\label{sub:sociotech}
+In this project, we aim to provide mutiple different considerations of online content moderation. Specifically, we aim to highlight how content moderation may have disparate impacts on different groups. We propose that by rethinking content moderation not as an inanimate filter but instead as a living membrane which provides care for the affected communities, it is possible to incorporate community knowledge, allowing for reintroducing agency that has been lost in the use of automated filters to communities that are adversely affected by abuse.
+
+In different aspect, we aim to provide the legal context of content moderation and the developments of the legal situations in the European Union and the United States of America. Here we seek to consider how technologies for content moderation can comply with the legal requirements and highlight where other methods need to be developed to address the legal requirements of content moderation.
+
+\subsection{RQ2: Fairly Fake: Investigating the Influence of Party affiliation on fake news classification - Ongoing}\label{sub:fakenews}
+In this project, we seek to extend the work of \cite{Agarwal:2018} to text classification. We show that by training a classifier for fake news detection without any constraints on features which may not be used, classifiers learn a correlation between party affiliation and fake news. Here we seek to apply constraints that limit the influence of features which are indicative of a protected attribute, in this case party affiliation. We show that by applying fairness criteria, the resulting classifier learns fewer correlations with the protected attributes.
+
+\subsection{RQ2: Dialectically Fair Abuse Classification}\label{sub:aave}
+Here we conduct an annotation experiment of dialects in the United States of America. We seek here to annotate for the use of African-American Vernacular English (AAVE) and Standard American English (SAE) as a step towards building a classifier which can identify dialectical use in abusive language documents, to address the issues of racial disparity addressed in \cite{Waseem:2018,Sap:2019}. With the dialectical predictions, we will seek to identify methods for training classifiers which are fair with regards to dialectical use for abusive language detection. This experiment relies on the experiment from \autoref{sub:fakenews} as it seeks to extend the methods we identify to abusive language detection and racial biases.
+
+\subsection{RQ2: A calls to critical NLP}\label{sub:critical}
+Here we consider the consequences of the choices made by NLP practitioners and researchers and the consequences of them. Specifically, we examine how racial biases influence abusive language detection datasets and aim to provide methods for addressing such issues as methods and datasets are developed by interrogating the blind spots held by the practitioner. This does not rely on any other experiments, rather it relies on the experience gained by considering {\bf RQ1} and the other experiments in {\bf RQ2}.
+
+\subsection{RQ3: About Time: Analyzing temporal patterns in abusive towards British Members of Parliament}\label{sub:temporal}
+In this project we aim to identify the temporal patterns of abuse against members of British Parliament. We will investigate how abuse develops temporally in its intensity and volume. Further, we seek to identify how abuse develops linguistically as a function of the temporal patterns. This project does not rely on previous projects.
+
+\subsection{RQ3: Timing is Everything: Using temporal patterns of abuse for early detection of abusive moments}\label{sub:timing}
+Here we seek to use temporal patterns identified in \autoref{sub:temporal} to predict when large volumes of abuse will occur - our aim here will be two-fold: 1) investigate how early we can identify potential high volume abusive moments while retaining a high classification performance and 2) analyze patterns and predict which tweeets are likely to trigger a high volume of abuse. This project relies on completing the work in \autoref{sub:temporal}.
+
+\subsection{RQ3: Identifying external tensions through abuse detection}\label{sub:external}
+As cases of abuse may be situational and influenced by external events \citep{Marsh:2018,Burret:2017,Dearden:2019} there is a need to identify when external events may influence abuse. In this, we seek to develop methods to identify candidates moments to examine for external forces driving abuse. Additionally, we will manually identify moments of tension and train a classifier to identify moments in which induce an abnormally high amount of abuse. This project relies on the work in \autoref{sub:temporal}.
+
+% \subsection{RQ4: Embedding Spaces for Abusive Language Detection - Ongoing}\label{sub:embeddings}
+% In this experiment, we will investigate embeddings for abusive language detection. As this experiment deals with improving the generalisability of abusive language detection models, it is central to this thesis.
+%
+% We will initially seek to analyze the usefulness of off-the-shelf embeddings for hate speech detection. Following this, we will seek to identify whether updating off-the-shelf embeddings with embeddings trained on data sets with large amounts of abusive language allow for improving model performance. We will also try with concatenation of off-the-shelf and pre-trained embeddings. Finally, we will investigate the applicability of various forms of embeddings for detecting abuse occurring on other platforms than the one which has been used to generate the embeddings. For this experiment, we plan to use a mix of linear models, particularly Support Vector Machines (SVM) and Logistic Regression and neural network models in particular Long-Short Term Memory (LSTM) models and CNNs (Convolutional Neural Networks). Further, we will be using different forms of embeddings both pre-trained embeddings as well as well as embeddings trained on datasets of abusive language.
+%
+% We choose to work with SVMs and Logistic Regression as much of the previous work has been employed these, thus they provide a reasonable baseline. Further we wish to investigate the utility of deep neural networks as such models are currently being given attention in the space of abusive language detection research \citep{Park:2017,Gamback:2017}. However, to the best of our knowledge, previous work using deep neural networks has been restricted to small labeled data sets. In this experiment, we intend to apply a large scale unlabeled data for abusive language detection.
+%
+% This experiment relies on the experiments that create data sets (see Section \autoref{sub:weak-supervised} and \autoref{sub:community-guidelines}), as the data collected will serve as the foundation for training embeddings.
+
+\subsection{RQ4: Multi-Task Learning for Abusive Language Detection}\label{sub:mtl}
+In this experiment we follow up on the work of \cite{Waseem:2018}, in which they seek to utilize multi-task learning for abusive language detection. In \cite{Waseem:2018} they utilize multiple abusive language data sets, in this experiment we will seek to utilize data sets for other tasks such as sentiment analysis, dependency parsing, cyber-bullying, and named entity recognition as our auxiliary tasks in order to investigate the utility of related tasks for improving abusive language detection. Our main task will be detecting abusive language. As we will use tasks where large scale data is available, we hope to improve generalisability of abusive language detection methods without the use of large scale data sets for abusive language. As such, this experiment is core to the thesis.
+
+As there is no not a need for collecting and annotating data sets, this experiment does not rely on others.
+
+\subsection{RQ4: Classifying Abusive Documents using Linguistic Information and Meta data}\label{sub:structuredpred}
+In this experiment, we will seek to address the issue of over-fitting to the small positive classes in abusive language data sets and thus having models have confounding variables. We will aim to avoid confounding variables in our models by seeking to utilize linguistic knowledge such as the part of speech tags and dependency trees. Further, we will seek to identify whether meta data such as the creation time of the user account, the frequency of tweets, and the number of followers and followees is useful for abusive language detection. In this experiment we will be using previously published data sets \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017} in addition to data obtained from abusive communities on Reddit. We will be applying linear models (logistic regression and SVMs) and neural network methods (LSTMs and CNNs). As this experiment seeks to improve generalisability of abusive language classifiers through the use of linguistic annotation and user meta data, it is central to the thesis.
+
+This experiment does not explicitly require more data, however we will let this experiment depend on the data obtained through the collection of abusive communities on Reddit.
+
+
+\section{Timetable}\label{sec:timetable}
+In order to answer the research questions described in Section \autoref{sec:rq}, the following tasks will be carried out:
+These are the experiments which we are aiming to work on throughout the remainder of this Ph.D. studentship. Items marked with an ``$^*$'' have already received ethical approval, while items marked with ``$^+$'' have yet to have an application for ethical approval granted but an application have been filed. Items marked with ``$^-$'' are covered by granted applications for ethical approval or do not require ethical approval.
+\newpage
+
+\begin{enumerate}
+  \item{Socio-technical Context of Content Moderation}
+    \begin{enumerate}
+      \item{$^-$ Content Moderation as care}
+      \item{$^-$ Legal Realities of content moderation}
+      \item{$^-$ Towards a Critical NLP}
+    \end{enumerate}
+  \item{Fairness in NLP}
+    \begin{enumerate}
+      \item{$^-$ Fair Fake News Detection}
+      \item{$^*$ Fair Abusive Language Detection}
+    \end{enumerate}
+  \item{Temporal Patterns}
+    \begin{enumerate}
+      \item{$^+$ About Time: Analyzing Temporal Patterns of Abuse}
+      \item{$^+$ Early Predictions of Abuse}
+      \item{$^+$ External Tensions}
+    \end{enumerate}
+  \item{Generalisability of and Improved Classification Models for Abusive Language Models}
+    \begin{enumerate}
+      % \item{$^-$ Exploration of (Pre-trained) Embeddings for Abusive Language Detection}
+      \item{$^*$ Multi-Task Learning for Abusive Language Detection Using Out of Domain data sets}
+      \item{$^-$ Classifying Abusive Documents using Linguistic Annotation and Meta data}
+    \end{enumerate}
+\end{enumerate}
+
+In Table \autoref{tab:schedule}, we present a time table for the completion of each subtask.
+
+\begin{table}[]
+  \centering
+  % \scriptsize
+  \resizebox{\textwidth}{!}{%
+    \begin{tabular}{ll|cccc|cc}
+      & & \multicolumn{4}{c|}{2019} & \multicolumn{2}{c}{2020}\\\hline
+
+      Overall Task                                                      & Subtask                                          & Q1        & Q2        & Q3        & Q4        & Q1        & Q2\\
+      \textit{Literature Review}                                        &                                                  &           &           &           &           &           & \\
+      \textit{RQ1: Socio-technical Context of Content Moderation}       &                                                  &           &           &           &           &           & \\
+                                                                        & Content Modeation as care                        & $\bullet$ &           &           &           &           & \\
+                                                                        & Legal Realities of Content Moderation            &           &           & $\bullet$ &           &           & \\
+                                                                        & Towards a Critical NLP                           &           &           & $\bullet$ &           &           & \\
+      \textit{RQ2: Fairness in NLP}                                     &                                                  &           &           &           &           &           & \\
+                                                                        & Fair Fake News Detection                         & $\bullet$ & $\bullet$ &           &           &           & \\
+                                                                        & Fair Abusive Language Detection                  &           & $\bullet$ &           & $\bullet$ &           & \\
+      \textit{RQ3: Temporal Patterns}                                   &                                                  &           &           &           &           &           & \\
+                                                                        & About Time: Analyzing Temporal Patterns of Abuse &           &           & $\bullet$ & $\bullet$ &           & \\
+                                                                        & Early Prediction of Abusive Moments              &           &           &           &           & $\bullet$ & \\
+                                                                        & External Tensions                                &           &           &           &           & $\bullet$ & \\
+      \textit{RQ4: Generalizability of Abusive Language Models}         &                                                  &           &           &           &           &           & \\
+                                                                        & Multi-Task Learning Using Out-Of-Domain data     &           &           & $\bullet$ &           &           & \\
+                                                                        & Linguistic Annotation \& Meta data               &           &           & $\bullet$ &           &           & \\
+
+    \end{tabular}%
+    }
+    
+  \caption{Task Timetable}
+\label{tab:schedule}
+\end{table}
+
+Table \autoref{tab:schedule} presents the timetable for the activities previously outlined. Each task is scheduled on a quarterly basis to provide an overview of the expected time necessary to complete it. For each group of tasks, a quarter is given as the period in which we will be writing the respective chapters of the thesis. At the end of each individual experiment component, we schedule a month for submission of papers to conferences and journals.
+
+\section{Contingency Plans}
+
+Should an experiment overrun its allotted time by a quarter or more, we will drop a subsequent experiment. For instance, should the early prediction of abusive moments take longer to implement and test than expected, then we will drop working on the experiment working on identifying external tensions and predicting external events. 
+Additionally, we leave 3 months for finalizing the final chapters of the thesis. These three months also serve as a buffer for experiments and time running over without using the potential fourth year of the PhD.
+
+\section{Summary}
+
+In this chapter, we have broken each research question into the experiments and provide a timeline for each experiment. While there may be deviations from this timeline, we will seek to adhere to it as best possible.

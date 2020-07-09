@@ -1,0 +1,112 @@
+%*******************************************************************************
+%*********************************** First Chapter *****************************
+%*******************************************************************************
+
+% !TEX root = ../thesis.tex
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Chapter1/Figs/Raster/}{Chapter1/Figs/PDF/}{Chapter1/Figs/}}
+\else
+    \graphicspath{{Chapter1/Figs/Vector/}{Chapter1/Figs/}}
+\fi
+
+\chapter{Introduction}\label{chap:intro} \zw{Rought contents here, needs updating to fit with narrative of the thesis and polishing of text}
+As people consume, interact with, and create media online at an ever growing rate, it becomes necessary to consider the content with which they interact and the cultures that are formed in online spaces. As social media platforms have been subject to a growing amount of governmental attention for the abusive content on their platforms \citep{HomeOffice:2016,EUCommission:2016}, they must find scalable methods for dealing with online abuse which can deal with the large volume of new documents added daily \citep{Kuchera:2014,Bates:2013,Sood:profanity:2012}.
+By considering how these cultures are formed, which methods for regulation and self-regulation are effective, and the linguistics markers we may gain insight into the distinct forms of culture and speech which is deemed acceptable by a given platform. With this knowledge it is possible to develop methods to encourage healthy conversations and mitigate negative societal constructs \citep{Bolukbasi:2016,Hannon:2016}.\vspace{5mm}
+
+Recently, there has been an increase in the amount of research on abusive language and hate speech in the Natural Language Processing (NLP) community. In spite of this increase in research attention, many questions remain unanswered, the methods for detection are not generalizable beyond the individual data sets, and there has been little consideration of how models learn social biases that discriminate against different groups. In addition, while this increase of interest in disparate and abusive treatment of people is quite new in NLP, it has been the subject of long and sustained interest in many other fields such as gender studies \citep{McIntosh:1988,Butler:1990,Beauvoir:1953}, law \citep{Han:2015,Crenshaw:1989}, media studies \citep{Shah:2015,Shah-FirstMonday:2015}, sociology \citep{Zaleski:2016}, and critical race theory \citep{Crenshaw:1989,Lawrence:1992} to name a few. In spite of a rich body of work on abuse and discrimination, work in NLP often neglects this history relying solely the community guidelines or terms and conditions documents put forth by social media companies \citep{Nobata:2016,Ross:2016}. This lack of consideration of work previous work has the consequence of creating blind spots in annotation guidelines and inconsistent judgments on acceptable language.\vspace{5mm}
+
+As abusive language may be expressed along several axis, we focus on abusive language that is directed and either explicit in its potential to be abusive or seeks to use implicit signals to notify abuse \citep{Waseem:2017}. We limit ourselves to these forms of abuse (please see Table \ref{tab:examples} for examples) to provide a reasonable scope of the project, and because currently the majority of data sets released deal with directed abuse. Further, due as the relationship between and identities of speaker and listener are important (e.g. black person using the n-word colloquially with another black person is not necessarily problematic\citep{Rahman:2011}, whereas a non-black person using the n-word directed at a black person is most likely problematic, as they speak to different histories), we will consider directed abuse as it has a clearly identifiable speaker and listener.\vspace{5mm}
+
+\begin{table}[ht]
+  \centering
+  \scriptsize
+  \begin{tabular}{p{0.30\textwidth}|p{0.30\textwidth}|p{0.30\textwidth}}
+    {\bf Input} & {\bf System} & {\bf Output}\\\hline
+  ``Go kill yourself'' & Abusive Language Detection Model & Abusive\\\hline
+    ``(((@User))) and what is your job? Writing cuck articles and slurping Google balls? \#Dumbgoogles'' & Procedural System & $0.80-0.85$ likelihood to be abusive\\\hline
+    ``@User shut yo b**n*r ass up sp*c and hop your f****t ass back across the border little n***a'' & Counter Speech Generation System & ``Why do you think they should leave the country? This is their country too.''\\
+  \end{tabular}
+  \caption{Examples of abusive comments and the outputs of our systems.}
+  \label{tab:examples}
+\end{table}
+
+Beyond a consideration of speaker and listener, it is necessary to consider of predictive impact. That is whether a given model's performance treats all investigated demographics equally, given a definition of equality.\footnote{Several competing definitions of equality exist which influence the evaluation of whether a model is discriminatory or not.} Specifically for issues in which the labels are highly contextual, such as hate speech or offensive language, social biases on acceptable language may influence annotations and thus models which are learned on the data.
+
+In this Ph.D. we will seek to marry the findings and knowledge obtained in fields outside of NLP on the nature of abuse and notions of equal and fair treatment.
+
+As machine learning methods rely on the data sets and labels upon which they are trained \citep{Mitchell:2018,Waseem:2016}, we will aim to identify and address issues of bias in datasets and propose methods to address such issues. We will address the issue of bias by considering a number of datasets and variables which may give cause for discrimination.
+
+Online abuse is heavily situational and influenced by external forces such as social events, disasters, violence, elections, and political movements \citep{Marsh:2018,Burret:2017,Dearden:2019}. For this reason, we will consider a longitudinal investigation of online abuse as it occurs in targeting British members of parliament.
+
+
+%Finally, we will aim to improve the generalizability of machine learning models for hate speech detection.
+
+%\section{Research Questions}\label{sec:rq}
+
+%\subsection{Abuse in Context: The legal and socio-technical landscape of abuse}
+
+%As more countries and legal territories are considering or have implemented regulation about artificial intelligence
+
+%As artificial intelligence becomes increasingly ubiquitous in society, there is is a growing need for a consideration of regulation of such technologies. This need has prompted the European Union to develop the ``Ethics Guidelines for Trustworthy Artificial Intelligence'' \citep{EU:TrustworthyAI}. In the case of content moderation, the European Union is also considering developing regulation of online dissemination of terrorist content, a proposal which may also have implications of abuse and hate speech in particular. Further, given the issues of disparate impact and harms of content moderation \citep{Gomes:2019}, it becomes necessary to consider the role of content moderation and how automated measures may be influenced by concerns of communities that they may be unfairly penalized by such technology.
+
+%\begin{quote}
+%  {\bf RQ1}: What are the implications of the legal realities, socio-technological and cultural contexts within which technology for abusive language detection exists for machine learning tools and what is the consequence for building tools for content moderation of abuse?
+%\end{quote}
+
+
+%\subsection{Hidden Variables: Minimising Disparate Impacts of Machine Learning Models Learned on Biased Annotations}\label{sub:critical}
+
+%As more data sets for abusive language detection are released it is important to critically assess the hidden variables that exist in the data sets which impact classifiers: i.e. which type of abusive language they can aid in identifying \citep{Jha:2017,Waseem:2017} as well as which cultural phenomena they speak to.
+
+%For instance \cite{Waseem:2018} and \cite{Sap:2019} find that the data set published by \cite{Davidson:2017} has a great deal of African-American Vernacular English (AAVE) labeled as either hate speech or offensive language. By training a classifier on this data set without ensuring that there are safeguards to prevent demographic discrimination, the trained model is likely have a preference for detecting that people who use AAVE are being either offensive or are using hate speech, in large parts disregarding whether the contents are truly offensive or abusive. Another issue that comes to light with the fact that AAVE is more likely to be tagged as offensive or hate speech is that the computational models built for removal, moderation, or even generation of counter speech, will explicitly make a judgment about the appropriateness of AAVE as a dialect. An implied role in abusive language detection is the responsibility of determining which forms of speech are socially acceptable; for this reason it is vital that seek to investigate which demographics, if any, are being singled out by the data sets we employ for training our models.
+
+%As there are no published datasets for abuse that also contain information about the speaker, we will also consider datasets that do not relate to abuse, such as the Wang \citeyear{Wang:2017} fake news dataset and the PAN Author Profiling dataset \citep{PAN:2015} to demonstrate rebiasing, while we develop a dataset with annotation for dialectical use.
+
+%\begin{quote}
+%  {\bf RQ2}: How can we identify correlations betweeen classes and protected variables (e.g. race, gender, and political affiliation) in machine learning methods and can we minimise the bias in classifiers for NLP systems?
+%\end{quote}
+
+%\subsection{Out of Time: Temporal patterns in the development of abuse.}
+
+%Many cases of abuse is situational and influenced by events external to the message being sent. Considering offline contexts, there is evidence suggesting that external influences such as terrorist attacks and elections can serve as catalysts for abuse and hate crimes \citep{Marsh:2018,Burret:2017,Dearden:2019}. In an online setting we see a similar pattern for the use of online hate speech, where a rise in hate speech follows external events \citep{Olteanu:2018}. Previous work on abusive language has primarily considered singular instances of abuse \citep{Davidson:2017,Waseem:2016}, constructivity of threads \citep{Napoles:2017,Kolhatkar:2017}, and the language and volume of abusive tweets \citep{Gorrell:2018}.
+
+%While prior work has addressed event detection \citep{Chen:2018,Orr:2018} and, more topically, predicting riots \citep{Alsaedi:2017}, to the best of our knowledge no prior work has examined the temporal developments of abuse. Here we consider the dataset of abuse against members of British Parliament \citep{Gorrell:2018} and ask the questions of how abuse develops over time and predicting the moral sentiment \citep{Hoover:2019} of responses to tweets. The purpose of this study is to allow for early detection of abuse occurring in addition to identifying features of tweets which elicit a disproportionately abusive response.
+
+%\begin{quote}
+%{\bf RQ3}: What are the temporal developments of abusive language production towards British MPs and can these patterns be used for early detection of abusive responses.
+%\end{quote}
+
+% \zw{Tweets that illicit emotional responses and generate abuse | could also be co-reference resolution to identify whether the target is actually the original speaker}
+
+%\subsection{Abusive Language Detection Using Machine Learning}\label{sub:detection}
+
+%One large issue with the current state of datasets available for abusive language, is the relatively small scale \citep{Waseem:2016,Davidson:2017}. The small size of the datasets allow for easy overfitting to confounding tokens (e.g. ``islam'' \citep{Waseem-Hovy:2016}). Further due to the small sizes of the datasets the issue of cultural-specificity arises, in which the datasets represent only one specific culture, which acts as a further inhibitor to building models which are generalizable across data sets.
+%Another challenge facing the field of abusive language detection is that the vast majority of abusive language data sets display large class imbalances with the majority class being documents that are not abusive, e.g. in \cite{Waseem-Hovy:2016}, where $31\%$ of the data is labeled as abusive spread over two classes ($20\%$ labelled as sexist and $11\%$ labelled as racist). As such classifiers are given the task of identifying abusive language while being given access to very little data and highly variable data in its notions of acceptability and demographic targeting. For a task such as abusive language and hate speech detection, where subjects such as racial and gender minorities are often discussed in both constructive and abusive ways, this means that classifiers are prone to over-fit to the majority class thus resulting in poor usability of the models and indeed, poor generalizability beyond the specific data set.\vspace{5mm}
+
+%Most data sets that have been for abusive language detection do not allow for generalization beyond the given data set due to being very small e.g. in \cite{Waseem:2016} there are less than $100$ documents labeled in the minority class; the data is collected for a limited number of targets \citep{Waseem-Hovy:2016}; or some communities being overrepresented in the data sets \citep{Davidson:2017}. In addition, many annotated data sets for abusive language are collected on Twitter \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Jha:2017} which naturally influences a given model's performance on data obtained from other sources which may have not have length limitations on documents (e.g. comments or posts). Poor generalisability also influences moving from one data set to another \citep{Waseem:2016} which greatly reduces the usability of the models that are trained on a given data set. To overcome this issue of poor generalisability stemming from a limited number of targets, we will be collecting additional data which will be used to explore the utility of neural network models along with linear models. Further, we will seek to abstract away from the words in the documents to avoid over-fitting to specific terms. We will to utilize unannotated data from communities that are known to be abusive in order to address poor generalizability stemming from a limited number of target groups in the annotated data as well as the issue of documents that exceed Twitter's document length restrictions. Thus, we will seek to address the following research question:\vspace{5mm}
+%\begin{quote}
+%{\bf RQ4}: How can embeddings, weak supervision, linguistic annotation, and meta data help improve platform and topic independent detection of abusive language and hate speech?
+%\end{quote}
+
+
+%********************************** % Report Structure  *************************************
+%\section{Report Structure}\label{sec:structure}
+
+%In this chapter, we have introduced the tasks we'll undertake in the thesis along with the research questions and brief outlines of how we will address each research question. For the sake of the confirmation panel chapters \ref{chap:nlp}, \ref{chap:done}, \ref{chap:experiments}, and \ref{chap:ddp} deal with the requirements of the report, while \ref{chap:socialscience} deals with more background knowledge that further motivates and provides deeper understanding of the social scientific concepts and how they will be used.\footnote{In Chapter \ref{chap:socialscience} we also present our ethical considerations.}\vspace{5mm}
+
+%\noindent Chapter \ref{chap:socialscience} presents the knowledge from Critical Race Theory, Gender Studies, ethics for social media research, and Psychology upon which we base our methodology and how we will use these concepts.\vspace{3mm}
+
+%\noindent Chapter \ref{chap:nlp} presents the literature review on current approaches to abusive language detection and counter speech generation in NLP, and seeks to explain which methods we will use and how they will be used.\vspace{3mm}
+
+%\noindent Chapter \ref{chap:done} presents the work that has been conducted thus far.\vspace{3mm}
+
+%\noindent Chapter \ref{chap:experiments} details the tasks and approaches that will be carried out during this PhD project, as well as a tentative execution timetable.\vspace{3mm}
+
+%\noindent Chapter \ref{chap:ddp} outlines the activities completed regarding the Doctoral Development Program (DDP), as well as other activities that have been carried out.\vspace{3mm}
+
+%\noindent Appendix \ref{appendix:published} provides the full papers that have been published thus far.\vspace{3mm}
+
+%\noindent Appendix \ref{appendix:ethics} provides the successful and pending applications for ethical approval. Successful applications also include the notification of acceptance.\vspace{3mm}
+
+%\noindent Appendix \ref{appendix:draft} contains draft papers and papers which are currently under review.
