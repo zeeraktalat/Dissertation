@@ -5,7 +5,43 @@
 \fi
 
 
-\chapter{Disembodied ML and Foucault + Fraser}
+\chapter{The Disembodied and Conservative Natures of Machine Learning}\label{chap:haraway-foucault}
 
+In each of the previous chapters we have identified different areas of concern for the use of our models and data. From the reductive perspectives on data from linear models in \autoref{chap:detection}, over the constraints of document transformation in \autoref{chap:liwc}, to the influence of multiple data sources and prediction tasks in \autoref{chap:mtl}, and finally the constraints of fairness methods for machine learning in \autoref{chap:fair}. In this chapter, we theorize over the core sources of these issues: the models and the data. Through a consideration of both data generation processes and the modelling stages of the machine learning pipeline.
+
+\section{Disembodied Machine Learning - Under Review}\label{sec:disembodied}
 \zw{Write disembodied ML paper here}
+
+Machine learning is a practice that is concerned with making decisions based on machine-discernable patterns in observed data. Often, the data upon which machine learning methods are trained, and later applied to, are ``extracted'' from the context within which they are created. Through this process of separation of context and datum, an notion of ``objectivity'' is imposed upon the data and the subsequent operations on the data and their results. Through the repeated separation of datum from context bodies of data, or datasets, are created. These amalgamated bodies of data exist only by virtue of their strict separation from the material bodies that they derive from are then used to train machine learning methods. Machine learning method come in two different forms: Supervised learning methods which seek to learn to distinguish between set of bodies of data, and unsupervised models which seek to identify discernable limbs of data within a single body of data. For both supervised and unsupervised models both the underlying data and the model applied to them have strong influences as to what bodies are discovered and what may be discovered within them.
+
+In the advent of machine learning, these models were hailed as objective, unimpeded by subjective human biases, and by extension social marginalisation \cite{Oneill:2016}. However, an increasing amount of research suggests that social biases are common in machine learning models \cite{Shah:2020,Buolamwini:2018,Agarwal:2018}, and that biases in the underlying data may be exacerbated by the machine learning models \cite{Zhao:2017,Jia:2020}. As a result of this growing awareness, a number of research directions seek to identify \cite{Shah:2020,Bender-Friedman:2018,Mitchell:2019,Buolamwini:2018} aim to identify, reduce or remove social biases \cite{Zhao:2017,Agarwal:2018,Romanov:2019,Jia:2020} from machine learning models to prevent further marginalisation. Such work assumes that social biases operate within a positivist logic in which the removal social bias is cast as an optimsation problem, i.e. that there is a finite and quantifiable source of bias that can be disentangled, isolated, and mathematically reduced out of the body of data or mathematical model from which the designer of both models and data are removed.
+
+Here, we provide a challenge to such a positivist logic drawing on work from feminist Science and Technology Studies and examples from Natural Language Processing we argue that bias and subjectivity in machine learning pipelines are inescapable and can therefore not be simply be reduced or removed, for which reason we hold that an ongoing recognition and reflection on our own positions and the imaginary of objectivity found in subjective realities reflect political choices throughout the machine learning pipeline. Through a contextualisation of bias in these terms, we aim to shift the surrounding discourse away from bias an its elimination to subjective positionality and its implications on the machine learning pipeline from data generation to trained model.
+
+\subsection{Embodiment in the Machine Learning Pipeline}
+Through Haraway's \citet{Haraway:1988} critique of objectivity it is possible to understand subjectivity, or bias in machine learning in a way that recognises its potential to create social marginalisation without casting the problem in a positivist, optimisational light. We argue that the disembodied or objective position exists within the machine learning pipeline at multiple junctions: 
+\begin{enumerate}
+  \item{In the data which is often removed from context and potentially adjudicated by externalised others,}
+  \item{in the person designing the experiment and pipeline, and}
+  \item{in the model trained on the disembodied data stemming from embodied data subjects.}
+\end{enumerate}
+First, as data collection processes require decisions to be made to delineate individual pieces of datum that are relevant to the task from those that are deemed irrelevant, it is often necessary to also create a separation between the person who created the datum and the datum in and of itself. Thus, a datum is removed from the context of its creator. Further, datum is often disassociated with the time and the social and political contexts within which it is created. In the case of supervised machine learning, the datum is then provided to a number of annotators, who frequently are neither the creator of the datum nor necessarily situated with contexts of the creator or the datum. These annotators then determine which limb of data, within the larger body of data, the datum belongs to given a set of criteria for such judgement.
+Second, as the designer of the model themselves are frequently removed from the contexts within which the body of data are created, they determine how the data are to be represented through a choice of features, setting limits on vocabularies (see \autoref{chap:intro}), transforming the input (as we see in \autoref{chap:liwc}), and the choice of models with their requirements of representing data.
+Third, as machine learning models step through disembodied data and embody it within itself, the model itself manipulates the representations of data to identify discernable boundaries between the limbs of data. In this process, the models further disembody the data from the data itself, operating within an assumption that datum consist of the sum of its parts.
+
+In each of these situations lay value judgements on which perspectives of the data are relevant and which are irrelevant. We observe here a peculiarity of machine learning, as data which is disembodied from its creator then becomes the body of knowledge upon which the machine learning model draws on, implicitly transforming all positions that exist outside of the model's interal body then becomes disembodied from the model. This transformation from disembodied to embodied then can serve as an explanation for calls for ``more'' and ``more diverse'' data \cite{Holstein:2019}.
+
+\paragraph{The Embodied Designer}
+Often a lack of diversity in machine learning development teams is cited as a source of socially biased technologies along with corresponding calls for an increase in designers embodying diverse experiences \cite{West:2019}. Similar to our argument, such calls argue that the embodied designers project an embodiment of self into the technologies they develop through data and modelling choices. This argument, in line with \citet{Haraway:1988} suggests that it is only through the recognition and promoting different embodiments that certain perspectives, understandings, and uses can be achieved.
+
+\subsection{Embodiment in Data}
+As \citet{Gitelman:2013} argues, datasets do not exist naturally but must be produced. Considering this production of data through \citet{Haraway:1988}, datasets can be understood as a form of knowledge that is produced through disembodying embodied experiences. Subjectivity can thus stem from a number of sources including the source of the data \cite{Gitelman-Jackson:2013}, the data sampling method \cite{Shah:2020}, the selection of annotators \cite{Waseem:2016,Derczynski:2016}.
+
+Grounding our discussion in Natural Language Processing, we show how subjectivity manifests itself in machine learning models through a number of meaning-making processes, modeling choices, and data idiosyncracies. We seek here to highlight the subjective and embodied nature of of data and classifications and that by taking a position of objectivity, we cannot do justice to the needs and wants of individuals or communities.
+
+\subsubsection{NLP Tasks}
+
+\section{Machine Learning as a Conservative Practice}
 \zw{Write about dominant and subjugated discourses for machine learning here; bring in that ML is a conservative practice}
+
+\zw{Citations needed: Foucault on dominant and subjugated discourses, Fraser on subaltern publics, some archival theory on margianlising effects of dominant discourses.}
