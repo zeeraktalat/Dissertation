@@ -1,7 +1,7 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,PageStyleII,12pt,times,print,oneside,numbered,index,authoryear]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,PageStyleII,12pt,times,print,twoside,numbered,index,authoryear,draft]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -135,12 +135,16 @@
 
 \include{Chapter1/chapter1}
 \include{Outline/outline}
-%\include{Chapter2/chapter2}
-%\include{Chapter3/chapter3}
-%\include{Chapter4/chapter4}
+\include{Chapter2/chapter2}
+\include{Chapter3/chapter3}
+\include{Chapter4/chapter4}
 \include{Chapter5/chapter5}
-%\include{Chapter6/chapter6}
-
+\include{Chapter6/chapter6}
+\include{Chapter7/chapter7}
+\include{Chapter8/chapter8}
+\include{Chapter9/chapter9}
+\include{Chapter10/chapter10}
+\include{Chapter11/chapter11}
 
 % ********************************** Back Matter *******************************
 % Backmatter should be commented out, if you are using appendices after References
@@ -154,6 +158,7 @@
 % Reference styles: http://sites.stat.psu.edu/~surajit/present/bib.htm
 
 \bibliographystyle{apalike}
+%\bibliographystyle{custombib}[authoryear]
 %\bibliographystyle{unsrt} % Use for unsorted references  
 %\bibliographystyle{plainnat} % use this to have URLs listed in References
 \cleardoublepage
