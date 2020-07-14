@@ -3,7 +3,7 @@
 %*******************************************************************************
 
 % !TEX root = ../thesis.tex
-
+\zw{Add about how equality does not provide equal outcomes or experiences as the world outside of the model is inherently unjust.}\zw{Mention AAE to introduce the abbreviation}
 \chapter{Theoretical Background}\label{chap:socialscience}
 In this chapter, we introduce core concepts from social science that we employ in this thesis. This will serve as foundational knowledge for what we interpret as abusive language and hate speech. Subsequently, a consideration of multiple of these may be necessary to determine if speech is derogatory and will inform our recommended solution for handling such speech. Additionally, we seek to introduce how we will use these concepts in the thesis.
 
@@ -192,22 +192,39 @@ While the weakening of Section 230 of the CDA falls in line with the European an
 
 Considering pressures to turn to automation, it is relevant to consider the class action lawsuit against Facebook\footnote{see Scola v. Facebook, Inc and Pro Unliminted, Inc., 2018, Civil Action No.: CIV0513} and the lawsuit Microsoft\footnote{See Soto and Blauert v. Microsoft, 2017, Case No.: 16-2-31049-4} by former content moderators from each company. Both lawsuits will be going forward and have not been settled. In both lawsuits, the plaintiffs report that they suffer from Post-Traumatic Stress Disorder as a result of being exposed to content such as beheadings and child pornography coupled with insufficient support and debriefing opportunities.
 
-\subsection{Collective Pressures} 
+\subsection{Collective Pressures}
 
 In the previous subsections we outline different three different pressures for content moderation on social media companies: Regulatory pressure, legal pressures, and pressures of volume. These pressures collectively generate a strong motive for deploying automated systems for content moderation including identifying abuse and hate speech. Considering however the issue of abuse, often context is required. However, while there may be an strong desire for automated systems, the issues in the impact on marginalized people highlight that uniform rules to apply to all groups may in fact effectively be discriminatory, which calls for systems to be developed thoughtfully with the knowledge that they may be discriminatory.
 
 % TODO Look at this again later. It doesn't fit here. \cite{banks:2010} suggest that the lack of accountability, the immediacy, and global nature of the internet has allowed for it to become ``an ideal tool for extremists and hate mongers to promote hate''. In addition, it was the hopes of Facebook that increased accountability would lead to a decrease in hate speech \citep{Levine:2013}.
 
 \section{Situated knowledge and subjugated data discourses} \zw{Actually write this as previous work instead of what we're going to do}
-Finally, one cannot talk about data in the context of machine learning without considering where it comes from or how the methods applied to it will affect it. We borrow here loosely from \cite{Fraser:1989} and \cite{Spivak}'s notion of the ``subaltern counterpublics'', that is ``parallel discursive arenas where members of subordinated social groups invent counterdiscourse, and Foucault's notion of dominant and subjugated discourses to understand the processes of marginalisation occurring through the use of machine learning models. Similarly, we rely on \cite{Haraway:1988}'s work on ``Situated Knowledge'' to better understand how machine learning methods, and data used in such methods assume a ``view from nowhere'', employing the ``God trick'' allowing for the illusion of objectivity as a result of applying mathematical modeling to data.
+Finally, one cannot talk about data in the context of machine learning without considering where it comes from or how the methods applied to it will affect it. We borrow here loosely from \cite{Fraser:1989} and \cite{Spivak}'s notion of the ``subaltern counterpublics'', that is ``parallel discursive arenas where members of subordinated social groups invent counterdiscourse, and Foucault's notion of dominant and subjugated discourses to understand the processes of marginalisation occurring through the use of machine learning models. Similarly, we rely on \cite{Haraway:1988}'s work on ``Situated Knowledge'' to better understand how machine learning methods, and data used in such methods assume a ``view from nowhere'', employing the ``God trick'' allowing for the illusion of objectivity as a result of applying mathematical modelling to data.
 
 \cite{Harway:1988,Gitelman:2013,Gitelman-Jackson:2013,Mohanty:1984}
 
 \section{Theoretical Approaches to Content Moderation}
 
+\zw{Add page numbers to the quotes, once your physical copy of the book arrives.}
+In her work on theories of social pollution, Mary Douglas \citeyear{Douglas:1966} examines how meaning and community are made through the positive reordering of the environment to separate the subjects and objects that belong and those that do not, i.e. what is not and what is dirt. She argues that `dirt is the by-product of a systematic ordering and classification of matter, in so far as ordering involves rejecting inappropriate elements' \cite{Douglas:1966}. Dirt is then not an independent attribute of an object or subject, but a `residual category rejected from our normal scheme of classifications' \cite{Douglas:1966}. This classification between what is dirt and what is not, practised through rituals and habits that create coherence within communities, helps establish borders between what and who belongs in a group and what does not. As communities reject the impure, members of the collective, or in fact society, form a shared meaning. Through these processes of meaning-making, or border hygiene the collective can maintain its integrity. Dirt then becomes something communities avoid in order to prevent the breakdown of meanings, and by extension the community itself.
+
+To \citet{Douglas:1966} the avoidance and removal of dirt are not negative processes of removal, they are a `positive effort to organize the environment' \cite{Douglas:1966} of the community in which the removals takes place. Further she argues that we seek to re-order our environment to make it conform to an idea.
+
+As the identification, demarcation, and expulsion of dirt are collective actions, the definitions and understandings of what constitutes dirt is a subjective in nature and meaning can only be attributed within a given system: `no single item is dirty apart from a particular system of classification in which it does not fit' \cite{Douglas:1966}. Further, in her conceptualisation dirt is an encompassing label for `all events which blur, smudge, contradict or otherwise confuse accepted definitions' \cite{Douglas:1966}. Dirt is then contextual, and what is dirty in one situation may not be dirty in another. She exemplifies this through the mundane: food is not necessarily dirty, `but it is dirty to leave cooking utensils in the bedroom' \cite{Douglas:1966}.
+
+Given the contextual nature of dirt, many might imagine that they are unequivocally able to identify dirt, \citet{Douglas:1966} argues that detecting dirt is complex as with the contextual nature of dirt, it follows that there can be no such thing as absolute dirt or clean, as these depend on the subject observing it. Thus, what is dirt to one might be valuable to another. Conversely, as \citet{Lepawsky:2019} argues, the positionality of discarding, or cleaning, may result in discarding or maintaining things that are valuable to one, but are harmful to another. Who then gets to exert such power to determine what stays and what remains becomes a question of differential power relations. Indeed, \cite{Hall:1993} similarly ties the classification of dirt and the clean to racist logics of social purification:
+
+\begin{quote}
+  What you do with dirt in the bedroom is you cleanse it, you sweep it out, you restore the order, you police the boundaries, you know the hard and fixed boundaries between what belongs and what doesn’t. Inside/outside. Cultured/uncivilised. Barbarous and cultivated, and so on. \cite[3]{Hall:1999}
+\end{quote}
+
+By investigating the question of power relationships and commercial content moderation \citet{Lepawsky:2019} extends \citet{Douglas:1966} framework into digital spaces, arguing that such work can help us understand online communities as systems that must constitute themselves through removal, for which human and automated content moderation systems act as the filters that allow for such constitution.
+
+In Hall's \citeyear{Hall:1997}, theory of encoding and decoding, it is argued that expressions are written, or encoded, with a specific understanding which may differ when it is interpreted by the reader from one of three positions: dominant, negotiated, or oppositional. These moments of interpretation create a space for uncertainty and instability. Where things have been encoded with one meaning, they can be decoded with a different meaning, e.g. a semi-colon followed by a close parenthesis may be encoded as an indicator of sarcasm, but decoded as either ungrammatical. Such oppositional reading can give space for subcultural communities, that stabilise their own meaning-making process such that the community understands a semi-colon followed by a close parenthesis as indicating happiness.
+
+In considering \cite{Hall:1997} and \cite{Lepawsky:2019}, the logics of dirt cannot be disconnected from the oppression experienced by marginalised people.
+
 \cite{Roberts:2019}
-\cite{Douglas:1966}
-\cite{Lepawsky:2019}
 
 
 
