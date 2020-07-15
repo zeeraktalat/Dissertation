@@ -72,4 +72,35 @@ Finally, the model architecture itself is a likely culprit of amplifying the bia
 As Jigsaw have stated their commitment to treat their models for social biases \cite{Marvin:2019}, we can assume that some development may have happened since Auerbach and West's examinations. However, at the time of writing w find that the phrase ‘black queer women’ scored 0.77 toxicity, while ‘white men are’ scores 0.25, and ‘white straight men are’ scored 0.50.
 
 \subsection{Opt Out}
+Our second case study is Opt Out, an open-source Firefox browser extension founded by Theresa Ingram. The extension, which was launched on the 8th of March, 2020, focuses on detecting misogyny. Opt Out define misogyny as `any verbal, visual or physical harassment and abuse rooted in misogyny that is threatened, carried out and/or amplified online' \cite{Ingram:2020}. Unlike the Perspective's aim to address content moderation at the platform level, the aim of Opt Out is to empower individual users to address the torrent of misogyny from their own timeline. Thus, while Perspective aims to provide a globally prescriptive understanding of `toxic', Opt Out aims to adjust to each individual's tolerance of misogyny, under a global understanding of what constitutes misogyny. The distinction here has downstream implications on how power is distributed, with Perspective the power is centralised with Jigsaw and the platform it operates on, while with Opt Out power is shared with the user. The choice to view a moderated stream is with Opt Out solely with the with user. Similarly, the power to define the amount of misogyny, or dirt to be exposed to is also placed with the user.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.5]{notnalise.png}
+  \caption{NotNalise on Twitter.}
+  \label{fig:notnalise}
+\end{figure}
+
+Foregrounding the cultural contingency of harmful expressions, Opt Out implement machine learning systems that are trained on multiple previously published datasets with competing definitions and operationalisations of misogyny, thus countering essentialist tendencies at the cost of model performance.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.5]{Rona.png}
+  \caption{Flash\_Hoe on Twitter.}
+  \label{fig:flash_hoe}
+\end{figure}
+
+Considering \autoref{fig:flash_hoe} and \autoref{fig:aquaria}, we see tensions in how to understand, or decode the term `b**ch' to distinguish between pejorative and reclaimed uses of the word. Further, while there is a distinction in the text-only reading of the two figures, by considering the image accompanying them, it is clear that the pejorative use in \autoref{fig:flash_hoe} is in fact referring to a non-human entity, namely the respiratory virus COVID-19. This depiction of the virus then hedges the pejorative nature of the text. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.5]{aquaria.png}
+  \caption{Aquaria on Twitter.}
+  \label{fig:flash_hoe}
+\end{figure}
+
+Notably, the presence of identity terms other than white male does not are not punished (see \autoref{fig:notnalise}), suggesting that the different understandings within the distinct datasets used to train the model may not have strong correlations with identity terms and the positive class. However, as the developers of the extension have shared, balancing the different understandings and levels of allowable misogyny does not come without its own costs. As machine learning systems rely on consistency in data and annotation to identify decision boundaries between different bodies of labelled data, there are seemingly spurious inconsistencies in what the model deems harmful, which has a downstream effect on the users who may experience what appear to be random effectiveness of the model in removing misogyny from their streams. Opt Out's use of multiple datasets and competing definitions of misogyny then penalises the dataset underpinning the model's positive class as the different datasets have different annotation schemes and define misogyny in closely related, yet distinct ways. Considered through \citet{Douglas:1966} framework, we can understand this inconsistency, or noise less as a technical problem to be optimised for or solved, but instead as a fundamental cultural quesiton of boundary setting and tolerance for ambiguity. Such ambiguity in the training data create competing signals for the model, as it seeks out correlations to rely on to identify misogyny. Further, as the model is trained on multiple competing definitions, it is limited in the nuances of any single operationalisation of misogyny; consequently a sparse modelling space is made more sparse, as less data remains at the centre and more is pushed to the margins of the space. The data, and correlations that remain at the centre then tend to consist of highly normative understandings of what is and what is not dirt.
+
+\section{The Deeper Politics of Toxic Discourse in Content Moderation}
+
+\section{Concluding Remarks}
