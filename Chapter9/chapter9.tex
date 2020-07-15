@@ -4,7 +4,7 @@
     \graphicspath{{Chapter9/Figs/Vector/}{Chapter9/Figs/}}
 \fi
 
-\chapter{The Politics of Toxicity in Content Moderation Infrastructures}\label{chap:filter}
+\chapter{The Politics of Toxicity in Content Moderation Infrastructures - under review @ New Media and Society}\label{chap:filter}
 \zw{In collaboration with Nanna Bonde Thylstrup (who's the first author)}
 
 Throughout our process, we have worked with notions of ``toxicity'' and ``abuse'' without further examining their implications or the political constructs they live within. Here we then take a critical look at the implications of the political economies which these terms live within and how content moderation infrastructures define toxic content.
@@ -30,3 +30,46 @@ These dynamic complexities stand in contradiction to automated content moderatio
 The fact that human, machine, and hybrid content moderation systems reproduce such social inequities has been the object of both scholarly work \cite{Davidson:2019,Sap:2019,Dixon:2018,Gomes:2018} and public criticism \cite{Guynn:2019}. Indeed the excessive policing of marginalised communities has given rise to the use of POTs \cite{Kulynych:2020} in efforts to circumvent such policing through a number of tactics including phonetic spelling (e.g. the use of `wypipo' instead of `white people') \cite{Guynn:2019}. These methods of circumventing content moderation systems come from the experience of negative removals \cite{Guynn:2019}. Examples of such negative removals. Considering, for instance, content moderation of AAE, the content moderation filters may reproduce racialised logics and thus excessively reject content written in AAE as particularly dirt-like. At other times, the system may fail to capture the semantic richness of AAE. For many content moderation systems, the working assumption embedded in the systems  \cite{Davidson:2019} that is curated through labelled data \cite{Sap:2019} is that any mention of the n-word invokes a negative stereotyping \cite{Waseem:2018}. However, as \citet{Rahman:2012} reminds us, beyond the negative uses of the n-word as a slur, there is a rich and complex cultural history and meaning assigned to the word, when it used by in-group speakers. Such structural biases occur because in efforts to scale the size of data, working with `deep data' (Lori Kendall cited in \citet{Brock:2015}), i.e. working on data with methods that include deeper insights about the `cultural, moral, and social choices about technology use' found in different cultural communities \cite(Brock:2015}).
 
 Thus, in particular for the moderation of language, many content moderation infrastructures reproduce the problems of respectability politics and its favouring of upper-middle class White ideals \cite{Kerrison:2017}.
+
+\section{Addressing Toxicity Online}
+
+Through the exemplification of Jigsaw's Perspective API and Opt Out's browser-plugin, we examine the issues of power differentials, respectability politics, and the complex space in which content moderation systems navigate.
+
+\subsection{Perspective}
+
+The Perspective API was developed \cite{Wulczyn:2017} and launched by Jigsaw and Google's Counter-Abuse Technology team in 2017. The method employed by Perspective aims to explore online discussions through experiments, models and research data in order to create better governance tools and `explore strengths and weaknesses of [machine learning] as a tool for online discussion'. The API is developed then to score the toxicity of provided text using machine learning. Each bit of text, or comment is then given a score between zero and one, where a toxicity score that is greater than or equal to $0.9$ are considered toxic.
+
+In order to identify what is toxic and not toxic, Perspective offer defining a toxic comment as ‘a rude, disrespectful, or unreasonable comment that is likely to make you leave a discussion' \cite{PerspectiveAPI}. This definition is used in the data creation process. The data is created `asking people to rate internet comments on a scale from “Very toxic” to “Very healthy” contribution' \cite{Gomes:2018}. As the definition is decidedly ambiguous, a certain degree of the different internal operationalisations of the definition, and thus the underlying dataset, is then informed by the people who trained the machine learning underpinning the API. The API works in real-time allowing for people to see the toxicity score of their comment as they are typing. The function of Perspective, phrased in terms of dirt is then to distinguish between the `toxic', which threaten the stability of online discussions, and the `healthy', that the communities can reinforce themselves around.\vspace{5mm}
+
+In its description, as well as in the labelling choices, Perspective conceptualises toxic in opposition to healthy, or in terms of \citet{Douglas:1966}: dirty and clean. However, unlike many other datasets, the training data underpinning Perspective is not only trained on found objects that are then annotated, the dataset also consists of crowdsourced abusive comments that were generated by antagonist users trying the system \cite{Marvin:2019}. \vspace{5mm}
+
+The Perspective team note that `initial testing revealed major blind spots and algorithmic bias` \cite{Marvin:2019} which were then addressed, however as librarian Jessamyn West discovered such biases had not been fully addressed (see \autoref{fig:jessamyn}); examples such as `I am a man' produced a toxicity score of only $0.20$ while `I am a gay black woman' scored $0.87$, that is just below the threshold of being deemed as toxic by the system.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{Jessamyn.png}
+  \caption{Jessamyn West on Twitter.}
+  \label{fig:jessamyn}
+\end{figure}
+
+Similarly, writer David Auerbach found issues with regard to religion and persecution (see \autoref{fig:auerbach}). For instance, he found that the model predicted a toxicity score of $0.73$ for the statement `whites and blacks are not inferior to one another', $0.70$ for `hitler was an anti-semite', and only $0.18$ for ``some races are inferior to others', $0.06$ for `Hitler's biggest mistake was not getting the job done' , and $0.05$ for `14/88' a common neo-Nazi symbol.\footnote{Please see https://www.adl.org/education/references/hate-symbols/14-words and https://www.adl.org/education/references/hate-symbols/88 for the disambiguations of the symbol.}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{Jessamyn.png}
+  \caption{David Auerbach on Twitter.}
+  \label{fig:auerbach}
+\end{figure}
+
+Such discrepancies in toxicity scores reproduce oppressive gendered, racial, and sexual hegemonies which assign negative attributes to deviations from straight, male, and white identities while assigning neutral or, in the worst and most likely case, positive values to information maintaining such hegemonies even at the cost of promoting fascist views. Why did Perspective then learn such oppressive logics of racism, anti-Semitism,, sexuality, and gender? The answer is likely to be found in the data the model is trained on as well as how the machine learning model is likely to function.\vspace{5mm}
+
+We delineate between three different causes: 1) the training data, 2) the word-embeddings used for the model, and 3) the model behaviour itself. First, the training data is likely to consists of imbalanced distributions of identity words in the different classes. It is highly likely that terms such as `black', `gay', and `woman' more frequently occur in the positive classes than in the negative class, for this reason the model is likely to learn stronger correlations between those identity terms and the positive classes than `white' and `man'. The occurrence of the terms documented by Jessamyn west in a document parsed by the API is then more likely to produce the label `toxic'. Conversely, content that uses `civilised' language while arguing for positions that more profoundly disturb the social order are a) less likely to be labelled as toxic by virtue of their `civilised' language and b) less frequent in the data overall, leaving seemingly benign words used in a context the model has rarely seen, and will therefore not know that it is in fact `toxic' language that needs `cleaning up' \cite{Gomes:2018}.
+
+Second, through the application of GloVe word embeddings \cite{Pennington:2014} as these allow for the machine learning model to take advantage of knowledge held outside of the training data. Several works have identified that severe social biases against marginalised communities are apparent in word embeddings \cite{Speer:2017,Bolukbasi:2016,Nissim:2019,Zhao:2017,Zhao:2020}, moreover even once such embedding spaces have been treated for social biases they continue to exhibit social biases \cite{Gonen:2019}. Thus, the external knowledge that the model relies in is then also likely to exhibit characteristics of oppressive racial, sexual, and gendered social structures.
+
+Finally, the model architecture itself is a likely culprit of amplifying the biases held within the dataset and word embeddings \cite{Zhao:2017}. As machine learning models seek to identify decision boundaries between the different classes, between the dirt and the clean, the models seek to determine boundaries in the contextual and indeterminable. Therefore, the models learn strong correlations with what is most frequently in the positive classes, what is most frequently in the negative classes, and what is frequently in both positive and negative classes. It is in the final space that the decision boundaries are drawn, however social biases are likely to be seen in spaces further away from the decision boundaries, more towards the positive and negative classes respectively. It is in the `civilized' language production tending towards the negative classes that some socially disturbing content is found, and it is towards the space of the positive classes that find strong correlations with mentions of marginalised identities.\vspace{5mm}
+
+As Jigsaw have stated their commitment to treat their models for social biases \cite{Marvin:2019}, we can assume that some development may have happened since Auerbach and West's examinations. However, at the time of writing w find that the phrase ‘black queer women’ scored 0.77 toxicity, while ‘white men are’ scores 0.25, and ‘white straight men are’ scored 0.50.
+
+\subsection{Opt Out}
+
