@@ -23,18 +23,39 @@ The primary changes in this chapter are:
 
 Here we provide introducing text stemming from each of the different areas and provide an overview of the thesis aims.
 
-Timeline: Expected completion late August
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 0\%. Needs complete rewrite.
+    \item 1st draft completion: Late August
+    \item Status: Awaiting completion of content chapters
+    \item Expected time consumption: 2-3 days
+\end{itemize}
+
 \section{Literature Review}
 
 \subsection{NLP and Computer Science}
 
 Here we present the previous works in NLP and computer science on fairness, abusive language detection, computational social science, and fake news detection. While a great deal of this has been written, an updated version is warranted to address the latest literature and the added areas from the draft version below. 
 
-Timeline: Expected completion late August
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 40\% (Large swat of content there, needs to be modified to reflect new literature + changes in papers)
+    \item 1st draft completion: Mid-late August, 2020
+    \item Status: Needs massive overhaul
+    \item Expected time costs: 5-6 days for first draft
+\end{itemize}
+
 \subsection{Social Science and Policy}
 In this section we present the social scientific work on fairness, intersectional feminism and oppression, notions of acceptability of dialects, law, policy and platform policy, ethics of research into abuse, and moderation practices. A large part of this has been written but further detail for many of the topics covered in this draft would benefit from further attention.
 
-Timeline: Expected completion late August
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 40\% (Large swat of content there, needs to be modified to reflect new literature + changes in papers)
+    \item 1st draft completion: Mid-late August, 2020
+    \item Status: Needs massive overhaul
+    \item Expected time costs: 5-6 days for first draft
+\end{itemize}
+
 %\subsection{That is the Law - Developments of legal realities for content moderation}
 %Here we detail the current state of platform policy and legal developments. We examine the state of content moderation technology for abusive langauge and address the ways in which these may interact with proposed and implemented European regulation.\footnote{Status: In initial draft stages.}
 
@@ -47,13 +68,26 @@ This chapter will consist of work on extending fairness methods to NLP and allow
 In this section we will introduce our methods for building fair NLP models. We extend the method for fair classification proposed by \citep{Agarwal:2018} to Natural Language Processing. We apply the method to two problems: Fake news detection and hate speech detection.
 
 \subsubsection{Fairly Fake: Investigating the Influence of Party Affiliation on Fake News Classification}
-Here we consider the influence of political affiliation on fake news detection models. We use this task to show the viability of the model by showing that unrestricted, a model for fake news detection learns a bias towards a political direction.\footnote{Status: Running final experiments.}
+Here we consider the influence of political affiliation on fake news detection models. We use this task to show the viability of the model by showing that unrestricted, a model for fake news detection learns a bias towards a political direction.
 
-Timeline: Expected completion Early August
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 80\% (Write up missing)
+    \item 1st draft completion: Mid-Late July
+    \item Status: Ready for writeup.
+    \item Expected time consumption: 5-7 days
+\end{itemize}
+
 \subsubsection{Fairly Reliable: Investigating the influence of political ideology on predicting reliability of political articles}
-Following the methodology from the previous section, we show how measuring classifiers learn confounding factors in predicting the reliability of articles across the political spectrum.\footnote{Status: Running final experiments.}
+Following the methodology from the previous section, we show how measuring classifiers learn confounding factors in predicting the reliability of articles across the political spectrum.
 
-Timeline: Expected completion Early August
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 75\% (Conclusion of final experiments + writing up)
+    \item 1st draft completion: Mid-Late July
+    \item Status: Final Experiments running.
+    \item Expected time consumption: 5-7 days
+\end{itemize}
 
 %\subsubsection{''Walking Contradiction``: De-marginalizing AAVE in Abusive Language Detection}
 %In this section we describe our annotation experiment for labelling African-American Vernacular English (AAVE), and the subsequent experiments to build a classifier to distinguish between AAVE and Standard American English. The resulting classifier will then be used to augment datasets labeled for abuse with dialectical annotations. Following the augmentation of abusive language datasets, we seek to identify bias against AAVE speakers and investigate methods to minimise the influence of bias introduced by disproportionate representation of AAVE in the positive classes.\footnote{Status: Recruiting annotators.}
@@ -77,37 +111,71 @@ Timeline: Expected completion Early August
 In this chapter, we will seek to address the heavy reliance on words for detection of abuse, seeking to allow for the use of meta-information and linguistic patterns and using multi-task learning for abusive language detection.
 
 \subsection{Multi-task learning for hate speech detection}
-Here we seek to map out which auxiliary tasks are conducive to identifying abuse. Specifically, we aim to use tasks which have large scale resources available to allow for higher generalizability of the resulting model than many approaches to identifying abuse allow for.\footnote{Status: Code is written and tested. Experiments need to be set up.}
+Here we seek to map out which auxiliary tasks are conducive to identifying abuse. Specifically, we aim to use tasks which have large scale resources available to allow for higher generalizability of the resulting model than many approaches to identifying abuse allow for.
 
-Timeline: Final results expected by the end of July.
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 35\% (Experiments need to be set to run + writing up)
+    \item 1st draft completion: Early-mid August
+    \item Status: Code base is tested and ready, experiments need final tuning.
+    \item Expected time consumption: 5-7 days
+\end{itemize}
 
 \subsection{Classifying Abusive Documents using Linguistic Information and Meta data}
-Here we aim to provide some critical consideration into which kind of metadata to use for building models for detecting abuse. Additionally, we aim for building a more generalizable model by using linguistic information rather than the words themselves.\footnote{Status: Verifying experimental results}
+Here we aim to provide some critical consideration into which kind of metadata to use for building models for detecting abuse. Additionally, we aim for building a more generalizable model by using linguistic information rather than the words themselves.
 
-Timeline: Final results expected by the end of July.
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 65\% (verification and writing up left)
+    \item 1st draft completion: Early-mid August
+    \item Status: Verification of results awaiting
+    \item Expected time consumption: 5-7 days
+\end{itemize}
 
 \section{The Socio-technical realities of abuse}
 
 In this chapter, we consider the formal and informal social systems and processes which govern the production and responses to abuse.
 
 \subsection{Filtering Harm: The Politics of Toxicity in Content Moderation Infrastructures}
-Here we detail our work on how notions of abuse and toxicity are used in content moderation literature and the implications of such meanings. Through engaging with theories on pollution and discard, we ask how and who content moderation technologies are for and how they are employed.\footnote{Status: In review; chapter roughly drafted, missing parts of previous work.}
+Here we detail our work on how notions of abuse and toxicity are used in content moderation literature and the implications of such meanings. Through engaging with theories on pollution and discard, we ask how and who content moderation technologies are for and how they are employed.
 %Here we detail our work on framing content moderation in the light of systems of care. By viewing content moderation in this framing, it is then possible to consider the work of the content moderator in the tradition of intersectional feminist scholarship, giving access to considerations of how the burden of moderating harmful content - and in fact the outcomes of said moderation - is placed disproportionately on marginalised bodies.\footnote{In review for a special issue in Big Data and Society.}
 
-Timeline: Expected completion in Late July
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 90\%
+    \item 1st draft completion: 17 July, 2020
+    \item Status: Missing a discussion and conclusion
+\end{itemize}
 
 \subsection{Disembodied Machine Learning}
-In this chapter, we examine how data and machine learning models predicate on an illusion of objectivity and discuss how the acceptance of such objectivity hinder the possibility of reaching the goals of fair machine learning.\footnote{Status: In review; chapter roughly drafted, missing previous work.}
+In this chapter, we examine how data and machine learning models predicate on an illusion of objectivity and discuss how the acceptance of such objectivity hinder the possibility of reaching the goals of fair machine learning.
 
-Timeline: Expected completion in Late July
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 100\%
+    \item 1st draft completion: Completed
+    \item Status: Completed
+\end{itemize}
 
 \subsubsection{Critical NLP for Abusive Language Detection/ Discussion Chapter}
-Here we discuss how content moderation systems, and widely NLP systems, may influence the people they are meant to serve. Here we aim to investigate how choices throughout the process of building NLP systems and tasks can allow for marginalisation and how, by borrowing from critical studies, practitioners and researchers can divulge and analyse their choices and the potential impacts of them. Further, we here ask if the directions in the field of abusive language detection are inherently harmful to the populations it seeks to protect.\footnote{Status: Waiting for the rest of the content to be written.}
+Here we discuss how content moderation systems, and widely NLP systems, may influence the people they are meant to serve. Here we aim to investigate how choices throughout the process of building NLP systems and tasks can allow for marginalisation and how, by borrowing from critical studies, practitioners and researchers can divulge and analyse their choices and the potential impacts of them. Further, we here ask if the directions in the field of abusive language detection are inherently harmful to the populations it seeks to protect.
 
-Timeline: Expected completion Mid August.
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 0\%
+    \item 1st draft completion: Mid August
+    \item Status: Awaiting completion of content chapters
+    \item Expected time consumption: 3-5 days
+\end{itemize}
 
 \section{Conclusion}
 In this chapter, we will conclude the findings of the thesis with a specific focus on how the methods described in the thesis may interact with both regulation and platform policies.
 
-Timeline: Expected completion late August
+\textbf{Status}
+\begin{itemize}
+    \item Completed: 0\%
+    \item 1st draft completion: Mid-Late August
+    \item Status: Awaiting completion of content chapters
+    \item Expected time consumption: 2-3 days
+\end{itemize}
 }
