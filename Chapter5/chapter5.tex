@@ -7,4 +7,70 @@
 
 \chapter{LIWC/text transformation chapter}\label{chap:liwc}
 
-\zw{Insert temporary results and describe approach}
+\zw{Describe problem field}
+One of the key issues in machine learning for content moderation is that such systems both in deployed settings (see \autoref{chap:filter}) and in research (see \autoref{chap:intro} and \autoref{chap:nlp}) over-fit to individual tokens that see over-representation in the positive and negative classes respectively. While research efforts have been made to address such issues \cite{CITE: cite papers that try to address overfitting}, the problem of over-fitting to words and identity markers remain an open question for the field. While some such approaches have addressed this problem by replacing certain words and phrases with more general tokens \cite{CITE: Replacing token papers} or masking \cite{CITE: Masking token paper} tokens. Other work has attempted to address the problem by treating it as a problem of dataset bias \cite{CITE: Bias papers}. Here we instead we propose a different approach which serves multiple purposes of 1) minimising the vocabulary to avoid over-fitting to distributional skews in vocabulary across classes; 2) representing documents in terms of how they represent thoughts, feelings, personality, and motivations \cite{LIWC:2015}; and 3) returning modelling of hate speech and different forms of abuse to simpler dictionary-lookup methods that simplify modelling of abuse to how words are used, rather than focusing on their surface forms, to achieve similar performance as compared to more complex models.
+
+Through the use of LIWC, we transform documents from large vocabularies, that are riddled with typos, spelling mistakes, and obfuscations to the functions how these words are used. As seen in \autoref{fig:liwc_transform}, the transformation of words to LIWC categories both contain deeper information about how words are used, and encode a loss of information in words that do not exist in the LIWC dictionary. However, by radically reducing the sizes of vocabularies, from several thousand unique tokens to around 1000 unique tokens that provide deeper insights than simply selecting the most frequent tokens. Moreover we show that the strength of the classification performances within the dataset will translate to other datasets, as these transformed tokens are more general than their surface form.
+
+Focusing our attentions on simple deep neural networks and shallow models, we show that by radically reducing the vocabulary size, while increasing the contextual information of the remaining vocabulary, we can achieve strong classification performances within datasets and more importantly, on out of domain datasets.
+
+\zw{Describe rationale behind the methods chosen: Provide example of transformation}
+\section{Previous work}
+
+\zw{Talk about LIWC}
+\zw{Talk in depth about the references from \autoref{chap:nlp}.}
+
+\section{Datasets}
+
+\zw{Describe the datasets here, along with collection rationales, data sources, annotation guidelines, etc.}
+
+\section{Modelling}
+\zw{Describe the models and experimental settings}
+
+For all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-pair encoding \cite{CITE: BPE paper} for two reasons. First, to minimise the number out-of-vocabulary tokens and second to limit the number of unique tokens. 
+
+For all models we define and search the parameter space for the optimal parameters for each model.
+
+We do not restrict the input vocabulary for any of the neural models.
+
+\subsection{Neural Models}
+
+We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with both a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration).
+
+In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
+
+\subsubsection{Multi-Layered Perceptron}
+
+Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of the document is then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}.
+
+\subsubsection{Recurrent Neural Network}
+\subsubsection{Long-Short Term Memory}
+\subsubsection{Convolutional Neural Network}
+
+
+\subsection{Baseline Models}
+
+We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines and so on), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as \zw{INSERT: vectorisation type} after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we train a multi-layer perceptron, a recurrent neural network, a long-short term memory model, and a convolutional neural network. For the neural model-based baselines, we simply train the models defined in \autoref{sec:neuralmodels} using surface level tokens and perform a hyper-parameter search with this new representation.
+
+\subsection{Experimental Models}
+
+In our efforts to robustly identify models
+
+We experiment using four different models
+
+We retain only the correct spelling, designating all words that do not cohere to the forms found in the LIWC dictionary as unknown tokens.
+
+\zw{Add results and start by rough analysis of just numbers}
+\zw{Look at predictions in detail, try to identify where they still fail}
+\zw{Do logistic regression and find out if there are things that the models might overfit on}
+
+\section{Results}
+
+While the onehot and index encoded tensors should functionally be equal to one another, we see a direct influence of the input layers on the classification scores; with all models showing stronger performance using linear input layers. We propose that the reason for such discrepancies lie in the simpler training procedure of linear layers which don't seek to find relationships between different tokens but instead simply provide a linear function, and embedding layers that seek to identify the relationships between each all tokens in the dataset.
+
+\section{Conclusions and future work}
+
+\zw{Some concluding remarks}
+While functionally this limits the vocabulary, there is also loss of information. Future work, could then employ both simple and complex mappings of different forms of words to single tokens that cohere with the LIWC dictionary, thus limiting information loss while retaining the predictive power.
+
+\zw{}

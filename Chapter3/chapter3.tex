@@ -36,11 +36,42 @@ A different approach is attempted by \cite{Waseem:2018}, in which they seek to c
 
 Finally, \cite{Jha:2017} break ``sexism'' down into benevolent and hostile sexism. They apply the ambivalent sexism theory as proposed by \cite{Glick:1996}. The ambivalent sexism theory suggests that there are two forms of sexism, benevolent sexism, which on a surface level speaks positively on women, but on a deeper level seeks to assert their inferiority, and hostile sexism, which expresses a strictly negative point of view on women. The following examples illustrate benevolent and hostile sexism respectively: ``Women are like flowers who need to be cherished.'' and ``Jus gonna say it..again..DUMB BITCH! \#MKR''.\vspace{5mm}
 
-As online platforms seek to remove abuse occurring on their platform, data sets that have been gathered and annotated may have the abusive documents removed, thus requiring several rounds of re-annotation of abusive language. In an attempt to deal with this, we will experiment with using documents that are assumed have a higher chance of being abusive as they are posted in forums that are known to abusive. Using these documents we will seek to build different forms of embeddings and evaluating on previously annotated data. Further, in an attempt to mitigate annotator needs, we will build an abusive language potential system which utilizes supervised methods for Named Entity Recognition (NER), Gender Identification \citep{Sap:2014}, and sentiment analysis amongst other methods. The goal of this is to identify the probability that a document has potential to contain abusive content, in efforts to exact greater control over what documents an annotator is faced with. Additionally, such a system will allow us to identify documents which are clearly abusive. Thus, we will be able to provide an automated method to create a seed set of positive documents for abusive language detection. 
+As online platforms seek to remove abuse occurring on their platform, data sets that have been gathered and annotated may have the abusive documents removed, thus requiring several rounds of re-annotation of abusive language. In an attempt to deal with this, we will experiment with using documents that are assumed have a higher chance of being abusive as they are posted in forums that are known to abusive. Using these documents we will seek to build different forms of embeddings and evaluating on previously annotated data. Further, in an attempt to mitigate annotator needs, we will build an abusive language potential system which utilizes supervised methods for Named Entity Recognition (NER), Gender Identification \citep{Sap:2014}, and sentiment analysis amongst other methods. The goal of this is to identify the probability that a document has potential to contain abusive content, in efforts to exact greater control over what documents an annotator is faced with. Additionally, such a system will allow us to identify documents which are clearly abusive. Thus, we will be able to provide an automated method to create a seed set of positive documents for abusive language detection.
 
-\section{Multitask Learning}
 
+
+\section{Models}
+
+Throughout this thesis, we develop and train several different model types to test our hypotheses. We use a mixture between linear and non-linear models both to act as points of comparison with one another and to test how well both simple and more complex models perform given our tasks. In each chapter, we will go into greater detail with regard to the implementation details for each model while we provide a theoretical description of each of these models here.
+
+\subsection{Byte-Pair Encoding}
+
+\subsection{Dropout and Early Stopping}\label{sec:dropoutearly}
+
+\subsection{Input Encoding}
+
+\zw{Explain the vectorisors used.}
+\zw{Explain onehot and embedding layers}
+
+\subsection{Softmax, Loss, and optimisers}
+
+\subsection{Activation Functions}
+
+\subsection{Logistic Regression}
+
+\subsection{Support Vector Machines}
+
+\subsection{MLP}
+
+\subsection{RNN}
+
+\subsection{LSTM}
+
+\subsection{CNN}
+
+\subsection{Multitask Learning}
 \cite{Caruna}
+
 
 \section{Fairness}\label{sec:fairlitt}
 
