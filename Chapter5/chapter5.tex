@@ -35,16 +35,56 @@ We do not restrict the input vocabulary for any of the neural models.
 
 \subsection{Neural Models}
 
-We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with both a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration).
+We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration).
 
 In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
+We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: Optuna} to identify the optimal parameters for each model and the variants of each model. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{chap:nlp}.
+
 \subsubsection{Multi-Layered Perceptron}
 
-Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of the document is then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}.
+Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of a batch of documents are then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}. For the Multi-Layered Perceptron models, we search over the following values:
+
+\zw{INSERT: Double check values.}
+\begin{itemize}
+  \item Dropout strength: $[0.0, 0.1, 0.2]$, \zw{Double check it's referred to as "Strength"}
+  \item the hidden layer dimension: $[128, 256]$, and
+  \item the activation function: $[tanh, relu]$
+\end{itemize}
+
+For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[64, 128, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
 
 \subsubsection{Recurrent Neural Network}
+
+Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer.
+
+The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models.
+
+For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
+
+\zw{INSERT: Insert the values.}
+\begin{itemize}
+  \item Dropout strength: $[0.0, 0.1, 0.2]$, \zw{Double check it's referred to as "Strength"}
+  \item the hidden layer dimension: $[128, 256]$,
+  \item the activation function: $[tanh, relu]$,
+  \item Embedding size  For the embedding-based models: $[]$
+\end{itemize}
+
 \subsubsection{Long-Short Term Memory}
+
+The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{tanh} as its non-linear activation function.
+
+The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class.
+
+For these models, our hyper-parameter tuning considers the following parameters and values:
+
+\zw{INSERT: Insert the values.}
+\begin{itemize}
+  \item Dropout strength: $[0.0, 0.1, 0.2]$, \zw{Double check it's referred to as "Strength"}
+  \item the hidden layer dimension: $[128, 256]$,
+  \item Embedding size  For the embedding-based models: $[]$
+\end{itemize}
+
 \subsubsection{Convolutional Neural Network}
 
 
@@ -63,6 +103,98 @@ We retain only the correct spelling, designating all words that do not cohere to
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
 \zw{Do logistic regression and find out if there are things that the models might overfit on}
+
+Following the hyper-parameter tuning, we set the following values
+
+\zw{Fill out these for davidson and wulczyn models}
+
+Davidson MLP
+\begin{itemize}
+  \zw{INSERT: Values}
+  \item Embedding-based model
+    \begin{itemize}
+      \item Dropout:
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+  \item Linear-layer model
+    \begin{itemize}
+      \item Dropout:
+      \item Embedding Layer
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+\end{itemize}
+
+Davidson RNN
+\begin{itemize}
+  \zw{INSERT: Values}
+  \item Embedding-based model
+    \begin{itemize}
+      \item Dropout:
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+  \item Linear-layer model
+    \begin{itemize}
+      \item Dropout:
+      \item Embedding Layer
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+\end{itemize}
+
+Davidson LSTM
+\begin{itemize}
+  \zw{INSERT: Values}
+  \item Embedding-based model
+    \begin{itemize}
+      \item Dropout:
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+  \item Linear-layer model
+    \begin{itemize}
+      \item Dropout:
+      \item Embedding Layer
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+\end{itemize}
+
+Davidson CNN
+\begin{itemize}
+  \zw{INSERT: Values}
+  \item Embedding-based model
+    \begin{itemize}
+      \item Dropout:
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+  \item Linear-layer model
+    \begin{itemize}
+      \item Dropout:
+      \item Embedding Layer
+      \item Hidden Layer
+      \item Activation function
+      \item Batch Size
+      \item Learning Rate
+    \end{itemize}
+\end{itemize}
 
 \section{Results}
 
