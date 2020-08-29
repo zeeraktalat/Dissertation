@@ -33,7 +33,7 @@ For all models we define and search the parameter space for the optimal paramete
 
 We do not restrict the input vocabulary for any of the neural models.
 
-\subsection{Neural Models}
+\subsection{Neural Models}\ref{sec:liwc_neural}
 
 We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration).
 
@@ -43,7 +43,7 @@ We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: 
 
 \subsubsection{Multi-Layered Perceptron}
 
-Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of a batch of documents are then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}. For the Multi-Layered Perceptron models, we search over the following values:
+The first neural model that we use, is a Multi-Layered Perceptron. We choose the model as it is a simple neural network, that can act as a minimal setting of the usefulness of neural networks. Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of a batch of documents are then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}. For the Multi-Layered Perceptron models, we search over the following values:
 
 \zw{INSERT: Double check values.}
 \begin{itemize}
@@ -56,7 +56,7 @@ For the models that use an embedding layer as their input layers, we additionall
 
 \subsubsection{Recurrent Neural Network}
 
-Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer.
+The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \autoref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer.
 
 The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models.
 
@@ -72,7 +72,7 @@ For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the 
 
 \subsubsection{Long-Short Term Memory}
 
-The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{tanh} as its non-linear activation function.
+The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{tanh} as its non-linear activation function. We use Long-Short Term Memory networks due to their prior successes in other works \cite{CITE: LSTM papers} and because they present a development over RNNs, in that they identify information to ``forget'' in to address the issue of long-range dependencies that occur (please see \autoref{chap:nlp} for more detail).
 
 The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class.
 
@@ -87,12 +87,41 @@ For these models, our hyper-parameter tuning considers the following parameters 
 
 \subsubsection{Convolutional Neural Network}
 
+For our final neural model type, we use a Convolutional Neural Network. We select this model as it has been applied previously in academic research \cite{CITE: CNN papers} and in industry (e.g. the Perspective API\foontnote{https://github.com/conversationai/perspectiveapi}). Similarly to the previous model types, the input layer of the Convolutional Neural Network models can either be an embedding layer or a linear layer. The second layer of the model is a two-dimensional convolutional layer. Finally, there is an output layer and a softmax layer. 
+
+For these models, we only consider the activation function and embedding dimension in our hyper-parameter tuning.
 
 \subsection{Baseline Models}
 
-We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines and so on), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as \zw{INSERT: vectorisation type} after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we train a multi-layer perceptron, a recurrent neural network, a long-short term memory model, and a convolutional neural network. For the neural model-based baselines, we simply train the models defined in \autoref{sec:neuralmodels} using surface level tokens and perform a hyper-parameter search with this new representation.
+We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines and so on), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as \zw{INSERT: vectorisation type} after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:liwc_neural} providing surface level tokens as the input to the models.
 
-\subsection{Experimental Models}
+\subsection{Datasets}
+Beyond the different specific models and types of input layer, the datasets themselves also differ strongly from one another across a number of attributes: the various sizes of the datasets, the platforms the datasets have been sampled from, the annotator selection, the annotation guidelines, and the aims of the datasets. As we seek to build generalisable models and compare the performance across datasets, we reduce the classification task in each dataset to a binary `abuse/not-abuse' class, as each dataset addresses different aspects and notions of abuse. We select the Twitter dataset collected by \citet{Davidson:2017} and the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2017} as our datasets, in part due to the sizes of the datasets and in part due to the different breadth of communicative styles, we select \citet{Davidson:2017} and \citet{Wulczyn:2017} as our training data. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
+
+
+\subsubsection{Dataset and Platform Affordances}
+
+As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting diverse editors \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref}, both dialectal and socio-cultural topics and patterns of speech may differ. 
+
+\paragraph{Training Datasets}
+
+\paragraph{Evaluation Datasets}
+
+\subsubsection{Annotator Selection}
+
+\paragraph{Training Datasets}
+
+\paragraph{Evaluation Datasets}
+
+\subsubsection{Annotation Guidelines}
+
+\paragraph{Training Datasets}
+
+\paragraph{Evaluation Datasets}
+
+\section{Experimental Models}
+
+To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:liwc_neural} and their variations on each of our training dataset, resulting in $16$ different models trained.
 
 In our efforts to robustly identify models
 
