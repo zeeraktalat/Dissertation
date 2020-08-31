@@ -56,7 +56,8 @@ We implement and train four different model architectures with two variations ea
 
 In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
-We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: Optuna} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{chap:nlp}.
+We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: Optuna} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.
+
 
 \subsubsection{Multi-Layered Perceptron}
 
@@ -64,12 +65,14 @@ The first neural model that we use, is a Multi-Layered Perceptron. We choose the
 
 \zw{INSERT: Double check values.}
 \begin{itemize}
-  \item Dropout strength: $[0.0, 0.1, 0.2]$, \zw{Double check it's referred to as "Strength"}
-  \item the hidden layer dimension: $[128, 256]$, and
+  \item Batch size: $[16, 32, 64]$,
+  \item learning rate: $[0.1, 0.01, 0.001]$
+  \item dropout probability: $[0.0, 0.1, 0.2]$,
+  \item hidden layer dimension: $[100, 300]$, and
   \item the activation function: $[tanh, relu]$
 \end{itemize}
 
-For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[64, 128, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
+For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[100, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
 
 \subsubsection{Recurrent Neural Network}
 
@@ -79,12 +82,12 @@ The model is trained by first passing batches of index or onehot encoded documen
 
 For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
 
-\zw{INSERT: Insert the values.}
 \begin{itemize}
-  \item Dropout strength: $[0.0, 0.1, 0.2]$, \zw{Double check it's referred to as "Strength"}
-  \item the hidden layer dimension: $[128, 256]$,
-  \item the activation function: $[tanh, relu]$,
-  \item Embedding size  For the embedding-based models: $[]$
+  \item Batch size: $[16, 32, 64]$,
+  \item learning rate: $[0.1, 0.01, 0.001]$
+  \item dropout probability: $[0.0, 0.1, 0.2]$,
+  \item embedding layer dimension: $[100, 300]$,
+  \item hidden layer dimension: $[100, 300]$, and
 \end{itemize}
 
 \subsubsection{Long-Short Term Memory}
@@ -95,18 +98,27 @@ The model is trained by passing batches of documents through the input layer pri
 
 For these models, our hyper-parameter tuning considers the following parameters and values:
 
-\zw{INSERT: Insert the values.}
 \begin{itemize}
-  \item Dropout strength: $[0.0, 0.1, 0.2]$, \zw{Double check it's referred to as "Strength"}
-  \item the hidden layer dimension: $[128, 256]$,
-  \item Embedding size  For the embedding-based models: $[]$
+  \item Batch size: $[16, 32, 64]$,
+  \item learning rate: $[0.1, 0.01, 0.001]$
+  \item dropout probability: $[0.0, 0.1, 0.2]$,
+  \item embedding layer dimension: $[100, 300]$, and
+  \item hidden layer dimension: $[100, 300]$.
 \end{itemize}
 
 \subsubsection{Convolutional Neural Network}
 
 For our final neural model type, we use a Convolutional Neural Network. We select this model as it has been applied previously in academic research \cite{CITE: CNN papers} and in industry (e.g. the Perspective API\foontnote{https://github.com/conversationai/perspectiveapi}). Similarly to the previous model types, the input layer of the Convolutional Neural Network models can either be an embedding layer or a linear layer. The second layer of the model is a two-dimensional convolutional layer. Finally, there is an output layer and a softmax layer.
 
-For these models, we only consider the activation function and embedding dimension in our hyper-parameter tuning.
+For these models, we only consider the activation function, embedding, and hidden dimension in our hyper-parameter tuning, in addition to batch size and learning rate.
+
+\begin{itemize}
+  \item Batch size: $[16, 32, 64]$,
+  \item learning rate: $[0.1, 0.01, 0.001]$
+  \item embedding layer dimension: $[100, 300]$, and
+  \item hidden layer dimension: $[100, 300]$.
+  \item the activation function: $[tanh, relu]$
+\end{itemize}
 
 \subsection{Baseline Models}
 
@@ -126,15 +138,15 @@ To evaluate which training dataset allows for better generalisation, we train ou
 \centering
 \begin{tabular}{lllllll}
 \hline
-               & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout \\ \hline
-Onehot MLP     &                  &                     &                     &            &               &         \\
-Onehot RNN     &                  &                     &                     &            &               &         \\
-Onehot LSTM    &                  &                     &                     &            &               &         \\
-Onehot CNN     &                  &                     &                     &            &               &         \\
-Embedding MLP  &                  &                     &                     &            &               &         \\
-Embedding RNN  &                  &                     &                     &            &               &         \\
-Embedding LSTM &                  &                     &                     &            &               &         \\
-Embedding CNN  &                  &                     &                     &            &               &         \\ \hline
+               & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout & Macro-F1\\ \hline
+Onehot MLP     &                  &                     &                     &            &               &         &         \\
+Onehot RNN     &                  &                     &                     &            &               &         &         \\
+Onehot LSTM    &                  &                     &                     &            &               &         &         \\
+Onehot CNN     &                  &                     &                     &            &               &         &         \\
+Embedding MLP  &                  &                     &                     &            &               &         &         \\
+Embedding RNN  &                  &                     &                     &            &               &         &         \\
+Embedding LSTM &                  &                     &                     &            &               &         &         \\
+Embedding CNN  &                  &                     &                     &            &               &         &         \\ \hline
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Davidson:2017}.}
 \label{tab:exp_model_parameters_davidson}
@@ -142,17 +154,17 @@ Embedding CNN  &                  &                     &                     & 
 
 \begin{table}[]
 \centering
-\begin{tabular}{lllllll}
+\begin{tabular}{llllllll}
 \hline
-               & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout \\ \hline
-Onehot MLP     &                  &                     &                     &            &               &         \\
-Onehot RNN     &                  &                     &                     &            &               &         \\
-Onehot LSTM    &                  &                     &                     &            &               &         \\
-Onehot CNN     &                  &                     &                     &            &               &         \\
-Embedding MLP  &                  &                     &                     &            &               &         \\
-Embedding RNN  &                  &                     &                     &            &               &         \\
-Embedding LSTM &                  &                     &                     &            &               &         \\
-Embedding CNN  &                  &                     &                     &            &               &         \\ \hline
+                 & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout & Macro-F1\\ \hline
+  Onehot MLP     &                  &                     &                     &            &               &         &         \\
+  Onehot RNN     &                  &                     &                     &            &               &         &         \\
+  Onehot LSTM    &                  &                     &                     &            &               &         &         \\
+  Onehot CNN     &                  &                     &                     &            &               &         &         \\
+  Embedding MLP  &                  &                     &                     &            &               &         &         \\
+  Embedding RNN  &                  &                     &                     &            &               &         &         \\
+  Embedding LSTM &                  &                     &                     &            &               &         &         \\
+  Embedding CNN  &                  &                     &                     &            &               &         &         \\ \hline
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Wulczyn:2017}.}
 \label{tab:exp_model_parameters_wulczyn}
