@@ -38,6 +38,27 @@ Finally, \cite{Jha:2017} break ``sexism'' down into benevolent and hostile sexis
 
 As online platforms seek to remove abuse occurring on their platform, data sets that have been gathered and annotated may have the abusive documents removed, thus requiring several rounds of re-annotation of abusive language. In an attempt to deal with this, we will experiment with using documents that are assumed have a higher chance of being abusive as they are posted in forums that are known to abusive. Using these documents we will seek to build different forms of embeddings and evaluating on previously annotated data. Further, in an attempt to mitigate annotator needs, we will build an abusive language potential system which utilizes supervised methods for Named Entity Recognition (NER), Gender Identification \citep{Sap:2014}, and sentiment analysis amongst other methods. The goal of this is to identify the probability that a document has potential to contain abusive content, in efforts to exact greater control over what documents an annotator is faced with. Additionally, such a system will allow us to identify documents which are clearly abusive. Thus, we will be able to provide an automated method to create a seed set of positive documents for abusive language detection.
 
+\subsection{Terminology, discrepancies, and synergies}
+
+\zw{Describe different annotation schemas, what they mean and how they influence}
+\zw{Describe how the different annotation schemes overlap and differ from one another}
+
+
+\section{Annotation}
+
+\subsection{Annotation Guidelines}
+\zw{Write about annotator guidelines}
+
+\subsection{Annotator Selection}
+\zw{Write about annotator influences}
+
+\citet{Waseem:2016} argue that due to different backgrounds and political stances, the operationalisation of annotation guidelines differ from person to person. They show that this then influences the quality of annotations of datasets, as a lack of control of socio-political backgrounds also suggests a lack of control of what is being annotated. They argue that such differences in operationalisation across a dataset influences what machine learning models are able to predict. Conversely, \citet{Founta:2017} operate with the assumption that with a large numbers of annotators, such differences will even out, such that dominant discourse understanding of what constitutes abuse and hate will even out. However, considering the argument that \citet{Douglas:1966} makes about what constitutes dirt is both contextual and cultural, what remains through majority voting by a large number of annotators, will be few salient discourses of what constitutes abuse and hate speech. Scaling annotations across cultural divides then also suggests that only what is universally accepted as abuse should be considered as abusive.
+
+This notion of dominant discourse, and culturally agnostic definitions of abuse stand in stark contrast to the widespread calls for moderation of abuse to be culturally contingent \cite{CITE: Articles about how content moderation fails}. More importantly, as \citet{Waseem:2017,Davidson:2019} and \citet{Sap:2019} argue, such dominant discourse perspectives on acceptability are likely to reproduce cultural, and often racial, biases towards marginalised communities.
+
+\subsection{Platform Affordances}
+
+\zw{Write theoretically about platform affordances, base in STS litt.}
 
 
 \section{Models}
@@ -74,6 +95,9 @@ Throughout this thesis, we develop and train several different model types to te
 
 \subsection{Bayesian Hyper Parameter Tuning}
 
+\subsection{Metrics}
+
+\zw{INSERT: Explanation of F1, macro-F1, Precision, Recall, Accuracy}
 
 \section{Fairness}\label{sec:fairlitt}
 
