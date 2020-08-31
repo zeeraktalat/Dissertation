@@ -58,12 +58,10 @@ In order to focus on the utility of the transformed document representations, we
 
 We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: Optuna} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.
 
-
 \subsubsection{Multi-Layered Perceptron}
 
 The first neural model that we use, is a Multi-Layered Perceptron. We choose the model as it is a simple neural network, that can act as a minimal setting of the usefulness of neural networks. Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of a batch of documents are then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}. For the Multi-Layered Perceptron models, we search over the following values:
 
-\zw{INSERT: Double check values.}
 \begin{itemize}
   \item Batch size: $[16, 32, 64]$,
   \item learning rate: $[0.1, 0.01, 0.001]$
@@ -136,7 +134,7 @@ To evaluate which training dataset allows for better generalisation, we train ou
 
 \begin{table}[]
 \centering
-\begin{tabular}{lllllll}
+\begin{tabular}{llllllll}
 \hline
                & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout & Macro-F1\\ \hline
 Onehot MLP     &                  &                     &                     &            &               &         &         \\
@@ -173,7 +171,6 @@ Embedding CNN  &                  &                     &                     & 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
 \zw{Do logistic regression and find out if there are things that the models might overfit on}
-
 
 
 \section{Results}
