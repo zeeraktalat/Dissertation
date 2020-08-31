@@ -14,24 +14,41 @@ Through the use of LIWC, we transform documents from large vocabularies, that ar
 
 Focusing our attentions on simple deep neural networks and shallow models, we show that by radically reducing the vocabulary size, while increasing the contextual information of the remaining vocabulary, we can achieve strong classification performances within datasets and more importantly, on out of domain datasets.
 
-\zw{Describe rationale behind the methods chosen: Provide example of transformation}
+% \zw{Describe rationale behind the methods chosen}
+\zw{Provide example of transformation}
 \section{Previous work}
 
 \zw{Talk about LIWC}
 \zw{Talk in depth about the references from \autoref{chap:nlp}.}
 
-\section{Datasets}
+\subsection{Datasets}
+Beyond the different specific models and types of input layer, the datasets themselves also differ strongly from one another across a number of attributes: the various sizes of the datasets, the platforms the datasets have been sampled from, the annotator selection, the annotation guidelines, and the aims of the datasets. As we seek to build generalisable models and compare the performance across datasets, we reduce the classification task in each dataset to a binary `abuse/not-abuse' class, as each dataset addresses different aspects and notions of abuse.
+We train our models on either the Twitter dataset collected by \citet{Davidson:2017} or the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2017} as our training datasets, in part due to the sizes of the datasets and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
 
-\zw{Describe the datasets here, along with collection rationales, data sources, annotation guidelines, etc.}
+
+\paragraph{Training Datasets}
+Our first dataset for training is the dataset developed by \citet{Davidson:2017} consists of $24,784$ tweets that are sampled from Twitter using keywords obtained from \citet{Hatebase}. The dataset is annotated for ``hate speech'', ``offensive language'' and ``neither''. The collection rationale was that not all content that immediately appears to be abusive is necessarily that, and that hate speech models must be able to distinguish between what is offensive and what is hateful \cite{Davidson:2017} (please see \autoref{chap:nlp} and \autoref{chap:filter} for more in-depth discussions on the implications of label categories, their overlap and differences). The dataset was annotated by crowd-workers on FigureEight\footnote{Previously known as CrowdFlower}. Unlike most datasets for abuse, this dataset consists primarily of positive instances, with $77$\% of the (binarised) dataset belonging to the positive class.
+
+Our second dataset used for training is the dataset presented by \citet{Wulczyn:2017}. This dataset consists of more then $100,000$ comments from Wikipedia talk pages that have been annotated for personal attacks and toxicity \cite{Wulczyn:2017}. The rationale of this dataset is that personal attacks are harmful to ongoing conversations, and that through the identification and removals of comments that poison, or toxify online conversations, more space will be left for healthy and constructive discussions (please see \autoref{chap:filter} for an in-depth consideration of the politics of what constitutes ``toxic'' and ``healthy''). The binarised distribution of documents tagged for toxicity aligns better with prior research, with the positive class consuming $\approx 9$\% of the dataset.
+
+\paragraph{Evaluation Datasets}
+For our evaluation datasets, we use \citet{Waseem-Hovy:2016}, a dataset of $16,000$ documents that are sampled from Twitter and annotated for ``racism'', ``sexism'', and ``neither''. The dataset was annotated by two coders, who labelled $31$\% of the dataset containing as either ``sexist'' or ``racist'' content. This dataset was developed for an early exploration into automated content moderation of online hate speech. We also use the dataset by \citet{Waseem:2016} that followed this first exploration. Here the annotation guidelines remain the same while the label-set is expanded to include the intersection of racism and sexism, the ``both'' category. This dataset contains $6000$ documents, labelled by intersectional feminist activists, and another label-set annotated by crowd-workers from FigureEight. We choose the intersectional feminist tagged annotations, as \citet{Waseem:2016} show that simple computational models perform better using this tagset. The binarised positive labels occupy $15.19$\% of the dataset. Finally, we use the dataset on white-supremacist speech developed by \citet{Garcia:2019}. This dataset, unlike the previous two evaluation datasets does not stem from Twitter, but instead the data is collected from StormFront\footnote{www.stormfront.net}, a web forum dedicated to the preservation and dissemination of white supremacist ideology. This dataset contains \zw{INSERT: Number of total document counts when using the entire dataset instead of the balanced one.} documents labelled for being hateful or not hateful, with \zw{INSERT: Percentage of positive class docs} in the positive class.
+
+\subsubsection{Dataset and Platform Affordances}
+
+As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting editors from a diverse set of backgrounds \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref} may influence which dialects are represented on the platforms, which patterns of speech (e.g. sociolects, slang, and shorthand) occur, and the style of the discussions and conversations.
+
+\subsubsection{Annotator Selection}
+
+There are some interesting discrepancies in the selection of annotators for the datasets that we apply our models to. \citet{Waseem:2016} select their annotators based on socio-political positions, controlling for a specific interpretation of abuse. On the other hand \citet{Wulczyn:2017} select their annotators from the users of the Wikipedia Talk pages. However, the Wikipedia editor community has been accused of being a highly male space that is unwelcoming to women \cite{CITE: Cite article talking about anti-women culture on wikipedia}. This suggests that the influence of their selection of annotators, who are culturally situated in the norms and culture of the Wikipedia editor community, are also likely to be less attuned to content that may be offensive to women, but is accepted communicative practices within the Wikipedia editor community.
+
+On the other hand \citet{Garcia:2019} and \citet{Davidson:2017} select annotators that are removed from the context of the documents they are annotating. This suggests that global understandings of what constitutes abuse are possible, and that it is possible to annotate without a deep understanding of the issues and communicative practices of the specific communities that are being investigated.
+
+While we accept that the influence of annotation guidelines have strong influences on the subject that is being examined (e.g. \citet{Davidson:2017} examine the differences in what is merely offensive and what is hateful, \citet{Garcia:2019} examine what is hateful from a white supremacist community and what is not, and \citet{Wulczyn:2017} examine things that make conversations toxic and hostile), we assume that these different guidelines and questions highlight different aspects of abuse. Through our efforts to develop methods that can identify different forms of abuse across different datasets, we accept the assumption that there are some global understandings of abuse that can be learned by machine learning models. We revisit this assumption in \autoref{chap:disembodied}.
 
 \section{Modelling}
-\zw{Describe the models and experimental settings}
 
-For all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-pair encoding \cite{CITE: BPE paper} for two reasons. First, to minimise the number out-of-vocabulary tokens and second to limit the number of unique tokens. 
-
-For all models we define and search the parameter space for the optimal parameters for each model.
-
-We do not restrict the input vocabulary for any of the neural models.
+First, to minimise the number out-of-vocabulary tokens and second to limit the number of unique tokens. In order to identify the optimal hyper-parameter settings for each model, we define and search a hyper-parameter space for each model. Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-pair encoding \cite{CITE: BPE paper} for two reasons. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
 
 \subsection{Neural Models}\ref{sec:liwc_neural}
 
@@ -39,7 +56,7 @@ We implement and train four different model architectures with two variations ea
 
 In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
-We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: Optuna} to identify the optimal parameters for each model and the variants of each model. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{chap:nlp}.
+We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: Optuna} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{chap:nlp}.
 
 \subsubsection{Multi-Layered Perceptron}
 
@@ -93,42 +110,53 @@ For these models, we only consider the activation function and embedding dimensi
 
 \subsection{Baseline Models}
 
-We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines and so on), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as \zw{INSERT: vectorisation type} after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:liwc_neural} providing surface level tokens as the input to the models.
+We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as \zw{INSERT: vectorisation type} after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:liwc_neural} providing surface level tokens as the input to the models.
 
-\subsection{Datasets}
-Beyond the different specific models and types of input layer, the datasets themselves also differ strongly from one another across a number of attributes: the various sizes of the datasets, the platforms the datasets have been sampled from, the annotator selection, the annotation guidelines, and the aims of the datasets. As we seek to build generalisable models and compare the performance across datasets, we reduce the classification task in each dataset to a binary `abuse/not-abuse' class, as each dataset addresses different aspects and notions of abuse.
-We train our models on either the Twitter dataset collected by \citet{Davidson:2017} or the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2017} as our training datasets, in part due to the sizes of the datasets and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
+\subsubsection{Baseline hyper-parameters}
 
-
-\paragraph{Training Datasets}
-Our first dataset for training is the dataset developed by \citet{Davidson:2017} consists of $24,784$ tweets that are sampled from Twitter using keywords obtained from \citet{Hatebase}. The dataset is annotated for ``hate speech'', ``offensive language'' and ``neither''. The collection rationale was that not all content that immediately appears to be abusive is necessarily that, and that hate speech models must be able to distinguish between what is offensive and what is hateful \cite{Davidson:2017} (please see \autoref{chap:nlp} and \autoref{chap:filter} for more in-depth discussions on the implications of label categories, their overlap and differences). The dataset was annotated by crowd-workers on FigureEight\footnote{Previously known as CrowdFlower}. Unlike most datasets for abuse, this dataset consists primarily of positive instances, with $77$\% of the (binarised) dataset belonging to the positive class.
-
-Our second dataset used for training is the dataset presented by \citet{Wulczyn:2017}. This dataset consists of more then $100,000$ comments from Wikipedia talk pages that have been annotated for personal attacks and toxicity \cite{Wulczyn:2017}. The rationale of this dataset is that personal attacks are harmful to ongoing conversations, and that through the identification and removals of comments that poison, or toxify online conversations, more space will be left for healthy and constructive discussions (please see \autoref{chap:filter} for an in-depth consideration of the politics of what constitutes ``toxic'' and ``healthy''). The binarised distribution of documents tagged for toxicity aligns better with prior research, with the positive class consuming $\approx 9$\% of the dataset.
-
-\paragraph{Evaluation Datasets}
-For our evaluation datasets, we use \citet{Waseem-Hovy:2016}, a dataset of $16,000$ documents that are sampled from Twitter and annotated for ``racism'', ``sexism'', and ``neither''. The dataset was annotated by two coders, who labelled $31$\% of the dataset containing as either ``sexist'' or ``racist'' content. This dataset was developed for an early exploration into automated content moderation of online hate speech. We also use the dataset by \citet{Waseem:2016} that followed this first exploration. Here the annotation guidelines remain the same while the label-set is expanded to include the intersection of racism and sexism, the ``both'' category. This dataset contains $6000$ documents, labelled by intersectional feminist activists, and another label-set annotated by crowd-workers from FigureEight. We choose the intersectional feminist tagged annotations, as \citet{Waseem:2016} show that simple computational models perform better using this tagset. The binarised positive labels occupy $15.19$\% of the dataset. Finally, we use the dataset on white-supremacist speech developed by \citet{Garcia:2019}. This dataset, unlike the previous two evaluation datasets does not stem from Twitter, but instead the data is collected from StormFront\footnote{www.stormfront.net}, a web forum dedicated to the preservation and dissemination of white supremacist ideology. This dataset contains \zw{INSERT: Number of total document counts when using the entire dataset instead of the balanced one.} documents labelled for being hateful or not hateful, with \zw{INSERT: Percentage of positive class docs} in the positive class.
-
-\subsubsection{Dataset and Platform Affordances}
-
-As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting diverse editors \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref}, both dialectal and socio-cultural topics and patterns of speech may differ.
-
-
-\subsubsection{Annotator Selection}
-
-The crowd vs. Selected crowd
-
-\subsubsection{Annotation Guidelines}
-
+Our Support Vector Machine is trained with \zw{INSERT: Parameter values for SVM and kernel type} and the Logistic Regression model is trained with \zw{INSERT: Parameter values for LR}. We set the hyper-parameters for our neural network baselines according to the best selected hyper-parameters for these (please see \autoref{tab:neural_baseline_parameters}).
 
 \section{Experimental Models}
 
-To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:liwc_neural} and their variations on each of our training dataset, resulting in $16$ different models trained.
+To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:liwc_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
 
-In our efforts to robustly identify models
+\zw{CODING: retrain the best parameters for the models with 4 new random seeds}
 
-We experiment using four different models
+\begin{table}[]
+\centering
+\begin{tabular}{lllllll}
+\hline
+               & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout \\ \hline
+Onehot MLP     &                  &                     &                     &            &               &         \\
+Onehot RNN     &                  &                     &                     &            &               &         \\
+Onehot LSTM    &                  &                     &                     &            &               &         \\
+Onehot CNN     &                  &                     &                     &            &               &         \\
+Embedding MLP  &                  &                     &                     &            &               &         \\
+Embedding RNN  &                  &                     &                     &            &               &         \\
+Embedding LSTM &                  &                     &                     &            &               &         \\
+Embedding CNN  &                  &                     &                     &            &               &         \\ \hline
+\end{tabular}
+\caption{Best parameter setting for each experimental model type trained on \citet{Davidson:2017}.}
+\label{tab:exp_model_parameters_davidson}
+\end{table}
 
-We retain only the correct spelling, designating all words that do not cohere to the forms found in the LIWC dictionary as unknown tokens.
+\begin{table}[]
+\centering
+\begin{tabular}{lllllll}
+\hline
+               & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout \\ \hline
+Onehot MLP     &                  &                     &                     &            &               &         \\
+Onehot RNN     &                  &                     &                     &            &               &         \\
+Onehot LSTM    &                  &                     &                     &            &               &         \\
+Onehot CNN     &                  &                     &                     &            &               &         \\
+Embedding MLP  &                  &                     &                     &            &               &         \\
+Embedding RNN  &                  &                     &                     &            &               &         \\
+Embedding LSTM &                  &                     &                     &            &               &         \\
+Embedding CNN  &                  &                     &                     &            &               &         \\ \hline
+\end{tabular}
+\caption{Best parameter setting for each experimental model type trained on \citet{Wulczyn:2017}.}
+\label{tab:exp_model_parameters_wulczyn}
+\end{table}
 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
@@ -138,93 +166,6 @@ Following the hyper-parameter tuning, we set the following values
 
 \zw{Fill out these for davidson and wulczyn models}
 
-Davidson MLP
-\begin{itemize}
-  \zw{INSERT: Values}
-  \item Embedding-based model
-    \begin{itemize}
-      \item Dropout:
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-  \item Linear-layer model
-    \begin{itemize}
-      \item Dropout:
-      \item Embedding Layer
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-\end{itemize}
-
-Davidson RNN
-\begin{itemize}
-  \zw{INSERT: Values}
-  \item Embedding-based model
-    \begin{itemize}
-      \item Dropout:
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-  \item Linear-layer model
-    \begin{itemize}
-      \item Dropout:
-      \item Embedding Layer
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-\end{itemize}
-
-Davidson LSTM
-\begin{itemize}
-  \zw{INSERT: Values}
-  \item Embedding-based model
-    \begin{itemize}
-      \item Dropout:
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-  \item Linear-layer model
-    \begin{itemize}
-      \item Dropout:
-      \item Embedding Layer
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-\end{itemize}
-
-Davidson CNN
-\begin{itemize}
-  \zw{INSERT: Values}
-  \item Embedding-based model
-    \begin{itemize}
-      \item Dropout:
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-  \item Linear-layer model
-    \begin{itemize}
-      \item Dropout:
-      \item Embedding Layer
-      \item Hidden Layer
-      \item Activation function
-      \item Batch Size
-      \item Learning Rate
-    \end{itemize}
-\end{itemize}
 
 \section{Results}
 
