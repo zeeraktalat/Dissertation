@@ -61,7 +61,7 @@ This notion of dominant discourse, and culturally agnostic definitions of abuse 
 \zw{Write theoretically about platform affordances, base in STS litt.}
 
 
-\section{Models}
+\section{Models}\label{sec:model_background}
 
 Throughout this thesis, we develop and train several different model types to test our hypotheses. We use a mixture between linear and non-linear models both to act as points of comparison with one another and to test how well both simple and more complex models perform given our tasks. In each chapter, we will go into greater detail with regard to the implementation details for each model while we provide a theoretical description of each of these models here.
 
@@ -73,6 +73,8 @@ Throughout this thesis, we develop and train several different model types to te
 
 \zw{Explain the vectorisors used.}
 \zw{Explain onehot and embedding layers}
+
+As embedding layers are layers that are optimised, it is unnecessary for the researcher to perform feature selection \cite{CITE: Papers that say no feature selection is needed}, although it can be a benefit \cite{CITE: Papers that take feature selection into account}. The process of selecting features for a model to consider implores the researcher to have a firm grasp of the concepts they are seeking to examine. This required intentionality of the researcher also comes with the risk that the researcher may, intentionally or unintentionally, omit features that illuminate a pattern in the data that the machine learning model can take advantage of.  Here optimisable representations excel if features are not pre-selected for them, as through multiple rounds of updating the layer, the resulting representation takes advantage of the patterns that emerge from the data.
 
 \subsection{Softmax, Loss, and optimisers}
 
@@ -91,7 +93,39 @@ Throughout this thesis, we develop and train several different model types to te
 \subsection{CNN}
 
 \subsection{Multitask Learning}
-\cite{Caruna}
+
+\zw{CITE: Add citations to the section below.}
+The Multi-task learning framework was initially proposed by \citet{Caruana:1997} as a way to train a model for a specific primary task by leveraging that (multiple) auxiliary tasks may be related and could thus provide inductive biases for the resulting model to take advantage of for its primary task. The multi-task learning framework can be trained in two different ways, through hard parameter sharing or soft parameter sharing. Training Multi-task learning models using hard parameter sharing is performed by having (some) hidden layers in the model that are shared by all tasks. When training each task, the model updates all layers of that task, including the shared hidden layers. Notably, while hard parameter sharing rely on (some) shared layers, the output layers are not shared between tasks \cite{CITE: Hard parameter sharing paper}. On the other hand, models that are trained using soft parameter sharing do not share any layers, instead the parameters of each task are regularised to be similar \cite{CITE: Soft parameter sharing paper - See Sebastian Ruder's blogpost on MTL for reference}. In \autoref{fig:mtl_types} we see the two different types of models. As seen in \autoref{fig:mtl_hard}, while each task have individual input and output layers, they all share a hidden layer. In \autoref{fig:mtl_soft}, we see that each task has its own model that would be unrelated to one another, if not for the fact that the parameters of each layer are regularised to be similar to each other. As researchers are frequently interested in one task over others, one can assign a primary task and a number of auxiliary task through a range of strategies, including weighting each task and the probability with which each task is selected for training.
+
+\begin{figure}
+  % Seehttps://tex.stackexchange.com/questions/37581/latex-figures-side-by-side
+  \centering
+  \begin{minipage}{0.5\linewidth}
+    \centering
+    \includegraphics[scale=0.75]{multitask_hard.jpg}
+    \caption{Depiction of Multi-task learning framework using hard parameter sharing.}
+    \label{fig:mtl_hard}
+  \end{minipage}
+  \begin{minipage}{0.5\linewidth}
+    \centering
+    \includegraphics[scale=0.75]{multitask_soft.jpg}
+    \caption{Depiction of Multi-task learning framework using soft parameter sharing.}
+    \label{fig:mtl_soft}
+  \end{minipage}
+  \caption{Parameter sharing strategies for Multi-task learning.}
+  \label{fig:mtl_types}
+\end{figure}
+
+While the idea of inductive biases from related tasks provides a compelling argument for examining multi-task learning for abuse and hate speech detection, there are some interesting attributes to the framework. First, as multi-task learning is compatible with neural networks, researchers can forego feature selection similar to other neural network approaches, with the same benefits and risks as described previously.
+Second, while the ensemble model training framework may appear very similar to multi-task learning framework, a key dissimilarity is apparent in that multi-task learning models seek to share information between the different tasks; for hard parameter sharing models this sharing occurs through shared layers \cite{CITE: Hard parameter sharing paper}, while for soft parameter sharing models this sharing happens through the regularisation that ensures similarity of the layers across the models for each task \cite{CITE: Soft parameter sharing paper}.
+Third, for hard-parameter sharing models the complexity of developing the model is reduced as the input and output layers are task independent, while at least one layer of the remainder of the model may be shared. Thus, only a single model is trained, where the researchers need only to concern themselves with the layers that are not shared, rather than concern themselves with full models and how to balance them.
+Fourth, the framework allows for training for several distinct tasks while leveraging the similarities shared by each individual task \cite{Caruana:1997}.
+For hard parameter sharing models, this approach also introduces the risk (and opportunity) of a single task dominating the representation of the model, due to either more data being available or a task being selected with for training with greater probability than the remaining tasks. The risk in this can be mitigated by either weighting the loss function, such that loss of each task is controlled by the researcher and the importance they wish to provide each task \cite{CITE: Weighting paper}. In this risk we also find an opportunity, by assigning the task of primary interest a higher weight than all other tasks, the model can be guided towards prioritising what is learned from this task over all others \cite{CITE: Paper with auxiliary tasks}. Selecting such weighting of the different tasks, in a similar vein to feature selection assumes that the researcher has knowledge and a hypothesis about how the different tasks are likely to influence each other.
+Fifth, when working with different datasets for similar and distinct tasks alike, leveraging them can be a cause for concern due to differences in collection rationales, data sources, or annotation strategies. However, through both weighting of the different tasks, and the fact that each task has either its own input and output layers or its own model such concerns can be alleviated due to either limited shared layers that are optimised or due to distinct models being trained that are regularised to minimise dissimilarity, depending on which parameter sharing strategy is used.
+Finally, in the event that an auxiliary task does not contribute to the primary task as the researcher had hypothesised, it may still contribute to the overall generalisability of the model as the offending task will act as regulariser for the primary task, as it introduces noise into shared layer according to \cite{CITE: Cite paper that argues the regularising effect of aux tasks}.
+
+\zw{Add paragraph on how MTL works with mini batching, batch selection, etc.}
+
 
 \subsection{Bayesian Hyper Parameter Tuning}
 
