@@ -6,13 +6,54 @@
 \fi
 
 \chapter{Multi-Task Learning}\label{chap:mtl}
-\zw{Joint work with Joachim Bingel and James Thorne}
+\zw{Joint work with Joachim Bingel}
+
+\begin{quote}
+  ``So hate speech detection is kind of like sentiment analysis++'' -- Anders Johannsen
+\end{quote}
+
+\section{Introduction}
+One of the frequently made assumptions is that hate speech detection, and in general abusive language detection, shares many similarities to other tasks that similarly seek to deal with identifying subjective human experiences such as sentiment analysis, sarcasm detection, and emotion detection. Indeed, each of these tasks share the characteristic that the identification of each of these on the basis of text is a task of linguistic pragmatics. While they share this unifying characteristic, hate and humour, for instance occupy different processes in \zw{INSERT: Generation/Identification/Whatever} \cite{CITE: Cite papers that find things about humour and hate}. It stands to reason then to ask if there are overlaps in patterns learned by machine learning models, in spite of their dissimilarities of the different tasks.
 
 \zw{describe rationales for method chosen}
-\zw{Describe Multi-Task learning framework here}
-\zw{describe different tasks and rationales for tasks}
+In recognition that tasks like identifying hate or humour are distinct in spite of their similarities and overlaps, it is not appropriate to use a single multi-class model, where data from all different tasks are simply combined to form a single large dataset with a number of different labels, some that indicate abuse while others do not. Indeed, several issues exist with such a methodology, as the collection periods, populations that are represented, and the collection rationales may differ to such a degree that combining datasets may introduce more confounding factors that the models may learn. On the other hand, as only one of the datasets that we investigate contains labels from multiple tasks, a multi-class prediction model, that is a model that predicts one or more labels for each document it processes is also a less-than perfect solution due to the limitation of only being given space to investigate one possible avenue for influence. Finally, one could also choose to investigate ensemble methods, that rely on a set of models that are each trained for a specific subtask, and are weighted by a model that treats the outputs of the models for each subtask as features. However, a drawback of this method is that it relies on training multiple models that are each optimised for their own subtask. In light of these issues, we choose to investigate multi-task learning as a framework for considering how a number of different tasks influence the modelling of abuse detection.
 
+\zw{CODING: Code an ensemble method as a baseline.}
+
+The use of multi-task learning affords remits from the issues of each of these different approaches and provides several benefits through the ability of multi-task learning models to leverage the information from each task separately while retaining a focus on identifying patterns that can be learned through the different tasks and datasets in question (please see \autoref{sec:model_background} for more detail).
+
+In this work, we implement multi-task learning models that use hard parameter sharing. We choose this strategy due to its relative simplicity in comparison to the soft parameter sharing strategy.
+
+\section{Learning tasks}
+
+For our tasks we choose a mix of tasks that have been identified as challenges in previous work, that relate to findings in previous work \cite{Waseem-Hovy:2016,Davidson:2017,Schmidt:2017} and datasets for distinct forms of abuse \cite{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2017}.
+
+Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2017} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2017} and \citet{Davidson:2017} as our main tasks and use \citet{Waseem:2016} and \citet{Waseem-Hovy:2016} as auxiliary tasks.
+
+and datasets that annotate according to linguistics theories of humour \cite{Oraby_sarcasm:2017} and the basis of arguments \cite{Oraby_fact_feel:2017} and social scientific theories morality \cite{Hoover:2019}.\vspace{5mm}
+Beyond the datasets annotated for abuse, we identify several other dataset to use as auxiliary tasks. These datasets fall into two categories, those that relate to previously identified issues for abusive language detection models and datasets that address seemingly related issues. In the former category, we choose sarcasm detection as an auxiliary task, using the dataset provided by \citet{Oraby_sarcasm:2017}; for the latter we choose a dataset labelled for moral sentiments \citet{Hoover:2019} and a dataset tagged for whether an argument is based in facts or feelings \citet{Oraby_fact_feel:2017}. Please refer to \autoref{sec:datasets} for more a comprehensive view on each of the datasets that we use in our model.
+
+\section{Previous work}
+
+
+
+Indeed, using a multi-task learning framework (please see \autoref{sec:model_background} for more details) \citet{Mishra:2020} find that that there may be some benefits in to machine learning models trained to detect hate if they also learn how to predict emotions. Building on this work, we further explore the use of multi-task learning for abusive language detection. We examine a range of tasks that function as auxiliary tasks including humour detection \cite{CITE: HUMOUR DETECTION}, sarcasm detection \cite{Oraby_sarcasm:2017}, different forms of abuse detection \cite{Waseem-Hovy:2016,Waseem:2016,Davidson:2017,Wulczyn:2017}, detecting whether an argument is fact-based or feeling-based \cite{Oraby_fact_feel:2017}, and the moral foundations of a document \cite{Hoover:2019}.
+
+
+\section{Modelling}
+
+\subsection{Baseline Models}
+
+\subsection{Experimental Models}
+
+\zw{Describe Multi-Task learning models here}
 \zw{Describe the models and experimental settings}
+
+\section{Results}
+
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
 \zw{Do logistic regression and find out if there are things that the models might overfit on}
+
+\section{Conclusions}
+
