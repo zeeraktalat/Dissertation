@@ -48,11 +48,17 @@ While we accept that the influence of annotation guidelines have strong influenc
 
 \section{Modelling}
 
-First, to minimise the number out-of-vocabulary tokens and second to limit the number of unique tokens. In order to identify the optimal hyper-parameter settings for each model, we define and search a hyper-parameter space for each model. Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-pair encoding \cite{CITE: BPE paper} for two reasons. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
+In order to identify the optimal hyper-parameter settings for each model, we define and search a hyper-parameter space for each model. Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-pair encoding \cite{CITE: BPE paper} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
 
 \subsection{Neural Models}\ref{sec:liwc_neural}
 
 We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration).
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{onehot_embedding.jpg}
+  \label{fig:onehot_embedding}
+\end{figure}
 
 In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
