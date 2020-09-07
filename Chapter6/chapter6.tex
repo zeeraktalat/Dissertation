@@ -43,7 +43,38 @@ Following \citet{Waseem:2018}, who train a multi-task learning model trained on 
 
 Beyond the datasets annotated for abuse, we identify several other dataset to use as auxiliary tasks. These datasets fall into two categories, those that relate to previously identified issues for abusive language detection models and datasets that address seemingly related issues. In the former category, we choose sarcasm detection as an auxiliary task, using the dataset provided by \citet{Oraby_sarcasm:2017}; for the latter we choose a dataset labelled for moral sentiments \citet{Hoover:2019} and a dataset tagged for whether an argument is based in facts or feelings \citet{Oraby_fact_feel:2017}. Please refer to \autoref{sec:datasets} for more a comprehensive view on each of the datasets that we use in our model.
 
+Finally, considering \citet{Waseem:2018,Davidson:2019} and \citet{Sap:2019} who all highlight issues of dialectal biases along racial lines in hate speech datasets, we considered using \citet{Preotiuc-Unger:2018} as an auxiliary task to predict demographic attributes. However, as this dataset is annotated on a user-level we collect the Twitter timelines for all users and represent the user as the concatenation of all tweets. For modelling purposes, this poses an issue as each user is represented by up to $3,200$ tweets of $280$ characters per tweet. We use the entire Twitter histories, rather than sample from them as people who communicate in multiple dialects, particularly those that are marginalised, are likely to code-switch \cite{CITE: AAE code switching paper}. This, in combination with Mainstream American English being the largest dialect represented in the dataset as it is used by both people who only speak that dialect as well as those that speak other dialects, not using the full histories disproportionately risks erasing the exact dialects we seek to examine. On the other hand, using the full histories presents issues in fitting the into GPU memory during the training phase of the model.
+
 \section{Modelling}
+
+To minimise out-of-vocabulary tokens and minimise the size of the vocabulary
+Following on the positive results obtained in \autoref{chap:liwc}, we represent all documents as their LIWC-tokens.
+
+\zw{Describe hyper parameter tuning}
+\zw{Mention using BPE to compute more reasonable embeddings}
+\zw{Describe the similarities between architectures}
+\zw{All models are index encoded}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
+  \label{fig:mtl_embedding}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{lstm_mtl_embedding.jpg}
+  \label{fig:mtl_embedding}
+\end{figure}
+
+see \autoref{fig:mtl_mlp} and \autoref{fig:mtl_lstm} for illustration of the multi-task Multi-Layered Perceptron and multi-task Long-Short Term Memory network.
+
+\subsection{Neural Models}
+
+\subsubsection{Multi-task Multi-Layered Perceptron}
+
+\subsubsection{Multi-task Long-Short Term Memory Network}
 
 \subsection{Baseline Models}
 
