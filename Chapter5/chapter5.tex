@@ -10,7 +10,7 @@
 \zw{Describe problem field}
 One of the key issues in machine learning for content moderation is that such systems both in deployed settings (see \autoref{chap:filter}) and in research (see \autoref{chap:intro} and \autoref{chap:nlp}) over-fit to individual tokens that see over-representation in the positive and negative classes respectively. While research efforts have been made to address such issues \cite{CITE: cite papers that try to address overfitting}, the problem of over-fitting to words and identity markers remain an open question for the field. While some such approaches have addressed this problem by replacing certain words and phrases with more general tokens \cite{CITE: Replacing token papers} or masking \cite{CITE: Masking token paper} tokens. Other work has attempted to address the problem by treating it as a problem of dataset bias \cite{CITE: Bias papers}. Here we instead we propose a different approach which serves multiple purposes of 1) minimising the vocabulary to avoid over-fitting to distributional skews in vocabulary across classes; 2) representing documents in terms of how they represent thoughts, feelings, personality, and motivations \cite{LIWC:2015}; and 3) returning modelling of hate speech and different forms of abuse to simpler dictionary-lookup methods that simplify modelling of abuse to how words are used, rather than focusing on their surface forms, to achieve similar performance as compared to more complex models.
 
-Through the use of LIWC, we transform documents from large vocabularies, that are riddled with typos, spelling mistakes, and obfuscations to the functions how these words are used. As seen in \autoref{fig:liwc_transform}, the transformation of words to LIWC categories both contain deeper information about how words are used, and encode a loss of information in words that do not exist in the LIWC dictionary. However, by radically reducing the sizes of vocabularies, from several thousand unique tokens to around 1000 unique tokens that provide deeper insights than simply selecting the most frequent tokens. Moreover we show that the strength of the classification performances within the dataset will translate to other datasets, as these transformed tokens are more general than their surface form.
+Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary, we transform documents from large vocabularies, that are riddled with typos, spelling mistakes, and obfuscations to the functions how these words are used. As seen in \autoref{fig:liwc_transform}, the transformation of words to LIWC categories both contain deeper information about how words are used, and encode a loss of information in words that do not exist in the LIWC dictionary. However, by radically reducing the sizes of vocabularies, from several thousand unique tokens to around 1000 unique tokens that provide deeper insights than simply selecting the most frequent tokens. Moreover we show that the strength of the classification performances within the dataset will translate to other datasets, as these transformed tokens are more general than their surface form.
 
 Focusing our attentions on simple deep neural networks and shallow models, we show that by radically reducing the vocabulary size, while increasing the contextual information of the remaining vocabulary, we can achieve strong classification performances within datasets and more importantly, on out of domain datasets.
 
@@ -52,17 +52,18 @@ In order to identify the optimal hyper-parameter settings for each model, we def
 
 \subsection{Neural Models}\ref{sec:liwc_neural}
 
-We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration).
+We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). For all neural models, we use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}.
 
 \begin{figure}
   \centering
   \includegraphics[scale=0.75]{onehot_embedding.jpg}
+  \caption{Onehot and Index encoded tensors.}
   \label{fig:onehot_embedding}
 \end{figure}
 
 In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
-We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{CITE: Optuna} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.
+We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{Optuna:2019} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
 
 \subsubsection{Multi-Layered Perceptron}
 
@@ -77,6 +78,14 @@ The first neural model that we use, is a Multi-Layered Perceptron. We choose the
 \end{itemize}
 
 For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[100, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{mlp.jpg}
+  \caption{Multi-Layered Perceptron model architecture.}
+  \label{fig:liwc_mlp}
+\end{figure}
+
 
 \subsubsection{Recurrent Neural Network}
 
@@ -94,11 +103,18 @@ For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the 
   \item hidden layer dimension: $[100, 300]$, and
 \end{itemize}
 
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{rnn.jpg}
+  \caption{Recurrent Neural Network model architecture.}
+  \label{fig:liwc_rnn}
+\end{figure}
+
 \subsubsection{Long-Short Term Memory}
 
 The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{tanh} as its non-linear activation function. We use Long-Short Term Memory networks due to their prior successes in other works \cite{CITE: LSTM papers} and because they present a development over RNNs, in that they identify information to ``forget'' in to address the issue of long-range dependencies that occur (please see \autoref{chap:nlp} for more detail).
 
-The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class.
+The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class (please see \autoref{fig:liwc_lstm} for depiction of model architecture.).
 
 For these models, our hyper-parameter tuning considers the following parameters and values:
 
@@ -110,9 +126,16 @@ For these models, our hyper-parameter tuning considers the following parameters 
   \item hidden layer dimension: $[100, 300]$.
 \end{itemize}
 
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{lstm.jpg}
+  \caption{Long-Short Term Memory Network model architecture.}
+  \label{fig:liwc_lstm}
+\end{figure}
+
 \subsubsection{Convolutional Neural Network}
 
-For our final neural model type, we use a Convolutional Neural Network. We select this model as it has been applied previously in academic research \cite{CITE: CNN papers} and in industry (e.g. the Perspective API\foontnote{https://github.com/conversationai/perspectiveapi}). Similarly to the previous model types, the input layer of the Convolutional Neural Network models can either be an embedding layer or a linear layer. The second layer of the model is a two-dimensional convolutional layer. Finally, there is an output layer and a softmax layer.
+For our final neural model type, we use a Convolutional Neural Network. We select this model as it has been applied previously in academic research \cite{CITE: CNN papers} and in industry (e.g. the Perspective API\foontnote{https://github.com/conversationai/perspectiveapi}). Similarly to the previous model types, the input layer of the Convolutional Neural Network models can either be an embedding layer or a linear layer. The second layer of the model is a two-dimensional convolutional layer. Finally, there is an output layer and a softmax layer (See \autoref{fig:liwc_cnn} for depiction of model architecture).
 
 For these models, we only consider the activation function, embedding, and hidden dimension in our hyper-parameter tuning, in addition to batch size and learning rate.
 
@@ -124,6 +147,13 @@ For these models, we only consider the activation function, embedding, and hidde
   \item the activation function: $[tanh, relu]$
 \end{itemize}
 
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{cnn.jpg}
+  \caption{Convolutional Neural Network model architecture.}
+  \label{fig:liwc_cnn}
+\end{figure}
+
 \subsection{Baseline Models}
 
 We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as \zw{INSERT: vectorisation type} after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:liwc_neural} providing surface level tokens as the input to the models.
@@ -133,6 +163,10 @@ We develop several different baseline methods to compare our method with. For ea
 Our Support Vector Machine is trained with \zw{INSERT: Parameter values for SVM and kernel type} and the Logistic Regression model is trained with \zw{INSERT: Parameter values for LR}. We set the hyper-parameters for our neural network baselines according to the best selected hyper-parameters for these (please see \autoref{tab:neural_baseline_parameters}).
 
 \section{Experimental Models}
+
+\zw{Explain training regime}
+- shuffle between each epoch
+- evaluate on main task dev data
 
 To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:liwc_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
 
