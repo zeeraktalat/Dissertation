@@ -67,7 +67,9 @@ This notion of dominant discourse, and culturally agnostic definitions of abuse 
 
 Throughout this thesis, we develop and train several different model types to test our hypotheses. We use a mixture between linear and non-linear models both to act as points of comparison with one another and to test how well both simple and more complex models perform given our tasks. In each chapter, we will go into greater detail with regard to the implementation details for each model while we provide a theoretical description of each of these models here.
 
-\subsection{Byte-Pair Encoding}
+\subsection{Byte-Pair Encoding and Linguistic Inquiry and Word Count}
+
+\zw{Add info on LIWC dictionary size}
 
 \subsection{Dropout and Early Stopping}\label{sec:dropoutearly}
 
@@ -104,13 +106,13 @@ The Multi-task learning framework was initially proposed by \citet{Caruana:1997}
   \centering
   \begin{minipage}{0.5\linewidth}
     \centering
-    \includegraphics[scale=0.75]{multitask_hard.jpg}
+    \includegraphics[scale=0.75]{Figs/multitask_hard.jpg}
     \caption{Depiction of Multi-task learning framework using hard parameter sharing.}
     \label{fig:mtl_hard}
   \end{minipage}
   \begin{minipage}{0.5\linewidth}
     \centering
-    \includegraphics[scale=0.75]{multitask_soft.jpg}
+    \includegraphics[scale=0.75]{Figs/multitask_soft.jpg}
     \caption{Depiction of Multi-task learning framework using soft parameter sharing.}
     \label{fig:mtl_soft}
   \end{minipage}
