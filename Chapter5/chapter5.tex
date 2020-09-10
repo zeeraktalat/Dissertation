@@ -165,14 +165,16 @@ Our Support Vector Machine is trained with \zw{INSERT: Parameter values for SVM 
 \section{Experimental Models}
 
 \zw{Explain training regime}
+- Multiple epochs
 - shuffle between each epoch
 - evaluate on main task dev data
+- Explain how we do early stopping
 
 To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:liwc_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
 
 \zw{CODING: retrain the best parameters for the models with 4 new random seeds}
 
-\begin{table}[]
+\begin{sidewaystable}[]
 \centering
 \begin{tabular}{llllllll}
 \hline
@@ -188,9 +190,9 @@ Embedding CNN  &                  &                     &                     & 
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Davidson:2017}.}
 \label{tab:exp_model_parameters_davidson}
-\end{table}
+\end{sidewaystable}
 
-\begin{table}[]
+\begin{sidewaystable}[]
 \centering
 \begin{tabular}{llllllll}
 \hline
@@ -206,7 +208,7 @@ Embedding CNN  &                  &                     &                     & 
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Wulczyn:2017}.}
 \label{tab:exp_model_parameters_wulczyn}
-\end{table}
+\end{sidewaystable}
 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
