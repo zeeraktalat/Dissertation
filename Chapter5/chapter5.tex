@@ -89,9 +89,9 @@ For the models that use an embedding layer as their input layers, we additionall
 
 \subsubsection{Recurrent Neural Network}
 
-The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \autoref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer.
+The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \autoref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer. 
 
-The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models.
+The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
 
 For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
 
@@ -99,8 +99,8 @@ For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the 
   \item Batch size: $[16, 32, 64]$,
   \item learning rate: $[0.1, 0.01, 0.001]$
   \item dropout probability: $[0.0, 0.1, 0.2]$,
-  \item embedding layer dimension: $[100, 300]$,
-  \item hidden layer dimension: $[100, 300]$, and
+  \item embedding layer dimension: $[100, 300]$, and
+  \item hidden layer dimension: $[100, 300]$.
 \end{itemize}
 
 \begin{figure}
