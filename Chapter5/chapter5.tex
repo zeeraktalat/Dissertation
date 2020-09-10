@@ -164,6 +164,8 @@ Our Support Vector Machine is trained with \zw{INSERT: Parameter values for SVM 
 
 \section{Experimental Models}
 
+We train our experimental models, we
+
 \zw{Explain training regime}
 - Multiple epochs
 - shuffle between each epoch
@@ -177,13 +179,14 @@ To evaluate which training dataset allows for better generalisation, we train ou
 \begin{table}[]
 \centering
 \begin{tabular}{lllll|llll}
-                    & \multicolumn{4}{c|}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer} \\
+                    & \multicolumn{4}{c|}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer}\\
                     & MLP     & RNN     & LSTM     & CNN     & MLP      & RNN      & LSTM      & CNN     \\\hline
 Hidden dimension    &         &         &          &         &          &          &           &         \\
 Embedding dimension &         &         &          &         &          &          &           &         \\
 Activation function &         &         &          &         &          &          &           &         \\
 Batch size          &         &         &          &         &          &          &           &         \\
 Learning rate       &         &         &          &         &          &          &           &         \\
+# Epochs            &         &         &          &         &          &          &           &         \\
 Dropout             &         &         &          &         &          &          &           &
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Davidson:2017}.}
@@ -193,13 +196,14 @@ Dropout             &         &         &          &         &          &       
 \begin{table}[]
 \centering
 \begin{tabular}{lllll|llll}
-                    & \multicolumn{4}{c|}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer} \\
+                    & \multicolumn{4}{c|}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer}\\
                     & MLP     & RNN     & LSTM     & CNN     & MLP      & RNN      & LSTM      & CNN     \\\hline
 Hidden dimension    &         &         &          &         &          &          &           &         \\
 Embedding dimension &         &         &          &         &          &          &           &         \\
 Activation function &         &         &          &         &          &          &           &         \\
 Batch size          &         &         &          &         &          &          &           &         \\
 Learning rate       &         &         &          &         &          &          &           &         \\
+# Epochs            &         &         &          &         &          &          &           &         \\
 Dropout             &         &         &          &         &          &          &           &
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Wulczyn:2017}.}

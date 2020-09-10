@@ -39,7 +39,7 @@ The work described in this chapter follows \citet{Rajamanickam:2020}, as we choo
 
 For our tasks we choose a mix of tasks that have been identified as challenges in previous work, that relate to findings in previous work \cite{Waseem-Hovy:2016,Davidson:2017,Schmidt:2017} and datasets for distinct forms of abuse \cite{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2017}.
 
-Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2017} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2017} and \citet{Davidson:2017} as our main tasks and use \citet{Waseem:2016} and \citet{Waseem-Hovy:2016} as auxiliary tasks.
+Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2017} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2017} and \citet{Davidson:2017} as our primary tasks and use \citet{Waseem:2016} and \citet{Waseem-Hovy:2016} as auxiliary tasks.
 
 Beyond the datasets annotated for abuse, we identify several other dataset to use as auxiliary tasks. These datasets fall into two categories, those that relate to previously identified issues for abusive language detection models and datasets that address seemingly related issues. In the former category, we choose sarcasm detection as an auxiliary task, using the dataset provided by \citet{Oraby_sarcasm:2017}; for the latter we choose a dataset labelled for moral sentiments \citet{Hoover:2019} and a dataset tagged for whether an argument is based in facts or feelings \citet{Oraby_fact_feel:2017}. Please refer to \autoref{sec:datasets} for more a comprehensive view on each of the datasets that we use in our model.
 
@@ -52,13 +52,13 @@ Following the same methodology as in \autoref{chap:liwc} we pre-process all docu
 We train two variants of all models, one using the Byte-Pair encoded documents and one using the LIWC encoded documents. For our baseline models, we train a Support Vector Machine and a single task Multi-Layered Perceptron. Our experimental models are then all multi-task learning models; we train a multi-task Multi-Layered Perceptron and a Long-Short Term Memory network. Please see \autoref{sec:model_background} for more detail on the models.
 
 % \zw{Describe hyper parameter tuning}
-For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Optuna library \cite{Optuna:2019} to perform Bayesian hyper-parameter optimisation. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{scikit-learn:2019}.
+For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Optuna library \cite{Optuna:2019} to perform Bayesian hyper-parameter optimisation. To identify the best hyper-parameter configuration, we run $100$ iterations of training our model with different hyper-parameters. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{scikit-learn:2019}.
 
 \subsection{Neural Models}
 
 We train two different multi-task model architectures, a Multi-Layered Perceptron network model and a Long-Short Term Memory network model, and a single task Multi-Layered Perceptron network. For all models, we use index-encoded tensors and use an embedding layer as the input layer. All neural models are implemented using PyTorch \cite{CITE: Pytorch paper}.
 
-In order to show the utility of multi-task learning for abuse detection, we use basic architectures and avoid things such as attention layers. Further, each model is subject to dropout for another measure against overfitting.  While we do subject our model to early stopping, we find that in practice early stopping is not triggered due to the variable performances on the different tasks.
+In order to show the utility of multi-task learning for abuse detection, we use basic architectures and avoid things such as attention layers. Further, each model is subject to dropout for another measure against over-fitting.  While we do subject our model to early stopping, we find that in practice early stopping is not triggered due to the variable performances on the different tasks.
 
 \begin{figure}
   \begin{minipage}{0.5\linewidth}
@@ -75,15 +75,19 @@ In order to show the utility of multi-task learning for abuse detection, we use 
   \label{fig:mtl_models}
 \end{figure}
 
-\zw{CODING: Rerun MLP hyper-param search.}
+\zw{CODING: Rerun MLP hyper-parameter search.}
 \subsubsection{Multi-task Multi-Layered Perceptron}
 
+\zw{Add mathematical function definition}
 The multi-task Multi-Layered Perceptron that we implement consists of an input embedding layer, which is trainable. The output of this is then passed to a linear layer that is shared by all tasks. The resulting representation of a document, or batch of documents, is then passed on the another linear layer, and finally it is passed through a linear output layer that maps to the classes for each task, respectively. The result of this final layer is then subject to a softmax layer. Between each layer in the model, softmax, input, and output layer aside, we subject the output of all layers to an activation function and dropout. Please refer to \autoref{fig:mlp_mtl_embedding} for a depiction of this model.
+
+\zw{Insert hyper-parameter space that is searched}
 
 \subsubsection{Multi-task Long-Short Term Memory Network}
 
-\zw{CODING: Run LSTM hyper-param search.}
-The multi-task Long-Short Term Memory network, similarly initially has a trainable input embedding layer. The output is, similarly the multi-task Multi-Layered Perceptron, passed to a shared hidden layer. The obtained representation is then passed to a Long-Short Term Memory network, which feeds its output into an output-layered that is then subject to a linear layer, mapping to the possible output classes. Similarly to our multi-task Multi-Layered Perceptron, all layers in our model, save the output layer, softmax layer, output layer, and input layer are subject to dropout. Please see \autoref{fig:lstm_mtl_embedding}.
+\zw{Add mathematical function definition}
+\zw{CODING: Run LSTM hyper-parameter search.}
+The multi-task Long-Short Term Memory network, similarly initially has a trainable input embedding layer. The output is, similarly the multi-task Multi-Layered Perceptron, passed to a shared hidden layer. The obtained representation is then passed to a Long-Short Term Memory network, which feeds its output into an output-layered that is then subject to a linear layer, mapping to the possible output classes. Similarly to our multi-task Multi-Layered Perceptron, all layers in our model, save the output layer, softmax layer, output layer, and input layer are subject to dropout. Please see \autoref{fig:lstm_mtl_embedding} for a depiction of the network.
 
 \subsection{Baseline Models}
 
@@ -96,23 +100,44 @@ The multi-task Long-Short Term Memory network, similarly initially has a trainab
 
 \subsection{Experimental Models}
 
-\zw{Describe training regime}
-We use the same training regime for all multi-task learning models,
+To train our experimental models, and ensure direct comparability of the models with one another, we develop a single training process that we subject all models to.\vspace{5mm}
 
-- randomly select task
-- weight losses for tasks
-- - multiply with 1+ to avoid vanishing losses
-- shuffle between each epoch
-- evaluate on main task dev data
+To train our model robustly, we iterate over the dataset in a set number of epochs for each model, identified through the hyper-parameter search. Each epoch consists of $500$ batches of data passed through the model; the batch size, too, is identified through the hyper-parameter search. To avoid the issue of only selecting within the first $500$ batches from each dataset, we randomly shuffle all datasets at the top of each new epoch. Though several different strategies for selecting which task to select have been developed \cite{Waseem:2018}, we choose here to follow the selection process in previous work \cite{Waseem:2018,Rajamanickam:2020} in which the task is randomly selected. For our training procedure, this means that selecting the task to processed is a 6-sided fair die toss, where each task will be chosen approximately every $6$ iterations. We distinguish between the primary task and the auxiliary tasks by introducing a parameter $\beta$ that controls how much each tasks contributes to the loss function. To avoid an issue of vanishing losses, we set the $\beta_{aux} = 1$ for each auxiliary task and $beta_{primary} = \sum^{i}_{i \in #auxiliary_tasks} 1$ for the primary task. Thus, the resulting model emphasises the contributions of the primary tasks equal to the collective contributions of all auxiliary tasks. For each task, we compute the loss using the equation given in \autoref{eq:mtl_loss} on the training data for the task. The computed loss is computed after each batch and back-propagated through the network, weighted by $\beta$. At the end of each epoch, we track the development of our model on the validation set from the primary task.
 
+\begin{equation}\label{eq:mtl_loss}
+  loss = loss(\hat{y}, y) \times \beta
+\end{equation}
 
+Although we implement early stopping for our model, and set the early stopping criteria to be a minimisation task of loss with a patience of $15$ epochs, we see that early stopping is not activated.
+
+\begin{table}[]
+\centering
+\begin{tabular}{lll|ll|ll}
+                    & \multicolumn{2}{c|}{Davidson} & \multicolumn{2}{c|}{Wulczyn} & \multicolumn{2}{l}{Waseem} \\
+                    & MLP           & LSTM          & MLP          & LSTM          & MLP         & LSTM         \\ \hline
+Hidden Dimension    &               &               &              &               &             &              \\
+Embedding Dimension &               &               &              &               &             &              \\
+Activation Function &               &               &              &               &             &              \\
+Batch Size          &               &               &              &               &             &              \\
+Learning Rate       &               &               &              &               &             &              \\
+# Epochs            &               &               &              &               &             &              \\
+Dropout             &               &               &              &               &             &
+\end{tabular}
+\caption{Best parameter setting for each experimental model type.}
+\label{tab:mtl_exp_model_parameters}
+\end{table}
+
+For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines. In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models. \zw{Insert insights about model hyper-parameters}.
 
 \zw{Describe Multi-Task learning models here}
 \zw{Describe the models and experimental settings}
+\zw{Add hyper parameter settings for each model}
 
 \section{Results}
 
 \zw{Add results and start by rough analysis of just numbers}
+\zw{Add plots for development of loss over each epoch}
+\zw{Add plots for F1 score during the evaluation set}
 \zw{Look at predictions in detail, try to identify where they still fail}
 \zw{Do logistic regression and find out if there are things that the models might overfit on}
 
