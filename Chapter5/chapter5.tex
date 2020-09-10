@@ -174,41 +174,37 @@ To evaluate which training dataset allows for better generalisation, we train ou
 
 \zw{CODING: retrain the best parameters for the models with 4 new random seeds}
 
-\begin{sidewaystable}[]
+\begin{table}[]
 \centering
-\begin{tabular}{llllllll}
-\hline
-               & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout & Macro-F1\\ \hline
-Onehot MLP     &                  &                     &                     &            &               &         &         \\
-Onehot RNN     &                  &                     &                     &            &               &         &         \\
-Onehot LSTM    &                  &                     &                     &            &               &         &         \\
-Onehot CNN     &                  &                     &                     &            &               &         &         \\
-Embedding MLP  &                  &                     &                     &            &               &         &         \\
-Embedding RNN  &                  &                     &                     &            &               &         &         \\
-Embedding LSTM &                  &                     &                     &            &               &         &         \\
-Embedding CNN  &                  &                     &                     &            &               &         &         \\ \hline
+\begin{tabular}{lllllllll}
+                    & \multicolumn{4}{c}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer} \\
+                    & MLP     & RNN     & LSTM     & CNN     & MLP      & RNN      & LSTM      & CNN     \\
+Hidden Dimension    &         &         &          &         &          &          &           &         \\
+Embedding Dimension &         &         &          &         &          &          &           &         \\
+Activation Function &         &         &          &         &          &          &           &         \\
+Batch Size          &         &         &          &         &          &          &           &         \\
+Learning Rate       &         &         &          &         &          &          &           &         \\
+Dropout             &         &         &          &         &          &          &           &        
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Davidson:2017}.}
 \label{tab:exp_model_parameters_davidson}
-\end{sidewaystable}
+\end{table}
 
-\begin{sidewaystable}[]
+\begin{table}[]
 \centering
-\begin{tabular}{llllllll}
-\hline
-                 & Hidden Dimension & Embedding Dimension & Activation Function & Batch Size & Learning Rate & Dropout & Macro-F1\\ \hline
-  Onehot MLP     &                  &                     &                     &            &               &         &         \\
-  Onehot RNN     &                  &                     &                     &            &               &         &         \\
-  Onehot LSTM    &                  &                     &                     &            &               &         &         \\
-  Onehot CNN     &                  &                     &                     &            &               &         &         \\
-  Embedding MLP  &                  &                     &                     &            &               &         &         \\
-  Embedding RNN  &                  &                     &                     &            &               &         &         \\
-  Embedding LSTM &                  &                     &                     &            &               &         &         \\
-  Embedding CNN  &                  &                     &                     &            &               &         &         \\ \hline
+\begin{tabular}{lllllllll}
+                    & \multicolumn{4}{c}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer} \\
+                    & MLP     & RNN     & LSTM     & CNN     & MLP      & RNN      & LSTM      & CNN     \\
+Hidden Dimension    &         &         &          &         &          &          &           &         \\
+Embedding Dimension &         &         &          &         &          &          &           &         \\
+Activation Function &         &         &          &         &          &          &           &         \\
+Batch Size          &         &         &          &         &          &          &           &         \\
+Learning Rate       &         &         &          &         &          &          &           &         \\
+Dropout             &         &         &          &         &          &          &           &
 \end{tabular}
 \caption{Best parameter setting for each experimental model type trained on \citet{Wulczyn:2017}.}
 \label{tab:exp_model_parameters_wulczyn}
-\end{sidewaystable}
+\end{table}
 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
