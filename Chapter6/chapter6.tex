@@ -15,13 +15,12 @@
 \section{Introduction}
 One of the frequently made assumptions is that hate speech detection, and in general abusive language detection, shares many similarities to other tasks that similarly seek to deal with identifying subjective human experiences such as sentiment analysis, sarcasm detection, and emotion detection. Indeed, each of these tasks share the characteristic that the identification of each of these on the basis of text is a task of linguistic pragmatics. While they share this unifying characteristic, hate and humour, for instance occupy different processes in \zw{INSERT: Generation/Identification/Whatever} \cite{CITE: Cite papers that find things about humour and hate}. It stands to reason then to ask if there are overlaps in patterns learned by machine learning models, in spite of their dissimilarities of the different tasks.
 
-In recognition that tasks like identifying hate or humour are distinct in spite of their similarities and overlaps, it is not appropriate to use a single multi-class model, where data from all different tasks are simply combined to form a single large dataset with a number of different labels, some that indicate abuse while others do not. Indeed, several issues exist with such a methodology, as the collection periods, populations that are represented, and the collection rationales may differ to such a degree that combining datasets may introduce more confounding factors that the models may learn. On the other hand, as only one of the datasets that we investigate contains labels from multiple tasks, a multi-class prediction model, that is a model that predicts one or more labels for each document it processes is also a less-than perfect solution due to the limitation of only being given space to investigate one possible avenue for influence. Finally, one could also choose to investigate ensemble methods, that rely on a set of models that are each trained for a specific subtask, and are weighted by a model that treats the outputs of the models for each subtask as features. However, a drawback of this method is that it relies on training multiple models that are each optimised for their own subtask. In light of these issues, we choose to investigate multi-task learning as a framework for considering how a number of different tasks influence the modelling of abuse detection.
+In recognition that tasks like identifying hate or humour are distinct in spite of their similarities and overlaps, it is not appropriate to use a single multi-class model, where data from all different tasks are simply combined to form a single large dataset with a number of different labels, some that indicate abuse while others do not. Indeed, several issues exist with such a methodology, as the collection periods, populations that are represented, and the collection rationales may differ to such a degree that combining datasets may introduce more confounding factors that the models may learn. On the other hand, as only one of the datasets that we investigate contains labels from multiple tasks, a multi-class prediction model, that is a model that predicts one or more labels for each document it processes is also a less-than perfect solution due to the limitation of only being given space to investigate one possible avenue for influence. Finally, one could also choose to investigate ensemble methods, that rely on a set of models that are each trained for a specific subtask, and are weighted by a model that treats the outputs of the models for each subtask as features. However, a drawback of this method is that it relies on training multiple models that are each optimised for their own subtask. Multi-task learning, a machine learning paradigm for training machine learning models for a main task while through leveraging inductive biases with related auxiliary tasks for the main task. Multitask learning offers a remit from the issues that plague single-task and ensemble models through its use of either a shared or closely aligned parameter space between the different task models, allowing the parameters learned in the different tasks to influence the main task model, while retaining a focus on the primary task through weighting (please refer back to \autoref{sec:model_background} for more detail).
 
-\zw{CODING: Code an ensemble method as a baseline.}
+In light of these issues and potentials, we choose to investigate multi-task learning as a framework for considering how a number of different tasks influence the modelling of abuse detection. This method, in addition to addressing the aforementioned concerns, through adding signals the auxiliary tasks, these also act as regularisers, preventing the main task model from over-fitting.
 
-The use of multi-task learning affords remits from the issues of each of these different approaches and provides several benefits through the ability of multi-task learning models to leverage the information from each task separately while retaining a focus on identifying patterns that can be learned through the different tasks and datasets in question (please see \autoref{sec:model_background} for more detail).
-
-In this work, we implement multi-task learning models that use hard parameter sharing. We choose this strategy due to its relative simplicity in comparison to the soft parameter sharing strategy.
+\zw{DOUBLE CHECK: Check that this is actually what our results show.}
+We find that in comparison to our baselines, simply adding multi-task learning without a consideration for the data and it is represented in the model does not provide strong benefits. However, we also find that if data and models are considered in combination, then there are strong gains in using multi-task learning approaches over single task models and simplistic multi-task models.
 
 \section{Previous work}
 
@@ -31,15 +30,13 @@ Considering the sparse previous work on different forms of abusive language dete
 
 A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that \citet{Rajamanickam:2020} use a weighting parameter to distinguish between the primary and auxiliary task. \citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set. The reason for this discrepancy is that \citet{Waseem:2018} seek to use multi-task learning to train a model that is capable of dealing with cross-cultural data while \citet{Rajamanickam:2020} seek to improve classification performance on the primary task.
 
-The work described in this chapter follows \citet{Rajamanickam:2020}, as we choose auxiliary tasks that we hypothesise will be beneficial to the primary task. While \citet{Rajamanickam:2020} use emotion detection as their only auxiliary task, we use the tasks described in \autoref{sec:mtl_tasks}.
-
-% Indeed, using a multi-task learning framework (please see \autoref{sec:model_background} for more details) \citet{Rajamanickam:2020} find that that there may be some benefits in to machine learning models trained to detect hate if they also learn how to predict emotions. Building on this work, we further explore the use of multi-task learning for abusive language detection. We examine a range of tasks that function as auxiliary tasks including humour detection \cite{CITE: HUMOUR DETECTION}, sarcasm detection \cite{Oraby_sarcasm:2017}, different forms of abuse detection \cite{Waseem-Hovy:2016,Waseem:2016,Davidson:2017,Wulczyn:2017}, detecting whether an argument is fact-based or feeling-based \cite{Oraby_fact_feel:2017}, and the moral foundations of a document \cite{Hoover:2019}.
+The work described in this chapter follows \citet{Rajamanickam:2020} in its efforts to improve classification performance, as we choose auxiliary tasks that we hypothesise will be beneficial to the primary task. While \citet{Rajamanickam:2020} use emotion detection as their only auxiliary task, we use the tasks described in \autoref{sec:mtl_tasks}.
 
 \section{Learning tasks}\label{sec:mtl_tasks}
 
 For our tasks we choose a mix of tasks that have been identified as challenges in previous work, that relate to findings in previous work \cite{Waseem-Hovy:2016,Davidson:2017,Schmidt:2017} and datasets for distinct forms of abuse \cite{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2017}.
 
-Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2017} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2017} and \citet{Davidson:2017} as our primary tasks and use \citet{Waseem:2016} and \citet{Waseem-Hovy:2016} as auxiliary tasks.
+Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2017} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2017}, \citet{Davidson:2017}, and \citet{Waseem:2016} as our primary tasks and use \citet{Waseem-Hovy:2016} as an auxiliary task.
 
 Beyond the datasets annotated for abuse, we identify several other dataset to use as auxiliary tasks. These datasets fall into two categories, those that relate to previously identified issues for abusive language detection models and datasets that address seemingly related issues. In the former category, we choose sarcasm detection as an auxiliary task, using the dataset provided by \citet{Oraby_sarcasm:2017}; for the latter we choose a dataset labelled for moral sentiments \citet{Hoover:2019} and a dataset tagged for whether an argument is based in facts or feelings \citet{Oraby_fact_feel:2017}. Please refer to \autoref{sec:datasets} for more a comprehensive view on each of the datasets that we use in our model.
 
@@ -91,12 +88,43 @@ The multi-task Long-Short Term Memory network, similarly initially has a trainab
 
 \subsection{Baseline Models}
 
-\zw{CODING: Single task SVM model}
-\zw{CODING: Single task MLP model}
+For our baseline models, we train all single-task models using Support Vector Machines (see \autoref{sec:model_background}) while we use a Logistic Regression classifier for on top of Support Vector Machines for the ensemble baseline. For all model types, we train two variants, one that is trained on the BPE tokenised text and one that is trained on the LIWC encoded text. For our Support Vector Machines and ensemble classifiers, w perform a grid-search over the parameters of the models. For each training dataset, we fit a vectoriser to the training set and pass all other datasets through the fitted vectoriser. While this allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training dataset. For this reason, we do not perform any operations that limit the occurrence of tokens in the vocabulary. Further, for the byte-pair encoded documents out-of-vocabulary tokens are likely to appear with smaller frequency as tokens unknown to the pre-trained Byte-Pair Embeddings are broken down into subword units that are likely to be repeated across the different datasets.
+
+For the grid search for the linear models, we explore the regularisation strength and the penalty provided for the models. For the regularisation strength we experiment with $C\in \{0.1, 0.2, 0.3, \ldots 1.0\}$ and we explore using an $L1$ and $L2$ penalty. The grid search is performed by training our linear baseline model trained on the training data for the primary task, using five-fold cross-validation. To arrive at the best performing parameters for a given model, a held-out subset of the training data is used to evaluate on. Following the conclusion of the parameter search, we evaluate the model with the optimal parameters on a held-out validation set, and finally we apply the model on the test data.
 
 \subsubsection{Support Vector Machines}
 
-\subsubsection{Single-task Multi-Layered Perceptron}
+Following previous work \cite{Waseem:2016,Davidson:2017}, we use a Support Vector Machine with linear kernels for our single-task models. Please consult \autoref{tab:mtl_svm_parameters} for the optimal setting for parameters for the Support Vector Machine for each training set.
+
+\begin{table}[]
+\centering
+\begin{tabular}{lll}
+                      & C & Penalty \\
+cite\{Waseem:2016\}   &   &         \\
+cite\{Davidson:2017\} &   &         \\
+cite\{Wulczyn:2017\}  &   &        
+\end{tabular}
+\caption{Optimal parameters for single task Support Vector Machines with linear kernels.}
+\label{tab:mtl_svm_parameters}
+\end{table}
+
+As we note in \autoref{tab:mtl_svm_parameters}, \zw{Insert insights about SVM}
+
+\subsubsection{Ensemble Classifier}
+
+As multi-task learning shares some resemblance with the ensemble training paradigm, we implement an ensemble as another baseline. Unlike the Support Vector Machines that use a single vectoriser for all datasets, in our ensemble model we train a vectoriser for each dataset and train a model to predict that task exclusively. To ensure that the model for each task performs as best possible, we perform a grid-search over each task model with a similar five-fold cross validation to the single-task Support Vector Machines.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{ensemble_mtl.jpg}
+  \label{fig:ensemble_mtl}
+\end{figure}
+
+Once each component model has been trained, we train a Logistic Regression Classifier on the main task training data and evaluate on the corresponding test set. The predictions from each single task model serve as features for the Logistic Regression Classifier to be trained on. Thus, the logistic regression classifier never sees any of the input text of the model, as that is only provided to the models whose predictions it relies on. To allow for this, each document must be vectorised several times, once for each task model in the ensemble. Finally, a vectoriser is fitted on the predicted labels from each task classifier, and presented to the main task model to be trained on. Please see \autoref{fig:ensemble_mtl} for a depiction of the training and prediction procedure the ensemble classifier.
+
+\subsubsection{Single Task Multi-Layered Perceptron}
+
+\zw{CODING: Single task MLP model}
 
 \subsection{Experimental Models}
 
@@ -108,7 +136,7 @@ To train our model robustly, we iterate over the dataset in a set number of epoc
   loss = loss(\hat{y}, y) \times \beta
 \end{equation}
 
-Although we implement early stopping for our model, and set the early stopping criteria to be a minimisation task of loss with a patience of $15$ epochs, we see that early stopping is not activated.
+Although we implement early stopping for our model, and set the early stopping criteria to be a maximisation task of macro f1-score with a patience of $10$ epochs, we see that early stopping is not activated.
 
 \begin{table}[]
 \centering
@@ -132,10 +160,13 @@ For each dataset used as a primary task, we perform hyper-parameter search for e
 \zw{Describe Multi-Task learning models here}
 \zw{Describe the models and experimental settings}
 \zw{Add hyper parameter settings for each model}
+\zw{CODING: Do Ablation test}
 
 \section{Results}
 
 \zw{Add results and start by rough analysis of just numbers}
+\zw{Add baseline experiment results}
+\zw{Show which models contribute most to ensemble models}
 \zw{Add plots for development of loss over each epoch}
 \zw{Add plots for F1 score during the evaluation set}
 \zw{Look at predictions in detail, try to identify where they still fail}
