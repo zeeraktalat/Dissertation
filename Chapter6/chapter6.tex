@@ -92,7 +92,7 @@ For our baseline models, we train all single-task models using Support Vector Ma
 
 For the grid search for the linear models, we explore the regularisation strength and the penalty provided for the models. For the regularisation strength we experiment with $C\in \{0.1, 0.2, 0.3, \ldots 1.0\}$ and we explore using an $L1$ and $L2$ penalty. The grid search is performed by training our linear baseline model trained on the training data for the primary task, using five-fold cross-validation. To arrive at the best performing parameters for a given model, a held-out subset of the training data is used to evaluate on. Following the conclusion of the parameter search, we evaluate the model with the optimal parameters on a held-out validation set, and finally we apply the model on the test data.
 
-\subsubsection{Support Vector Machines}
+\subsubsection{Linear Single Task Models}
 
 Following previous work \cite{Waseem:2016,Davidson:2017}, we use a Support Vector Machine with linear kernels for our single-task models. Please consult \autoref{tab:mtl_svm_parameters} for the optimal setting for parameters for the Support Vector Machine for each training set.
 
