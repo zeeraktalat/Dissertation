@@ -119,7 +119,6 @@ As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Reg
 \subsubsection{Ensemble Classifier}
 
 As multi-task learning shares some resemblance with the ensemble training paradigm, we implement an ensemble as another baseline. Unlike the Support Vector Machines that use a single vectoriser for all datasets, in our ensemble model we train a vectoriser for each dataset and train a model to predict that task exclusively. To ensure that the model for each task performs as best possible, we perform a grid-search over each task model with a similar five-fold cross validation to the single-task Support Vector Machines.
-
 \begin{figure}
   \centering
   \includegraphics[scale=0.75]{ensemble_mtl.jpg}
@@ -157,37 +156,39 @@ To train our model robustly, we iterate over the dataset in a set number of epoc
   loss = loss(\hat{y}, y) \times \beta
 \end{equation}
 
-Although we implement early stopping for our model, and set the early stopping criteria to be a maximisation task of macro f1-score with a patience of $10$ epochs, we see that early stopping is not activated.
+For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines. In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models. For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models. We do note however, that most models prefer $ReLU$ as their activation function over $tanh$. Similarly, most models prefer a batch size of $64$ over $32$. On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
+\zw{Insert insights about model hyper-parameters}.
 
-\begin{rotatetable}[]
+\begin{landscape}
+\begin{table}[]
 \centering
 \begin{tabular}{lllll|llll|llll}
-                    & \multicolumn{4}{c|}{Davidson}     & \multicolumn{4}{c|}{Wulczyn}      & \multicolumn{4}{c}{Waseem}        \\ \hline
- & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c}{LIWC} \\
-                    & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM \\
-Shared Dimension    & $256$    &      & $256$    &      & $256$    &      & $256$    &      & $256$    &      & $256$    &      \\
-Hidden Dimension    & -        &      & -        &      & -        &      & -        &      & -        &      & -        &      \\
-Embedding Dimension & $100$    &      & $100$    &      & $100$    &      & $100$    &      & $300$    &      & $100$    &      \\
-Activation Function & $ReLU$   &      & $ReLU$   &      & $ReLU$   &      & $ReLU$   &      & $Tanh$   &      & $ReLU$   &      \\
-Batch Size          & $64$     &      & $64$     &      & $32$     &      & $32$     &      & $64$     &      & $64$     &      \\
-Learning Rate       & $0.001$  &      & $0.001$  &      & $0.01$   &      & $0.01$   &      & $0.001$  &      & $0.001$  &      \\
-\# Epochs           & $200$    &      & $200$    &      & $100$    &      & $100$    &      & $100$    &      & $200$    &      \\
-Dropout             & $0.3$    &      & $0.2$    &      & $0.1$    &      & $0.2$    &      & $0.3$    &      & $0.1$    &      \\
-Validation Score    & $0.5249$ &      & $0.5410$ &      & $0.6885$ &      & $0.5304$ &      & $0.4054$ &      & $0.2995$ &
+                    & \multicolumn{4}{c|}{Davidson}   & \multicolumn{4}{c|}{Wulczyn}  & \multicolumn{4}{c}{Waseem}          \\ \hline
+                    & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} &  \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} &  \multicolumn{2}{c}{BPE} &  \multicolumn{2}{c}{LIWC} \\
+                    & MLP       & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM     & MLP      & LSTM \\
+Shared Dimension    & $256$     &      & $256$    &      & $256$    &      & $256$    &      & $256$    & $256$    & $256$    &      \\
+Hidden Dimension    & -         &      & -        &      & -        &      & -        &      & -        & $300$    & -        &      \\
+Embedding Dimension & $100$     &      & $100$    &      & $100$    &      & $100$    &      & $300$    & $100$    & $100$    &      \\
+Activation Function & $ReLU$    &      & $ReLU$   &      & $ReLU$   &      & $ReLU$   &      & $Tanh$   & $ReLU$   & $ReLU$   &      \\
+Batch Size          & $64$      &      & $64$     &      & $32$     &      & $32$     &      & $64$     & $64$     & $64$     &      \\
+Learning Rate       & $0.001$   &      & $0.001$  &      & $0.01$   &      & $0.01$   &      & $0.001$  & $0.0001$ & $0.001$  &      \\
+\# Epochs           & $200$     &      & $200$    &      & $100$    &      & $100$    &      & $100$    & $200$    & $200$    &      \\
+Dropout             & $0.3$     &      & $0.2$    &      & $0.1$    &      & $0.2$    &      & $0.3$    & $0.1$    & $0.1$    &      \\
+Validation Score    & $0.5249$  &      & $0.5410$ &      & $0.6885$ &      & $0.5304$ &      & $0.4054$ & $0.3336$ & $0.2995$ &
 \end{tabular}
 \caption{Best parameter setting for each experimental model type.}
 \label{tab:mtl_exp_model_parameters}
-\end{rotatetable}
+\end{table}
+\end{landscape}
 
-For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines. In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models. \zw{Insert insights about model hyper-parameters}.
+\zw{Identify which models will be experimental models once good results come out.}
 
-\zw{Describe Multi-Task learning models here}
 \zw{Describe the models and experimental settings}
-\zw{Add hyper parameter settings for each model}
 \zw{CODING: Do Ablation test}
 
 \section{Results}
 
+\zw{INSERT: Baseline scores}
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Add baseline experiment results}
 \zw{Show which models contribute most to ensemble models}
