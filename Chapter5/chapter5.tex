@@ -186,7 +186,6 @@ We develop several different baseline methods to compare our method with. For ea
 
 Similarly to our neural models, we perform a parameter search to identify the optimal parameters for training our linear baseline models. For the Support Vector Machine models, we explore a regularisation strength of $C \in \{0.1, 0.02 \ldots 1.0\}$ and $penalty \in \{L1, L2\}$. For the Logistic Regression models, we explore the same values of $C$ and append \texttt{elasticnet} to the possible space of penalties, yielding $penalty \in \{L1, L2, elasticnet\}$. We report the optimal settings in \autoref{tab:liwc_baseline_linear_params}.
 
-\begin{landscape}
 \begin{table}[]
 \centering
 \begin{tabular}{l|ll|ll}
@@ -199,10 +198,10 @@ Similarly to our neural models, we perform a parameter search to identify the op
 \caption{Optimal parameters for linear Support Vector Machine baselines.}
 \label{tab:liwc_baseline_linear_params}
 \end{table}
-\end{landscape}
 
 Considering the performances on the in-domain development data, we see in \autoref{tab:mtl_linear_baselines_dev} reasonable baseline performances on the
 
+\begin{landscape}
 \begin{table}[]
 \centering
 \begin{tabular}{lclllll}
@@ -219,12 +218,32 @@ Training Dataset          & \multicolumn{1}{l}{Document Representation} & Model 
 \caption{In-domain scores on validation set by linear baselines.}
 \label{tab:redux_linear_baselines_dev}
 \end{table}
+\end{landscape}
 
 \section{Experimental Models}
 
 To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:liwc_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:redux_hyperparam_search}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
 
 We train all of our neural network models following the same training procedure. We iterate over the training dataset in multiple epochs, shuffling the order of the data at the beginning of each epoch. As we train on a single task, the loss that is propagated through the network using backpropagation is computed on the validation set for the given task. To avoid over-training our model, we implement set our models to stop training after $15$ epochs of worse, that is strictly higher, loss values. As our training procedure closes, we apply the model on each test set, allowing us to evaluate its in-domain performance as well as its out-of-domain performance.
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\begin{tabular}{lclllll}
+Training Dataset          & \multicolumn{1}{l}{Document Representation} & Model                   & F1-macro & Accuracy & Precision & Recall \\
+\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}                        & Logistic Regression     & 69.57    & 89.46    & 71.43     & 69.20  \\
+                          &                                             & Support Vector Machine  & 70.78    & 89.54    & 72.74     & 70.03  \\
+                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     &          &          &           &        \\
+                          &                                             & Support Vector Machine  &          &          &           &        \\
+\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}                        & Logistic Regression     & 86.47    & 95.70    & 90.13     & 83.56  \\
+                          &                                             & Support Vector Machine  &          &          &           &        \\
+                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     &          &          &           &        \\
+                          &                                             & Support Vector Machine  &          &          &           &
+\end{tabular}%
+\caption{In-domain scores on validation set by linear baselines.}
+\label{tab:redux_linear_baselines_dev}
+\end{table}
+\end{landscape}
 
 \zw{CODING: retrain the best parameters for the models with 4 new random seeds}
 
