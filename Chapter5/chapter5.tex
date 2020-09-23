@@ -188,13 +188,15 @@ Similarly to our neural models, we perform a parameter search to identify the op
 
 \begin{table}[]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{l|llll|llll}
                       & \multicolumn{4}{c}{BPE}                                                              & \multicolumn{4}{c}{LIWC}                                                             \\ \hline
                       & \multicolumn{2}{l}{Logistic Regression} & \multicolumn{2}{l}{Support Vector Machine} & \multicolumn{2}{l}{Logistic Regression} & \multicolumn{2}{l}{Support Vector Machine} \\
                       & C               & Penalty               & C                 & Penalty                & C               & Penalty               & C                 & Penalty                \\ \hline
 \cite{Davidson:2017}  & $0.8$           & L2                    & $0.2$             & L2                     &                 &                       & $0.9$             & L2                     \\
 \cite{Wulczyn:2017}   & $1.0$           & L2                    & $0.2$             & L2                     &                 &                       & $0.8$             & L2
-\end{tabular}
+\end{tabular}%
+}
 \caption{Optimal parameters for linear Support Vector Machine baselines.}
 \label{tab:liwc_baseline_linear_params}
 \end{table}
@@ -214,7 +216,7 @@ Training Dataset          & \multicolumn{1}{l}{Document Representation} & Model 
                           &                                             & Support Vector Machine  &          &          &           &        \\
                           & \multirow{2}{*}{LIWC}                       & Logistic Regression     &          &          &           &        \\
                           &                                             & Support Vector Machine  &          &          &           &
-\end{tabular}%
+\end{tabular}
 \caption{In-domain scores on validation set by linear baselines.}
 \label{tab:redux_linear_baselines_dev}
 \end{table}
