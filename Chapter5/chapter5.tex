@@ -180,7 +180,7 @@ For these models, we only consider the activation function, embedding, and hidde
 
 \subsection{Baseline Models}
 
-We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as \zw{INSERT: vectorisation type} after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:liwc_neural} providing surface level tokens as the input to the models.
+We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as a bag-of-words after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:liwc_neural} providing surface level tokens as the input to the models.
 
 \subsubsection{Baseline hyper-parameters}
 
@@ -193,8 +193,8 @@ Similarly to our neural models, we perform a parameter search to identify the op
                       & \multicolumn{4}{c|}{BPE}                                                             & \multicolumn{4}{c}{LIWC}                                                             \\ \hline
                       & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} \\ \hline
                       & C               & Penalty               & C                 & Penalty                & C               & Penalty               & C                 & Penalty                \\ \hline
-\cite{Davidson:2017}  & $0.8$           & L2                    & $0.2$             & L2                     &                 &                       & $0.9$             & L2                     \\
-\cite{Wulczyn:2017}   & $1.0$           & L2                    & $0.2$             & L2                     &                 &                       & $0.8$             & L2
+\cite{Davidson:2017}  & $0.8$           & L2                    & $0.2$             & L2                     & $1.0$           & L2                    & $0.8$             & L2                     \\
+\cite{Wulczyn:2017}   & $1.0$           & L2                    & $0.2$             & L2                     & $0.9$           & L2                    & $1.0$             & L2
 \end{tabular}%
 }
 \caption{Optimal parameters for linear Support Vector Machine baselines.}
