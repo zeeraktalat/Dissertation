@@ -190,8 +190,8 @@ Similarly to our neural models, we perform a parameter search to identify the op
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|cccc|cccc}
-                      & \multicolumn{4}{c}{BPE}                                                              & \multicolumn{4}{c}{LIWC}                                                             \\ \hline
-                      & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} \\
+                      & \multicolumn{4}{c|}{BPE}                                                             & \multicolumn{4}{c}{LIWC}                                                             \\ \hline
+                      & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} \\ \hline
                       & C               & Penalty               & C                 & Penalty                & C               & Penalty               & C                 & Penalty                \\ \hline
 \cite{Davidson:2017}  & $0.8$           & L2                    & $0.2$             & L2                     &                 &                       & $0.9$             & L2                     \\
 \cite{Wulczyn:2017}   & $1.0$           & L2                    & $0.2$             & L2                     &                 &                       & $0.8$             & L2
@@ -201,7 +201,7 @@ Similarly to our neural models, we perform a parameter search to identify the op
 \label{tab:liwc_baseline_linear_params}
 \end{table}
 
-Considering the performances on the in-domain development data, we see in \autoref{tab:mtl_linear_baselines_dev} reasonable baseline performances on the
+Considering the performances on the in-domain during training, we see in \autoref{tab:redux_linear_baselines_dev} reasonable baseline performances on the validation set. The validation scores described in \autoref{tab:redux_linear_baselines_dev} are not as strong as the state-of-the-art in-domain models \cite{Salminen:2020}, in fact they are comparable to the scores reported on the test set of the in the original paper \cite{Davidson:2017} which provided initial baseline scores.\footnote{We do not report these baseline scores as their work does not identify which weighting of their F1-score was used.}. While several previous work augment the textual data with syntactic knowledge \cite{Davidson:2017} or advanced token representations \cite{Salminen:2020} to boost classification performance, we only use the byte-pair encoded documents and the LIWC encoded documents, to ensure comparability with our experimental models. Moreover, as our primary concern is learning classifiers whose performance generalise to other datasets, unlike much prior work which concerns itself with learning classifiers that perform well within the dataset, we do not take further steps towards boosting our baseline classifiers in-domain performances.
 
 \begin{landscape}
 \begin{table}[]
