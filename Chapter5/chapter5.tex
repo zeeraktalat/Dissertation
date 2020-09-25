@@ -50,9 +50,7 @@ While we accept that the influence of annotation guidelines have strong influenc
 
 \section{Modelling}
 
-In order to identify the optimal hyper-parameter settings for each model, we define and search a hyper-parameter space for each model. Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
-
-\subsection{Neural Models}\ref{sec:liwc_neural}
+\subsection{Neural Models}\ref{sec:redux_neural}
 
 We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). For all neural models, we use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}. All neural models are implemented using PyTorch \cite{CITE: Pytorch paper}.
 
@@ -70,24 +68,46 @@ We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{Optuna
 \begin{landscape}
 \begin{table}[]
 \centering
-\begin{tabular}{lllllllll|llllllll}
-                    & \multicolumn{8}{c|}{Davidson}                       & \multicolumn{8}{c}{Wulczyn}                        \\
-                    & \multicolumn{4}{c}{BPE} & \multicolumn{4}{c|}{LIWC} & \multicolumn{4}{c}{BPE} & \multicolumn{4}{c}{LIWC} \\
-                    & MLP  & CNN & RNN & LSTM & MLP  & CNN  & RNN  & LSTM & MLP  & CNN & RNN & LSTM & MLP  & CNN  & RNN & LSTM \\ \hline
-Shared Dimension    &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Embedding Dimension &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Hidden Dimension    &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Window Size         &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Batch Size          &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Learning Rate       &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Dropout             &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Activation Function &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &      \\
-Validation F1-score &      &     &     &      &      &      &      &      &      &     &     &      &      &      &     &     
+\begin{tabular}{lllllllll}
+                      & \multicolumn{4}{c}{BPE}                 & \multicolumn{4}{c|}{LIWC} \\
+                       & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
+Embedding Dimension    & $100$   & $300$    & $100$   & $300$   & $100$   & $100$   & $100$   & $100$    \\
+Hidden Dimension       & $300$   & $64$     & $300$   & $300$   & $300$   & $100$   & $300$   & $100$    \\
+Window Size            & -       & $2, 3 4$ & -       & -       & -       & -       & -       & -        \\
+Batch Size             & $16$    & $32$     & $16$    & $64$    & $16$    & $64$    & $64$    & $64$     \\
+Learning Rate          & $0.001$ & $0.001$  & $0.01$  & $0.001$ & $0.001$ & $0.001$ & $0.001$ & $0.001$  \\
+Dropout                & $0.2$   & $0.2$    & $0.0$   & $0.1$   & $0.1$   & $0.0$   & $0.0$   & $0.0$    \\
+Activation Function    & tanh    & tanh     & tanh    & tanh    & relu    & relu    & tanh    & tanh     \\
+# Epochs               & $100$   & $50$     & $50$    & $100$   & $200$   & $50$    & $100$   & $200$    \\
+Validation F1-score    & $84.24$ & $85.10$  & $45.41$ & $72.01$ & $87.54$ & $86.01$ & $43.73$ & $82.67$  
 \end{tabular}
-\caption{Best hyper-parameter setting for each model and dataset.}
-\label{tab:redux_hyperparam_search}
+\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
+\label{tab:redux_hyperparam_search_davidson}
 \end{table}
 \end{landscape}
+
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\begin{tabular}{lllllllll}
+                      & \multicolumn{4}{c}{BPE}               & \multicolumn{4}{c|}{LIWC} \\
+                      & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
+Embedding Dimension   & $100$   &         &         &         & $300$   &         &         &         \\
+Hidden Dimension      & $300$   &         &         &         & $300$   &         &         &         \\
+Window Size           & -       &         &         &         & -       &         &         &         \\        
+Batch Size            & $32$    &         &         &         & $32$    &         &         &         \\        
+Learning Rate         & $0.001$ &         &         &         & $0.001$ &         &         &         \\
+Dropout               & $0.0$   &         &         &         & $0.1$   &         &         &         \\        
+Activation Function   & ReLU    &         &         &         & Tanh    &         &         &         \\
+# Epochs              & $50$    &         &         &         & $200$   &         &         &         \\
+Validation F1-score   & $82.39$ &         &         &         & $82.90$ &         &         &
+\end{tabular}
+\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
+\label{tab:redux_hyperparam_search_wulczyn}
+\end{table}
+\end{landscape}
+
 
 \subsubsection{Multi-Layered Perceptron}
 
@@ -180,7 +200,7 @@ For these models, we only consider the activation function, embedding, and hidde
 
 \subsection{Baseline Models}
 
-We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as a bag-of-words after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:liwc_neural} providing surface level tokens as the input to the models.
+We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as a bag-of-words after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:redux_neural} providing surface level tokens as the input to the models.
 
 \subsubsection{Baseline hyper-parameters}
 
@@ -224,25 +244,27 @@ Training Dataset          & Document Representation                     & Model 
 
 \section{Experimental Models}
 
-To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:liwc_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:redux_hyperparam_search}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
+To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:redux_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:redux_hyperparam_search}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
 
 We train all of our neural network models following the same training procedure. We iterate over the training dataset in multiple epochs, shuffling the order of the data at the beginning of each epoch. As we train on a single task, the loss that is propagated through the network using backpropagation is computed on the validation set for the given task. To avoid over-training our model, we implement set our models to stop training after $15$ epochs of worse, that is strictly higher, loss values. As our training procedure closes, we apply the model on each test set, allowing us to evaluate its in-domain performance as well as its out-of-domain performance.
+
+In order to identify the optimal hyper-parameter settings for each model, we define and search a hyper-parameter space for each model (see \autoref{sec:redux_neural} for the search space for each model and \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
 
 \begin{landscape}
 \begin{table}[]
 \centering
 \begin{tabular}{lclllll}
-Training Dataset          & \multicolumn{1}{l}{Document Representation} & Model                   & F1-macro & Accuracy & Precision & Recall \\
-\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}                        & Logistic Regression     & 69.57    & 89.46    & 71.43     & 69.20  \\
-                          &                                             & Support Vector Machine  & 70.78    & 89.54    & 72.74     & 70.03  \\
-                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     &          &          &           &        \\
-                          &                                             & Support Vector Machine  &          &          &           &        \\
-\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}                        & Logistic Regression     & 86.47    & 95.70    & 90.13     & 83.56  \\
-                          &                                             & Support Vector Machine  &          &          &           &        \\
-                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     &          &          &           &        \\
-                          &                                             & Support Vector Machine  &          &          &           &
+Training Dataset          & Document Representation  & Model                   & F1-macro & Accuracy & Precision & Recall  \\ \hline
+\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}     & Logistic Regression     & $69.57$  & $89.46$  & $71.43$   & $69.20$  \\
+                          &                          & Support Vector Machine  & $70.78$  & $89.54$  & $72.74$   & $70.03$  \\
+                          & \multirow{2}{*}{LIWC}    & Logistic Regression     & $59.75$  & $87.89$  & $63.81$   & $61.37$  \\
+                          &                          & Support Vector Machine  & $59.97$  & $88.53$  & $67.89$   & $62.00$  \\
+\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}     & Logistic Regression     & $86.47$  & $95.70$  & $90.13$   & $83.56$  \\
+                          &                          & Support Vector Machine  & $86.36$  & $95.57$  & $88.92$   & $84.18$  \\
+                          & \multirow{2}{*}{LIWC}    & Logistic Regression     & $83.80$  & $95.18$  & $90.82$   & $79.19$  \\
+                          &                          & Support Vector Machine  & $84.85$  & $95.42$  & $91.02$   & $90.59$
 \end{tabular}%
-\caption{In-domain scores on validation set by linear baselines.}
+\caption{In-domain scores on validation set by neural models.}
 \label{tab:redux_linear_baselines_dev}
 \end{table}
 \end{landscape}
