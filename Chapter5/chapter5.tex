@@ -263,14 +263,10 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 
 \section{Results}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
-% \usepackage{graphicx}
 \begin{table}[]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{clllllll}
-\multicolumn{1}{l}{}         & Training data & \multicolumn{6}{c}{Davidson}                                                                                                                                                         \\
 \multicolumn{1}{l}{}         &               & \textit{Support Vector Machine} & \textit{Logistic Regression} & Multi-Layered Perceptron & Convolutional Neural Network & Recurrent Neural Network & Long-Short Term Memory network \\
 \multirow{4}{*}{Davidson}    & F1-macro      &                                 &                              &                          &                              &                          &                                \\
                              & Accuracy      &                                 &                              &                          &                              &                          &                                \\
@@ -298,9 +294,10 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 \label{tab:redux_performance_davidson_bpe}
 \end{table}
 
-\begin{landscape}
+%\begin{landscape}
 \begin{table}[]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{ccl|llll|llll}
 \multicolumn{1}{l}{}                 & \multicolumn{1}{l}{}                        &                                 & \multicolumn{4}{c|}{Davidson}            & \multicolumn{4}{c}{Wulczyn}              & \multicolumn{4}{c}{Waseem}               & \multicolumn{4}{c}{Waseem-Hovy}          & \multicolumn{4}{c}{Garcia}              \\
 \multicolumn{1}{l}{Training Dataset} & \multicolumn{1}{l}{Document Representation} & Model                           & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall \\ \hline
@@ -316,11 +313,12 @@ Using this training scheme, we define and search a hyper-parameter space for eac
                                      &                                             & Convolutional Neural Network    &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
                                      &                                             & Recurrent Neural Network        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
                                      &                                             & Long-Short Term Memory network  &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        
-\end{tabular}
+\end{tabular}%
+}
 \caption{Performance of models trained on \citet{Davidson:2017} across both in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
 \label{tab:redux_performance_davidson}
 \end{table}
-\end{landscape}
+%\end{landscape}
 
 
 \begin{landscape}
