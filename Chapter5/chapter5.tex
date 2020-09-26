@@ -292,36 +292,6 @@ Training data               & Document Representation & Model                   
 
 \section{Results}
 
-% \begin{table}[]
-% \centering
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{clllllll}
-% \multicolumn{1}{l}{}         &               & \textit{Support Vector Machine} & \textit{Logistic Regression} & Multi-Layered Perceptron & Convolutional Neural Network & Recurrent Neural Network & Long-Short Term Memory network \\
-% \multirow{4}{*}{Davidson}    & F1-macro      &                                 &                              &                          &                              &                          &                                \\
-%                              & Accuracy      &                                 &                              &                          &                              &                          &                                \\
-%                              & Precision     &                                 &                              &                          &                              &                          &                                \\
-%                              & Recall        &                                 &                              &                          &                              &                          &                                \\
-% \multirow{4}{*}{Wulczyn}     & F1-macro      &                                 &                              &                          &                              &                          &                                \\
-%                              & Accuracy      &                                 &                              &                          &                              &                          &                                \\
-%                              & Precision     &                                 &                              &                          &                              &                          &                                \\
-%                              & Recall        &                                 &                              &                          &                              &                          &                                \\
-% \multirow{4}{*}{Waseem}      & F1-macro      &                                 &                              &                          &                              &                          &                                \\
-%                              & Accuracy      &                                 &                              &                          &                              &                          &                                \\
-%                              & Precision     &                                 &                              &                          &                              &                          &                                \\
-%                              & Recall        &                                 &                              &                          &                              &                          &                                \\
-% \multirow{4}{*}{Waseem-Hovy} & F1-macro      &                                 &                              &                          &                              &                          &                                \\
-%                              & Accuracy      &                                 &                              &                          &                              &                          &                                \\
-%                              & Precision     &                                 &                              &                          &                              &                          &                                \\
-%                              & Recall        &                                 &                              &                          &                              &                          &                                \\
-% \multirow{4}{*}{Gilbert}     & F1-macro      &                                 &                              &                          &                              &                          &                                \\
-%                              & Accuracy      &                                 &                              &                          &                              &                          &                                \\
-%                              & Precision     &                                 &                              &                          &                              &                          &                                \\
-%                              & Recall        &                                 &                              &                          &                              &                          &
-% \end{tabular}%
-% }
-% \caption{Performance of models trained on Byte-Pair Encoded \citet{Davidson:2017} across both in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
-% \label{tab:redux_performance_davidson_bpe}
-% \end{table}
 
 \zw{UPDATE: Change F1, Accuracy, precision, recall names to full names from acc, prec, rec}
 \begin{landscape}
@@ -329,36 +299,36 @@ Training data               & Document Representation & Model                   
 \centering
 \resizebox{1.4\textheight}{!}{%
 \begin{tabular}{ccl|llll|llll|llll|llll|llll}
-                                     &                         &                                 & \multicolumn{4}{c|}{Davidson} & \multicolumn{4}{c}{Wulczyn} & \multicolumn{4}{c}{Waseem} & \multicolumn{4}{c}{Waseem-Hovy} & \multicolumn{4}{c}{Garcia} \\
- Training data                       & Representation          & Model                           & F1 & acc & prec & rec         & F1 & acc & prec & rec       & F1 & acc & prec & rec      & F1 & acc & prec & rec           & F1 & acc & prec & rec      \\ \hline
-\mrow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     & \mrow{6}{*}{\rot{LIWC}} & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\\hline
+                                     &                         &                                & \multicolumn{4}{c|}{Davidson} & \multicolumn{4}{c}{Wulczyn}   & \multicolumn{4}{c}{Waseem}    & \multicolumn{4}{c}{Waseem-Hovy} & \multicolumn{4}{c}{Garcia} \\
+ Training data                       & Representation          & Model                          & F1    & acc    & prec & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec     & F1    & acc    & prec & rec   \\ \hline
+\mrow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$92.19$&$95.60$&$91.91$&$92.47$&$71.26$&$86.83$&$67.87$&$92.47$&$49.06$&$68.64$&$49.56$&$49.41$&$58.49$&$65.66$&$49.41$&$58.25$  &$60.62$&$60.66$&$60.71$&$60.66$\\
+                                     &                         & Logistic Regression            &$91.39$&$95.19$&$91.51$&$91.27$&$71.18$&$86.40$&$67.68$&$79.85$&$48.34$&$66.04$&$49.35$&$49.03$&$58.12$&$64.36$&$58.37$&$57.98$  &$58.15$&$58.15$&$58.16$&$58.15$\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     & \mrow{6}{*}{\rot{LIWC}} & Support Vector Machine         &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Logistic Regression            &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\\hline
 
-\mrow{12}{*}{\rot{Wulczyn}}          & \mrow{6}{*}{\rot{BPE}}  & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     & \mrow{6}{*}{\rot{LIWC}} & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+\mrow{12}{*}{\rot{Wulczyn}}          & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Logistic Regression            &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     & \mrow{6}{*}{\rot{LIWC}} & Support Vector Machine         &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Logistic Regression            &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
 \end{tabular}%
 }
-\caption{Performance of index-encoded models across in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
+\caption{Performance of linear baseline models and index-encoded models across in-domain and out-of-domain evaluation sets.}
 \label{tab:redux_embedding_davidson}
 \end{table}
 \end{landscape}
