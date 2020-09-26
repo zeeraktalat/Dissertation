@@ -14,9 +14,11 @@ Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary, we t
 
 Focusing our attentions on simple deep neural networks and shallow models, we show that by radically reducing the vocabulary size, while increasing the contextual information of the remaining vocabulary, we can achieve strong classification performances within datasets and more importantly, on out of domain datasets.
 
-% \zw{Describe rationale behind the methods chosen}
 \zw{Provide example of transformation}
 \section{Previous work}
+
+\zw{Talk about LIWC: Designed for long form documents}
+
 
 \zw{Talk about LIWC}
 \zw{Talk in depth about the references from \autoref{chap:nlp}.}
@@ -77,7 +79,7 @@ Window Size            & -       & $2, 3 4$ & -       & -       & -       & -   
 Batch Size             & $16$    & $32$     & $16$    & $64$    & $16$    & $64$    & $64$    & $64$     \\
 Learning Rate          & $0.001$ & $0.001$  & $0.01$  & $0.001$ & $0.001$ & $0.001$ & $0.001$ & $0.001$  \\
 Dropout                & $0.2$   & $0.2$    & $0.0$   & $0.1$   & $0.1$   & $0.0$   & $0.0$   & $0.0$    \\
-Activation Function    & tanh    & tanh     & tanh    & tanh    & relu    & relu    & tanh    & tanh     \\
+Activation Function    & Tanh    & Tanh     & Tanh    & Tanh    & ReLU    & ReLU    & Tanh    & Tanh     \\
 # Epochs               & $100$   & $50$     & $50$    & $100$   & $200$   & $50$    & $100$   & $200$    \\
 Validation F1-score    & $84.24$ & $85.10$  & $45.41$ & $72.01$ & $87.54$ & $86.01$ & $43.73$ & $82.67$  
 \end{tabular}
@@ -95,10 +97,10 @@ Validation F1-score    & $84.24$ & $85.10$  & $45.41$ & $72.01$ & $87.54$ & $86.
                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
 Embedding Dimension   & $100$   &         &         &         & $300$   &         &         &         \\
 Hidden Dimension      & $300$   &         &         &         & $300$   &         &         &         \\
-Window Size           & -       &         &         &         & -       &         &         &         \\        
+Window Size           & -       &         &         &         & -       &         &         &         \\
 Batch Size            & $32$    &         &         &         & $32$    &         &         &         \\        
 Learning Rate         & $0.001$ &         &         &         & $0.001$ &         &         &         \\
-Dropout               & $0.0$   &         &         &         & $0.1$   &         &         &         \\        
+Dropout               & $0.0$   &         &         &         & $0.1$   &         &         &         \\
 Activation Function   & ReLU    &         &         &         & Tanh    &         &         &         \\
 # Epochs              & $50$    &         &         &         & $200$   &         &         &         \\
 Validation F1-score   & $82.39$ &         &         &         & $82.90$ &         &         &
@@ -118,7 +120,7 @@ The first neural model that we use, is a Multi-Layered Perceptron. We choose the
   \item learning rate: $[0.1, 0.01, 0.001]$
   \item dropout probability: $[0.0, 0.1, 0.2]$,
   \item hidden layer dimension: $[100, 300]$, and
-  \item the activation function: $[tanh, relu]$
+  \item the activation function: $[Tanh, ReLU]$
 \end{itemize}
 
 For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[100, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
@@ -135,7 +137,7 @@ For the models that use an embedding layer as their input layers, we additionall
 
 The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \autoref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer. 
 
-The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
+The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\Tanh$.
 
 For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
 
@@ -156,7 +158,7 @@ For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the 
 
 \subsubsection{Long-Short Term Memory}
 
-The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{tanh} as its non-linear activation function. We use Long-Short Term Memory networks due to their prior successes in other works \cite{CITE: LSTM papers} and because they present a development over RNNs, in that they identify information to ``forget'' in to address the issue of long-range dependencies that occur (please see \autoref{chap:nlp} for more detail).
+The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{Tanh} as its non-linear activation function. We use Long-Short Term Memory networks due to their prior successes in other works \cite{CITE: LSTM papers} and because they present a development over RNNs, in that they identify information to ``forget'' in to address the issue of long-range dependencies that occur (please see \autoref{chap:nlp} for more detail).
 
 The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class (please see \autoref{fig:liwc_lstm} for depiction of model architecture.).
 
@@ -188,7 +190,7 @@ For these models, we only consider the activation function, embedding, and hidde
   \item learning rate: $[0.1, 0.01, 0.001]$
   \item embedding layer dimension: $[100, 300]$,
   \item hidden layer dimension: $[100, 300]$, and
-  \item the activation function: $[tanh, relu]$
+  \item the activation function: $[Tanh, ReLU]$
 \end{itemize}
 
 \begin{figure}
@@ -206,6 +208,8 @@ We develop several different baseline methods to compare our method with. For ea
 
 Similarly to our neural models, we perform a parameter search to identify the optimal parameters for training our linear baseline models. For the Support Vector Machine models, we explore a regularisation strength of $C \in \{0.1, 0.02 \ldots 1.0\}$ and $penalty \in \{L1, L2\}$. For the Logistic Regression models, we explore the same values of $C$ and append \texttt{elasticnet} to the possible space of penalties, yielding $penalty \in \{L1, L2, elasticnet\}$. We report the optimal settings in \autoref{tab:liwc_baseline_linear_params}.
 
+\zw{EDIT: Update this table based on binary results}
+
 \begin{table}[]
 \centering
 \resizebox{\textwidth}{!}{%
@@ -213,8 +217,8 @@ Similarly to our neural models, we perform a parameter search to identify the op
                       & \multicolumn{4}{c|}{BPE}                                                             & \multicolumn{4}{c}{LIWC}                                                             \\ \hline
                       & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} \\ \hline
                       & C               & Penalty               & C                 & Penalty                & C               & Penalty               & C                 & Penalty                \\ \hline
-\cite{Davidson:2017}  & $0.8$           & L2                    & $0.2$             & L2                     & $1.0$           & L2                    & $0.8$             & L2                     \\
-\cite{Wulczyn:2017}   & $1.0$           & L2                    & $0.2$             & L2                     & $0.9$           & L2                    & $1.0$             & L2
+\cite{Davidson:2017}  & $1.0$           & L2                    & $0.1$             & L2                     & $0.4$           & L2                    & $0.1$             & L2                     \\
+\cite{Wulczyn:2017}   & $1.0$           & L2                    & $0.2$             & L2                     & $1.0$           & L2                    & $1.0$             & L2
 \end{tabular}%
 }
 \caption{Optimal parameters for linear Support Vector Machine baselines.}
@@ -228,14 +232,14 @@ Considering the performances on the in-domain during training, we see in \autore
 \centering
 \begin{tabular}{l|clllll}
 Training Dataset          & Document Representation                     & Model                   & F1-macro & Accuracy & Precision & Recall   \\ \hline
-\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}                        & Logistic Regression     & $69.57$  & $89.46$  & $71.43$   & $69.20$  \\
-                          &                                             & Support Vector Machine  & $70.78$  & $89.54$  & $72.74$   & $70.03$  \\
-                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $59.75$  & $87.89$  & $63.81$   & $61.37$  \\
-                          &                                             & Support Vector Machine  & $59.97$  & $88.53$  & $67.89$   & $62.00$  \\
-\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}                        & Logistic Regression     & $86.47$  & $95.70$  & $90.13$   & $83.56$  \\
-                          &                                             & Support Vector Machine  & $86.36$  & $95.57$  & $88.92$   & $84.18$  \\
-                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $83.82$  & $95.18$  & $90.81$   & $79.22$  \\
-                          &                                             & Support Vector Machine  & $85.10$  & $95.43$  & $90.47$   & $81.22$
+\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}                        & Logistic Regression     & $92.02$  & $95.52$  & $91.82$   & $92.22$  \\
+                          &                                             & Support Vector Machine  & $92.13$  & $95.56$  & $91.73$   & $92.53$  \\
+                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $87.75$  & $93.09$  & $87.43$   & $88.08$  \\
+                          &                                             & Support Vector Machine  & $89.02$  & $93.62$  & $87.64$   & $90.60$  \\
+\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}                        & Logistic Regression     & $86.35$  & $95.67$  & $90.04$   & $83.42$  \\
+                          &                                             & Support Vector Machine  & $86.47$  & $95.50$  & $89.02$   & $84.31$  \\
+                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $82.32$  & $94.86$  & $90.48$   & $77.34$  \\
+                          &                                             & Support Vector Machine  & $82.98$  & $94.96$  & $90.14$   & $78.36$
 \end{tabular}
 \caption{In-domain scores on validation set by linear baselines.}
 \label{tab:redux_linear_baselines_dev}
@@ -248,68 +252,76 @@ To evaluate which training dataset allows for better generalisation, we train ou
 
 We train all of our neural network models following the same training procedure. We iterate over the training dataset in multiple epochs, shuffling the order of the data at the beginning of each epoch. As we train on a single task, the loss that is propagated through the network using backpropagation is computed on the validation set for the given task. To avoid over-training our model, we implement set our models to stop training after $15$ epochs of worse, that is strictly higher, loss values. As our training procedure closes, we apply the model on each test set, allowing us to evaluate its in-domain performance as well as its out-of-domain performance.
 
-In order to identify the optimal hyper-parameter settings for each model, we define and search a hyper-parameter space for each model (see \autoref{sec:redux_neural} for the search space for each model and \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
-
-\begin{landscape}
-\begin{table}[]
-\centering
-\begin{tabular}{lclllll}
-Training Dataset          & Document Representation  & Model                   & F1-macro & Accuracy & Precision & Recall  \\ \hline
-\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}     & Logistic Regression     & $69.57$  & $89.46$  & $71.43$   & $69.20$  \\
-                          &                          & Support Vector Machine  & $70.78$  & $89.54$  & $72.74$   & $70.03$  \\
-                          & \multirow{2}{*}{LIWC}    & Logistic Regression     & $59.75$  & $87.89$  & $63.81$   & $61.37$  \\
-                          &                          & Support Vector Machine  & $59.97$  & $88.53$  & $67.89$   & $62.00$  \\
-\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}     & Logistic Regression     & $86.47$  & $95.70$  & $90.13$   & $83.56$  \\
-                          &                          & Support Vector Machine  & $86.36$  & $95.57$  & $88.92$   & $84.18$  \\
-                          & \multirow{2}{*}{LIWC}    & Logistic Regression     & $83.80$  & $95.18$  & $90.82$   & $79.19$  \\
-                          &                          & Support Vector Machine  & $84.85$  & $95.42$  & $91.02$   & $90.59$
-\end{tabular}%
-\caption{In-domain scores on validation set by neural models.}
-\label{tab:redux_linear_baselines_dev}
-\end{table}
-\end{landscape}
+Using this training scheme, we define and search a hyper-parameter space for each model (see \autoref{sec:redux_neural} for the search space for each model and \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
 
 \zw{CODING: retrain the best parameters for the models with 4 new random seeds}
 
-\begin{table}[]
-\centering
-\begin{tabular}{lllll|llll}
-                    & \multicolumn{4}{c|}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer}\\
-                    & MLP     & RNN     & LSTM     & CNN     & MLP      & RNN      & LSTM      & CNN     \\\hline
-Hidden dimension    &         &         &          &         &          &          &           &         \\
-Embedding dimension &         &         &          &         &          &          &           &         \\
-Activation function &         &         &          &         &          &          &           &         \\
-Batch size          &         &         &          &         &          &          &           &         \\
-Learning rate       &         &         &          &         &          &          &           &         \\
-# Epochs            &         &         &          &         &          &          &           &         \\
-Dropout             &         &         &          &         &          &          &           &
-\end{tabular}
-\caption{Best parameter setting for each experimental model type trained on \citet{Davidson:2017}.}
-\label{tab:exp_model_parameters_davidson}
-\end{table}
-
-\begin{table}[]
-\centering
-\begin{tabular}{lllll|llll}
-                    & \multicolumn{4}{c|}{Onehot input layer} & \multicolumn{4}{c}{Embedding input layer}\\
-                    & MLP     & RNN     & LSTM     & CNN     & MLP      & RNN      & LSTM      & CNN     \\\hline
-Hidden dimension    &         &         &          &         &          &          &           &         \\
-Embedding dimension &         &         &          &         &          &          &           &         \\
-Activation function &         &         &          &         &          &          &           &         \\
-Batch size          &         &         &          &         &          &          &           &         \\
-Learning rate       &         &         &          &         &          &          &           &         \\
-# Epochs            &         &         &          &         &          &          &           &         \\
-Dropout             &         &         &          &         &          &          &           &
-\end{tabular}
-\caption{Best parameter setting for each experimental model type trained on \citet{Wulczyn:2017}.}
-\label{tab:exp_model_parameters_wulczyn}
-\end{table}
 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
 \zw{Do logistic regression and find out if there are things that the models might overfit on}
 
 \section{Results}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{clllllll}
+\multicolumn{1}{l}{}         & Training data & \multicolumn{6}{c}{Davidson}                                                                                                                                                         \\
+\multicolumn{1}{l}{}         &               & \textit{Support Vector Machine} & \textit{Logistic Regression} & Multi-Layered Perceptron & Convolutional Neural Network & Recurrent Neural Network & Long-Short Term Memory network \\
+\multirow{4}{*}{Davidson}    & F1-macro      &                                 &                              &                          &                              &                          &                                \\
+                             & Accuracy      &                                 &                              &                          &                              &                          &                                \\
+                             & Precision     &                                 &                              &                          &                              &                          &                                \\
+                             & Recall        &                                 &                              &                          &                              &                          &                                \\
+\multirow{4}{*}{Wulczyn}     & F1-macro      &                                 &                              &                          &                              &                          &                                \\
+                             & Accuracy      &                                 &                              &                          &                              &                          &                                \\
+                             & Precision     &                                 &                              &                          &                              &                          &                                \\
+                             & Recall        &                                 &                              &                          &                              &                          &                                \\
+\multirow{4}{*}{Waseem}      & F1-macro      &                                 &                              &                          &                              &                          &                                \\
+                             & Accuracy      &                                 &                              &                          &                              &                          &                                \\
+                             & Precision     &                                 &                              &                          &                              &                          &                                \\
+                             & Recall        &                                 &                              &                          &                              &                          &                                \\
+\multirow{4}{*}{Waseem-Hovy} & F1-macro      &                                 &                              &                          &                              &                          &                                \\
+                             & Accuracy      &                                 &                              &                          &                              &                          &                                \\
+                             & Precision     &                                 &                              &                          &                              &                          &                                \\
+                             & Recall        &                                 &                              &                          &                              &                          &                                \\
+\multirow{4}{*}{Gilbert}     & F1-macro      &                                 &                              &                          &                              &                          &                                \\
+                             & Accuracy      &                                 &                              &                          &                              &                          &                                \\
+                             & Precision     &                                 &                              &                          &                              &                          &                                \\
+                             & Recall        &                                 &                              &                          &                              &                          &                               
+\end{tabular}%
+}
+\caption{Performance of models trained on Byte-Pair Encoded \citet{Davidson:2017} across both in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
+\label{tab:redux_performance_davidson_bpe}
+\end{table}
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\begin{tabular}{ccl|llll|llll}
+\multicolumn{1}{l}{}                 & \multicolumn{1}{l}{}                        &                                 & \multicolumn{4}{c|}{Davidson}            & \multicolumn{4}{c}{Wulczyn}              & \multicolumn{4}{c}{Waseem}               & \multicolumn{4}{c}{Waseem-Hovy}          & \multicolumn{4}{c}{Garcia}              \\
+\multicolumn{1}{l}{Training Dataset} & \multicolumn{1}{l}{Document Representation} & Model                           & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall \\ \hline
+\multirow{12}{*}{Davidson}           & \multirow{6}{*}{BPE}                        & \textit{Support Vector Machine} &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & \textit{Logistic Regression}    &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Multi-Layered Perceptron        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Convolutional Neural Network    &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Recurrent Neural Network        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Long-Short Term Memory network  &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     & \multirow{6}{*}{LIWC}                       & \textit{Support Vector Machine} &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & \textit{Logistic Regression}    &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Multi-Layered Perceptron        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Convolutional Neural Network    &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Recurrent Neural Network        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
+                                     &                                             & Long-Short Term Memory network  &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        
+\end{tabular}
+\caption{Performance of models trained on \citet{Davidson:2017} across both in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
+\label{tab:redux_performance_davidson}
+\end{table}
+\end{landscape}
+
 
 \begin{landscape}
 \begin{table}[]
