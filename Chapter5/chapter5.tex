@@ -294,11 +294,11 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 % \label{tab:redux_performance_davidson_bpe}
 % \end{table}
 
-%\begin{landscape}
+\begin{landscape}
 \begin{table}[]
 \centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{ccl|llll|llll|llll|llll}
+\resizebox{1.4\textheight}{!}{%
+\begin{tabular}{ccl|llll|llll|llll|llll|llll}
 \multicolumn{1}{l}{}                 & \multicolumn{1}{l}{}                        &                                 & \multicolumn{4}{c|}{Davidson}            & \multicolumn{4}{c}{Wulczyn}              & \multicolumn{4}{c}{Waseem}               & \multicolumn{4}{c}{Waseem-Hovy}          & \multicolumn{4}{c}{Garcia}              \\
 \multicolumn{1}{l}{Training Dataset} & \multicolumn{1}{l}{Document Representation} & Model                           & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall & F1-macro & Accuracy & Precision & Recall \\ \hline
 \rot{\multirow{12}{*}{Davidson}}     & \multirow{6}{*}{BPE}                        & \textit{Support Vector Machine} &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        &          &          &           &        \\
@@ -318,7 +318,7 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 \caption{Performance of models trained on \citet{Davidson:2017} across both in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
 \label{tab:redux_performance_davidson}
 \end{table}
-%\end{landscape}
+\end{landscape}
 
 
 \begin{landscape}
