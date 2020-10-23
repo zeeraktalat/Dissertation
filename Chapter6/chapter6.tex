@@ -52,7 +52,7 @@ Following the same methodology as in \autoref{chap:liwc} we pre-process all docu
 We train two variants of all models, one using the Byte-Pair encoded documents and one using the LIWC encoded documents. For our baseline models, we train a Support Vector Machine and a single task Multi-Layered Perceptron. Our experimental models are then all multi-task learning models; we train a multi-task Multi-Layered Perceptron and a Long-Short Term Memory network. Please see \autoref{sec:model_background} for more detail on the models.
 
 % \zw{Describe hyper parameter tuning}
-For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Optuna library \cite{Optuna:2019} to perform Bayesian hyper-parameter optimisation. To identify the best hyper-parameter configuration, we run $100$ iterations of training our model with different hyper-parameters. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{scikit-learn:2019}.
+For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Weights and Biases \cite{Wandb} to perform Bayesian hyper-parameter optimisation. To identify the best hyper-parameter configuration, we run $100$ iterations of training our model with different hyper-parameters. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{scikit-learn:2019}.
 
 \subsection{Neural Models}
 

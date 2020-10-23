@@ -65,7 +65,7 @@ We implement and train four different model architectures with two variations ea
 
 In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
-We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{Optuna:2019} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
+We perform Bayesian Hyper Parameter Tuning using Weights and Biases \cite{Wandb} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
 
 \begin{landscape}
 \begin{table}[]
