@@ -94,58 +94,45 @@ To limit the search space, we search only the top TODO: INSERT NUMBER OF PAREMET
 \begin{table}[]
 \centering
 \begin{tabular}{l|llll|llll}
-  \toprule\multicolumn{9}{c}{Davidson}\\\toprule
                       & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
-                      & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
-Embedding Dimension   &         &          &         &         &         &         &         &          \\
-Hidden Dimension      &         &          &         &         &         &         &         &          \\
-Window Size           &         &          &         &         &         &         &         &          \\
-Batch Size            &         &          &         &         &         &         &         &          \\
-Learning Rate         &         &          &         &         &         &         &         &          \\
-Dropout               &         &          &         &         &         &         &         &          \\
-Activation Function   &         &          &         &         &         &         &         &          \\
-# Epochs              &         &          &         &         &         &         &         &          \\
-Validation F1-score   &         &          &         &         &         &         &         &          \\
-  \toprule\multicolumn{9}{c}{Wulczyn}\\\toprule
-                      & \multicolumn{4}{c|}{BPE}               & \multicolumn{4}{c}{LIWC} \\
+                       & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
+Embedding Dimension    &         &          &         &         &         &         &         &          \\
+Hidden Dimension       &         &          &         &         &         &         &         &          \\
+Window Size            &         &          &         &         &         &         &         &          \\
+Batch Size             &         &          &         &         &         &         &         &          \\
+Learning Rate          &         &          &         &         &         &         &         &          \\
+Dropout                &         &          &         &         &         &         &         &          \\
+Activation Function    &         &          &         &         &         &         &         &          \\
+# Epochs               &         &          &         &         &         &         &         &          \\
+Validation F1-score    &         &          &         &         &         &         &         &
+\end{tabular}
+\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
+\label{tab:redux_hyperparam_search_davidson}
+\end{table}
+\end{landscape}
+
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\begin{tabular}{l|llll|llll}
+                      & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
 Embedding Dimension   &         &         &         &         &         &         &         &         \\
 Hidden Dimension      &         &         &         &         &         &         &         &         \\
 Window Size           &         &         &         &         &         &         &         &         \\
-Batch Size            &         &         &         &         &         &         &         &         \\
+Batch Size            &         &         &         &         &         &         &         &         \\        
 Learning Rate         &         &         &         &         &         &         &         &         \\
 Dropout               &         &         &         &         &         &         &         &         \\
 Activation Function   &         &         &         &         &         &         &         &         \\
 # Epochs              &         &         &         &         &         &         &         &         \\
 Validation F1-score   &         &         &         &         &         &         &         &
 \end{tabular}
-\caption{Best hyper-parameter settings for neural models with embedding input layer.}
-\label{tab:redux_hyperparam_search_davidson}
+\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
+\label{tab:redux_hyperparam_search_wulczyn}
 \end{table}
 \end{landscape}
 
-
-% \begin{landscape}
-% \begin{table}[]
-% \centering
-% \begin{tabular}{lllllllll}
-%                       & \multicolumn{4}{c}{BPE}               & \multicolumn{4}{c|}{LIWC} \\
-%                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
-% Embedding Dimension   &         &         &         &         &         &         &         &         \\
-% Hidden Dimension      &         &         &         &         &         &         &         &         \\
-% Window Size           &         &         &         &         &         &         &         &         \\
-% Batch Size            &         &         &         &         &         &         &         &         \\        
-% Learning Rate         &         &         &         &         &         &         &         &         \\
-% Dropout               &         &         &         &         &         &         &         &         \\
-% Activation Function   &         &         &         &         &         &         &         &         \\
-% # Epochs              &         &         &         &         &         &         &         &         \\
-% Validation F1-score   &         &         &         &         &         &         &         &
-% \end{tabular}
-% \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
-% \label{tab:redux_hyperparam_search_wulczyn}
-% \end{table}
-% \end{landscape}
-%
 For all models trained, we perform hyper-parameter tuning over the batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a catagorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution.
 
 \begin{itemize}
