@@ -94,18 +94,19 @@ To limit the search space, we search only the top TODO: INSERT NUMBER OF PAREMET
 \begin{table}[]
 \centering
 \begin{tabular}{l|llll|llll}
-                       & \multicolumn{4}{c}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
-                       & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
-Embedding Dimension    &         &          &         &         &         &         &         &          \\
-Hidden Dimension       &         &          &         &         &         &         &         &          \\
-Window Size            &         &          &         &         &         &         &         &          \\
-Batch Size             &         &          &         &         &         &         &         &          \\
-Learning Rate          &         &          &         &         &         &         &         &          \\
-Dropout                &         &          &         &         &         &         &         &          \\
-Activation Function    &         &          &         &         &         &         &         &          \\
-# Epochs               &         &          &         &         &         &         &         &          \\
-Validation F1-score    &         &          &         &         &         &         &         &          \\
   \toprule\multicolumn{9}{c}{Davidson}\\\toprule
+                      & \multicolumn{4}{c}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
+                      & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
+Embedding Dimension   &         &          &         &         &         &         &         &          \\
+Hidden Dimension      &         &          &         &         &         &         &         &          \\
+Window Size           &         &          &         &         &         &         &         &          \\
+Batch Size            &         &          &         &         &         &         &         &          \\
+Learning Rate         &         &          &         &         &         &         &         &          \\
+Dropout               &         &          &         &         &         &         &         &          \\
+Activation Function   &         &          &         &         &         &         &         &          \\
+# Epochs              &         &          &         &         &         &         &         &          \\
+Validation F1-score   &         &          &         &         &         &         &         &          \\
+  \toprule\multicolumn{9}{c}{Wulczyn}\\\toprule
                       & \multicolumn{4}{c}{BPE}               & \multicolumn{4}{c|}{LIWC} \\
                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
 Embedding Dimension   &         &         &         &         &         &         &         &         \\
@@ -116,8 +117,7 @@ Learning Rate         &         &         &         &         &         &       
 Dropout               &         &         &         &         &         &         &         &         \\
 Activation Function   &         &         &         &         &         &         &         &         \\
 # Epochs              &         &         &         &         &         &         &         &         \\
-Validation F1-score   &         &         &         &         &         &         &         &         \\
-  \toprule\multicolumn{9}{c}{Wulczyn}\\\toprule
+Validation F1-score   &         &         &         &         &         &         &         &
 \end{tabular}
 \caption{Best hyper-parameter settings for neural models with embedding input layer.}
 \label{tab:redux_hyperparam_search_davidson}
