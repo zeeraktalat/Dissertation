@@ -17,15 +17,33 @@ Focusing our attentions on simple deep neural networks and shallow models, we sh
 \zw{Provide example of transformation}
 \section{Previous work}
 
+In the interest of curtailing the spread of online abuse, a large number of technical appraoches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, we focus on three different strands of research. First, methods that rely on manually crafted feature. Such methods, potentially the most rigerous from a scientific point of view, require an understanding of the problem and dataset as well as intuition and knowledge on how it may be addressed; thus here one might find suggestions for features that have the potential to travel across datasets. Second, we examine methods that rely on automated selection and weighting of features, that is neural network based approaches. Finally, we consider the comparatively small body of research devoted to the development of computational models that explicitly seek to generalise across datasets and domains. As we apply our models to datasets in English, we limit our consideration of methods to those that have been applied to datasets on English.
+
+\subsection{Modelling}
+\subsubsection{Manually Crafted Features}
+
+Generally uses hand-crafted features: \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}
+
+LIWC has previously been examined in the context of abusive detection, \citet{Nina-Alcocer:2019} use LIWC to compute percentages of emotions that are present in abusive docuemnts. They also incorporate ``sexual, anxiety feeling, anger, and so on'' into their feature representation, however withouth clarifying what such features may be or how they are incorporated.
+
+\subsubsection{Neural Networks}
+
+\cite{Zimmerman:2018,Park:2017,Gamback:2017}
+
+As our aim is to consider the influence of LIWC-represented documents, we do not consider the more recent pre-trained Transformer-based langauge models (e.g. \cite{Devlin:2019, CITE: Roberta}) as the amounts of data necessary to train such a masked language model with LIWC representations are unavailable. Moreover, as the LIWC dictionary only occupies a small fraction of the entire English lexicon, and its tokens are abstractions on use of the language, training a language model is a fruitless endeavor.
+
+\subsubsection{Generalisable Models}
+\zw{Talk about NLP models that try to generalise to other datasets.}
+
+\cite{Waseem:2016,Waseem:2018,Karan:2018}
+
+\subsection{Linguistic Inquiry and Word Count}
+
 \zw{Talk about LIWC: Designed for long form documents}
-
-
-\zw{Talk about LIWC}
-\zw{Talk in depth about the references from \autoref{chap:nlp}.}
 
 \subsection{Datasets}
 Beyond the different specific models and types of input layer, the datasets themselves also differ strongly from one another across a number of attributes: the various sizes of the datasets, the platforms the datasets have been sampled from, the annotator selection, the annotation guidelines, and the aims of the datasets. As we seek to build generalisable models and compare the performance across datasets, we reduce the classification task in each dataset to a binary `abuse/not-abuse' class, as each dataset addresses different aspects and notions of abuse.
-We train our models on either the Twitter dataset collected by \citet{Davidson:2017} or the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2017} as our training datasets, in part due to the sizes of the datasets and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
+We train our models on either the Twitter dataset collected by \citet{Davidson:2017} and the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2017}, respectively, as our training datasets. We choose these datasets in part due to their sizes and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
 
 \zw{INSERT: Table of BPE and LIWC vocabularies}
 \zw{INSERT: Short paragraph on vocabularies.}
@@ -52,9 +70,12 @@ While we accept that the influence of annotation guidelines have strong influenc
 
 \section{Modelling}
 
+As our aim is to understand how representing documents using only the tokens derived using the Linguistic Inquiry and Word Count dictionary may influence the generalisability of models for hate speech detection across datasets and domains, we use simple modelling architectures and feature representations.
+
 \subsection{Neural Models}\ref{sec:redux_neural}
 
-We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We choose these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). For all neural models, we use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}. All neural models are implemented using PyTorch \cite{CITE: Pytorch paper}.
+We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We select these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). We implement all neural network models using PyTorch \cite{CITE: Pytorch paper} and use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}.
+In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
 \begin{figure}
   \centering
@@ -63,15 +84,17 @@ We implement and train four different model architectures with two variations ea
   \label{fig:onehot_embedding}
 \end{figure}
 
-In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
+\subsection{Hyper-Parameter Search}
 
 We perform Bayesian Hyper Parameter Tuning using Weights and Biases \cite{Wandb} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
+For each embedding-based model, we sample $200$ different hyper-parameter settings for each of our models. Due to the number of hyper-parameter combinations that we sample, we find multiple competing hyper-parameter settings that achieve comparative results. Here we only consider the top TODO: INSERT NUMBER OF PARAMETER SETTINGS TO SEARCH the hyper-parameter hyper-parameter settings and report the setting that performs best on the training data and the test data. In an initial, aborted, hyper-parameter search of the onehot encoded models, we identified that the hyper-parameter search with $200$ different paremeter settings would take more than 200 days to complete.
+To limit the search space, we search only the top TODO: INSERT NUMBER OF PAREMETERS TO SEARCH hyper-parameter settings from the hyper-parameter search of the embedding-layer models to search. See \autoref{tab:appendix-embedding-hyperparam} and \autoref{tab:appendix-onehot-hyperparam} in \autoref{Appendix:hyperparams} for full listing of hyper-parameter values.
 
 \begin{landscape}
 \begin{table}[]
 \centering
-\begin{tabular}{lllllllll}
-                      & \multicolumn{4}{c}{BPE}                 & \multicolumn{4}{c|}{LIWC} \\
+\begin{tabular}{l|llll|llll}
+                      & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
                        & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
 Embedding Dimension    &         &          &         &         &         &         &         &          \\
 Hidden Dimension       &         &          &         &         &         &         &         &          \\
@@ -81,9 +104,9 @@ Learning Rate          &         &          &         &         &         &     
 Dropout                &         &          &         &         &         &         &         &          \\
 Activation Function    &         &          &         &         &         &         &         &          \\
 # Epochs               &         &          &         &         &         &         &         &          \\
-Validation F1-score    &         &          &         &         &         &         &         &        
+Validation F1-score    &         &          &         &         &         &         &         &
 \end{tabular}
-\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
+\caption{Best hyper-parameter settings for neural models with embedding input layer trained on \citet{Davidson:2017}.}
 \label{tab:redux_hyperparam_search_davidson}
 \end{table}
 \end{landscape}
@@ -93,12 +116,12 @@ Validation F1-score    &         &          &         &         &         &     
 \begin{table}[]
 \centering
 \begin{tabular}{lllllllll}
-                      & \multicolumn{4}{c}{BPE}               & \multicolumn{4}{c|}{LIWC} \\
+                      & \multicolumn{4}{c|}{BPE}               & \multicolumn{4}{c}{LIWC} \\
                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
 Embedding Dimension   &         &         &         &         &         &         &         &         \\
 Hidden Dimension      &         &         &         &         &         &         &         &         \\
 Window Size           &         &         &         &         &         &         &         &         \\
-Batch Size            &         &         &         &         &         &         &         &         \\        
+Batch Size            &         &         &         &         &         &         &         &         \\
 Learning Rate         &         &         &         &         &         &         &         &         \\
 Dropout               &         &         &         &         &         &         &         &         \\
 Activation Function   &         &         &         &         &         &         &         &         \\
@@ -110,17 +133,22 @@ Validation F1-score   &         &         &         &         &         &       
 \end{table}
 \end{landscape}
 
+For all models trained, we perform hyper-parameter tuning over the batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a catagorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution.
+
+\begin{itemize}
+  \item Maximum epoch count: $\{50, 100, 200\}$,
+  \item Batch size: $\{16, 32, 64\}$,
+  \item learning rate: $[0.00001, 1.0]$
+\end{itemize}
 
 \subsubsection{Multi-Layered Perceptron}
 
 The first neural model that we use, is a Multi-Layered Perceptron. We choose the model as it is a simple neural network, that can act as a minimal setting of the usefulness of neural networks. Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of a batch of documents are then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}. For the Multi-Layered Perceptron models, we search over the following values:
 
 \begin{itemize}
-  \item Batch size: $[16, 32, 64]$,
-  \item learning rate: $[0.1, 0.01, 0.001]$
-  \item dropout probability: $[0.0, 0.1, 0.2]$,
-  \item hidden layer dimension: $[100, 300]$, and
-  \item the activation function: $[Tanh, ReLU]$
+  \item dropout probability: $[0.0, 0.5]$,
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
+  \item the activation function: $\{Tanh, ReLU\}$
 \end{itemize}
 
 For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[100, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
@@ -142,11 +170,9 @@ The model is trained by first passing batches of index or onehot encoded documen
 For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
 
 \begin{itemize}
-  \item Batch size: $[16, 32, 64]$,
-  \item learning rate: $[0.1, 0.01, 0.001]$
-  \item dropout probability: $[0.0, 0.1, 0.2]$,
-  \item embedding layer dimension: $[100, 300]$, and
-  \item hidden layer dimension: $[100, 300]$.
+  \item dropout probability: $[0.0, 0.5]$,
+  \item embedding layer dimension: $\{64, 100, 200, 300\}$, and
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$
 \end{itemize}
 
 \begin{figure}
@@ -165,11 +191,9 @@ The model is trained by passing batches of documents through the input layer pri
 For these models, our hyper-parameter tuning considers the following parameters and values:
 
 \begin{itemize}
-  \item Batch size: $[16, 32, 64]$,
-  \item learning rate: $[0.1, 0.01, 0.001]$
-  \item dropout probability: $[0.0, 0.1, 0.2]$,
-  \item embedding layer dimension: $[100, 300]$, and
-  \item hidden layer dimension: $[100, 300]$.
+  \item dropout probability: $[0.0, 0.5]$,
+  \item embedding layer dimension: $\{64, 100, 200, 300\}$, and
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$
 \end{itemize}
 
 \begin{figure}
@@ -186,11 +210,10 @@ For our final neural model type, we use a Convolutional Neural Network. We selec
 For these models, we only consider the activation function, embedding, and hidden dimension in our hyper-parameter tuning, in addition to batch size and learning rate.
 
 \begin{itemize}
-  \item Batch size: $[16, 32, 64]$,
-  \item learning rate: $[0.1, 0.01, 0.001]$
-  \item embedding layer dimension: $[100, 300]$,
-  \item hidden layer dimension: $[100, 300]$, and
-  \item the activation function: $[Tanh, ReLU]$
+  \item window size: $\{(1, 2, 3), (2, 3, 4), (3, 4, 5)\}$,
+  \item Number of filters: $\{64, 128, 256\}$,
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
+  \item the activation function: $\{Tanh, ReLU\}$
 \end{itemize}
 
 \begin{figure}
