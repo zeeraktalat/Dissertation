@@ -74,7 +74,8 @@ As our aim is to understand how representing documents using only the tokens der
 
 \subsection{Neural Models}\ref{sec:redux_neural}
 
-We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We select these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). For all neural models, we use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}. All neural models are implemented using PyTorch \cite{CITE: Pytorch paper}.
+We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We select these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). We implement all neural network models using PyTorch \cite{CITE: Pytorch paper} and use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}.
+In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
 
 \begin{figure}
   \centering
@@ -83,15 +84,18 @@ We implement and train four different model architectures with two variations ea
   \label{fig:onehot_embedding}
 \end{figure}
 
-In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
+\subsection{Hyper-Parameter Search}
 
 We perform Bayesian Hyper Parameter Tuning using the Optuna library \cite{Optuna:2019} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
+For each embedding-based model, we sample $200$ different hyper-parameter settings for each of our models. Due to the number of hyper-parameter combinations that we sample, we find multiple competing hyper-parameter settings that achieve comparative results. Here we only consider the top TODO: INSERT NUMBER OF PARAMETER SETTINGS TO SEARCH the hyper-parameter hyper-parameter settings and report the setting that performs best on the training data and the test data. In an initial, aborted, hyper-parameter search of the onehot encoded models, we identified that the hyper-parameter search with $200$ different paremeter settings would take more than 200 days to complete.
+To limit the search space, we search only the top TODO: INSERT NUMBER OF PAREMETERS TO SEARCH hyper-parameter settings from the hyper-parameter search of the embedding-layer models to search. See \autoref{tab:appendix-embedding-hyperparam} and \autoref{tab:appendix-onehot-hyperparam} in \autoref{Appendix:hyperparams} for full listing of hyper-parameter values.
 
 \begin{landscape}
 \begin{table}[]
 \centering
 \begin{tabular}{lllllllll}
-                      & \multicolumn{4}{c}{BPE}                 & \multicolumn{4}{c|}{LIWC} \\
+  \toprule\\\multicolumn{9}{c}{Davidson}\\\toprule
+                       & \multicolumn{4}{c}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
                        & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
 Embedding Dimension    &         &          &         &         &         &         &         &          \\
 Hidden Dimension       &         &          &         &         &         &         &         &          \\
@@ -101,35 +105,47 @@ Learning Rate          &         &          &         &         &         &     
 Dropout                &         &          &         &         &         &         &         &          \\
 Activation Function    &         &          &         &         &         &         &         &          \\
 # Epochs               &         &          &         &         &         &         &         &          \\
-Validation F1-score    &         &          &         &         &         &         &         &          
-\end{tabular}
-\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
-\label{tab:redux_hyperparam_search_davidson}
-\end{table}
-\end{landscape}
-
-
-\begin{landscape}
-\begin{table}[]
-\centering
-\begin{tabular}{lllllllll}
+Validation F1-score    &         &          &         &         &         &         &         &          \\
+  \toprule\\\multicolumn{9}{c}{Wulczyn}\\\toprule
                       & \multicolumn{4}{c}{BPE}               & \multicolumn{4}{c|}{LIWC} \\
                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
 Embedding Dimension   &         &         &         &         &         &         &         &         \\
 Hidden Dimension      &         &         &         &         &         &         &         &         \\
 Window Size           &         &         &         &         &         &         &         &         \\
-Batch Size            &         &         &         &         &         &         &         &         \\        
+Batch Size            &         &         &         &         &         &         &         &         \\
 Learning Rate         &         &         &         &         &         &         &         &         \\
 Dropout               &         &         &         &         &         &         &         &         \\
 Activation Function   &         &         &         &         &         &         &         &         \\
 # Epochs              &         &         &         &         &         &         &         &         \\
 Validation F1-score   &         &         &         &         &         &         &         &
 \end{tabular}
-\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
-\label{tab:redux_hyperparam_search_wulczyn}
+\caption{Best hyper-parameter settings for neural models with embedding input layer.}
+\label{tab:redux_hyperparam_search_davidson}
 \end{table}
 \end{landscape}
 
+
+% \begin{landscape}
+% \begin{table}[]
+% \centering
+% \begin{tabular}{lllllllll}
+%                       & \multicolumn{4}{c}{BPE}               & \multicolumn{4}{c|}{LIWC} \\
+%                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
+% Embedding Dimension   &         &         &         &         &         &         &         &         \\
+% Hidden Dimension      &         &         &         &         &         &         &         &         \\
+% Window Size           &         &         &         &         &         &         &         &         \\
+% Batch Size            &         &         &         &         &         &         &         &         \\        
+% Learning Rate         &         &         &         &         &         &         &         &         \\
+% Dropout               &         &         &         &         &         &         &         &         \\
+% Activation Function   &         &         &         &         &         &         &         &         \\
+% # Epochs              &         &         &         &         &         &         &         &         \\
+% Validation F1-score   &         &         &         &         &         &         &         &
+% \end{tabular}
+% \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
+% \label{tab:redux_hyperparam_search_wulczyn}
+% \end{table}
+% \end{landscape}
+%
 For all models trained, we perform hyper-parameter tuning over the batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a catagorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution.
 
 \begin{itemize}
