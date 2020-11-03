@@ -73,15 +73,15 @@ We perform Bayesian Hyper Parameter Tuning using Weights and Biases \cite{Wandb}
 \begin{tabular}{lllllllll}
                       & \multicolumn{4}{c}{BPE}                 & \multicolumn{4}{c|}{LIWC} \\
                        & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
-Embedding Dimension    & $100$   & $300$    & $100$   & $300$   & $100$   & $100$   & $100$   & $100$    \\
-Hidden Dimension       & $300$   & $64$     & $300$   & $300$   & $300$   & $100$   & $300$   & $100$    \\
-Window Size            & -       & $2, 3 4$ & -       & -       & -       & -       & -       & -        \\
-Batch Size             & $16$    & $32$     & $16$    & $64$    & $16$    & $64$    & $64$    & $64$     \\
-Learning Rate          & $0.001$ & $0.001$  & $0.01$  & $0.001$ & $0.001$ & $0.001$ & $0.001$ & $0.001$  \\
-Dropout                & $0.2$   & $0.2$    & $0.0$   & $0.1$   & $0.1$   & $0.0$   & $0.0$   & $0.0$    \\
-Activation Function    & Tanh    & Tanh     & Tanh    & Tanh    & ReLU    & ReLU    & Tanh    & Tanh     \\
-# Epochs               & $100$   & $50$     & $50$    & $100$   & $200$   & $50$    & $100$   & $200$    \\
-Validation F1-score    & $84.24$ & $85.10$  & $45.41$ & $72.01$ & $87.54$ & $86.01$ & $43.73$ & $82.67$  
+Embedding Dimension    &         &          &         &         &         &         &         &          \\
+Hidden Dimension       &         &          &         &         &         &         &         &          \\
+Window Size            &         &          &         &         &         &         &         &          \\
+Batch Size             &         &          &         &         &         &         &         &          \\
+Learning Rate          &         &          &         &         &         &         &         &          \\
+Dropout                &         &          &         &         &         &         &         &          \\
+Activation Function    &         &          &         &         &         &         &         &          \\
+# Epochs               &         &          &         &         &         &         &         &          \\
+Validation F1-score    &         &          &         &         &         &         &         &        
 \end{tabular}
 \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
 \label{tab:redux_hyperparam_search_davidson}
@@ -95,15 +95,15 @@ Validation F1-score    & $84.24$ & $85.10$  & $45.41$ & $72.01$ & $87.54$ & $86.
 \begin{tabular}{lllllllll}
                       & \multicolumn{4}{c}{BPE}               & \multicolumn{4}{c|}{LIWC} \\
                       & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
-Embedding Dimension   & $100$   &         &         &         & $300$   &         &         &         \\
-Hidden Dimension      & $300$   &         &         &         & $300$   &         &         &         \\
-Window Size           & -       &         &         &         & -       &         &         &         \\
-Batch Size            & $32$    &         &         &         & $32$    &         &         &         \\        
-Learning Rate         & $0.001$ &         &         &         & $0.001$ &         &         &         \\
-Dropout               & $0.0$   &         &         &         & $0.1$   &         &         &         \\
-Activation Function   & ReLU    &         &         &         & Tanh    &         &         &         \\
-# Epochs              & $50$    &         &         &         & $200$   &         &         &         \\
-Validation F1-score   & $82.39$ &         &         &         & $82.90$ &         &         &
+Embedding Dimension   &         &         &         &         &         &         &         &         \\
+Hidden Dimension      &         &         &         &         &         &         &         &         \\
+Window Size           &         &         &         &         &         &         &         &         \\
+Batch Size            &         &         &         &         &         &         &         &         \\        
+Learning Rate         &         &         &         &         &         &         &         &         \\
+Dropout               &         &         &         &         &         &         &         &         \\
+Activation Function   &         &         &         &         &         &         &         &         \\
+# Epochs              &         &         &         &         &         &         &         &         \\
+Validation F1-score   &         &         &         &         &         &         &         &
 \end{tabular}
 \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
 \label{tab:redux_hyperparam_search_wulczyn}
