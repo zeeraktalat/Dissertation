@@ -294,21 +294,24 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 \centering
 \resizebox{1.4\textheight}{!}{%
 \begin{tabular}{l|clllll|llllll}
-                            & \multicolumn{6}{c}{Onehot-Encoded Models}                                                            & \multicolumn{6}{c}{Index-Encoded Models}                                                             \\
-Training data               & Doc Rep & Model                          & F1-macro & Accuracy & Precision & Recall  & Doc Rep & Model                          & F1-macro & Accuracy & Precision & Recall  \\ \hline
-\mrow{4}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         \\
-                            &                         & Convolutional Neural Network   &          &          &           &         &                         & Convolutional Neural Network   &          &          &           &         \\
-                            &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
-                            
-                            & \mrow{4}{*}{\rot{LIWC}} & Convolutional Neural Network   &          &          &           &         & \mrow{4}{*}{\rot{LIWC}}   & Convolutional Neural Network   &          &          &           &         \\
-                            &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
-                            
-\mrow{4}{*}{\rot{{\Large Wulczyn}}}  & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         \\
-                            &                         & Convolutional Neural Network   &          &          &           &         &                         & Convolutional Neural Network   &          &          &           &         \\
-                            &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
-                            
-                            & \mrow{4}{*}{\rot{LIWC}} & Convolutional Neural Network   &          &          &           &         & \mrow{4}{*}{\rot{LIWC}}   & Convolutional Neural Network   &          &          &           &         \\
-                            &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
+                            & \multicolumn{6}{c}{Onehot-Encoded Models}                                                           & \multicolumn{6}{c}{Index-Encoded Models}                                                             \\
+  Training data             & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall  \\ \hline
+\mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &        & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           &        &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           &        &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           &        &                         & Long-Short Term Memory Network &          &          &           & \\
+                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &        & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           &        &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           &        &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           &        &                         & Long-Short Term Memory Network &          &          &           & \\
+\mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &        & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           &        &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           &        &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           &        &                         & Long-Short Term Memory Network &          &          &           & \\
+                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &        & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           &        &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           &        &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           &        &                         & Long-Short Term Memory Network &          &          &           & \\
 \end{tabular}%
 }
 \caption{In-domain scores on validation set by neural models.}
