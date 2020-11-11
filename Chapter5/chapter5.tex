@@ -22,7 +22,7 @@ In the interest of curtailing the spread of online abuse, a large number of tech
 \subsection{Modelling}
 \subsubsection{Manually Crafted Features}
 
-A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. While we do not manually craft the features for our experiments, we draw heavily on the rationale for manually developing features. The governing reasoning for using manually crafted features, such as Part-of-Speech tags \cite{Davidson:2017} is that they reveal intuitions of what the researcher believes may surface salient correlations that aid in high classification performance. Frequently used features are Bag-of-Words, that is the unordered occurrence of each word in a document; Term Frequency-Inverse Document Frequency which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination, mathematically $\dfrac{\text{{\em \# token} t}}{\# \text{{\em tokens in document}}} \times \dfrac{\text{{\em \# documents}}}{\text{{\em \# documents containing} t}}$; n-grams, 
+A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. While we do not manually craft the features for our experiments, we draw heavily on the rationale for manually developing features. The governing reasoning for using manually crafted features, such as Part-of-Speech tags \cite{Davidson:2017} is that they reveal intuitions of what the researcher believes may surface salient correlations that aid in high classification performance. Frequently used features are Bag-of-Words, that is the un-ordered occurrence of each word in a document; Term Frequency-Inverse Document Frequency which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination, mathematically $\dfrac{\text{{\em \# token} t}}{\# \text{{\em tokens in document}}} \times \dfrac{\text{{\em \# documents}}}{\text{{\em \# documents containing} t}}$; n-grams, e.g. bi-grams and tri-grams that consider tuples of tokens
 
 LIWC has previously been examined in the context of abusive detection, \citet{Nina-Alcocer:2019} use LIWC to compute percentages of emotions that are present in abusive docuemnts. They also incorporate ``sexual, anxiety feeling, anger, and so on'' into their feature representation, however withouth clarifying what such features may be or how they are incorporated.
 
@@ -92,7 +92,7 @@ In order to focus on the utility of the transformed document representations, we
 \subsection{Hyper-Parameter Search}
 
 We perform Bayesian Hyper Parameter Tuning using Weights and Biases \cite{Wandb} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
-For each embedding-based model, we sample $200$ different hyper-parameter settings for each of our models. Due to the number of hyper-parameter combinations that we sample, we find multiple competing hyper-parameter settings that achieve comparative results. Here we only consider the top TODO: INSERT NUMBER OF PARAMETER SETTINGS TO SEARCH the hyper-parameter hyper-parameter settings and report the setting that performs best on the training data and the test data. In an initial, aborted, hyper-parameter search of the onehot encoded models, we identified that the hyper-parameter search with $200$ different paremeter settings would take more than 200 days to complete.
+For each embedding-based model, we sample $200$ different hyper-parameter settings for each of our models. Due to the number of hyper-parameter combinations that we sample, we find multiple competing hyper-parameter settings that achieve comparative results. Here we only consider the top TODO: INSERT NUMBER OF PARAMETER SETTINGS TO SEARCH the hyper-parameter hyper-parameter settings and report the setting that performs best on the training data and the test data. In an initial, aborted, hyper-parameter search of the onehot encoded models, we identified that the hyper-parameter search with $200$ different parameter settings would take more than 200 days to complete.
 To limit the search space, we search only the top TODO: INSERT NUMBER OF PAREMETERS TO SEARCH hyper-parameter settings from the hyper-parameter search of the embedding-layer models to search. See \autoref{tab:appendix-embedding-hyperparam} and \autoref{tab:appendix-onehot-hyperparam} in \autoref{Appendix:hyperparams} for full listing of hyper-parameter values.
 
 \begin{landscape}
@@ -138,7 +138,7 @@ Validation F1-score   &         &         &         &         &         &       
 \end{table}
 \end{landscape}
 
-For all models trained, we perform hyper-parameter tuning over the batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a catagorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution.
+For all models trained, we perform hyper-parameter tuning over the same batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution. We select a Rectified Linear Unit \cite{CITE: RELU paper} activation function for all models except for the Recurrent Neural Network and the Long-Short Term Memory model, as the latter is only implemented with a $Tanh$ activation function in PyTorch and we use the former to ensure comparison between the Long-Short Term Memory model and all other models.
 
 \begin{itemize}
   \item Maximum epoch count: $\{50, 100, 200\}$,
@@ -153,7 +153,7 @@ The first neural model that we use, is a Multi-Layered Perceptron. We choose the
 \begin{itemize}
   \item dropout probability: $[0.0, 0.5]$,
   \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
-  \item the activation function: $\{Tanh, ReLU\}$
+  \item the activation function: $\{ReLU\}$
 \end{itemize}
 
 For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[100, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
@@ -176,8 +176,9 @@ For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the 
 
 \begin{itemize}
   \item dropout probability: $[0.0, 0.5]$,
-  \item embedding layer dimension: $\{64, 100, 200, 300\}$, and
-  \item hidden layer dimension: $\{64, 100, 200, 300\}$
+  \item embedding layer dimension: $\{64, 100, 200, 300\}$,
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
+   \item the activation function: $\{Tanh, ReLU\}$
 \end{itemize}
 
 \begin{figure}
@@ -218,7 +219,7 @@ For these models, we only consider the activation function, embedding, and hidde
   \item window size: $\{(1, 2, 3), (2, 3, 4), (3, 4, 5)\}$,
   \item Number of filters: $\{64, 128, 256\}$,
   \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
-  \item the activation function: $\{Tanh, ReLU\}$
+  \item the activation function: $\{ReLU\}$
 \end{itemize}
 
 \begin{figure}
@@ -292,25 +293,22 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 \begin{table}[]
 \centering
 \resizebox{1.4\textheight}{!}{%
-\begin{tabular}{l|clllll|}
+\begin{tabular}{l|clllll|llllll}
                             & \multicolumn{6}{c}{Onehot-Encoded Models}                                                            & \multicolumn{6}{c}{Index-Encoded Models}                                                             \\
-Training data               & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall  & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall  \\ \hline
-\mrow{4}{*}{\rot{Davidson}} & \mrow{4}{*}{BPE}        & Multi-Layered Perceptron       &          &          &           &         & \mrow{4}{*}{BPE}        & Multi-Layered Perceptron       &          &          &           &         \\
+Training data               & Doc Rep & Model                          & F1-macro & Accuracy & Precision & Recall  & Doc Rep & Model                          & F1-macro & Accuracy & Precision & Recall  \\ \hline
+\mrow{4}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         \\
                             &                         & Convolutional Neural Network   &          &          &           &         &                         & Convolutional Neural Network   &          &          &           &         \\
                             &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
-                            &                         & Support Vector Machine         &          &          &           &         &                         & Support Vector Machine         &          &          &           &         \\
-                            & \mrow{4}{*}{LIWC}       & Logistic Regression            &          &          &           &         & \mrow{4}{*}{LIWC}       & Logistic Regression            &          &          &           &         \\
+                            
+                            & \mrow{4}{*}{\rot{LIWC}} & Convolutional Neural Network   &          &          &           &         & \mrow{4}{*}{\rot{LIWC}}   & Convolutional Neural Network   &          &          &           &         \\
+                            &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
+                            
+\mrow{4}{*}{\rot{{\Large Wulczyn}}}  & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         & \mrow{4}{*}{\rot{BPE}}        & Multi-Layered Perceptron       &          &          &           &         \\
                             &                         & Convolutional Neural Network   &          &          &           &         &                         & Convolutional Neural Network   &          &          &           &         \\
                             &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
-                            &                         & Support Vector Machine         &          &          &           &         &                         & Support Vector Machine         &          &          &           &         \\
-\mrow{4}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{BPE}        & Logistic Regression            &          &          &           &         & \mrow{4}{*}{BPE}        & Logistic Regression            &          &          &           &         \\
-                            &                         & Convolutional Neural Network   &          &          &           &         &                         & Convolutional Neural Network   &          &          &           &         \\
+                            
+                            & \mrow{4}{*}{\rot{LIWC}} & Convolutional Neural Network   &          &          &           &         & \mrow{4}{*}{\rot{LIWC}}   & Convolutional Neural Network   &          &          &           &         \\
                             &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
-                            &                         & Support Vector Machine         &          &          &           &         &                         & Support Vector Machine         &          &          &           &         \\
-                            & \mrow{4}{*}{LIWC}       & Logistic Regression            &          &          &           &         & \mrow{4}{*}{LIWC}       & Logistic Regression            &          &          &           &         \\
-                            &                         & Convolutional Neural Network   &          &          &           &         &                         & Convolutional Neural Network   &          &          &           &         \\
-                            &                         & Long-Short Term Memory Network &          &          &           &         &                         & Long-Short Term Memory Network &          &          &           &         \\
-                            &                         & Support Vector Machine         &          &          &           &         &                         & Support Vector Machine         &          &          &           &         \\
 \end{tabular}%
 }
 \caption{In-domain scores on validation set by neural models.}
@@ -328,7 +326,7 @@ Training data               & Document Representation & Model                   
 \begin{tabular}{ccl|llll|llll|llll|llll|llll}
                                      &                         &                                & \multicolumn{4}{c|}{Davidson} & \multicolumn{4}{c}{Wulczyn}   & \multicolumn{4}{c}{Waseem}    & \multicolumn{4}{c}{Waseem-Hovy} & \multicolumn{4}{c}{Garcia} \\
  Training data                       & Representation          & Model                          & F1    & acc    & prec & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec     & F1    & acc    & prec & rec   \\ \hline
-\mrow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$92.19$&$95.60$&$91.91$&$92.47$&$71.26$&$86.83$&$67.87$&$92.47$&$49.06$&$68.64$&$49.56$&$49.41$&$58.49$&$65.66$&$49.41$&$58.25$  &$60.62$&$60.66$&$60.71$&$60.66$\\
+\multirow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$92.19$&$95.60$&$91.91$&$92.47$&$71.26$&$86.83$&$67.87$&$92.47$&$49.06$&$68.64$&$49.56$&$49.41$&$58.49$&$65.66$&$49.41$&$58.25$  &$60.62$&$60.66$&$60.71$&$60.66$\\
                                      &                         & Logistic Regression            &$91.39$&$95.19$&$91.51$&$91.27$&$71.18$&$86.40$&$67.68$&$79.85$&$48.34$&$66.04$&$49.35$&$49.03$&$58.12$&$64.36$&$58.37$&$57.98$  &$58.15$&$58.15$&$58.16$&$58.15$\\
                                      &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
                                      &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
