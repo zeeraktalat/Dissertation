@@ -154,9 +154,45 @@ Through these choices of metrics we can discern some aims of the modeling proces
 
 \section{Dissertation Models}
 
+Here I consider the two model types that I have developed in \autoref{chap:liwc} and \autoref{chap:mtl}. I document the considerations and assumptions each model type reveals throughout the machine learning pipeline. Rather than go through the entire pipeline, I begin my analysis at the entry points, that the choices of datasets and the modelling choices, as I only make use of previously published datasets.
+
 \subsection{Vocabulary Reductions}
 
+In \autoref{chap:liwc}, I train the machine learning models using the datasets published by \citet{Davidson:2017} and \citet{Wulczyn:2017}. The decision to use these datasets as training data stems from the two datasets coming from two distinct sources, Twitter and Wikipedia editor discussions.
+\zw{If generalisability is the goal}
+To be able to measure the generalisability of the models trained in \citet{Davidson:2017}, I reduce the multi-class classification task to a binary classification task. Through this reduction in classes, I enforce a normative choice that the detection of abuse has greater value than the identification of the specific type of abuse. Similarly, for all other datasets used for evaluating generalisability (i.e. \citet{Waseem:2016,Waseem-Hovy:2016,Gibert:2018}) are similarly subject to a reduction of output classes, here to align the labels learned by the model with the output labels in these external evaluation sets. My own experiences of hate speech and racialised abuse are at the heart of such a prioritisation.
+Further, the modeling choice of how to represent data are also subject to my subjective embodiments. While on one hand the reduction of the input space to a much smaller input space means that the size of the subsequent models, and by extension the complexity of the models.\footnote{We appreciate that even with a reduction of the model size and complexity, neural networks are still too complex to be readily understood without the aid of additional tools.} On the other hand, through such a reduction in the vocabulary, a large majority of words will no longer be represented by the text in the models. Here, my own beliefs that abuse detection models that rely too strongly on the occurrence of specific tokens ultimately provide an issue towards the goal of achieving models that can protect marginalised people from abuse.
+
+\zw{If only input space reduction is the goal, otherwise drop.}
+{\color{orange!80!black}
+The modeling choice of how to represent data are also subject to my subjective embodiments. While on one hand the reduction of the input space to a much smaller input space means that the size of the subsequent models, and by extension the complexity of the models.\footnote{We appreciate that even with a reduction of the model size and complexity, neural networks are still too complex to be readily understood without the aid of additional tools.} On the other hand, through such a reduction in the vocabulary, a large majority of words will no longer be represented by the text in the models. Here, my own beliefs that abuse detection models that rely too strongly on the occurrence of specific tokens ultimately provide an issue towards the goal of achieving models that can protect marginalised people from abuse.
+\vspace{5mm}
+}
+
+In the use of linear models as baseline models, the underlying assumption is that simple correlations of word occurrences with labels, as are found with linear models, do not capture the complex interactions between words in text required to make qualified judgements on abuse. This assumption too is influenced by my own positionality as a brown muslim who grew up in a predominately white country where brown people, and in particular muslims, are villified for their existence. As I am often wont to recount, growing up and watching the news Danish police bullitins for wanted persons frequently used the description `muslim looking' to describe brown men. Such experiences have made it clear to me that social norms surrounding the use of tokens cannot be readily understood from the words, or multi word expressions without greater contextualisation. For this reason, I use LSTMs as they can capture long interactions between words and are less directly reliant on the occurrence of individual patterns. In addition, a number of past studies having shown the efficacy of CNNs for abuse detection \citep{Park:2017, Mitchell:2019,Kolhatkar:2020,Rizwan:2020,Safaya:2020}, I use such models, due to the influence of past work on the topic of hate speech and abuse detection.
+
+{\color{orange!80!black}
+\zw{If current models come to work OR input space reduction becomes the argument}
+As the models described in \autoref{chap:liwc} that only use words or byte-pair encoded words as input rely entirely on the training data to learn patterns in data, its apparent that those models fall towards the very extreme of the globalised end of the spectrum that I propose. On the other hand, while still towards the globalised end of the spectrum, the models that rely on LIWC as the input come are shifted more to the localised end of the spectrum, as the LIWC dictionary that is used to map from words to LIWC categories is informed by considering data external to the data the models rely on.
+}
+
+{\color{green!80!black}
+\zw{If pre-trained embeddings + LIWC embedding layer works}
+All models described in \autoref{chap:liwc} fall towards the globalised end of the spectrum, however some further to the extreme ends than others. All linear models that use words or byte-pair encoded data as input represent the extreme globalised-end of the spectrum, as these models only rely on the training data. The linear models that use LIWC categories, and those that use words/bpe in addition to LIWC categories shift slightly towards the localised end of the spectrum by virtue of the LIWC dictionary being developed using external data to inform the creation of the categories.
+As all neural network models use pre-trained word or BPE embeddings, they can be placed further towards the localised end of the spectrum. Similarly to the use of LIWC for linear models, the use of LIWC as additional input shifts the models further towards the localised end of the spectrum.}
+
+However, while some models find themselves further towards the localised end of the spectrum than others, all models that I use in \autoref{chap:liwc} are positioned in the globalised end of the spectrum as none of the data representations take into account the local subjective positionality of the individuals in the data, instead they all rely on some abstraction away from the subjective self through processes of disembodiment.
+
 \subsection{Multitask learning}
+
+
+\zw{Dataset choices}
+\zw{Text representations}
+\zw{Model choices}
+
+\zw{If current method works}
+In \autoref{chap:mtl} I turn to the question of which embodiments, in terms of social constructs such as sarcasm, humour, and moral sentiment would be helpful for a classification model for abuse detection. As I use many of the same data processing techniques as in \autoref{chap:liwc}, and
+
 
 \section{Discussion}
 
