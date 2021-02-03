@@ -156,7 +156,7 @@ Through these choices of metrics we can discern some aims of the modeling proces
 
 Here I consider the two model types that I have developed in \autoref{chap:liwc} and \autoref{chap:mtl}. I document the considerations and assumptions each model type reveals throughout the machine learning pipeline. Rather than go through the entire pipeline, I begin my analysis at the entry points, that the choices of datasets and the modelling choices, as I only make use of previously published datasets.
 
-\subsection{Vocabulary Reductions}
+\subsection{Vocabulary Reductions}\label{sub:vocab_redux}
 
 In \autoref{chap:liwc}, I train the machine learning models using the datasets published by \citet{Davidson:2017} and \citet{Wulczyn:2017}. The decision to use these datasets as training data stems from the two datasets coming from two distinct sources, Twitter and Wikipedia editor discussions.
 {\color{green!80!black}
@@ -183,17 +183,52 @@ As the models described in \autoref{chap:liwc} that only use words or byte-pair 
 All models described in \autoref{chap:liwc} fall towards the globalised end of the spectrum, however some further to the extreme ends than others. All linear models that use words or byte-pair encoded data as input represent the extreme globalised-end of the spectrum, as these models only rely on the training data. The linear models that use LIWC categories, and those that use words/bpe in addition to LIWC categories shift slightly towards the localised end of the spectrum by virtue of the LIWC dictionary being developed using external data to inform the creation of the categories.
 As all neural network models use pre-trained word or BPE embeddings, they can be placed further towards the localised end of the spectrum. Similarly to the use of LIWC for linear models, the use of LIWC as additional input shifts the models further towards the localised end of the spectrum.}
 
+The motivation for using Byte-Pair encoding is reflected in a) my own personal assumptions about the importance of textual representations and b) computational considerations. Briefly, to minimise the number of out-of-vocabulary items, I use BPE to deconstruct the training data into smaller word-parts, that allow for a) deconstructing words to minimise the influence of intentional obfuscations (e.g. `mooslim women`) of tokens, as I have frequently noted and been subject to abuse that seeks to obscure  and b) better handling of unknown tokens for the computational models.
+
 However, while some models find themselves further towards the localised end of the spectrum than others, all models that I use in \autoref{chap:liwc} are positioned in the globalised end of the spectrum as none of the data representations take into account the local subjective positionality of the individuals in the data, instead they all rely on some abstraction away from the subjective self through processes of disembodiment.
 
 \subsection{Multitask learning}
 
+{\color{orange!80!black}
+\zw{If we use current methods}
+In \autoref{chap:mtl} I turn to the question of which embodiments, in terms of social constructs such as sarcasm\citep{Oraby:2016}, the basis of a statement \citep{Oraby:2015}, and moral foundation \citep{Hoover:2019} in addition to other hate speech and offensive language datasets \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} would be helpful for a classification model for abuse detection in improving performance
+\zw{If generalisability to other models doesn't work.}
+on the associated test set.
+\zw{If generasability to other datasets works}
+the generalisability of abuse deteciton models.
 
-\zw{Dataset choices}
-\zw{Text representations}
-\zw{Model choices}
+For this task, I reuse the LIWC modeling choice from \autoref{chap:liwc} and the use of byte-pair embeddings. As such the analysis of those modeling chocies remain the same \autoref{sub:vocab_redux}. However, as we include more datasets into consideration, we also implicitly invite the question `why those datasets'? To answer this question, it's necessary to revisit the aims of each dataset. First, we consider the question of sarcasm. As \citet{Rottger:2021} highlight, the issue of sarcastic comments may be misinterpretet as hate or abuse, or not hate if the
+\
+. As I reuse the use of LIWC and BPE from \autoref{chap:liwc}, some of the embodiments of the models, with regard to text representation remain. Here I focus on those that change for the models described in \autoref{chap:mtl}.
 
-\zw{If current method works}
-In \autoref{chap:mtl} I turn to the question of which embodiments, in terms of social constructs such as sarcasm, humour, and moral sentiment would be helpful for a classification model for abuse detection. As I use many of the same data processing techniques as in \autoref{chap:liwc}, and
+One frequently identified issue with computational modeling of abuse is the issue of sarcasm \citep{Rottger:2021} and we use \citet{Oraby:2016}. In this choice lay two assumptions: first, that computational models for abuse detection can benefit from better understanding what constitutes abuse. Second, that there does exist some line between in which sarcasm that mimics abuse is not also abuse. Both assumptions are the result of years of researching online abuse, and in particular exposing myself to the abuse that occurs in online spaces. While I may have become desensitised to abuse through the disproportionate amounts I am exposed to through my research, I frequently see that online abuse, and responses to it, are expressed through humour, in particular sarcasm.\footnote{By responses I mean general reactions and responses to abuse beyond the direct responses to a perpetrator of abuse.}
+The second dataset, asks the question of whether an argument is made in the basis of feeling or on the basis of facts \citep{Oraby:2015}. As a majority of people who perpetrate online abuse do so infrequently \citep{Waseem-Hovy:2016} an underlying cause for being abusive may well be due to being impassioned, and thus being able to determine whether an argument is made with a basis in feelings or fact may be possible to help improve performance for abuse detection.
+We also use a dataset annotated for moral foundation \citep{Hoover:2019}. In this dataset, each document is labeled for which moral foundations it invokes in the annotators. As moral foundations and online abuse can be thought of us as concepts that are orthogonal to each other, as moral foundations provide for a higher level of cognition about contet that is read, I believe that using such a dataset can aid in training a multi-task classifier for the primary task. Here, my own experiences of the harms that occur from being subject to racialised abuse and the apparent desire to cause such harm from the perpetrators lead me to include this as an auxillary task.
+Finally, we use a number of datasets for online abuse \citep{Garcia:2018,Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016}. For this task, we do not reduce the question of detecting to a binary task. However, my subjective positioning does not change from what is detailed in \autoref{sub:vocab_redux}.
+
+Similarly for the choices in developing the data and textual representaitons, my own subjective embodiments and experiences are a factor in the modeling decisions. This is particularly true for multi-task learning, where I specifically set the weights for how much each task is to contribute to the main task. Such a weighting relies on my own consideration of how important each task is to the overall task of identifying abuse. The specific architecture of the model is highly influenced by prior work \citet[e.g.]{Bingel:2018,Waseem:2018}.
+
+Using the multi-task learning framework has strong implications for where on the localisation spectrum the models can exist within. For instance, the use multiple different datasets to influence a single model precludes the extreme ends of the modeling spectrum. However, such a training regime also precludes the extremely localised end of the spectrum for the same reason. As each auxillary task will work, if as nothing else, as a regulariser for the main task. As I use multi-task learning to contextualise the task of abusive language detection within the frame of tasks that have been indicated in prior literature as relevant to the task of abusive language detection, the model is both drawn to a more localised position.
+However, as I do not train my models on any tasks that seek to make predictions on users, the model does not cross entirely into the space of localised models. Instead the models that we produce, by virtue of learning consideartios on tone, argument-basis, sarcasm, and moral sentiment. These auxillary tasks then provide an avenue for our models to be more closely situated within the how each individual person can be represented. Thus, while further towards being a lcalised end of the spectrum than our LIWC models, the models fall short of signifcantly situating the modeling of individuals within the context and lived experiences of that individual.
+}
+
+{\color{green!80!black}
+\zw{If chapter with Joachim and James is used}
+In \autoref{chap:mtl} I turn to the question of which embodiments, in terms of cultural contexts of the production of abuse matters. Here, I consider the question of whether hate speech that is produced in one cultural context can map to hate speech produced in another cultural context. To this end, I explore whether, on the basis of training data alone, a multi-task learning model can learn to bridge two different cultural contexts.
+
+\zw{Dataset choices: Davidson, Waseem \& Hovy, Waseem}
+\zw{Text representations: BPE, BoW}
+\zw{Model choices: MLP}
+
+\zw{Globalised-localised model spectrum}
+Using the multi-task learning framework has strong implications for where on the localisation spectrum the models can exist within. For instance, the use multiple different datasets to influence a single model precludes the extreme ends of the modeling spectrum. However, such a training regime also precludes the extremely localised end of the spectrum for the same reason. As each auxillary task will work, if as nothing else, as a regulariser for the main task.
+As I use multi-task learning to try to learn models that can model abuse across geo-cultural contexts, the model shifts in its position on the model spectrum in comparison to single task models. Sucha  minor shift happens as there are some choices draw it towards a more localised model while others strongly push it towards a more globalised model. 
+Choices towards localised: use of bytepair encoding
+Choices towards globalised: Only using abusive lang datasets so fundamentally does not learn anything about users, simply other forms of abuse with other contexts.
+
+However, as I do not train my models on any tasks that seek to make predictions on users, the model does not cross entirely into the space of localised models. Instead the models that we produce, by virtue of learning consideartios on tone, argument-basis, sarcasm, and moral sentiment. These auxillary tasks then provide an avenue for our models to be more closely situated within the how each individual person can be represented. Thus, while further towards being a lcalised end of the spectrum than our LIWC models, the models fall short of signifcantly situating the modeling of individuals within the context and lived experiences of that individual.
+}
+
 
 
 \section{Discussion}
