@@ -22,7 +22,13 @@ In the interest of curtailing the spread of online abuse, a large number of tech
 \subsection{Modelling}
 \subsubsection{Manually Crafted Features}
 
-A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. While we do not manually craft the features for our experiments, we draw heavily on the rationale for manually developing features. The governing reasoning for using manually crafted features, such as Part-of-Speech tags \cite{Davidson:2017} is that they reveal intuitions of what the researcher believes may surface salient correlations that aid in high classification performance. Frequently used features are Bag-of-Words, that is the un-ordered occurrence of each word in a document; Term Frequency-Inverse Document Frequency which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination, mathematically $\dfrac{\text{{\em \# token} t}}{\# \text{{\em tokens in document}}} \times \dfrac{\text{{\em \# documents}}}{\text{{\em \# documents containing} t}}$; n-grams, e.g. bi-grams and tri-grams that consider tuples of tokens
+A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. While we do not manually craft the features for our experiments, we draw heavily on the rationale for manually developing features. The governing reasoning for using manually crafted features, such as Part-of-Speech tags \cite{Davidson:2017} is that they reveal intuitions of what the researcher believes may surface salient correlations that aid in high classification performance. Frequently used features are Bag-of-Words, that is the un-ordered occurrence of each word in a document; Term Frequency-Inverse Document Frequency which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination (see \autoref{eq:tfidf} detailing the implementation of \cite{Pedregosa:2011}); n-grams, e.g. bi-grams and tri-grams that consider tuples  and triplets of tokens, respectively; and Part-of-Speech tags.
+
+\begin{equation}\label{eq:tfidf}
+  \text{Term Frequency:}tf(t, d) = f_{t, d}\\
+  \text{Inverse Document Frequency:}idf(t) = \log \dfrac{1 + n}{1 + df(t)} + 1\\
+  TF-IDF(t, d) = tf(t, d) \cdot idf(t)
+\end{equation}
 
 LIWC has previously been examined in the context of abusive detection, \citet{Nina-Alcocer:2019} use LIWC to compute percentages of emotions that are present in abusive docuemnts. They also incorporate ``sexual, anxiety feeling, anger, and so on'' into their feature representation, however withouth clarifying what such features may be or how they are incorporated.
 
@@ -48,7 +54,7 @@ As our aim is to consider the influence of LIWC-represented documents, we do not
 
 \subsection{Datasets}
 Beyond the different specific models and types of input layer, the datasets themselves also differ strongly from one another across a number of attributes: the various sizes of the datasets, the platforms the datasets have been sampled from, the annotator selection, the annotation guidelines, and the aims of the datasets. As we seek to build generalisable models and compare the performance across datasets, we reduce the classification task in each dataset to a binary `abuse/not-abuse' class, as each dataset addresses different aspects and notions of abuse.
-We train our models on either the Twitter dataset collected by \citet{Davidson:2017} and the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2017}, respectively, as our training datasets. We choose these datasets in part due to their sizes and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
+We train our models on either the Twitter dataset collected by \citet{Davidson:2017} and the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2016}, respectively, as our training datasets. We choose these datasets in part due to their sizes and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
 
 \zw{INSERT: Table of BPE and LIWC vocabularies}
 \zw{INSERT: Short paragraph on vocabularies.}
@@ -56,7 +62,7 @@ We train our models on either the Twitter dataset collected by \citet{Davidson:2
 \subsubsection{Training Datasets}
 Our first dataset for training is the dataset developed by \citet{Davidson:2017} consists of $24,784$ tweets that are sampled from Twitter using keywords obtained from \citet{Hatebase}. The dataset is annotated for ``hate speech'', ``offensive language'' and ``neither''. The collection rationale was that not all content that immediately appears to be abusive is necessarily that, and that hate speech models must be able to distinguish between what is offensive and what is hateful \cite{Davidson:2017} (please see \autoref{chap:nlp} and \autoref{chap:filter} for more in-depth discussions on the implications of label categories, their overlap and differences). The dataset was annotated by crowd-workers on FigureEight\footnote{Previously known as CrowdFlower}. Unlike most datasets for abuse, this dataset consists primarily of positive instances, with $77$\% of the (binarised) dataset belonging to the positive class.
 
-Our second dataset used for training is the dataset presented by \citet{Wulczyn:2017}. This dataset consists of more then $100,000$ comments from Wikipedia talk pages that have been annotated for personal attacks and toxicity \cite{Wulczyn:2017}. The rationale of this dataset is that personal attacks are harmful to ongoing conversations, and that through the identification and removals of comments that poison, or toxify online conversations, more space will be left for healthy and constructive discussions (please see \autoref{chap:filter} for an in-depth consideration of the politics of what constitutes ``toxic'' and ``healthy''). The binarised distribution of documents tagged for toxicity aligns better with prior research, with the positive class consuming $\approx 9$\% of the dataset.
+Our second dataset used for training is the dataset presented by \citet{Wulczyn:2016}. This dataset consists of more then $100,000$ comments from Wikipedia talk pages that have been annotated for personal attacks and toxicity \cite{Wulczyn:2016}. The rationale of this dataset is that personal attacks are harmful to ongoing conversations, and that through the identification and removals of comments that poison, or toxify online conversations, more space will be left for healthy and constructive discussions (please see \autoref{chap:filter} for an in-depth consideration of the politics of what constitutes ``toxic'' and ``healthy''). The binarised distribution of documents tagged for toxicity aligns better with prior research, with the positive class consuming $\approx 9$\% of the dataset.
 
 \subsubsection{Evaluation Datasets}
 For our evaluation datasets, we use \citet{Waseem-Hovy:2016}, a dataset of $16,000$ documents that are sampled from Twitter and annotated for ``racism'', ``sexism'', and ``neither''. The dataset was annotated by two coders, who labelled $31$\% of the dataset containing as either ``sexist'' or ``racist'' content. This dataset was developed for an early exploration into automated content moderation of online hate speech. We also use the dataset by \citet{Waseem:2016} that followed this first exploration. Here the annotation guidelines remain the same while the label-set is expanded to include the intersection of racism and sexism, the ``both'' category. This dataset contains $6000$ documents, labelled by intersectional feminist activists, and another label-set annotated by crowd-workers from FigureEight. We choose the intersectional feminist tagged annotations, as \citet{Waseem:2016} show that simple computational models perform better using this tagset. The binarised positive labels occupy $15.19$\% of the dataset. Finally, we use the dataset on white-supremacist speech developed by \citet{Garcia:2019}. This dataset, unlike the previous two evaluation datasets does not stem from Twitter, but instead the data is collected from StormFront\footnote{www.stormfront.net}, a web forum dedicated to the preservation and dissemination of white supremacist ideology. This dataset contains \zw{INSERT: Number of total document counts when using the entire dataset instead of the balanced one.} documents labelled for being hateful or not hateful, with \zw{INSERT: Percentage of positive class docs} in the positive class.
@@ -78,6 +84,9 @@ While we accept that the influence of annotation guidelines have strong influenc
 As our aim is to understand how representing documents using only the tokens derived using the Linguistic Inquiry and Word Count dictionary may influence the generalisability of models for hate speech detection across datasets and domains, we use simple modelling architectures and feature representations.
 
 \subsection{Neural Models}\ref{sec:redux_neural}
+
+\zw{Add this where it fits}
+Given that onehot encoded models are much larger in size, I limit the exploration of hyper parameter values to embedding dimension, hidden dimension, dropout and learning rate. Particularly dropout and learning rate are of interest as onehot encoded models are larger than index encoded models. For this reason, I explore deviate from the best parameters identified by the index encoded models. For embedding and hidden dimensions on the other hand, I follow the best parameters found by the index encoded models.
 
 We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We select these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). We implement all neural network models using PyTorch \cite{CITE: Pytorch paper} and use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}.
 In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
@@ -108,7 +117,7 @@ Batch Size             &         &          &         &         &         &     
 Learning Rate          &         &          &         &         &         &         &         &          \\
 Dropout                &         &          &         &         &         &         &         &          \\
 Activation Function    &         &          &         &         &         &         &         &          \\
-# Epochs               &         &          &         &         &         &         &         &          \\
+\# Epochs               &         &          &         &         &         &         &         &          \\
 Validation F1-score    &         &          &         &         &         &         &         &
 \end{tabular}
 \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
@@ -130,7 +139,7 @@ Batch Size            &         &         &         &         &         &       
 Learning Rate         &         &         &         &         &         &         &         &         \\
 Dropout               &         &         &         &         &         &         &         &         \\
 Activation Function   &         &         &         &         &         &         &         &         \\
-# Epochs              &         &         &         &         &         &         &         &         \\
+\# Epochs              &         &         &         &         &         &         &         &         \\
 Validation F1-score   &         &         &         &         &         &         &         &
 \end{tabular}
 \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
@@ -170,7 +179,7 @@ For the models that use an embedding layer as their input layers, we additionall
 
 The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \autoref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer. 
 
-The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\Tanh$.
+The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
 
 For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
 
@@ -247,7 +256,7 @@ Similarly to our neural models, we perform a parameter search to identify the op
                       & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} \\ \hline
                       & C               & Penalty               & C                 & Penalty                & C               & Penalty               & C                 & Penalty                \\ \hline
 \cite{Davidson:2017}  & $1.0$           & L2                    & $0.1$             & L2                     & $0.4$           & L2                    & $0.1$             & L2                     \\
-\cite{Wulczyn:2017}   & $1.0$           & L2                    & $0.2$             & L2                     & $1.0$           & L2                    & $1.0$             & L2
+\cite{Wulczyn:2016}   & $1.0$           & L2                    & $0.2$             & L2                     & $1.0$           & L2                    & $1.0$             & L2
 \end{tabular}%
 }
 \caption{Optimal parameters for linear Support Vector Machine baselines.}
@@ -298,11 +307,11 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 \mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\
                             &                         & Convolutional Neural Network   &          &          &           &  \\
                             &                         & Recurrent Neural Network       &          &          &           &  \\        
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\        
+                            &                         & Long-Short Term Memory Network &          &          &           &  \\     
                             & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\
                             &                         & Convolutional Neural Network   &          &          &           &  \\        
                             &                         & Recurrent Neural Network       &          &          &           &  \\        
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\        
+                            &                         & Long-Short Term Memory Network &          &          &           &  \\ \midrule       
 \mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\        
                             &                         & Convolutional Neural Network   &          &          &           &  \\        
                             &                         & Recurrent Neural Network       &          &          &           &  \\
@@ -332,7 +341,7 @@ Using this training scheme, we define and search a hyper-parameter space for eac
                             & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           & \\
                             &                         & Convolutional Neural Network   &          &          &           & \\
                             &                         & Recurrent Neural Network       &          &          &           & \\
-                            &                         & Long-Short Term Memory Network &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           & \\ \midrule
 \mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           & \\
                             &                         & Convolutional Neural Network   &          &          &           & \\
                             &                         & Recurrent Neural Network       &          &          &           & \\
