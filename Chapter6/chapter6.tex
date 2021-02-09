@@ -148,6 +148,13 @@ Considering the values of $C$ in \autoref{tab:mtl_ensemble_parameters}, we simil
 
 \subsection{Experimental Models}
 
+Three different scenarios
+\begin{enumerate}
+  \item Aux tasks are also abusive language tasks
+  \item Aux tasks are not abuse tasks
+  \item Aux tasks are abuse and not abuse tasks
+\end{enumerate}
+
 To train our experimental models, and ensure direct comparability of the models with one another, we develop a single training process that we subject all models to.\vspace{5mm}
 
 To train our model robustly, we iterate over the dataset in a set number of epochs for each model, identified through the hyper-parameter search. Each epoch consists of $500$ batches of data passed through the model; the batch size, too, is identified through the hyper-parameter search. To avoid the issue of only selecting within the first $500$ batches from each dataset, we randomly shuffle all datasets at the top of each new epoch. Though several different strategies for selecting which task to select have been developed \cite{Waseem:2018}, we choose here to follow the selection process in previous work \cite{Waseem:2018,Rajamanickam:2020} in which the task is randomly selected. For our training procedure, this means that selecting the task to processed is a 6-sided fair die toss, where each task will be chosen approximately every $6$ iterations. We distinguish between the primary task and the auxiliary tasks by introducing a parameter $\beta$ that controls how much each tasks contributes to the loss function. To avoid an issue of vanishing losses, we set the $\beta_{aux} = 1$ for each auxiliary task and $beta_{primary} = \sum^{i}_{i \in #auxiliary_tasks} 1$ for the primary task. Thus, the resulting model emphasises the contributions of the primary tasks equal to the collective contributions of all auxiliary tasks. For each task, we compute the loss using the equation given in \autoref{eq:mtl_loss} on the training data for the task. The computed loss is computed after each batch and back-propagated through the network, weighted by $\beta$. At the end of each epoch, we track the development of our model on the validation set from the primary task.
