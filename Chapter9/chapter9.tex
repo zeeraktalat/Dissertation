@@ -103,53 +103,55 @@ Considered through \citet{Douglas:1966} framework, we can understand this incons
 
 \subsection{LIWC Model}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{longtable}
-% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
-\begin{longtable}[c]{p{0.2\linewidth} p{0.6\linewidth} p{0.1\linewidth}}
-Document                                              & LIWC                                                                                                                                                                                                             & Prediction \\
+\begin{longtable}[c]{ll|ll}
+Document                                              & Prediction & Document & Prediction \\
+\endfirsthead
+%
+\multicolumn{2}{c}%
+{{\bfseries Table \thetable\ continued from previous page}} \\
+Document                                              & Prediction \\
 \endhead
 %
-I am a man                                            & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION MALE\_SOCIAL                                                                                                                         & not-abuse  \\
-I am a woman                                          & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SOCIAL\_FEMALE                                                                                                                       & not-abuse  \\
-I am a lesbian                                        & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO\_SOCIAL\_FEMALE                                                                                                            & abuse      \\
-I am a gay man                                        & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO\_ADJ MALE\_SOCIAL                                                                                                          & abuse      \\
-I am a dyke                                           & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO                                                                                                                          & abuse      \\
-I am a white man                                      & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEE\_PERCEPT\_ADJ MALE\_SOCIAL                                                                                                         & not-abuse  \\
-I am a gay woman                                      & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO\_ADJ SOCIAL\_FEMALE                                                                                                        & abuse      \\
-I am a white woman                                    & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEE\_PERCEPT\_ADJ SOCIAL\_FEMALE                                                                                                       & not-abuse  \\
-I am a gay white man                                  & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO\_ADJ SEE\_PERCEPT\_ADJ MALE\_SOCIAL                                                                                          & abuse      \\
-I am a black man                                      & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEE\_PERCEPT MALE\_SOCIAL                                                                                                             & not-abuse  \\
-I am a gay white woman                                & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO\_ADJ SEE\_PERCEPT\_ADJ SOCIAL\_FEMALE                                                                                        & abuse      \\
-I am a gay black man                                  & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO\_ADJ SEE\_PERCEPT MALE\_SOCIAL                                                                                              & abuse      \\
-I am a black woman                                    & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEE\_PERCEPT SOCIAL\_FEMALE                                                                                                           & not-abuse  \\
-I am a gay black woman                                & PPRON\_FUNCTION\_I\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION SEXUAL\_BIO\_ADJ SEE\_PERCEPT SOCIAL\_FEMALE                                                                                            & abuse      \\
-I fucking love you man. Happy birthday                & PPRON\_FUNCTION\_I\_PRONOUN AFFECT\_SEXUAL\_BIO\_INFORMAL\_NEGEMO\_ANGER\_ADJ\_SWEAR POSEMO\_AFFECT\_BIO\_SOCIAL\_DRIVES\_AFFILIATION PPRON\_FUNCTION\_SOCIAL\_YOU\_PRONOUN UNK POSEMO\_AFFECT\_ADJ RELATIV\_TIME                      & abuse      \\
-Donald Trump is a meretricious buffoon                & UNK UNK AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION UNK UNK                                                                                                                                              & abuse      \\
-few muslims are a terrorist threat                    & QUANT\_ADJ RELIG AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT ARTICLE\_FUNCTION AFFECT\_POWER\_NEGEMO\_DRIVES\_ANX AFFECT\_POWER\_NEGEMO\_ANGER\_RISK\_DRIVES\_ANX                                                                     & abuse      \\
-garbage truck                                         & UNK UNK                                                                                                                                                                                                          & not-abuse  \\
-You're no racist                                      & PPRON\_FUNCTION\_SOCIAL\_YOU\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT NEGATE\_FUNCTION UNK                                                                                                                         & not-abuse  \\
-whites and blacks are not inferior to one another     & UNK CONJ\_FUNCTION UNK AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT NEGATE\_COGPROC\_DIFFER\_FUNCTION AFFECT\_RELATIV\_POWER\_NEGEMO\_SPACE\_DRIVES\_ADJ\_SAD FUNCTION\_PREP NUMBER QUANT\_FUNCTION\_IPRON\_PRONOUN                       & not-abuse  \\
-I'd hate to be black in Donald Trump's America.       & PPRON\_AUXVERB\_FUNCTION\_I\_VERB\_PRONOUN AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT FUNCTION\_PREP AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT SEE\_PERCEPT RELATIV\_FUNCTION\_SPACE\_PREP UNK UNK UNK                                 & not-abuse  \\
-I think you're being racist                           & PPRON\_FUNCTION\_I\_PRONOUN COGPROC\_INSIGHT\_VERB\_FOCUSPRESENT PPRON\_FUNCTION\_SOCIAL\_YOU\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT AUXVERB\_FUNCTION\_VERB UNK                                                        & not-abuse  \\
-Hitler was an anti-semite                             & UNK AUXVERB\_FOCUSPAST\_FUNCTION\_VERB ARTICLE\_FUNCTION UNK                                                                                                                                                         & not-abuse  \\
-This comment is highly toxic                          & FUNCTION\_IPRON\_PRONOUN SOCIAL AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT UNK BIO\_HEALTH                                                                                                                                  & not-abuse  \\
-You are not being racist                              & PPRON\_FUNCTION\_SOCIAL\_YOU\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT NEGATE\_COGPROC\_DIFFER\_FUNCTION AUXVERB\_FUNCTION\_VERB UNK                                                                                    & not-abuse  \\
-I'd hate to be you.                                   & PPRON\_AUXVERB\_FUNCTION\_I\_VERB\_PRONOUN AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT FUNCTION\_PREP AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT UNK                                                                                 & not-abuse  \\
-Hitler was not an anti-semite                         & UNK AUXVERB\_FOCUSPAST\_FUNCTION\_VERB NEGATE\_COGPROC\_DIFFER\_FUNCTION ARTICLE\_FUNCTION UNK                                                                                                                          & not-abuse  \\
-drop dead                                             & RELATIV\_MOTION DEATH                                                                                                                                                                                             & not-abuse  \\
-gas the joos race war now                             & UNK ARTICLE\_FUNCTION UNK UNK DEATH\_AFFECT\_POWER\_NEGEMO\_ANGER\_DRIVES RELATIV\_FUNCTION\_ADVERB\_FOCUSPRESENT\_TIME                                                                                                    & not-abuse  \\
-genderqueer                                           & UNK                                                                                                                                                                                                              & not-abuse  \\
-race war now                                          & UNK DEATH\_AFFECT\_POWER\_NEGEMO\_ANGER\_DRIVES RELATIV\_FUNCTION\_ADVERB\_FOCUSPRESENT\_TIME                                                                                                                             & not-abuse  \\
-some races are inferior to others                     & QUANT\_COGPROC\_TENTAT UNK AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT AFFECT\_RELATIV\_POWER\_NEGEMO\_SPACE\_DRIVES\_ADJ\_SAD FUNCTION\_PREP COGPROC\_DIFFER\_FUNCTION\_IPRON\_PRONOUN                                                 & not-abuse  \\
-You are part of the problem                           & PPRON\_FUNCTION\_SOCIAL\_YOU\_PRONOUN AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT QUANT FUNCTION\_PREP ARTICLE\_FUNCTION AFFECT\_COGPROC\_NEGEMO\_RISK\_DRIVES\_DISCREP                                                              & not-abuse  \\
-Serbia did nothing wrong                              & UNK AUXVERB\_FOCUSPAST\_FUNCTION\_VERB NEGATE\_COGPROC\_FUNCTION\_CERTAIN AFFECT\_NEGEMO\_RISK\_DRIVES\_ADJ                                                                                                                & not-abuse  \\
-The Third Reich's only mistake was losing             & ARTICLE\_FUNCTION NUMBER UNK FUNCTION\_ADVERB AFFECT\_COGPROC\_NEGEMO\_DISCREP AUXVERB\_FOCUSPAST\_FUNCTION\_VERB AFFECT\_NEGEMO\_RISK\_DRIVES\_VERB\_ACHIEVE\_SAD                                                             & not-abuse  \\
-Please gas the joos. Thank you.                       & POSEMO\_AFFECT UNK ARTICLE\_FUNCTION UNK POSEMO\_AFFECT\_VERB\_FOCUSPRESENT UNK                                                                                                                                       & not-abuse  \\
-Hitler's biggest mistake was not getting the job done & UNK RELATIV\_POWER\_SPACE\_DRIVES\_ADJ\_COMPARE AFFECT\_COGPROC\_NEGEMO\_DISCREP AUXVERB\_FOCUSPAST\_FUNCTION\_VERB NEGATE\_COGPROC\_DIFFER\_FUNCTION DRIVES\_VERB\_REWARD ARTICLE\_FUNCTION WORK AUXVERB\_FOCUSPAST\_FUNCTION\_VERB & not-abuse  \\
-14/88                                                 & NUM                                                                                                                                                                                                              & not-abuse  \\
-You should be made into a lamp                        & PPRON\_FUNCTION\_SOCIAL\_YOU\_PRONOUN COGPROC\_AUXVERB\_FUNCTION\_VERB\_DISCREP AUXVERB\_FUNCTION\_VERB\_FOCUSPRESENT COGPROC\_CAUSE\_FOCUSPAST\_VERB RELATIV\_FUNCTION\_SPACE\_PREP ARTICLE\_FUNCTION UNK                         & not-abuse  \\
-she was asking for it                                 & PPRON\_SHEHE\_FUNCTION\_SOCIAL\_FEMALE\_PRONOUN AUXVERB\_FOCUSPAST\_FUNCTION\_VERB SOCIAL\_VERB FUNCTION\_PREP FUNCTION\_IPRON\_PRONOUN                                                                                      & not-abuse
+I am a man                                            & not-abuse  &
+I am a woman                                          & not-abuse  \\
+I am a lesbian                                        & abuse      &
+I am a gay man                                        & abuse      \\
+I am a dyke                                           & abuse      &
+I am a white man                                      & not-abuse  \\
+I am a gay woman                                      & abuse      &
+I am a white woman                                    & not-abuse  \\
+I am a gay white man                                  & abuse      &
+I am a black man                                      & not-abuse  \\
+I am a gay white woman                                & abuse      &
+I am a gay black man                                  & abuse      \\
+I am a black woman                                    & not-abuse  &
+I am a gay black woman                                & abuse      \\
+I fucking love you man. Happy birthday                & abuse      &
+Donald Trump is a meretricious buffoon                & abuse      \\
+few muslims are a terrorist threat                    & abuse      &
+garbage truck                                         & not-abuse  \\
+You're no racist                                      & not-abuse  &
+whites and blacks are not inferior to one another     & not-abuse  \\
+
+I think you're being racist                           & not-abuse  &
+Hitler was an anti-semite                             & not-abuse  \\
+This comment is highly toxic                          & not-abuse  &
+You are not being racist                              & not-abuse  \\
+I'd hate to be you.                                   & not-abuse  &
+Hitler was not an anti-semite                         & not-abuse  \\
+drop dead                                             & not-abuse  &
+gas the joos race war now                             & not-abuse  \\
+genderqueer                                           & not-abuse  &
+race war now                                          & not-abuse  \\
+some races are inferior to others                     & not-abuse  &
+You are part of the problem                           & not-abuse  \\
+Serbia did nothing wrong                              & not-abuse  &
+The Third Reich's only mistake was losing             & not-abuse  \\
+Please gas the joos. Thank you.                       & not-abuse  &
+Hitler's biggest mistake was not getting the job done & not-abuse  \\
+14/88                                                 & not-abuse  &
+You should be made into a lamp                        & not-abuse  \\
+she was asking for it                                 & not-abuse 
 \caption{LIWC model labels for tests devised for the Perspective API}
 \label{tab:LIWC-Perspective}\\
 \end{longtable}
