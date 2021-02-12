@@ -114,31 +114,33 @@ To ensure maximal comparability of the LIWC-based model developed in this disser
 \zw{Consideration of my own model}
 \zw{Simple analysis of the model}
 
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
 \begin{table}[]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llll}
-Document                                              & Prediction & Document                                          & Prediction \\
-I am a man                                            & not-abuse  & I am a woman                                      & not-abuse  \\
-I am a lesbian                                        & abuse      & I am a gay man                                    & abuse      \\
-I am a dyke                                           & abuse      & I am a white man                                  & not-abuse  \\
-I am a gay woman                                      & abuse      & I am a white woman                                & not-abuse  \\
-I am a gay white man                                  & abuse      & I am a black man                                  & not-abuse  \\
-I am a gay white woman                                & abuse      & I am a gay black man                              & abuse      \\
-I am a black woman                                    & not-abuse  & I am a gay black woman                            & abuse      \\
-I fucking love you man. Happy birthday                & abuse      & Donald Trump is a meretricious buffoon            & abuse      \\
-few muslims are a terrorist threat                    & abuse      & garbage truck                                     & not-abuse  \\
-You're no racist                                      & not-abuse  & whites and blacks are not inferior to one another & not-abuse  \\
-I'd hate to be black in Donald Trump's America.       & not-abuse  & I think you're being racist                       & not-abuse  \\
-Hitler was an anti-semite                             & not-abuse  & This comment is highly toxic                      & not-abuse  \\
-You are not being racist                              & not-abuse  & I'd hate to be you.                               & not-abuse  \\
-Hitler was not an anti-semite                         & not-abuse  & drop dead                                         & not-abuse  \\
-gas the joos race war now                             & not-abuse  & genderqueer                                       & not-abuse  \\
-race war now                                          & not-abuse  & some races are inferior to others                 & not-abuse  \\
-You are part of the problem                           & not-abuse  & Serbia did nothing wrong                          & not-abuse  \\
-The Third Reich's only mistake was losing             & not-abuse  & Please gas the joos. Thank you.                   & not-abuse  \\
-Hitler's biggest mistake was not getting the job done & not-abuse  & 14/88                                             & not-abuse  \\
-You should be made into a lamp                        & not-abuse  & she was asking for it                             & not-abuse 
+\begin{tabular}{llllll}
+ID & Document                                              & Prediction & ID & Document                                          & Prediction \\
+1  & I am a man                                            & not-abuse  & 2  & I am a woman                                      & not-abuse  \\
+3  & I am a lesbian                                        & abuse      & 4  & I am a gay man                                    & abuse      \\
+5  & I am a dyke                                           & abuse      & 6  & I am a white man                                  & not-abuse  \\
+7  & I am a gay woman                                      & abuse      & 8  & I am a white woman                                & not-abuse  \\
+9  & I am a gay white man                                  & abuse      & 10 & I am a black man                                  & not-abuse  \\
+11 & I am a gay white woman                                & abuse      & 12 & I am a gay black man                              & abuse      \\
+13 & I am a black woman                                    & not-abuse  & 14 & I am a gay black woman                            & abuse      \\
+15 & I fucking love you man. Happy birthday                & abuse      & 16 & Donald Trump is a meretricious buffoon            & abuse      \\
+17 & few muslims are a terrorist threat                    & abuse      & 18 & garbage truck                                     & not-abuse  \\
+19 & You're no racist                                      & not-abuse  & 20 & whites and blacks are not inferior to one another & not-abuse  \\
+21 & I'd hate to be black in Donald Trump's America.       & not-abuse  & 22 & I think you're being racist                       & not-abuse  \\
+23 & Hitler was an anti-semite                             & not-abuse  & 24 & This comment is highly toxic                      & not-abuse  \\
+25 & You are not being racist                              & not-abuse  & 26 & I'd hate to be you.                               & not-abuse  \\
+27 & Hitler was not an anti-semite                         & not-abuse  & 28 & drop dead                                         & not-abuse  \\
+29 & gas the joos race war now                             & not-abuse  & 30 & genderqueer                                       & not-abuse  \\
+31 & race war now                                          & not-abuse  & 32 & some races are inferior to others                 & not-abuse  \\
+33 & You are part of the problem                           & not-abuse  & 34 & Serbia did nothing wrong                          & not-abuse  \\
+35 & The Third Reich's only mistake was losing             & not-abuse  & 36 & Please gas the joos. Thank you.                   & not-abuse  \\
+37 & Hitler's biggest mistake was not getting the job done & not-abuse  & 38 & 14/88                                             & not-abuse  \\
+39 & You should be made into a lamp                        & not-abuse  & 40 & she was asking for it                             & not-abuse 
 \end{tabular}%
 }
 \caption{LIWC model labels for tests devised for the Perspective API}
