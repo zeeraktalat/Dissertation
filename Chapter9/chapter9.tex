@@ -111,42 +111,46 @@ Given the heavy imbalance of the dataset, with the vast majority of cases being 
 
 Each approach comes with a set of opportunities and risks. For instance, as language use evolves, so can the embeddings that the Perspective API rely on be retrained. A LIWC-based approach on the other hand requires significant human effort, filtering, annotation, and reasoning to create a new set of words to include. Such a process is both slower and more limited in what will ultimately be included in the LIWC dictionary. On the other hand, pre-trained embeddings will also learn hegemonic social biases \citep{Bender:2021} whereas the LIWC-based approaches only learn a subset of the social biases that are present in the original dataset, due to the vast majority of tokens present in a large dataset, e.g. \citep{Wulczyn:2017}, not being known to the LIWC token. However, the social biases that are present in the dataset that rely on identity terms will remain in the model, should the identity terms also exist within the LIWC vocabulary, e.g. where identity terms are used as slurs or the use of an identity term is unevenly distributed in the classes.
 
-\zw{Maybe move this down}
-Returning to Douglas' \citeyear{Douglas:1966} concept of dirt, such modelling choices are both the product of meaning-making processes and produce meaning by first being subject to human understandings of what constitutes `non-toxic' or sanitised virtual spaces and subsequently the models construct such meaning. Thus, through a narrowing of the signals, that is tokens, which can constitute dirt the boundaries which subject to sanitisation become more porous along certain axes, providing solace for communities that are not recognised by the model. At the same time, such algorithmic boundary-making is also made less porous to threat of communities that are seen, and seen negatively, through the increased and incorrect sanitisation efforts of the model. Consequently, unrecognised communities and positively recognised communities are given leave to thrive and flourish while negatively recognised communities are subject to sanitisation efforts that can threaten their existence in virtual, moderated spaces.
-
 \begin{table}[]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llllll}
+\begin{tabular}{lll|lll}
 ID & Document                                              & Prediction & ID & Document                                          & Prediction \\
-1  & I am a man                                            & not-abuse  & 2  & I am a woman                                      & not-abuse  \\
-3  & I am a lesbian                                        & not-abuse  & 4  & I am a gay man                                    & abuse      \\
-5  & I am a dyke                                           & abuse      & 6  & I am a white man                                  & not-abuse  \\
-7  & I am a gay woman                                      & abuse      & 8  & I am a white woman                                & not-abuse  \\
-9  & I am a gay white man                                  & abuse      & 10 & I am a black man                                  & not-abuse  \\
-11 & I am a gay white woman                                & abuse      & 12 & I am a gay black man                              & abuse      \\
-13 & I am a black woman                                    & not-abuse  & 14 & I am a gay black woman                            & abuse      \\
-15 & I fucking love you man. Happy birthday                & abuse      & 16 & Donald Trump is a meretricious buffoon            & abuse      \\
-17 & few muslims are a terrorist threat                    & abuse      & 18 & garbage truck                                     & not-abuse  \\
-19 & You're no racist                                      & abuse      & 20 & whites and blacks are not inferior to one another & not-abuse  \\
-21 & I'd hate to be black in Donald Trump's America.       & not-abuse  & 22 & I think you're being racist                       & not-abuse  \\
-23 & Hitler was an anti-semite                             & not-abuse  & 24 & This comment is highly toxic                      & not-abuse  \\
-25 & You are not being racist                              & not-abuse  & 26 & I'd hate to be you.                               & abuse      \\
-27 & Hitler was not an anti-semite                         & not-abuse  & 28 & drop dead                                         & not-abuse  \\
-29 & gas the joos race war now                             & not-abuse  & 30 & genderqueer                                       & not-abuse  \\
-31 & race war now                                          & not-abuse  & 32 & some races are inferior to others                 & abuse      \\
-33 & You are part of the problem                           & not-abuse  & 34 & Serbia did nothing wrong                          & not-abuse  \\
-35 & The Third Reich's only mistake was losing             & not-abuse  & 36 & Please gas the joos. Thank you.                   & not-abuse  \\
-37 & Hitler's biggest mistake was not getting the job done & not-abuse  & 38 & 14/88                                             & not-abuse  \\
-39 & You should be made into a lamp                        & not-abuse  & 40 & she was asking for it                             & not-abuse 
+1  & I am a man                                            & not-toxic  & 2  & I am a woman                                      & not-toxic  \\
+3  & I am a lesbian                                        & not-toxic  & 4  & I am a gay man                                    & toxic      \\
+5  & I am a dyke                                           & toxic      & 6  & I am a white man                                  & not-toxic  \\
+7  & I am a gay woman                                      & toxic      & 8  & I am a white woman                                & not-toxic  \\
+9  & I am a gay white man                                  & toxic      & 10 & I am a black man                                  & not-toxic  \\
+11 & I am a gay white woman                                & toxic      & 12 & I am a gay black man                              & toxic      \\
+13 & I am a black woman                                    & not-toxic  & 14 & I am a gay black woman                            & toxic      \\
+15 & I fucking love you man. Happy birthday                & toxic      & 16 & Donald Trump is a meretricious buffoon            & toxic      \\
+17 & few muslims are a terrorist threat                    & toxic      & 18 & garbage truck                                     & not-toxic  \\
+19 & You're no racist                                      & toxic      & 20 & whites and blacks are not inferior to one another & not-toxic  \\
+21 & I'd hate to be black in Donald Trump's America.       & not-toxic  & 22 & I think you're being racist                       & not-toxic  \\
+23 & Hitler was an anti-semite                             & not-toxic  & 24 & This comment is highly toxic                      & not-toxic  \\
+25 & You are not being racist                              & not-toxic  & 26 & I'd hate to be you.                               & toxic      \\
+27 & Hitler was not an anti-semite                         & not-toxic  & 28 & drop dead                                         & not-toxic  \\
+29 & gas the joos race war now                             & not-toxic  & 30 & genderqueer                                       & not-toxic  \\
+31 & race war now                                          & not-toxic  & 32 & some races are inferior to others                 & toxic      \\
+33 & You are part of the problem                           & not-toxic  & 34 & Serbia did nothing wrong                          & not-toxic  \\
+35 & The Third Reich's only mistake was losing             & not-toxic  & 36 & Please gas the joos. Thank you.                   & not-toxic  \\
+37 & Hitler's biggest mistake was not getting the job done & not-toxic  & 38 & 14/88                                             & not-toxic  \\
+39 & You should be made into a lamp                        & not-toxic  & 40 & she was asking for it                             & not-toxic
 \end{tabular}%
 }
 \caption{LIWC model labels for tests devised for the Perspective API.}
 \label{tab:LIWC-Perspective}
 \end{table}
-\zw{The models results on the different documents Jessamyn West proposed.}
+
+Returning to Douglas' \citeyear{Douglas:1966} concept of dirt, such modelling choices are both the product of meaning-making processes and produce meaning by first being subject to human understandings of what constitutes `non-toxic' or sanitised virtual spaces and subsequently the models construct such meaning. Thus, through a narrowing of the signals, that is tokens, which can constitute dirt the boundaries which subject to sanitisation become more porous along certain axes, providing solace for communities that are not recognised by the model. At the same time, such algorithmic boundary-making is also made less porous to threat of communities that are seen, and seen negatively, through the increased and incorrect sanitisation efforts of the model. Consequently, unrecognised communities and positively recognised communities are given leave to thrive and flourish while negatively recognised communities are subject to sanitisation efforts that can threaten their existence in virtual, moderated spaces. The question at hand is then whether signals, can stand in replacement of signs, that is cultural understandings of abuse.
+
+To address this question of signs and signals, I turn to the tests of cultural and social biases in the Perspective API proposed by Jessamyn West (see \autoref{fig:jessamyn}) and David Auerbach (see \autoref{fig:auerbach}) in \autoref{tab:LIWC-Perspective}. Though a direct comparison cannot be made between the Perspective API and our model, as the former produces percentages of how many people `would consider the comment to be toxic' \citep{PerspectiveAPI:Github} whereas the LIWC-based model produces binary labels of \texttt{toxic} or \texttt{not-toxic}. Considering first the identity-based tests proposed by Jessamyn West, the Perspective API incrementally increases its toxicity score as identities deviate from `man', at a $50\%$ threshold, where half of all people would find the comment toxic, all statements asides from `I am a man' and `I am a woman' would be considered toxic. As the statements gravitate towards queer black people, so does the score increase. The predictions produced by the LIWC on the other hand do not reproduce differential results on the basis of race, however the differential results are maintained and consistent for anyone with a queer identity (see documents $1$-$14$ in \autoref{tab:LIWC-Perspective}). It is thus fair to say that the LIWC model does not, at first glance, appear to be hold anti-Black biases yet it maintains strongly anti-LGTBQ+ sentiments, an issue that also holds for the Perspective API \citep{Oliva:2020}. In the cases proposed by David Auerbach (see \autoref{fig:auerbach} and cases $15$-$40$ in \autoref{tab:LIWC-Perspective}), we see however how the LIWC-based model fails to capture many diverse forms of abuse, while somewhat surprisingly, capturing other forms. Notably, case $23$ and the negated case $27$ produce the same classification, this suggests that the LIWC-based model does not handle negation well an issue common to abuse detection systems \cite{Rottger:2021}. Case $20$ and $32$ similarly display surprising results, where the LIWC-based model correctly classifies both cases, while case $20$ does hold a negation. However, considering the LIWC representations of these two instances reveal that while `white' and `black' exist in the LIWC dictionary `whites' and `Blacks' do not. Similarly, cases $30$ and $36$ contain tokens for individual and group characteristics that do not appear in the LIWC dictionary and also result in a non-toxic label. Given the data distributions in \citet{Wulczyn:2017}, the unknown token placeholder is likely to occur more frequently in the negative class and a model is more likely to associate it with a lack of toxicity. Subsequently, while the Perspective API overly polices marginalised groups through biases learned in part from pre-trained embeddings, the LIWC-based classifier poses risk by allowing cases such as case $36$.
+
+Such misclassifications also pose inherent risk to any communities that are not recognised by the LIWC-based classifier while also offering space to exist. The inability of both models to distinguishing signals from the signs that threaten the communities function as a double edged sword that will require additional content moderation strategies for such unrecognised communities in the case of the LIWC-based classifier. On the other hand, the Perspective API offers no protection from dirt that threaten marginalised communities, instead it proposes additional policing and marginalisation virtual spaces.
 
 \section{The Deeper Politics of Toxic Discourse in Content Moderation}
+
+\zw{Can dirt and the signs of dirt be reduced to a matter of signals?}
 
 Considering then the perspectives on toxic offered in \cite{Risam:2015}, we can try to understand these cultural-technical issues that are encountered by Perspective and Opt Out in their aims to distinguish between dirt and not dirt.
 
@@ -156,4 +160,6 @@ While \citet{Rissam:2015} theorises about cultural codes of the feminist movemen
 As comptuational models do not learn to understand \citep{Bender:2020} but instead learn to parrot, methods for the computational detection of abuse similarly do not come to understand abuse, but instead learn correlations of what abuse is. Using such correlations, technologies for content moderation inadvertently engage in toxic slippage of policing non-toxic language use by marginalised populations at a greater rate than marginalised language use \cite{Oliva:2020}.
 
 \section{Concluding Remarks}
+
+
 
