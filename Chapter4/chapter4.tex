@@ -1,7 +1,3 @@
-% !TEX root = ../thesis.tex
-%*******************************************************************************
-%********************************** Fourth Chapter *****************************
-%*******************************************************************************
 % **************************** Define Graphics Path **************************
 \ifpdf
     \graphicspath{{Chapter4/Figs/Raster/}{Chapter4/Figs/PDF/}{Chapter4/Figs/}}
@@ -9,266 +5,449 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-\chapter{Abusive Language Detection}\label{chap:detection}
+\chapter{LIWC/text transformation chapter}\label{chap:liwc}
 
-\section{Typology of Abuse - Published} \zw{Ask committee if this can be used, has now been published in another person's thesis}
-In \cite{Waseem:2017}, we consider the implications of the current state of abusive language detection. In \cite{Davidson:2017} and \cite{Schmidt:2017}, clear misunderstandings of the term ``hate speech'' occur, considering both a legal, gender studies and critical race studies point of view. To effect this, we worked on a paper to emphasize  and encourage researchers to focus on the manner in which the abuse occurs rather than the kind of abuse occurring, as focusing overly on the type of abuse will inevitably lead to potential overlaps between multiple tasks in the general topic of abusive language detection.
+\zw{Describe problem field}
+One of the key issues in machine learning for content moderation is that such systems both in deployed settings (see \autoref{chap:filter}) and in research (see \autoref{chap:intro} and \autoref{chap:nlp}) over-fit to individual tokens that see over-representation in the positive and negative classes respectively. While research efforts have been made to address such issues \cite{CITE: cite papers that try to address overfitting}, the problem of over-fitting to words and identity markers remain an open question for the field. While some such approaches have addressed this problem by replacing certain words and phrases with more general tokens \cite{CITE: Replacing token papers} or masking \cite{CITE: Masking token paper} tokens. Other work has attempted to address the problem by treating it as a problem of dataset bias \cite{CITE: Bias papers}. Here we instead we propose a different approach which serves multiple purposes of 1) minimising the vocabulary to avoid over-fitting to distributional skews in vocabulary across classes; 2) representing documents in terms of how they represent thoughts, feelings, personality, and motivations \cite{LIWC:2015}; and 3) returning modelling of hate speech and different forms of abuse to simpler dictionary-lookup methods that simplify modelling of abuse to how words are used, rather than focusing on their surface forms, to achieve similar performance as compared to more complex models.
 
-In the work, we propose that abusive language will exist in the following forms (please see table \ref{tab:typology} for more examples):
+Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary, we transform documents from large vocabularies, that are riddled with typos, spelling mistakes, and obfuscations to the functions how these words are used. As seen in \autoref{fig:liwc_transform}, the transformation of words to LIWC categories both contain deeper information about how words are used, and encode a loss of information in words that do not exist in the LIWC dictionary. However, by radically reducing the sizes of vocabularies, from several thousand unique tokens to around 1000 unique tokens that provide deeper insights than simply selecting the most frequent tokens. Moreover we show that the strength of the classification performances within the dataset will translate to other datasets, as these transformed tokens are more general than their surface form.
+
+Focusing our attentions on simple deep neural networks and shallow models, we show that by radically reducing the vocabulary size, while increasing the contextual information of the remaining vocabulary, we can achieve strong classification performances within datasets and more importantly, on out of domain datasets.
+
+\zw{Provide example of transformation}
+\section{Previous work}
+
+In the interest of curtailing the spread of online abuse, a large number of technical appraoches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, we focus on three different strands of research. First, methods that rely on manually crafted feature. Such methods, potentially the most rigerous from a scientific point of view, require an understanding of the problem and dataset as well as intuition and knowledge on how it may be addressed; thus here one might find suggestions for features that have the potential to travel across datasets. Second, we examine methods that rely on automated selection and weighting of features, that is neural network based approaches. Finally, we consider the comparatively small body of research devoted to the development of computational models that explicitly seek to generalise across datasets and domains. As we apply our models to datasets in English, we limit our consideration of methods to those that have been applied to datasets on English.
+
+\subsection{Modelling}
+\subsubsection{Manually Crafted Features}
+
+A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. While we do not manually craft the features for our experiments, we draw heavily on the rationale for manually developing features. The governing reasoning for using manually crafted features, such as Part-of-Speech tags \cite{Davidson:2017} is that they reveal intuitions of what the researcher believes may surface salient correlations that aid in high classification performance. Frequently used features are Bag-of-Words, that is the un-ordered occurrence of each word in a document; Term Frequency-Inverse Document Frequency which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination (see \autoref{eq:tfidf} detailing the implementation of \cite{Pedregosa:2011}); n-grams, e.g. bi-grams and tri-grams that consider tuples  and triplets of tokens, respectively; and Part-of-Speech tags.
+
+\begin{equation}\label{eq:tfidf}
+  \text{Term Frequency:}tf(t, d) = f_{t, d}\\
+  \text{Inverse Document Frequency:}idf(t) = \log \dfrac{1 + n}{1 + df(t)} + 1\\
+  TF-IDF(t, d) = tf(t, d) \cdot idf(t)
+\end{equation}
+
+LIWC has previously been examined in the context of abusive detection, \citet{Nina-Alcocer:2019} use LIWC to compute percentages of emotions that are present in abusive docuemnts. They also incorporate ``sexual, anxiety feeling, anger, and so on'' into their feature representation, however withouth clarifying what such features may be or how they are incorporated.
+
+\subsubsection{Neural Networks}
+
+\cite{Zimmerman:2018,Park:2017,Gamback:2017}
+
+As our aim is to consider the influence of LIWC-represented documents, we do not consider the more recent pre-trained Transformer-based langauge models (e.g. \cite{Devlin:2019, CITE: Roberta}) as the amounts of data necessary to train such a masked language model with LIWC representations are unavailable. Moreover, as the LIWC dictionary only occupies a small fraction of the entire English lexicon, and its tokens are abstractions on use of the language, training a language model is a fruitless endeavor.
+
+\subsubsection{Generalisable Models}
+\zw{Talk about NLP models that try to generalise to other datasets.}
+
+\cite{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019}
+
+\subsection{Linguistic Inquiry and Word Count}
+
+\zw{Talk about LIWC: Designed for long form documents}
+
+
+
+
+
+
+\subsection{Datasets}
+Beyond the different specific models and types of input layer, the datasets themselves also differ strongly from one another across a number of attributes: the various sizes of the datasets, the platforms the datasets have been sampled from, the annotator selection, the annotation guidelines, and the aims of the datasets. As we seek to build generalisable models and compare the performance across datasets, we reduce the classification task in each dataset to a binary `abuse/not-abuse' class, as each dataset addresses different aspects and notions of abuse.
+We train our models on either the Twitter dataset collected by \citet{Davidson:2017} and the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2016}, respectively, as our training datasets. We choose these datasets in part due to their sizes and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
+
+\zw{INSERT: Table of BPE and LIWC vocabularies}
+\zw{INSERT: Short paragraph on vocabularies.}
+
+\subsubsection{Training Datasets}
+Our first dataset for training is the dataset developed by \citet{Davidson:2017} consists of $24,784$ tweets that are sampled from Twitter using keywords obtained from \citet{Hatebase}. The dataset is annotated for ``hate speech'', ``offensive language'' and ``neither''. The collection rationale was that not all content that immediately appears to be abusive is necessarily that, and that hate speech models must be able to distinguish between what is offensive and what is hateful \cite{Davidson:2017} (please see \autoref{chap:nlp} and \autoref{chap:filter} for more in-depth discussions on the implications of label categories, their overlap and differences). The dataset was annotated by crowd-workers on FigureEight\footnote{Previously known as CrowdFlower}. Unlike most datasets for abuse, this dataset consists primarily of positive instances, with $77$\% of the (binarised) dataset belonging to the positive class.
+
+Our second dataset used for training is the dataset presented by \citet{Wulczyn:2016}. This dataset consists of more then $100,000$ comments from Wikipedia talk pages that have been annotated for personal attacks and toxicity \cite{Wulczyn:2016}. The rationale of this dataset is that personal attacks are harmful to ongoing conversations, and that through the identification and removals of comments that poison, or toxify online conversations, more space will be left for healthy and constructive discussions (please see \autoref{chap:filter} for an in-depth consideration of the politics of what constitutes ``toxic'' and ``healthy''). The binarised distribution of documents tagged for toxicity aligns better with prior research, with the positive class consuming $\approx 9$\% of the dataset.
+
+\subsubsection{Evaluation Datasets}
+For our evaluation datasets, we use \citet{Waseem-Hovy:2016}, a dataset of $16,000$ documents that are sampled from Twitter and annotated for ``racism'', ``sexism'', and ``neither''. The dataset was annotated by two coders, who labelled $31$\% of the dataset containing as either ``sexist'' or ``racist'' content. This dataset was developed for an early exploration into automated content moderation of online hate speech. We also use the dataset by \citet{Waseem:2016} that followed this first exploration. Here the annotation guidelines remain the same while the label-set is expanded to include the intersection of racism and sexism, the ``both'' category. This dataset contains $6000$ documents, labelled by intersectional feminist activists, and another label-set annotated by crowd-workers from FigureEight. We choose the intersectional feminist tagged annotations, as \citet{Waseem:2016} show that simple computational models perform better using this tagset. The binarised positive labels occupy $15.19$\% of the dataset. Finally, we use the dataset on white-supremacist speech developed by \citet{Garcia:2019}. This dataset, unlike the previous two evaluation datasets does not stem from Twitter, but instead the data is collected from StormFront\footnote{www.stormfront.net}, a web forum dedicated to the preservation and dissemination of white supremacist ideology. This dataset contains \zw{INSERT: Number of total document counts when using the entire dataset instead of the balanced one.} documents labelled for being hateful or not hateful, with \zw{INSERT: Percentage of positive class docs} in the positive class.
+
+\subsubsection{Dataset and Platform Affordances}
+
+As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting editors from a diverse set of backgrounds \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref} may influence which dialects are represented on the platforms, which patterns of speech (e.g. sociolects, slang, and shorthand) occur, and the style of the discussions and conversations.
+
+\subsubsection{Annotator Selection}
+
+There are some interesting discrepancies in the selection of annotators for the datasets that we apply our models to. \citet{Waseem:2016} select their annotators based on socio-political positions, controlling for a specific interpretation of abuse. On the other hand \citet{Wulczyn:2017} select their annotators from the users of the Wikipedia Talk pages. However, the Wikipedia editor community has been accused of being a highly male space that is unwelcoming to women \cite{CITE: Cite article talking about anti-women culture on wikipedia}. This suggests that the influence of their selection of annotators, who are culturally situated in the norms and culture of the Wikipedia editor community, are also likely to be less attuned to content that may be offensive to women, but is accepted communicative practices within the Wikipedia editor community.
+
+On the other hand \citet{Garcia:2019} and \citet{Davidson:2017} select annotators that are removed from the context of the documents they are annotating. This suggests that global understandings of what constitutes abuse are possible, and that it is possible to annotate without a deep understanding of the issues and communicative practices of the specific communities that are being investigated.
+
+While we accept that the influence of annotation guidelines have strong influences on the subject that is being examined (e.g. \citet{Davidson:2017} examine the differences in what is merely offensive and what is hateful, \citet{Garcia:2019} examine what is hateful from a white supremacist community and what is not, and \citet{Wulczyn:2017} examine things that make conversations toxic and hostile), we assume that these different guidelines and questions highlight different aspects of abuse. Through our efforts to develop methods that can identify different forms of abuse across different datasets, we accept the assumption that there are some global understandings of abuse that can be learned by machine learning models. We revisit this assumption in \autoref{chap:disembodied}.
+
+\section{Modelling}
+
+As our aim is to understand how representing documents using only the tokens derived using the Linguistic Inquiry and Word Count dictionary may influence the generalisability of models for hate speech detection across datasets and domains, we use simple modelling architectures and feature representations.
+
+\subsection{Neural Models}\ref{sec:redux_neural}
+
+\zw{Add this where it fits}
+Given that onehot encoded models are much larger in size, I limit the exploration of hyper parameter values to embedding dimension, hidden dimension, dropout and learning rate. Particularly dropout and learning rate are of interest as onehot encoded models are larger than index encoded models. For this reason, I explore deviate from the best parameters identified by the index encoded models. For embedding and hidden dimensions on the other hand, I follow the best parameters found by the index encoded models.
+
+We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We select these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). We implement all neural network models using PyTorch \cite{CITE: Pytorch paper} and use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}.
+In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{onehot_embedding.jpg}
+  \caption{Onehot and Index encoded tensors.}
+  \label{fig:onehot_embedding}
+\end{figure}
+
+\subsection{Hyper-Parameter Search}
+
+We perform Bayesian Hyper Parameter Tuning using Weights and Biases \cite{Wandb} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
+For each embedding-based model, we sample $200$ different hyper-parameter settings for each of our models. Due to the number of hyper-parameter combinations that we sample, we find multiple competing hyper-parameter settings that achieve comparative results. Here we only consider the top TODO: INSERT NUMBER OF PARAMETER SETTINGS TO SEARCH the hyper-parameter hyper-parameter settings and report the setting that performs best on the training data and the test data. In an initial, aborted, hyper-parameter search of the onehot encoded models, we identified that the hyper-parameter search with $200$ different parameter settings would take more than 200 days to complete.
+To limit the search space, we search only the top TODO: INSERT NUMBER OF PAREMETERS TO SEARCH hyper-parameter settings from the hyper-parameter search of the embedding-layer models to search. See \autoref{tab:appendix-embedding-hyperparam} and \autoref{tab:appendix-onehot-hyperparam} in \autoref{Appendix:hyperparams} for full listing of hyper-parameter values.
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\begin{tabular}{l|llll|llll}
+                      & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
+                       & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
+Embedding Dimension    &         &          &         &         &         &         &         &          \\
+Hidden Dimension       &         &          &         &         &         &         &         &          \\
+Window Size            &         &          &         &         &         &         &         &          \\
+Batch Size             &         &          &         &         &         &         &         &          \\
+Learning Rate          &         &          &         &         &         &         &         &          \\
+Dropout                &         &          &         &         &         &         &         &          \\
+Activation Function    &         &          &         &         &         &         &         &          \\
+\# Epochs               &         &          &         &         &         &         &         &          \\
+Validation F1-score    &         &          &         &         &         &         &         &
+\end{tabular}
+\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
+\label{tab:redux_hyperparam_search_davidson}
+\end{table}
+\end{landscape}
+
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\begin{tabular}{l|llll|llll}
+                      & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
+                      & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
+Embedding Dimension   &         &         &         &         &         &         &         &         \\
+Hidden Dimension      &         &         &         &         &         &         &         &         \\
+Window Size           &         &         &         &         &         &         &         &         \\
+Batch Size            &         &         &         &         &         &         &         &         \\
+Learning Rate         &         &         &         &         &         &         &         &         \\
+Dropout               &         &         &         &         &         &         &         &         \\
+Activation Function   &         &         &         &         &         &         &         &         \\
+\# Epochs              &         &         &         &         &         &         &         &         \\
+Validation F1-score   &         &         &         &         &         &         &         &
+\end{tabular}
+\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
+\label{tab:redux_hyperparam_search_wulczyn}
+\end{table}
+\end{landscape}
+
+For all models trained, we perform hyper-parameter tuning over the same batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution. We select a Rectified Linear Unit \cite{CITE: RELU paper} activation function for all models except for the Recurrent Neural Network and the Long-Short Term Memory model, as the latter is only implemented with a $Tanh$ activation function in PyTorch and we use the former to ensure comparison between the Long-Short Term Memory model and all other models.
+
 \begin{itemize}
-  \item{Directed Abuse\\In this case the abuse is aimed a particular individual or entity.}
-  \item{Generalized Abuse\\Is the abuse generalized, it seeks to attack a large group of people, for instance by use of stereotyping an oppressed minority.}
-  \item{Explicit Abuse\\Explicit Abuse may be explicit for instance by using bad words (slurs amongst other things).}
-  \item{Implicit Abuse\\Implicit Abuse is abusive comments that seek to use alliterations, similes, and euphemisms amongst others to communicate abusive content. An example of this, is referring to refugees from Syria in terms of waves and streams, where the implicit connotations are that they are overrunning Europeans and must be stopped, lest we all ``drown''.}
+  \item Maximum epoch count: $\{50, 100, 200\}$,
+  \item Batch size: $\{16, 32, 64\}$,
+  \item learning rate: $[0.00001, 1.0]$
 \end{itemize}
 
-% \begin{table*}[ht]
-% \centering
-% \begin{tabular}{p{\textwidth/30}|p{0.45\textwidth}|p{0.45\textwidth}}
-%   & \textit{Explicit}    & \textit{Implicit} \\\hline
-%     \multirow{4}{*}{\rotatebox[origin=c]{90}{\textit{Directed}}}    &   {\scriptsize``Go kill yourself'',  ``You're a sad little f*ck'' \citep{Hee:2015a}}, \newline {\scriptsize ``@User shut yo beaner ass up sp*c and hop your f*ggot ass back across the border little n*gga''  \citep{Davidson:2017}}, \newline {\scriptsize ``Youre one of the ugliest b*tches Ive ever fucking seen'' \citep{Kontostathis:2013}}. & {\scriptsize ``Hey Brendan, you look gorgeous today. What beauty salon did you visit?'' \citep{dinakar2012common}, \newline ``(((@User))) and what is your job?  Writing cuck articles and slurping Google balls?  \#Dumbgoogles'' \citep{Hine:2016},\newline  ``you're intelligence is so breathtaking!!!!!!'' \citep{dinakar2011modeling}}\\\hline
-%   \multirow{5}{*}{\rotatebox[origin=c]{90}{\textit{Generalized}}} & {\scriptsize``I am surprised they reported on this crap who cares about another dead n*gger?'', ``300 missiles are cool! Love to see um launched into Tel Aviv! Kill all the g*ys there!'' \citep{Nobata:2016}, \newline ``So an 11 year old n*gger girl killed herself over my tweets? \^ \_ \^\ thats another n*gger off the streets!!'' \citep{Kwok:2013}}. & {\scriptsize``Totally fed up with the way this country has turned into a haven for terrorists. Send them all back home.'' \citep{burnap2015cyber}, \newline ``Gas the skypes'' \citep{magu2017detecting}, \newline ``most of them come north and are good at just mowing lawns'' \citep{dinakar2011modeling}} \\
-% \end{tabular}
-%   \caption{Typology of abusive language \citep{Waseem:2017}.}
-% \label{tab:typology}
-% \end{table*}
-%
-in Table \ref{tab:typology} we see a mapping of the categories proposed and how they may interact.
+\subsubsection{Multi-Layered Perceptron}
 
-\section{Challenges of the task}
+The first neural model that we use, is a Multi-Layered Perceptron. We choose the model as it is a simple neural network, that can act as a minimal setting of the usefulness of neural networks. Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of a batch of documents are then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}. For the Multi-Layered Perceptron models, we search over the following values:
 
-\zw{Show here how poorly models generalise to other datasets; refer back to racial biases in datasets}
+\begin{itemize}
+  \item dropout probability: $[0.0, 0.5]$,
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
+  \item the activation function: $\{ReLU\}$
+\end{itemize}
 
-% This project was a collaboration between Zeerak Waseem, James Thorne (University of Sheffield), and Joachim Bingel (University of Copenhagen)\footnote{This project was the result of equal contribution from all authors.}.\vspace{5mm}
-%
-%
-% This project sought to investigate the applicability of Multi-Task Learning for abusive language detection. The overarching aim of the project was to investigate the hypothesis that disparate data sets annotated for different kinds of abusive language in which the demographics writing the abuse can are different can be utilized for a unified model for abusive language detection.
-%
-% We applied data from \cite{Waseem-Hovy:2016,Waseem:2016} and \cite{Davidson:2017}. The tweets collected by \cite{Waseem-Hovy:2016} and \cite{Waseem:2016} were collected without a specific demographic selected whereas \cite{Davidson:2017} collected tweets that originated from the United States of America. Given that these differences meant that the datasets contained documents from several different demographic groups, each with their own understandings of bias and abuse we sought to investigate whether it was possible to utilize the distinct groups to improve detection of abusive language.
-%
-% To investigate this we built classifiers trained on a single data set\footnote{\cite{Waseem-Hovy:2016} and \cite{Waseem:2016} are concatenated into a single data set as they are collected from the same initial scrape }, the concatenation of all data sets, and a multi-task learning configuration in which multiple models are trained simultaneously.
-%
-% \begin{table}[hbt]
-% \centering
-% \caption{Comparison of test-set performance of within-domain and out-of-domain datasets using models trained only on one dataset (first four rows), models trained by concatenating both datasets (middle two rows), and using both datasets in a multi-task learning environment (final four rows). For each training regime, we compare using Bag-of-Words (BoW), the Average of Subword Embeddings (Emb) and both (B+E) as features for each tweet. Key: (R)acism, (S)exism, (H)ate-Speech, (O)ffensive, (N)either. Datasets: Davidson \cite{Davidson:2017}, Waseem\cite{Waseem:2016}/Waseem-Hovy\cite{Waseem-Hovy:2016} (W/W+H)}
-% \label{tab:results}
-%
-% \begin{tabular}{|c|c||c||c|c|c|c||c|c|c|c|} 
-% \hline
-% \multicolumn{2}{|c||}{\textbf{Training Objective}} & \multirow{3}{*}{\textbf{Feats}} & %\multicolumn{8}{|c|}{\textbf{$F_1$-Scores of Predictions on Test Sets}}  \\
-% \cline{1-2}
-% \cline{4-11}
-% \multirow{2}{*}{\textbf{Primary}} & \multirow{2}{*}{\textbf{Aux}} & & %\multicolumn{4}{|c||}{\textbf{W/W+H}} & \multicolumn{4}{|c|}
-% {\textbf{Davidson}} \\
-% \cline{4-11}
-% & & & R & S & N & Avg & H & O & N & Avg\\
-% \hline
-% \hline
-% W/W+H & - & BoW & 0.70 & 0.65 & 0.88 & 0.82 & 0.00 & 0.64 & 0.42 & 0.57 \\
-% W/W+H & - & Emb & 0.30 & 0.42 & 0.85 & 0.71 & 0.01 & 0.04 & 0.29 & 0.08 \\
-% W/W+H & - & B+E & 0.00 & 0.00 & 0.82 & 0.57 & 0.00 & 0.00 & 0.29 & 0.05\\
-% \hline
-% Davidson & - & BoW & 0.22 & 0.29 & 0.69 & 0.56 & 0.32 & 0.94 & 0.84 & 0.89 \\
-% Davidson & - & Emb  & 0.00 & 0.32 & 0.60 & 0.48 & 0.19 & 0.92 & 0.69 & 0.84 \\
-% Davidson & - & B+E & 0.25 & 0.33 & 0.70 & 0.58 & 0.39  & 0.82 & 0.94 & 0.89 \\
-% \hline
-% \hline
-% Both & - & BoW & 0.21 & 0.54 & 0.81 & 0.70 & 0.20 & 0.92 & 0.77 & 0.86 \\
-% Both & - & Emb & 0.21 & 0.45 & 0.76 & 0.64 & 0.05 & 0.90 & 0.64 & 0.80\\
-% Both & - & B+E & 0.17 & 0.53 & 0.81 & 0.69 & 0.31 & 0.92 & 0.77 & 0.86 \\
-% \hline
-% \hline
-% W/W+H & Davidson & BoW & 0.64 & 0.63 & 0.87 & 0.80 & 0.39 & 0.94 & 0.84 & 0.89 \\
-% W/W+H & Davidson & Emb & 0.32 & 0.50 & 0.84 & 0.72 & 0.10 & 0.91 & 0.64 & 0.82 \\
-% W/W+H & Davidson & B+E & 0.51 & 0.53 & 0.86 & 0.75 & 0.16 & 0.93 & 0.78 & 0.86 \\
-% \hline
-% Davidson & W/W+H & BoW & 0.66 & 0.62 & 0.86 & 0.79 & 0.37 & 0.94 & 0.83 & 0.89 \\
-% Davidson & W/W+H & Emb & 0.39 & 0.49 & 0.84 & 0.73 & 0.09 & 0.91 & 0.62 & 0.81 \\
-% Davidson & W/W+H & B+E & 0.60 & 0.57 & 0.85 & 0.77 & 0.14 & 0.93 & 0.78 & 0.86 \\
-% \hline
-% \end{tabular}
-% \end{table}
-%
-% We find that while we did not see improvements over the concatenated models, strong improvements were made over simply using a single training set. Importantly, we see that using multi-task learning we achieve similar performance to concatenating a data set, which allows for further research to continue with this setting using more data sets that may give related signals to abusive language detection.
-%
-% \section{Reframing Content Moderation in the Context of Care - In review}
-%
-% This project is conducted in collaboration with Nanna Bonde Thylstrup from Copenhagen Businesss School.
-%
-% In this project we seek to reframe the logics of content moderation with the logics of content moderation. While content moderation has often been framed in the context of censorship and removal, we here propose to view content moderation in a lens of community care, in which impacted communities are brought to the center of the problem, rather than the peripheral casualties of content mdoeration. This work, in the context of computer science research, allows us to rethink how computational models for content moderation may be built to allow for an intersectional feminist approach to automated content moderation through returning agency to the affected communities.
-% In the context of social scientific thought on content moderation, we seek here to describe (internal) processes and motivations of content moderators at smaller companies. We develop our empirical basis through semi-structured interviews with content moderators from two different companies which engage with the dissemination of sound and webpages, respectively.\vspace{5mm}
-%
-% Through our interviews, we find that the process of content moderation shows striking similarities with nine characterstics of infrastructures as described by \cite{Graham-Thrift:2007} from the work of \cite{Star:1999} and \cite{Star-Ruhleder:1996}. The similarities are expressed in terms of content moderation acting as cultural filters which raise question about pollutive behavior \cite{Douglas:2015}, seeking to separate the harmful from the harmless content.
-%
-% \section{Fair Fake News Detection - In Draft}
-%
-% In this project we aim to extend the method of \cite{Agarwal:2018} to text classification and examine its usefulness for deriving fair classifiers detecting fake news. We use the dataset published by \cite{Wang:2017} which contains statements in the general area of political conversations. For each statement the dataset contains multiple properties including party affiliation, name of the speaker, venue of the statement, subjects of the statement, state the speaker is in, and their job title. In this project we set the protected attribute to be political affiliation, as ones political affiliation should not have an impact on the prediction of the classifier. The method proposed by \cite{Agarwal:2018} is an iterative process of training constrained models in which the constraints updated each time a model has been trained. The updated contraints are computed as a function of violation of the selected fairness criteria.\vspace{5mm}
-%
-% \subsection{Data}
-% The \cite{Wang:2017} dataset contains $12$K statements labelled with 6 classes obtained from Politifact,\footnote{Politifact is a professional fact checking organization.} along with data for each document detailing their party affiliation, job title, the venue of the statement,\footnote{Venue here refers to the type of place the statement was made, e.g. 'social media', 'rally', and 'radio interview'} the name of the speaker, the subjects of the statement, and the state the speaker is in. To estimate if \cite{Agarwal:2018} can be applied, we change the prediction task to a binary classification task by collapsing the labels 'pants-on-fire', 'false', and 'barely-true' to our positive class and 'true', 'mostly-true' and 'half-true' to our negative class. Further, we restrict the data set to only statements which are made by people with declared political affiliations, specifically we consider Democrats and Republicans from the United States of America. Our functioning dataset thus consists of $9.8$K statements which are split into $7,855$ for training, $992$ for validation, and $990$ in our test set.
-%
-% \subsection{Selecting Protected Attributes}
-% In our selection of which meta-data category to use as the protected attribute, we consider gender (as derived from names) and political affiliation. We limit our gender-tagged data to be limited to people who have declared party affiliations to ensure that we can uniquely and accurately identify gender. For both datasets we train a classifier to predict the protected attribute using unigrams. The results of predicting gender (omitted) show that a classifier trained to predict gender only slightly outperforms a random choice model, this suggests that a gender bias may not be expressed strongly in the dataset. On the other hand, a model trained to predict political affiliation using unigrams achieves a reasonable result (see \autoref{tab:feat_exploration}) suggesting that a model for fake news detection {\textit may} correlations between political affiliations and fake news. For our methods, we use demographic parity as our fairness criteria. Demographic Parity states that the predictions of a model must be statistically independent of the protected attribute. We choose this as we wish for a complete independence of political affiliation and predictions of fake news.
-%
-% \begin{table*}[ht]
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{l|l|lll}
-%   Feature Set                               & Feature                                                             & Accuracy   & Precision & Recall \\\hline
-%   \multirow{2}{*}{n-grams}                  & Unigrams                                                            & 63,13      & 0.62      & 0.63   \\
-%                                             & Unigrams + Bigrams                                                  & \bf{64.04} & 0.63      & \bf{0.64} \\\hline
-%    LIWC                                     & LIWC                                                                & 59.59      & 0.36      & 0.60   \\\hline
-%    Sentiment                                & Sentiment                                                           & 56.66      & 0.36      & 0.60   \\\hline
-%   \multirow{4}{*}{Dependency Feats}         & Arc                                                                 & 62.32      & 0.52      & 0.51   \\
-%                                             & Children                                                            & 62.72      & 0.61      & 0.63   \\
-%                                             & Head                                                                & 61.31      & 0.60      & 0.61   \\
-%                                             & Arc Count                                                           & 59.39      & 0.58      & 0.59   \\
-%                                             & Dependency Features                                                 & 60.70      & 0.60      & 0.61   \\\hline
-%   \multirow{3}{*}{Reading Ease Feats}       & Dale-Chall                                                          & 59.49      & 0.54      & 0.59   \\
-%                                             & Sentence Length                                                     & 59.79      & \bf{0.76} & 0.60   \\
-%                                             & Avg. Word Length                                                    & 59.39      & 0.46      & 0.59   \\
-%                                             & Reading Ease Features                                               & 59.09      & 0.52      & 0.59   \\\hline
-%   \multirow{8}{*}{Feature Combinations}     & Reading Ease Feats + Unigram                                        & 63.63      & 0.63      & \bf{0.64}\\
-%                                             & Reading Ease Feats + Unigram + Bigram                               & 62.92      & 0.62      & 0.63   \\
-%                                             & Dependency Feats + Unigram                                          & 61.01      & 0.60      & 0.61   \\
-%                                             & Dependency Feats + Unigram + Bigram                                 & 61.71      & 0.61      & 0.62   \\
-%                                             & Unigrams + LIWC + Sentiment + Dependency Feats + Reading Ease Feats & 61.31      & 0.61      & 0.61   \\
-%                                             & LIWC + Unigram                                                      & 63.33      & 0.62      & 0.63   \\
-%                                             & LIWC + Unigrams + Bigrams                                           & 61.51      & 0.60      & 0.62   \\
-%                                             & All Features                                                        & 62.02      & 0.61      & 0.62
-% \end{tabular}%
-% }
-% \caption{Feature Exploration using Logistic Regression}
-% \label{tab:feat_exploration}
-% \end{table*}
-%
-% \subsection{Defining Fairness}
-%
-% In a consideration of what it means for a classifier to be fair, we consider error rates and accuracies for each class. The aim for a fair classifier is then to minimise differences between error rates for each protected attribute.
-% Error rates are computed by considering all instances of misclassification for each category of the protected attributes
-% \begin{equation}
-%   \left|\dfrac{1}{|Y|}\sum_{i\in X} \mathbf{1}\{y_i \neq \hat{y_i} \land y_i = \text{republican}\} - \dfrac{1}{|Y|}\sum_{i\in X} \mathbf{1}\{y_i \neq \hat{y_i} \land y_i = \text{democrat}\}\right|
-%   \label{eq:err_rate}
-% \end{equation}
-% where $C$ is the set of classes and $X$ is the set of documents that are being predicted on, and $Y$ is the set of labels, and $y_i = \text{democrat}$ is replaced by 'republican' to compute the error rate for republicans. We then take the absolute value for differences between the error rate for each protected attribute.
-%
-% Similarly we compute the difference in accuracy for each class by replacing the $\neq$ with $=$ in \autoref{eq:err_rate}.
-%
-% \subsection{Building a Fair Classifier}
-% The method proposed by \cite{Agarwal:2018} views computation of a fair classifier as a two player game that seeks a $\nu$-approximate equillibrium, where a saddlepoint is computed such that neither player can gain more than $\nu$ by changing their choice. The classifier is constrained by a set of linear constraints which represent the protected attributes. Formally, we can define our constraints as
-% \begin{equation}
-%   \min_{Q\in\Delta} \widehat{err}(Q) \text{ subject to } \bm{M\mu}(Q) \leq \mathbf{c}
-%   \label{eq:constraint}
-% \end{equation}
-% where $\mathbf{c}$ and $\mathbf{M}$ express the linear constraints as a matrix and vector, $Q$ is a randomized classifier, and $\bm{\mu}$ is a conditional moment.\vspace{5mm}
-%
-% The algorithm computes the saddlepoint through an iterative process in which a classifier is trained on a set of linear constraints which are expressed in terms of lagrangian multipliers. In each iteration, we initially update the lagrangian multipliers for each of the $\mathcal{K}$ constraints. Using the updated lagrangian multipliers, we compute a classifier $h$ which allows us to compute the actions of our two players (classifiers) $\\hat{Q}$ and $\hat{\lambda}$. In effect, the lagrangian multipliers allow us to modify our feature weights as a function of the constraint violationof the previous iteration. In each iteration, we store the classifier which has the smallest constraint violation, using its constraint violation to update the values of our lagrangian multipliers.
-%
-% The result of this computation is a set of classifiers which iteratively are more fair, as the constraints of the models are updated.\vspace{5mm}
-%
-% While the method may be applied to linear and non-linear classifiers alike, we focus on linear classifiers to allow us for considering the changes in feature weights.
-%
-% \paragraph{Blind Classifier} We also apply a weak form of Fairness through unawareness \cite{Grgic-Hlaca}, which seeks to remove the influence of features that are indicative of the protected class - notably \cite{Grgic-Hlaca} show that reducing or removing the influence of indicative features does not guarantee that the classifier produces fair predictions. In our approach, we compute a classifier to predict the protected attribute, identify the $400$ most indicative features ($200$ for each class), and train a classifier to predict our main task, fake news, while we remove access to the $400$ most indicative features for the protected attributes. We use a logistic regression model for our blind classifier.
-%
-% \subsection{Model Selection}
-%
-% For all unfair and fair models, with the exception of the blind classifier, we use three different models: Logistic Regression (LR), Support Vector Machines (SVM), and Random Forests (RF). For each classifier type, we initially perform a grid-search over the models parameters on the vanilla fake news detection problem, the best parameters for each model are then applied to all versions of it.
-%
-% \paragraph{Baselines} As the \cite{Wang:2017} paper experimented with a multi-class classifier, we first train a multi-class classifier to ensure that we obtain the same results, then we retrain the classifier using binary labels. Due to the low accuracy of the binary classifier, we show experiment with different features (see \autoref{tab:feat_exploration}, we note that all feature sets were evaluated using a Logistic Regression classifier) which show that unigrams obtain a competitive baseline with little improvement in classification scores by using more advanced feature sets. Therefore we use unigrams for all of our classifiers.
-%
-% \begin{table*}[ht]
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{l|l|lll}
-%   Feature Set                              & Feature                                                             & Accuracy   & Precision & Recall \\\hline
-%   \multirow{2}{*}{n-grams}                 & Unigrams                                                            & 63,13      & 0.62      & 0.63   \\
-%                                            & Unigrams + Bigrams                                                  & \bf{64.04} & 0.63      & \bf{0.64} \\\hline
-%    LIWC                                    & LIWC                                                                & 59.59      & 0.36      & 0.60   \\\hline
-%    Sentiment                               & Sentiment                                                           & 56.66      & 0.36      & 0.60   \\\hline
-%   \multirow{4}{*}{Dependency Feats}        & Arc                                                                 & 62.32      & 0.52      & 0.51   \\
-%                                            & Children                                                            & 62.72      & 0.61      & 0.63   \\
-%                                            & Head                                                                & 61.31      & 0.60      & 0.61   \\
-%                                            & Arc Count                                                           & 59.39      & 0.58      & 0.59   \\
-%                                            & Dependency Features                                                 & 60.70      & 0.60      & 0.61   \\\hline
-%   \multirow{3}{*}{Reading Ease Feats}      & Dale-Chall                                                          & 59.49      & 0.54      & 0.59   \\
-%                                            & Sentence Length                                                     & 59.79      & \bf{0.76} & 0.60   \\
-%                                            & Avg. Word Length                                                    & 59.39      & 0.46      & 0.59   \\
-%                                            & Reading Ease Features                                               & 59.09      & 0.52      & 0.59   \\\hline
-%   \multirow{8}{*}{Feature Combinations}    & Reading Ease Feats + Unigram                                        & 63.63      & 0.63      & \bf{0.64}\\
-%                                            & Reading Ease Feats + Unigram + Bigram                               & 62.92      & 0.62      & 0.63   \\
-%                                            & Dependency Feats + Unigram                                          & 61.01      & 0.60      & 0.61   \\
-%                                            & Dependency Feats + Unigram + Bigram                                 & 61.71      & 0.61      & 0.62   \\
-%                                            & Unigrams + LIWC + Sentiment + Dependency Feats + Reading Ease Feats & 61.31      & 0.61      & 0.61   \\
-%                                            & LIWC + Unigram                                                      & 63.33      & 0.62      & 0.63   \\
-%                                            & LIWC + Unigrams + Bigrams                                           & 61.51      & 0.60      & 0.62   \\
-%                                            & All Features                                                        & 62.02      & 0.61      & 0.62
-% \end{tabular}%
-% }
-% \caption{Feature Exploration using Logistic Regression}
-% \label{tab:feat_exploration}
-% \end{table*}
-%
-% In addition to the the baseline computed using the binary version of the \cite{Wang:2017} classifier, we also compute an unfair SVM and random forest classifier to serve as additional baselines. Finally, we show baselines on predicting party affiliation using a model trained to predict party affiliation and unfair models trained to predict fake news where we use the heuristic that all predictions of ``Fake'' map to ``republican'' and all predictions of ``True'' map to ``democrat''. See \autoref{tab:baselines} for all baselines.
-%
-% \begin{table*}[ht]
-%  \resizebox{\textwidth}{!}{
-% \begin{tabular}{lllllllll}
-%                                                 & Accuracy (overall) & Precision & Recall & F1-score & Accuracy (Class0) & Accuracy (Class1) & Error Rate (Class0) & Error Rate (Class1) \\
-% Unfair LR (Fake News - all data)                & 0.6305             & 0.63      & 0.63   & 0.63     & 0.4982            & 0.7317            & 0.1519              & 0.2174              \\
-% Unfair SVM (Fake News - all data)               & 0.6024             & 0.60      & 0.60   & 0.60     & 0.5215            & 0.6643            & 0.1901              & 0.2073              \\
-% Unfair RF (Fake News - all data)                & 0.6250             & 0.62      & 0.63   & 0.60     & 0.3669            & 0.8225            & 0.1005              & 0.2743              \\
-% Random Baseline (Fake News - all data)          & 0.5003             & 0.51      & 0.50   & 0.50     & 0.4946            & 0.5048            & 0.2805              & 0.2190              \\
-% Unfair LR (Fake News - dem/rep)                 & 0.6313             & 0.62      & 0.63   & 0.62     & 0.4525            & 0.75254237        & 0.1474              & 0.2212              \\
-% Unfair SVM (Fake News - dem/rep)                & 0.6020             & 0.60      & 0.60   & 0.60     & 0.5175            & 0.6593            & 0.2030              & 0.1949              \\
-% Unfair RF (Fake News - dem/rep)                 & 0.6272             & 0.61      & 0.63   & 0.61     & 0.3750            & 0.7983            & 0.1202              & 0.2525              \\
-% Random Baseline (Fake News - dem/rep)           & 0.5040             & 0.52      & 0.50   & 0.51     & 0.5               & 0.5067            & 0.2939              & 0.2020              \\
-% Unfair Pretrained LR (Dem/rep prediction)       & 0.5202             & 0.57      & 0.52   & 0.51     &                   &                   &                     &                     \\
-% Unfair Pretrained SVM (dem/rep prediction)      & 0.5292             & 0.56      & 0.53   & 0.53     &                   &                   &                     &                     \\
-% Unfair Pretrained RF (dem/rep prediction)       & 0.5060             & 0.58      & 0.51   & 0.48     &                   &                   &                     &                     \\
-% Random Baseline (Dem/rep prediction)            & 0.4717             & 0.49      & 0.47   & 0.48     & 0.4672            & 0.4780            & 0.2161              & 0.312               \\
-%
-% \end{tabular}}
-% \caption{Baselines}
-% \label{tab:baselines}
-% \end{table*}
-%
-% \subsection{Results}
-%
-% In \autoref{tab:results} we see the that by applying our blind classifier, we improve the classification accuracy to $0.84$ with a a sharp decrease in error rates compared to the unfair Logistic Regression model. Considering then our fair Logistic Regression model, we see that the classification error increases, however if we consider the relative error computed, there is a slight decrease in the error rate.\footnote{We are still considering which exact error metric to use, so we are leaving the error rates in the table as is for now.}
-%
-% \begin{table*}[ht]
-% \resizebox{\textwidth}{!}{
-% \begin{tabular}{lllllllll}
-%                                                 & Accuracy (overall) & Precision & Recall & F1-score & Accuracy (Class0) & Accuracy (Class1) & Error Rate (Class0) & Error Rate (Class1) \\
-% Blind (dem/rep)                                 & 0.7745             & 0.78      & 0.77   & 0.77     & 0.6318            & 0.88211           & 0.0672              & 0.1582              \\
-% LR (Dem/rep prediction)                         & 0.6676             & 0.66      & 0.67   & 0.66     & 0.8086            & 0.4682            & 0.2202              & 0.1121              \\
-% SVM (Dem/rep prediction)                        & 0.6434             & 0.64      & 0.64   & 0.64     & 0.6965            & 0.5682            & 0.1787              & 0.1777              \\
-% RF (Dem/rep prediction)                         & 0.6131             & 0.60      & 0.61   & 0.59     & 0.8172            & 0.3243            & 0.2898              & 0.1070              \\
-% Fair Fake News LR (dem/rep)                     & 0.5252             & 0.52      & 0.53   & 0.52     & 0.36              & 0.6372            & 0.2161              & 0.2585              \\
-% Fair Fake News SVM                              & 0.4808             & 0.49      & 0.48   & 0.48     & 0.39              & 0.5423            & 0.2727              & 0.2464              \\
-% Fair Fake News RF                               & 0.5909             & 0.58      & 0.59   & 0.58     & 0.415             & 0.7101            & 0.1727              & 0.2363              \\
-% Fair Pretrained LR (Dem/rep prediction)         & 0.3575             & 0.38      & 0.36   & 0.35     &                   &                   &                     &                     \\
-% Fair Pretrained SVM (Dem/rep prediction)        & 0.3676             & 0.39      & 0.37   & 0.37     &                   &                   &                     &                     \\
-% Fair Pretrained RF (Dem/rep prediction)         & 0.4959             & 0.54      & 0.50   & 0.49     &                   &                   &                     &
-% \end{tabular}}
-% \caption{Results of our models}
-% \label{tab:results}
-% \end{table*}
-% \end{rotatebox}
-%
-% Turning our attention to using the fair fake news models to predict party affiliation, we see that in the process of learning a fair fake news classifier, the modification of features has resulted in a classifier which negatively associates republicans with fake news. As the unfair model learns that features which indicate fake news also indicate republicans, this negative association falls in line with our expectations of the model's performance. In \autoref{fig:feature_dev} we show the development of 10 features which are strongly predictive of republicans and democrats, respectively.
-%
-% \begin{figure*}
-%   \centering
-%   \includegraphics[width=\textwidth]{feature_dev.png}
-%   \caption{Development of 10 most predictive features for predicting party affiliation.}
-%   \label{fig:feature_dev}
-% \end{figure*}
-%
-% Based on our results we can conclude that the dataset proposed by \cite{Wang:2017} contains bias against republicans and that intelligent feature selection may yield similar results to modifying a classifier for fairness, with a boost to the classification performance obtained by disallowing the classifier access to biased terms.
-%
-% \section{Critical NLP - Draft}
-%
-% This work is in undertaken in collaboration with Maya Indira Ganesh, Leuphana University of L{\¨u}neburg. In this early draft, we see a conversation between an doctoral student in NLP and a doctoral student in Science and Technology Studies (STS) on the need for critical thought in NLP, how research in NLP on topics such as abuse and hate speech can ignore populations affected by NLP tools and further marginalize them. In our work, we take a step back from the implementations and the specific task and seek to ask how NLP tools can be inclusive of communities afflicted by them and how they can speak to, rather than about the communities that are affected. Importantly, we also situate the researcher - highlighting that for some problems, the experiences, identities, knowledge, and biases that the researchers bring into their approach to the tasks. For instance, for abusive language there is a marked lack of African-American researchers devoted to the problem - this has likely had an influence on the fact that a number of datasets for abusive language all exhibit biases against African American Vernacular English \citep{Davidson:2019,Sap:2019}. We provide concrete considerations for researchers when they work on tasks which may influence communities to which they do not belong.
-%
-% \section{Summary}
-%
-% In this chapter, we have briefly introduced the projects which have lead to publication, the papers have been drafted or are in review at this point. Please see Appendix \ref{appendix:published} for more detail of published papers and \autoref{appendix:draft} for more detail on draft and review versions of papers.
+For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[100, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{mlp.jpg}
+  \caption{Multi-Layered Perceptron model architecture.}
+  \label{fig:liwc_mlp}
+\end{figure}
+
+
+\subsubsection{Recurrent Neural Network}
+
+The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \autoref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer. 
+
+The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
+
+For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
+
+\begin{itemize}
+  \item dropout probability: $[0.0, 0.5]$,
+  \item embedding layer dimension: $\{64, 100, 200, 300\}$,
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
+   \item the activation function: $\{Tanh, ReLU\}$
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{rnn.jpg}
+  \caption{Recurrent Neural Network model architecture.}
+  \label{fig:liwc_rnn}
+\end{figure}
+
+\subsubsection{Long-Short Term Memory}
+
+The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{Tanh} as its non-linear activation function. We use Long-Short Term Memory networks due to their prior successes in other works \cite{CITE: LSTM papers} and because they present a development over RNNs, in that they identify information to ``forget'' in to address the issue of long-range dependencies that occur (please see \autoref{chap:nlp} for more detail).
+
+The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class (please see \autoref{fig:liwc_lstm} for depiction of model architecture.).
+
+For these models, our hyper-parameter tuning considers the following parameters and values:
+
+\begin{itemize}
+  \item dropout probability: $[0.0, 0.5]$,
+  \item embedding layer dimension: $\{64, 100, 200, 300\}$, and
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{lstm.jpg}
+  \caption{Long-Short Term Memory Network model architecture.}
+  \label{fig:liwc_lstm}
+\end{figure}
+
+\subsubsection{Convolutional Neural Network}
+
+For our final neural model type, we use a Convolutional Neural Network. We select this model as it has been applied previously in academic research \cite{CITE: CNN papers} and in industry (e.g. the Perspective API\footnote{https://github.com/conversationai/perspectiveapi}). Similarly to the previous model types, the input layer of the Convolutional Neural Network models can either be an embedding layer or a linear layer. The second layer of the model is a two-dimensional convolutional layer. Finally, there is an output layer and a softmax layer (See \autoref{fig:liwc_cnn} for depiction of model architecture).
+
+For these models, we only consider the activation function, embedding, and hidden dimension in our hyper-parameter tuning, in addition to batch size and learning rate.
+
+\begin{itemize}
+  \item window size: $\{(1, 2, 3), (2, 3, 4), (3, 4, 5)\}$,
+  \item Number of filters: $\{64, 128, 256\}$,
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
+  \item the activation function: $\{ReLU\}$
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{cnn.jpg}
+  \caption{Convolutional Neural Network model architecture.}
+  \label{fig:liwc_cnn}
+\end{figure}
+
+\subsection{Baseline Models}
+
+We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as a bag-of-words after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:redux_neural} providing surface level tokens as the input to the models.
+
+\subsubsection{Baseline hyper-parameters}
+
+Similarly to our neural models, we perform a parameter search to identify the optimal parameters for training our linear baseline models. For the Support Vector Machine models, we explore a regularisation strength of $C \in \{0.1, 0.02 \ldots 1.0\}$ and $penalty \in \{L1, L2\}$. For the Logistic Regression models, we explore the same values of $C$ and append \texttt{elasticnet} to the possible space of penalties, yielding $penalty \in \{L1, L2, elasticnet\}$. We report the optimal settings in \autoref{tab:liwc_baseline_linear_params}.
+
+\zw{EDIT: Update this table based on binary results}
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|cccc|cccc}
+                      & \multicolumn{4}{c|}{BPE}                                                             & \multicolumn{4}{c}{LIWC}                                                             \\ \hline
+                      & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} \\ \hline
+                      & C               & Penalty               & C                 & Penalty                & C               & Penalty               & C                 & Penalty                \\ \hline
+\cite{Davidson:2017}  & $1.0$           & L2                    & $0.1$             & L2                     & $0.4$           & L2                    & $0.1$             & L2                     \\
+\cite{Wulczyn:2016}   & $1.0$           & L2                    & $0.2$             & L2                     & $1.0$           & L2                    & $1.0$             & L2
+\end{tabular}%
+}
+\caption{Optimal parameters for linear Support Vector Machine baselines.}
+\label{tab:liwc_baseline_linear_params}
+\end{table}
+
+Considering the performances on the in-domain during training, we see in \autoref{tab:redux_linear_baselines_dev} reasonable baseline performances on the validation set. The validation scores described in \autoref{tab:redux_linear_baselines_dev} are not as strong as the state-of-the-art in-domain models \cite{Salminen:2020}, in fact they are comparable to the scores reported on the test set of the in the original paper \cite{Davidson:2017} which provided initial baseline scores.\footnote{We do not report these baseline scores as their work does not identify which weighting of their F1-score was used.}. While several previous work augment the textual data with syntactic knowledge \cite{Davidson:2017} or advanced token representations \cite{Salminen:2020} to boost classification performance, we only use the byte-pair encoded documents and the LIWC encoded documents, to ensure comparability with our experimental models. Moreover, as our primary concern is learning classifiers whose performance generalise to other datasets, unlike much prior work which concerns itself with learning classifiers that perform well within the dataset, we do not take further steps towards boosting our baseline classifiers in-domain performances.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|clllll}
+Training data             & Document Representation                     & Model                   & F1-macro & Accuracy & Precision & Recall   \\ \hline
+\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}                        & Logistic Regression     & $92.02$  & $95.52$  & $91.82$   & $92.22$  \\
+                          &                                             & Support Vector Machine  & $92.13$  & $95.56$  & $91.73$   & $92.53$  \\
+                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $87.75$  & $93.09$  & $87.43$   & $88.08$  \\
+                          &                                             & Support Vector Machine  & $89.02$  & $93.62$  & $87.64$   & $90.60$  \\
+\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}                        & Logistic Regression     & $86.35$  & $95.67$  & $90.04$   & $83.42$  \\
+                          &                                             & Support Vector Machine  & $86.47$  & $95.50$  & $89.02$   & $84.31$  \\
+                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $82.32$  & $94.86$  & $90.48$   & $77.34$  \\
+                          &                                             & Support Vector Machine  & $82.98$  & $94.96$  & $90.14$   & $78.36$
+\end{tabular}%
+}
+\caption{In-domain scores on validation set by linear baselines.}
+\label{tab:redux_linear_baselines_dev}
+\end{table}
+
+\section{Experimental Models}
+
+To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:redux_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:redux_hyperparam_search}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
+
+We train all of our neural network models following the same training procedure. We iterate over the training dataset in multiple epochs, shuffling the order of the data at the beginning of each epoch. As we train on a single task, the loss that is propagated through the network using backpropagation is computed on the validation set for the given task. To avoid over-training our model, we implement set our models to stop training after $15$ epochs of worse, that is strictly higher, loss values. As our training procedure closes, we apply the model on each test set, allowing us to evaluate its in-domain performance as well as its out-of-domain performance.
+
+Using this training scheme, we define and search a hyper-parameter space for each model (see \autoref{sec:redux_neural} for the search space for each model and \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
+
+\zw{CODING: retrain the best parameters for the models with 4 new random seeds}
+
+
+\zw{Add results and start by rough analysis of just numbers}
+\zw{Look at predictions in detail, try to identify where they still fail}
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\resizebox{1.4\textheight}{!}{%
+\begin{tabular}{l|clllll}
+  Training data             & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall \\ \hline
+\mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\
+                            &                         & Convolutional Neural Network   &          &          &           &  \\
+                            &                         & Recurrent Neural Network       &          &          &           &  \\        
+                            &                         & Long-Short Term Memory Network &          &          &           &  \\     
+                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\
+                            &                         & Convolutional Neural Network   &          &          &           &  \\        
+                            &                         & Recurrent Neural Network       &          &          &           &  \\        
+                            &                         & Long-Short Term Memory Network &          &          &           &  \\ \midrule       
+\mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\        
+                            &                         & Convolutional Neural Network   &          &          &           &  \\        
+                            &                         & Recurrent Neural Network       &          &          &           &  \\
+                            &                         & Long-Short Term Memory Network &          &          &           &  \\
+                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\        
+                            &                         & Convolutional Neural Network   &          &          &           &  \\        
+                            &                         & Recurrent Neural Network       &          &          &           &  \\        
+                            &                         & Long-Short Term Memory Network &          &          &           &  
+\end{tabular}%
+}
+\caption{In-domain scores on validation set by onehot encoded neural models.}
+\label{tab:redux_onehot_neural_dev}
+\end{table}
+\end{landscape}
+
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\resizebox{1.4\textheight}{!}{%
+\begin{tabular}{l|clllll}
+  Training data             & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall  \\ \hline
+\mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           & \\
+                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           & \\ \midrule
+\mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           & \\
+                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           & \\
+                            &                         & Convolutional Neural Network   &          &          &           & \\
+                            &                         & Recurrent Neural Network       &          &          &           & \\
+                            &                         & Long-Short Term Memory Network &          &          &           &
+\end{tabular}%
+}
+\caption{In-domain scores on validation set by index encoded neural models.}
+\label{tab:redux_index_neural_dev}
+\end{table}
+\end{landscape}
+
+\section{Results}
+
+\zw{UPDATE: Change F1, Accuracy, precision, recall names to full names from acc, prec, rec}
+\begin{landscape}
+\begin{table}[]
+\centering
+\resizebox{1.4\textheight}{!}{%
+\begin{tabular}{ccl|llll|llll|llll|llll|llll}
+                                     &                         &                                & \multicolumn{4}{c|}{Davidson} & \multicolumn{4}{c}{Wulczyn}   & \multicolumn{4}{c}{Waseem}    & \multicolumn{4}{c}{Waseem-Hovy} & \multicolumn{4}{c}{Garcia} \\
+ Training data                       & Representation          & Model                          & F1    & acc    & prec & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec     & F1    & acc    & prec & rec   \\ \hline
+\multirow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$92.19$&$95.60$&$91.91$&$92.47$&$71.26$&$86.83$&$67.87$&$92.47$&$49.06$&$68.64$&$49.56$&$49.41$&$58.49$&$65.66$&$49.41$&$58.25$  &$60.62$&$60.66$&$60.71$&$60.66$\\
+                                     &                         & Logistic Regression            &$91.39$&$95.19$&$91.51$&$91.27$&$71.18$&$86.40$&$67.68$&$79.85$&$48.34$&$66.04$&$49.35$&$49.03$&$58.12$&$64.36$&$58.37$&$57.98$  &$58.15$&$58.15$&$58.16$&$58.15$\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     & \mrow{6}{*}{\rot{LIWC}} & Support Vector Machine         &$86.85$&$92.01$&$84.41$&$90.12$&$75.32$&$90.02$&$72.41$&$79.78$&$53.29$&$71.24$&$53.27$&$54.42$&$55.89$&$65.36$&$57.59$&$55.93$  &$44.92$&$49.58$&$49.36$&$49.58$\\
+                                     &                         & Logistic Regression            &$87.19$&$92.41$&$85.37$&$89.41$&$74.91$&$89.69$&$71.85$&$79.81$&$51.90$&$68.78$&$52.30$&$53.36$&$56.43$&$64.83$&$57.51$&$56.32$  &$45.23$&$48.74$&$48.31$&$48.74$\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\\hline
+
+\mrow{12}{*}{\rot{Wulczyn}}          & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$63.89$&$70.55$&$66.24$&$78.47$&$86.42$&$95.59$&$89.11$&$84.15$&$53.45$&$80.34$&$55.30$&$53.23$&$51.95$&$67.90$&$59.86$&$54.19$  &$52.89$&$58.99$&$68.66$&$58.99$\\
+                                     &                         & Logistic Regression            &$59.86$&$64.30$&$64.25$&$75.47$&$86.24$&$95.63$&$89.94$&$83.31$&$51.22$&$80.92$&$53.43$&$51.64$&$50.56$&$68.14$&$60.38$&$53.64$  &$50.04$&$57.53$&$68.78$&$57.53$\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     & \mrow{6}{*}{\rot{LIWC}} & Support Vector Machine         &$76.06$&$81.72$&$73.73$&$88.34$&$83.20$&$95.05$&$90.72$&$78.42$&$54.49$&$82.51$&$59.19$&$54.12$&$49.82$&$68.02$&$59.77$&$53.23$  &$39.70$&$51.67$&$58.13$&$51.67$\\
+                                     &                         & Logistic Regression            &$72.62$&$78.17$&$71.52$&$86.30$&$82.67$&$94.95$&$90.88$&$77.65$&$54.26$&$82.94$&$59.99$&$53.99$&$49.11$&$67.78$&$58.88$&$52.81$  &$39.41$&$51.67$&$58.77$&$51.67$\\
+                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
+                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $
+\end{tabular}%
+}
+\caption{Performance of linear baseline models and index-encoded models across in-domain and out-of-domain evaluation sets.}
+\label{tab:redux_embedding_davidson}
+\end{table}
+\end{landscape}
+
+\begin{landscape}
+\begin{table}[]
+\centering
+\resizebox{1.4\textheight}{!}{%
+\begin{tabular}{ccl|llll|llll|llll|llll|llll}
+                                     &                         &                                 & \multicolumn{4}{c|}{Davidson} & \multicolumn{4}{c}{Wulczyn} & \multicolumn{4}{c}{Waseem} & \multicolumn{4}{c}{Waseem-Hovy} & \multicolumn{4}{c}{Garcia} \\
+ Training data                       & Representation          & Model                           & F1 & acc & prec & rec         & F1 & acc & prec & rec       & F1 & acc & prec & rec      & F1 & acc & prec & rec           & F1 & acc & prec & rec      \\ \hline
+\mrow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     & \mrow{6}{*}{\rot{LIWC}} & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\\hline
+
+\mrow{12}{*}{\rot{Wulczyn}}          & \mrow{6}{*}{\rot{BPE}}  & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     & \mrow{6}{*}{\rot{LIWC}} & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
+\end{tabular}%
+}
+\caption{Performance of onehot-encoded models across in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
+\label{tab:redux_embedding_davidson}
+\end{table}
+\end{landscape}
+\zw{Add results and start by rough analysis of just numbers}
+\zw{Add plots for development of loss over each epoch}
+\zw{Add plots for F1 score during the evaluation set}
+\zw{Look at predictions in detail, try to identify where they still fail}
+\zw{Do logistic regression and to find out what clear patterns there are}
+
+While the onehot and index encoded tensors should functionally be equal to one another, we see a direct influence of the input layers on the classification scores; with all models showing stronger performance using linear input layers. We propose that the reason for such discrepancies lie in the simpler training procedure of linear layers which don't seek to find relationships between different tokens but instead simply provide a linear function, and embedding layers that seek to identify the relationships between each all tokens in the dataset.
+
+\section{Conclusions and future work}
+
+\zw{Some concluding remarks}
+While functionally this limits the vocabulary, there is also loss of information. Future work, could then employ both simple and complex mappings of different forms of words to single tokens that cohere with the LIWC dictionary, thus limiting information loss while retaining the predictive power.
+
+\zw{}
