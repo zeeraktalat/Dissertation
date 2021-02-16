@@ -5,449 +5,204 @@
     \graphicspath{{Chapter5/Figs/Vector/}{Chapter5/Figs/}}
 \fi
 
-\chapter{LIWC/text transformation chapter}\label{chap:liwc}
+\chapter{Multi-Task Learning}\label{chap:mtl}
+\zw{Joint work with Joachim Bingel}
 
-\zw{Describe problem field}
-One of the key issues in machine learning for content moderation is that such systems both in deployed settings (see \autoref{chap:filter}) and in research (see \autoref{chap:intro} and \autoref{chap:nlp}) over-fit to individual tokens that see over-representation in the positive and negative classes respectively. While research efforts have been made to address such issues \cite{CITE: cite papers that try to address overfitting}, the problem of over-fitting to words and identity markers remain an open question for the field. While some such approaches have addressed this problem by replacing certain words and phrases with more general tokens \cite{CITE: Replacing token papers} or masking \cite{CITE: Masking token paper} tokens. Other work has attempted to address the problem by treating it as a problem of dataset bias \cite{CITE: Bias papers}. Here we instead we propose a different approach which serves multiple purposes of 1) minimising the vocabulary to avoid over-fitting to distributional skews in vocabulary across classes; 2) representing documents in terms of how they represent thoughts, feelings, personality, and motivations \cite{LIWC:2015}; and 3) returning modelling of hate speech and different forms of abuse to simpler dictionary-lookup methods that simplify modelling of abuse to how words are used, rather than focusing on their surface forms, to achieve similar performance as compared to more complex models.
+\begin{quote}
+  ``So hate speech detection is kind of like sentiment analysis++'' -- Anders Johannsen
+\end{quote}
 
-Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary, we transform documents from large vocabularies, that are riddled with typos, spelling mistakes, and obfuscations to the functions how these words are used. As seen in \autoref{fig:liwc_transform}, the transformation of words to LIWC categories both contain deeper information about how words are used, and encode a loss of information in words that do not exist in the LIWC dictionary. However, by radically reducing the sizes of vocabularies, from several thousand unique tokens to around 1000 unique tokens that provide deeper insights than simply selecting the most frequent tokens. Moreover we show that the strength of the classification performances within the dataset will translate to other datasets, as these transformed tokens are more general than their surface form.
+\section{Introduction}
+One of the frequently made assumptions is that hate speech detection, and in general abusive language detection, shares many similarities to other tasks that similarly seek to deal with identifying subjective human experiences such as sentiment analysis, sarcasm detection, and emotion detection. Indeed, each of these tasks share the characteristic that the identification of each of these on the basis of text is a task of linguistic pragmatics. While they share this unifying characteristic, hate and humour, for instance occupy different processes in \zw{INSERT: Generation/Identification/Whatever} \cite{CITE: Cite papers that find things about humour and hate}. It stands to reason then to ask if there are overlaps in patterns learned by machine learning models, in spite of their dissimilarities of the different tasks.
 
-Focusing our attentions on simple deep neural networks and shallow models, we show that by radically reducing the vocabulary size, while increasing the contextual information of the remaining vocabulary, we can achieve strong classification performances within datasets and more importantly, on out of domain datasets.
+In recognition that tasks like identifying hate or humour are distinct in spite of their similarities and overlaps, it is not appropriate to use a single multi-class model, where data from all different tasks are simply combined to form a single large dataset with a number of different labels, some that indicate abuse while others do not. Indeed, several issues exist with such a methodology, as the collection periods, populations that are represented, and the collection rationales may differ to such a degree that combining datasets may introduce more confounding factors that the models may learn. On the other hand, as only one of the datasets that we investigate contains labels from multiple tasks, a multi-class prediction model, that is a model that predicts one or more labels for each document it processes is also a less-than perfect solution due to the limitation of only being given space to investigate one possible avenue for influence. Finally, one could also choose to investigate ensemble methods, that rely on a set of models that are each trained for a specific subtask, and are weighted by a model that treats the outputs of the models for each subtask as features. However, a drawback of this method is that it relies on training multiple models that are each optimised for their own subtask. Multi-task learning, a machine learning paradigm for training machine learning models for a main task while through leveraging inductive biases with related auxiliary tasks for the main task. Multitask learning offers a remit from the issues that plague single-task and ensemble models through its use of either a shared or closely aligned parameter space between the different task models, allowing the parameters learned in the different tasks to influence the main task model, while retaining a focus on the primary task through weighting (please refer back to \autoref{sec:model_background} for more detail).
 
-\zw{Provide example of transformation}
+In light of these issues and potentials, we choose to investigate multi-task learning as a framework for considering how a number of different tasks influence the modelling of abuse detection. This method, in addition to addressing the aforementioned concerns, through adding signals the auxiliary tasks, these also act as regularisers, preventing the main task model from over-fitting.
+
+\zw{DOUBLE CHECK: Check that this is actually what our results show.}
+We find that in comparison to our baselines, simply adding multi-task learning without a consideration for the data and it is represented in the model does not provide strong benefits. However, we also find that if data and models are considered in combination, then there are strong gains in using multi-task learning approaches over single task models and simplistic multi-task models.
+
 \section{Previous work}
 
-In the interest of curtailing the spread of online abuse, a large number of technical appraoches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, we focus on three different strands of research. First, methods that rely on manually crafted feature. Such methods, potentially the most rigerous from a scientific point of view, require an understanding of the problem and dataset as well as intuition and knowledge on how it may be addressed; thus here one might find suggestions for features that have the potential to travel across datasets. Second, we examine methods that rely on automated selection and weighting of features, that is neural network based approaches. Finally, we consider the comparatively small body of research devoted to the development of computational models that explicitly seek to generalise across datasets and domains. As we apply our models to datasets in English, we limit our consideration of methods to those that have been applied to datasets on English.
+While multi-task learning has been applied for a number of tasks, including language specific tasks such as multi-word expression identification \cite{Bingel-Bjerva:2018}, machine translation \cite{Dong:2015}, and sequence labelling \cite{Rei:2017}. Multi-task learning has also been used in tasks that produce social outcomes such as predicting mental health conditions \cite{Benton:2017},hate speech detecting \cite{Waseem:2018,Rajamanickam:2020,Farha:2020,Djandji:2019}, and rumour verification \cite{Kochkina:2018}.
 
-\subsection{Modelling}
-\subsubsection{Manually Crafted Features}
+Considering the sparse previous work on different forms of abusive language detection that employ multi-task learning, two of the approaches consider English text \cite{Waseem:2018,Rajamanickam:2020} and two operate on Arabic \cite{Farha:2020,Djandji:2019}. Focusing on the models applied to English, both works approach the task using hard parameter sharing \cite{Caruana:1997} and randomly choose which task is being trained on. \citet{Waseem:2018} apply a Multi-Layered Perceptron network while \citet{Rajamanickam:2020} use a Long-Short Term Memory network. \citet{Rajamanickam:2020} also implemented a double encoder model in which the primary and auxiliary share an encoder and each have a stacked Bi-directional Long-Short Memory Network that generate another encoding. The primary and auxiliary task models diverge at this point, where the model for the auxiliary task directly passes the second encoding to a Bi-directional Long-Short Memory Network, the output of which is subject to an attention layer and finally passed through to a linear layer and subject to an activation function before producing the prediction of the model. The primary task model sums the encodings from the stacked Bi-directional Long-Short Term Memory networks for the primary and auxiliary task, passing this on to a Bi-directional Long Short Term Memory network. The resulting representation is then passed through an attention layer and passed through an output layer generating the prediction.
 
-A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. While we do not manually craft the features for our experiments, we draw heavily on the rationale for manually developing features. The governing reasoning for using manually crafted features, such as Part-of-Speech tags \cite{Davidson:2017} is that they reveal intuitions of what the researcher believes may surface salient correlations that aid in high classification performance. Frequently used features are Bag-of-Words, that is the un-ordered occurrence of each word in a document; Term Frequency-Inverse Document Frequency which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination (see \autoref{eq:tfidf} detailing the implementation of \cite{Pedregosa:2011}); n-grams, e.g. bi-grams and tri-grams that consider tuples  and triplets of tokens, respectively; and Part-of-Speech tags.
+A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that \citet{Rajamanickam:2020} use a weighting parameter to distinguish between the primary and auxiliary task. \citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set. The reason for this discrepancy is that \citet{Waseem:2018} seek to use multi-task learning to train a model that is capable of dealing with cross-cultural data while \citet{Rajamanickam:2020} seek to improve classification performance on the primary task.
 
-\begin{equation}\label{eq:tfidf}
-  \text{Term Frequency:}tf(t, d) = f_{t, d}\\
-  \text{Inverse Document Frequency:}idf(t) = \log \dfrac{1 + n}{1 + df(t)} + 1\\
-  TF-IDF(t, d) = tf(t, d) \cdot idf(t)
-\end{equation}
+The work described in this chapter follows \citet{Rajamanickam:2020} in its efforts to improve classification performance, as we choose auxiliary tasks that we hypothesise will be beneficial to the primary task. While \citet{Rajamanickam:2020} use emotion detection as their only auxiliary task, we use the tasks described in \autoref{sec:mtl_tasks}.
 
-LIWC has previously been examined in the context of abusive detection, \citet{Nina-Alcocer:2019} use LIWC to compute percentages of emotions that are present in abusive docuemnts. They also incorporate ``sexual, anxiety feeling, anger, and so on'' into their feature representation, however withouth clarifying what such features may be or how they are incorporated.
+\section{Learning tasks}\label{sec:mtl_tasks}
 
-\subsubsection{Neural Networks}
+For our tasks we choose a mix of tasks that have been identified as challenges in previous work, that relate to findings in previous work \cite{Waseem-Hovy:2016,Davidson:2017,Schmidt:2017} and datasets for distinct forms of abuse \cite{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016}.
 
-\cite{Zimmerman:2018,Park:2017,Gamback:2017}
+Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2016} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2016}, \citet{Davidson:2017}, and \citet{Waseem:2016} as our primary tasks and use \citet{Waseem-Hovy:2016} as an auxiliary task.
 
-As our aim is to consider the influence of LIWC-represented documents, we do not consider the more recent pre-trained Transformer-based langauge models (e.g. \cite{Devlin:2019, CITE: Roberta}) as the amounts of data necessary to train such a masked language model with LIWC representations are unavailable. Moreover, as the LIWC dictionary only occupies a small fraction of the entire English lexicon, and its tokens are abstractions on use of the language, training a language model is a fruitless endeavor.
+Beyond the datasets annotated for abuse, we identify several other dataset to use as auxiliary tasks. These datasets fall into two categories, those that relate to previously identified issues for abusive language detection models and datasets that address seemingly related issues. In the former category, we choose sarcasm detection as an auxiliary task, using the dataset provided by \citet{Oraby_sarcasm:2017}; for the latter we choose a dataset labelled for moral sentiments \citet{Hoover:2019} and a dataset tagged for whether an argument is based in facts or feelings \citet{Oraby_fact_feel:2017}. Please refer to \autoref{sec:datasets} for more a comprehensive view on each of the datasets that we use in our model.
 
-\subsubsection{Generalisable Models}
-\zw{Talk about NLP models that try to generalise to other datasets.}
-
-\cite{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019}
-
-\subsection{Linguistic Inquiry and Word Count}
-
-\zw{Talk about LIWC: Designed for long form documents}
-
-
-
-
-
-
-\subsection{Datasets}
-Beyond the different specific models and types of input layer, the datasets themselves also differ strongly from one another across a number of attributes: the various sizes of the datasets, the platforms the datasets have been sampled from, the annotator selection, the annotation guidelines, and the aims of the datasets. As we seek to build generalisable models and compare the performance across datasets, we reduce the classification task in each dataset to a binary `abuse/not-abuse' class, as each dataset addresses different aspects and notions of abuse.
-We train our models on either the Twitter dataset collected by \citet{Davidson:2017} and the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2016}, respectively, as our training datasets. We choose these datasets in part due to their sizes and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
+Finally, considering \citet{Waseem:2018,Davidson:2019} and \citet{Sap:2019} who all highlight issues of dialectal biases along racial lines in hate speech datasets, we considered using \citet{Preotiuc-Unger:2018} as an auxiliary task to predict demographic attributes. However, as this dataset is annotated on a user-level we collect the Twitter timelines for all users and represent the user as the concatenation of all tweets. For modelling purposes, this poses an issue as each user is represented by up to $3,200$ tweets of $280$ characters per tweet. We use the entire Twitter histories, rather than sample from them as people who communicate in multiple dialects, particularly those that are marginalised, are likely to code-switch \cite{CITE: AAE code switching paper}. This, in combination with Mainstream American English being the largest dialect represented in the dataset as it is used by both people who only speak that dialect as well as those that speak other dialects, not using the full histories disproportionately risks erasing the exact dialects we seek to examine. On the other hand, using the full histories presents issues in fitting the into GPU memory during the training phase of the model.
 
 \zw{INSERT: Table of BPE and LIWC vocabularies}
 \zw{INSERT: Short paragraph on vocabularies.}
 
-\subsubsection{Training Datasets}
-Our first dataset for training is the dataset developed by \citet{Davidson:2017} consists of $24,784$ tweets that are sampled from Twitter using keywords obtained from \citet{Hatebase}. The dataset is annotated for ``hate speech'', ``offensive language'' and ``neither''. The collection rationale was that not all content that immediately appears to be abusive is necessarily that, and that hate speech models must be able to distinguish between what is offensive and what is hateful \cite{Davidson:2017} (please see \autoref{chap:nlp} and \autoref{chap:filter} for more in-depth discussions on the implications of label categories, their overlap and differences). The dataset was annotated by crowd-workers on FigureEight\footnote{Previously known as CrowdFlower}. Unlike most datasets for abuse, this dataset consists primarily of positive instances, with $77$\% of the (binarised) dataset belonging to the positive class.
-
-Our second dataset used for training is the dataset presented by \citet{Wulczyn:2016}. This dataset consists of more then $100,000$ comments from Wikipedia talk pages that have been annotated for personal attacks and toxicity \cite{Wulczyn:2016}. The rationale of this dataset is that personal attacks are harmful to ongoing conversations, and that through the identification and removals of comments that poison, or toxify online conversations, more space will be left for healthy and constructive discussions (please see \autoref{chap:filter} for an in-depth consideration of the politics of what constitutes ``toxic'' and ``healthy''). The binarised distribution of documents tagged for toxicity aligns better with prior research, with the positive class consuming $\approx 9$\% of the dataset.
-
-\subsubsection{Evaluation Datasets}
-For our evaluation datasets, we use \citet{Waseem-Hovy:2016}, a dataset of $16,000$ documents that are sampled from Twitter and annotated for ``racism'', ``sexism'', and ``neither''. The dataset was annotated by two coders, who labelled $31$\% of the dataset containing as either ``sexist'' or ``racist'' content. This dataset was developed for an early exploration into automated content moderation of online hate speech. We also use the dataset by \citet{Waseem:2016} that followed this first exploration. Here the annotation guidelines remain the same while the label-set is expanded to include the intersection of racism and sexism, the ``both'' category. This dataset contains $6000$ documents, labelled by intersectional feminist activists, and another label-set annotated by crowd-workers from FigureEight. We choose the intersectional feminist tagged annotations, as \citet{Waseem:2016} show that simple computational models perform better using this tagset. The binarised positive labels occupy $15.19$\% of the dataset. Finally, we use the dataset on white-supremacist speech developed by \citet{Garcia:2019}. This dataset, unlike the previous two evaluation datasets does not stem from Twitter, but instead the data is collected from StormFront\footnote{www.stormfront.net}, a web forum dedicated to the preservation and dissemination of white supremacist ideology. This dataset contains \zw{INSERT: Number of total document counts when using the entire dataset instead of the balanced one.} documents labelled for being hateful or not hateful, with \zw{INSERT: Percentage of positive class docs} in the positive class.
-
-\subsubsection{Dataset and Platform Affordances}
-
-As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting editors from a diverse set of backgrounds \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref} may influence which dialects are represented on the platforms, which patterns of speech (e.g. sociolects, slang, and shorthand) occur, and the style of the discussions and conversations.
-
-\subsubsection{Annotator Selection}
-
-There are some interesting discrepancies in the selection of annotators for the datasets that we apply our models to. \citet{Waseem:2016} select their annotators based on socio-political positions, controlling for a specific interpretation of abuse. On the other hand \citet{Wulczyn:2017} select their annotators from the users of the Wikipedia Talk pages. However, the Wikipedia editor community has been accused of being a highly male space that is unwelcoming to women \cite{CITE: Cite article talking about anti-women culture on wikipedia}. This suggests that the influence of their selection of annotators, who are culturally situated in the norms and culture of the Wikipedia editor community, are also likely to be less attuned to content that may be offensive to women, but is accepted communicative practices within the Wikipedia editor community.
-
-On the other hand \citet{Garcia:2019} and \citet{Davidson:2017} select annotators that are removed from the context of the documents they are annotating. This suggests that global understandings of what constitutes abuse are possible, and that it is possible to annotate without a deep understanding of the issues and communicative practices of the specific communities that are being investigated.
-
-While we accept that the influence of annotation guidelines have strong influences on the subject that is being examined (e.g. \citet{Davidson:2017} examine the differences in what is merely offensive and what is hateful, \citet{Garcia:2019} examine what is hateful from a white supremacist community and what is not, and \citet{Wulczyn:2017} examine things that make conversations toxic and hostile), we assume that these different guidelines and questions highlight different aspects of abuse. Through our efforts to develop methods that can identify different forms of abuse across different datasets, we accept the assumption that there are some global understandings of abuse that can be learned by machine learning models. We revisit this assumption in \autoref{chap:disembodied}.
-
 \section{Modelling}
 
-As our aim is to understand how representing documents using only the tokens derived using the Linguistic Inquiry and Word Count dictionary may influence the generalisability of models for hate speech detection across datasets and domains, we use simple modelling architectures and feature representations.
+Following the same methodology as in \autoref{chap:liwc} we pre-process all documents using 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018}. Given the positive results obtained in \autoref{chap:liwc}, we also conduct experiments pre-processing all documents using the Linguistic Inquiry and Word Count (LIWC) dictionary. Through processing all documents through the Byte-Pair Encodings, we minimise the vocabulary as tokens are decomposed to their sub-words, moreover this approach allows us to reduce out-of-vocabulary tokens. Conversely, by preprocessing our documents using LIWC, we increase the number of out-of-vocabulary tokens, however, by reducing the number of unique tokens remaining after only using tokens in the LIWC dictionary. These tokens are then reduced to the smaller set of the combinations of LIWC categories. It is only through the use of LIWC categories that we limit the size of the vocabulary.\vspace{5mm}
 
-\subsection{Neural Models}\ref{sec:redux_neural}
+We train two variants of all models, one using the Byte-Pair encoded documents and one using the LIWC encoded documents. For our baseline models, we train a Support Vector Machine and a single task Multi-Layered Perceptron. Our experimental models are then all multi-task learning models; we train a multi-task Multi-Layered Perceptron and a Long-Short Term Memory network. Please see \autoref{sec:model_background} for more detail on the models.
 
-\zw{Add this where it fits}
-Given that onehot encoded models are much larger in size, I limit the exploration of hyper parameter values to embedding dimension, hidden dimension, dropout and learning rate. Particularly dropout and learning rate are of interest as onehot encoded models are larger than index encoded models. For this reason, I explore deviate from the best parameters identified by the index encoded models. For embedding and hidden dimensions on the other hand, I follow the best parameters found by the index encoded models.
+% \zw{Describe hyper parameter tuning}
+For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Weights and Biases \cite{Wandb} to perform Bayesian hyper-parameter optimisation. To identify the best hyper-parameter configuration, we run $100$ iterations of training our model with different hyper-parameters. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{scikit-learn:2019}.
 
-We implement and train four different model architectures with two variations each, resulting in a total of 8 different neural models for each input representation. We choose to train a Multi-Layered Perceptron, a Recurrent Neural Network, a Long-Short Term Memory network, and a Convolutional Neural Network. We select these four models as they have each been used in previous work \cite{CITE: Find papers with Neural approaches for each of the models}. Each of the four models are trained with either a linear input layer and an embedding input layer. We choose to make this distinction as our datasets are too small to meaningfully learn embedding layers, yet for the LIWC transformed documents, pre-trained embeddings have little value, as all tokens would be out-of-vocabulary. Thus to compare comparable entities, we train a model with each type of input layer. This difference in the input layers however also implies a difference in how each document is represented: for the models with linear input layers, each document is encoded as a onehot tensor whereas the models that use an embedding layer as it's input layer the documents are represented as index-encoded tensors (please see \autoref{fig:onehot_embedding} for an illustration). We implement all neural network models using PyTorch \cite{CITE: Pytorch paper} and use gradient clipping to prevent the issue of exploding gradients \cite{Bengio:1994}.
-In order to focus on the utility of the transformed document representations, we use bare bones models with simple architectures. To address the issue of the models over-fitting to the data either by identifying spurious correlations or by over-training the model, we subject each model to dropout and early stopping criteria (please see \autoref{sec:dropoutearly} for more details on the functionality of early stopping and dropout).
+\subsection{Neural Models}
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{onehot_embedding.jpg}
-  \caption{Onehot and Index encoded tensors.}
-  \label{fig:onehot_embedding}
-\end{figure}
+We train two different multi-task model architectures, a Multi-Layered Perceptron network model and a Long-Short Term Memory network model, and a single task Multi-Layered Perceptron network. For all models, we use index-encoded tensors and use an embedding layer as the input layer. All neural models are implemented using PyTorch \cite{CITE: Pytorch paper}.
 
-\subsection{Hyper-Parameter Search}
-
-We perform Bayesian Hyper Parameter Tuning using Weights and Biases \cite{Wandb} to identify the optimal parameters for each model and the variants of each model, evaluated using macro-F1 score. We also investigate the influence of batch sizes and learning rate. For more in depth explanation of how each model works, please refer to \autoref{sec:model_background}.\vspace{5mm}
-For each embedding-based model, we sample $200$ different hyper-parameter settings for each of our models. Due to the number of hyper-parameter combinations that we sample, we find multiple competing hyper-parameter settings that achieve comparative results. Here we only consider the top TODO: INSERT NUMBER OF PARAMETER SETTINGS TO SEARCH the hyper-parameter hyper-parameter settings and report the setting that performs best on the training data and the test data. In an initial, aborted, hyper-parameter search of the onehot encoded models, we identified that the hyper-parameter search with $200$ different parameter settings would take more than 200 days to complete.
-To limit the search space, we search only the top TODO: INSERT NUMBER OF PAREMETERS TO SEARCH hyper-parameter settings from the hyper-parameter search of the embedding-layer models to search. See \autoref{tab:appendix-embedding-hyperparam} and \autoref{tab:appendix-onehot-hyperparam} in \autoref{Appendix:hyperparams} for full listing of hyper-parameter values.
-
-\begin{landscape}
-\begin{table}[]
-\centering
-\begin{tabular}{l|llll|llll}
-                      & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
-                       & MLP     & CNN      & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM     \\ \hline
-Embedding Dimension    &         &          &         &         &         &         &         &          \\
-Hidden Dimension       &         &          &         &         &         &         &         &          \\
-Window Size            &         &          &         &         &         &         &         &          \\
-Batch Size             &         &          &         &         &         &         &         &          \\
-Learning Rate          &         &          &         &         &         &         &         &          \\
-Dropout                &         &          &         &         &         &         &         &          \\
-Activation Function    &         &          &         &         &         &         &         &          \\
-\# Epochs               &         &          &         &         &         &         &         &          \\
-Validation F1-score    &         &          &         &         &         &         &         &
-\end{tabular}
-\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
-\label{tab:redux_hyperparam_search_davidson}
-\end{table}
-\end{landscape}
-
-
-\begin{landscape}
-\begin{table}[]
-\centering
-\begin{tabular}{l|llll|llll}
-                      & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
-                      & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
-Embedding Dimension   &         &         &         &         &         &         &         &         \\
-Hidden Dimension      &         &         &         &         &         &         &         &         \\
-Window Size           &         &         &         &         &         &         &         &         \\
-Batch Size            &         &         &         &         &         &         &         &         \\
-Learning Rate         &         &         &         &         &         &         &         &         \\
-Dropout               &         &         &         &         &         &         &         &         \\
-Activation Function   &         &         &         &         &         &         &         &         \\
-\# Epochs              &         &         &         &         &         &         &         &         \\
-Validation F1-score   &         &         &         &         &         &         &         &
-\end{tabular}
-\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
-\label{tab:redux_hyperparam_search_wulczyn}
-\end{table}
-\end{landscape}
-
-For all models trained, we perform hyper-parameter tuning over the same batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution. We select a Rectified Linear Unit \cite{CITE: RELU paper} activation function for all models except for the Recurrent Neural Network and the Long-Short Term Memory model, as the latter is only implemented with a $Tanh$ activation function in PyTorch and we use the former to ensure comparison between the Long-Short Term Memory model and all other models.
-
-\begin{itemize}
-  \item Maximum epoch count: $\{50, 100, 200\}$,
-  \item Batch size: $\{16, 32, 64\}$,
-  \item learning rate: $[0.00001, 1.0]$
-\end{itemize}
-
-\subsubsection{Multi-Layered Perceptron}
-
-The first neural model that we use, is a Multi-Layered Perceptron. We choose the model as it is a simple neural network, that can act as a minimal setting of the usefulness of neural networks. Our Multi-Layered Perceptron consists of either a linear input layer or an embedding input layer. The obtained representation of a batch of documents are then passed on to a linear hidden layer and passed on to a linear output layer, which is subject to a softmax layer computing probability estimates for each class. Following the first and second layer of the model architecture, we subject the output of the layer to a non-linear activation function and a dropout layer. The model architecture is depicted in \autoref{fig:liwc_mlp}. For the Multi-Layered Perceptron models, we search over the following values:
-
-\begin{itemize}
-  \item dropout probability: $[0.0, 0.5]$,
-  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
-  \item the activation function: $\{ReLU\}$
-\end{itemize}
-
-For the models that use an embedding layer as their input layers, we additionally search for the dimension of the embedding layer, allowing the model to search between $[100, 300]$. For the linear input layer model, the hidden dimension search functionally replaces the search over the embedding size.
+In order to show the utility of multi-task learning for abuse detection, we use basic architectures and avoid things such as attention layers. Further, each model is subject to dropout for another measure against over-fitting.  While we do subject our model to early stopping, we find that in practice early stopping is not triggered due to the variable performances on the different tasks.
 
 \begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{mlp.jpg}
-  \caption{Multi-Layered Perceptron model architecture.}
-  \label{fig:liwc_mlp}
+  \begin{minipage}{0.5\linewidth}
+    \centering
+    \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
+    \label{fig:mlp_mtl_embedding}
+  \end{minipage}
+  \begin{minipage}{0.5\linewidth}
+    \centering
+    \includegraphics[scale=0.75]{lstm_mtl_embedding.jpg}
+    \label{fig:lstm_mtl_embedding}
+  \end{minipage}
+  \caption{Multi-task Learning models}
+  \label{fig:mtl_models}
 \end{figure}
 
+\zw{CODING: Rerun MLP hyper-parameter search.}
 
-\subsubsection{Recurrent Neural Network}
+\subsubsection{Multi-task Multi-Layered Perceptron}
 
-The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \autoref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer. 
+\zw{Add mathematical function definition}
+The multi-task Multi-Layered Perceptron that we implement consists of an input embedding layer, which is trainable. The output of this is then passed to a linear layer that is shared by all tasks. The resulting representation of a document, or batch of documents, is then passed on the another linear layer, and finally it is passed through a linear output layer that maps to the classes for each task, respectively. The result of this final layer is then subject to a softmax layer. Between each layer in the model, softmax, input, and output layer aside, we subject the output of all layers to an activation function and dropout. Please refer to \autoref{fig:mlp_mtl_embedding} for a depiction of this model.
 
-The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \autoref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
+\zw{Insert hyper-parameter space that is searched}
 
-For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
+\subsubsection{Multi-task Long-Short Term Memory Network}
 
-\begin{itemize}
-  \item dropout probability: $[0.0, 0.5]$,
-  \item embedding layer dimension: $\{64, 100, 200, 300\}$,
-  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
-   \item the activation function: $\{Tanh, ReLU\}$
-\end{itemize}
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{rnn.jpg}
-  \caption{Recurrent Neural Network model architecture.}
-  \label{fig:liwc_rnn}
-\end{figure}
-
-\subsubsection{Long-Short Term Memory}
-
-The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{Tanh} as its non-linear activation function. We use Long-Short Term Memory networks due to their prior successes in other works \cite{CITE: LSTM papers} and because they present a development over RNNs, in that they identify information to ``forget'' in to address the issue of long-range dependencies that occur (please see \autoref{chap:nlp} for more detail).
-
-The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class (please see \autoref{fig:liwc_lstm} for depiction of model architecture.).
-
-For these models, our hyper-parameter tuning considers the following parameters and values:
-
-\begin{itemize}
-  \item dropout probability: $[0.0, 0.5]$,
-  \item embedding layer dimension: $\{64, 100, 200, 300\}$, and
-  \item hidden layer dimension: $\{64, 100, 200, 300\}$
-\end{itemize}
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{lstm.jpg}
-  \caption{Long-Short Term Memory Network model architecture.}
-  \label{fig:liwc_lstm}
-\end{figure}
-
-\subsubsection{Convolutional Neural Network}
-
-For our final neural model type, we use a Convolutional Neural Network. We select this model as it has been applied previously in academic research \cite{CITE: CNN papers} and in industry (e.g. the Perspective API\footnote{https://github.com/conversationai/perspectiveapi}). Similarly to the previous model types, the input layer of the Convolutional Neural Network models can either be an embedding layer or a linear layer. The second layer of the model is a two-dimensional convolutional layer. Finally, there is an output layer and a softmax layer (See \autoref{fig:liwc_cnn} for depiction of model architecture).
-
-For these models, we only consider the activation function, embedding, and hidden dimension in our hyper-parameter tuning, in addition to batch size and learning rate.
-
-\begin{itemize}
-  \item window size: $\{(1, 2, 3), (2, 3, 4), (3, 4, 5)\}$,
-  \item Number of filters: $\{64, 128, 256\}$,
-  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
-  \item the activation function: $\{ReLU\}$
-\end{itemize}
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{cnn.jpg}
-  \caption{Convolutional Neural Network model architecture.}
-  \label{fig:liwc_cnn}
-\end{figure}
+\zw{Add mathematical function definition}
+\zw{CODING: Run LSTM hyper-parameter search.}
+The multi-task Long-Short Term Memory network, similarly initially has a trainable input embedding layer. The output is, similarly the multi-task Multi-Layered Perceptron, passed to a shared hidden layer. The obtained representation is then passed to a Long-Short Term Memory network, which feeds its output into an output-layered that is then subject to a linear layer, mapping to the possible output classes. Similarly to our multi-task Multi-Layered Perceptron, all layers in our model, save the output layer, softmax layer, output layer, and input layer are subject to dropout. Please see \autoref{fig:lstm_mtl_embedding} for a depiction of the network.
 
 \subsection{Baseline Models}
 
-We develop several different baseline methods to compare our method with. For each shallow baseline model (i.e. Logistic Regression and Support Vector Machines), we train two different types: a surface-token based model that uses the surface forms of the documents (e.g. words), and a LIWC based model. For each of these models, we represent each document for training and classification as a bag-of-words after removing stop words. In addition to the aforementioned models, we also train deep neural networks that similarly rely on surface forms. Specifically, we use the models described in \autoref{sec:redux_neural} providing surface level tokens as the input to the models.
+For our baseline models, we train all single-task models using Support Vector Machines (see \autoref{sec:model_background}) while we use a Logistic Regression classifier for on top of Support Vector Machines for the ensemble baseline. For all model types, we train two variants, one that is trained on the BPE tokenised text and one that is trained on the LIWC encoded text. For our Support Vector Machines and ensemble classifiers, we perform a grid-search over the parameters of the models. For each training dataset, we fit a vectoriser to the training set and pass all other datasets through the fitted vectoriser. While this allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training dataset. For this reason, we do not perform any operations that limit the occurrence of tokens in the vocabulary. Further, for the byte-pair encoded documents out-of-vocabulary tokens are likely to appear with smaller frequency as tokens unknown to the pre-trained Byte-Pair Embeddings are broken down into subword units that are likely to be repeated across the different datasets.
 
-\subsubsection{Baseline hyper-parameters}
+For the grid search for the linear models, we explore the regularisation strength and the penalty provided for the models. For the regularisation strength we experiment with $C\in \{0.1, 0.2, 0.3, \ldots 1.0\}$, where the value of $C$ is inversely proportional to $C$, and we explore using an $L1$ and $L2$ penalty. The grid search is performed by training our linear baseline model trained on the training data for the primary task, using five-fold cross-validation. To arrive at the best performing parameters for a given model, a held-out subset of the training data is used to evaluate on. Following the conclusion of the parameter search, we evaluate the model with the optimal parameters on a held-out validation set, and finally we apply the model on the test data.
 
-Similarly to our neural models, we perform a parameter search to identify the optimal parameters for training our linear baseline models. For the Support Vector Machine models, we explore a regularisation strength of $C \in \{0.1, 0.02 \ldots 1.0\}$ and $penalty \in \{L1, L2\}$. For the Logistic Regression models, we explore the same values of $C$ and append \texttt{elasticnet} to the possible space of penalties, yielding $penalty \in \{L1, L2, elasticnet\}$. We report the optimal settings in \autoref{tab:liwc_baseline_linear_params}.
+\subsubsection{Linear Single Task Models}
 
-\zw{EDIT: Update this table based on binary results}
-
-\begin{table}[]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{l|cccc|cccc}
-                      & \multicolumn{4}{c|}{BPE}                                                             & \multicolumn{4}{c}{LIWC}                                                             \\ \hline
-                      & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} & \multicolumn{2}{c}{Logistic Regression} & \multicolumn{2}{c}{Support Vector Machine} \\ \hline
-                      & C               & Penalty               & C                 & Penalty                & C               & Penalty               & C                 & Penalty                \\ \hline
-\cite{Davidson:2017}  & $1.0$           & L2                    & $0.1$             & L2                     & $0.4$           & L2                    & $0.1$             & L2                     \\
-\cite{Wulczyn:2016}   & $1.0$           & L2                    & $0.2$             & L2                     & $1.0$           & L2                    & $1.0$             & L2
-\end{tabular}%
-}
-\caption{Optimal parameters for linear Support Vector Machine baselines.}
-\label{tab:liwc_baseline_linear_params}
-\end{table}
-
-Considering the performances on the in-domain during training, we see in \autoref{tab:redux_linear_baselines_dev} reasonable baseline performances on the validation set. The validation scores described in \autoref{tab:redux_linear_baselines_dev} are not as strong as the state-of-the-art in-domain models \cite{Salminen:2020}, in fact they are comparable to the scores reported on the test set of the in the original paper \cite{Davidson:2017} which provided initial baseline scores.\footnote{We do not report these baseline scores as their work does not identify which weighting of their F1-score was used.}. While several previous work augment the textual data with syntactic knowledge \cite{Davidson:2017} or advanced token representations \cite{Salminen:2020} to boost classification performance, we only use the byte-pair encoded documents and the LIWC encoded documents, to ensure comparability with our experimental models. Moreover, as our primary concern is learning classifiers whose performance generalise to other datasets, unlike much prior work which concerns itself with learning classifiers that perform well within the dataset, we do not take further steps towards boosting our baseline classifiers in-domain performances.
+Following previous work \cite{Waseem:2016,Davidson:2017}, we use a Support Vector Machine with linear kernels for our single-task models. Please consult \autoref{tab:mtl_svm_parameters} for the optimal setting for parameters for the Support Vector Machine for each training set.
 
 \begin{table}[]
 \centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{l|clllll}
-Training data             & Document Representation                     & Model                   & F1-macro & Accuracy & Precision & Recall   \\ \hline
-\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}                        & Logistic Regression     & $92.02$  & $95.52$  & $91.82$   & $92.22$  \\
-                          &                                             & Support Vector Machine  & $92.13$  & $95.56$  & $91.73$   & $92.53$  \\
-                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $87.75$  & $93.09$  & $87.43$   & $88.08$  \\
-                          &                                             & Support Vector Machine  & $89.02$  & $93.62$  & $87.64$   & $90.60$  \\
-\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}                        & Logistic Regression     & $86.35$  & $95.67$  & $90.04$   & $83.42$  \\
-                          &                                             & Support Vector Machine  & $86.47$  & $95.50$  & $89.02$   & $84.31$  \\
-                          & \multirow{2}{*}{LIWC}                       & Logistic Regression     & $82.32$  & $94.86$  & $90.48$   & $77.34$  \\
-                          &                                             & Support Vector Machine  & $82.98$  & $94.96$  & $90.14$   & $78.36$
-\end{tabular}%
-}
-\caption{In-domain scores on validation set by linear baselines.}
-\label{tab:redux_linear_baselines_dev}
+\begin{tabular}{l|ll|ll}
+                     & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c}{LIWC} \\ \hline
+                     &         & Penalty       & $C$      & Penalty       \\ \hline
+\cite{Waseem:2016}   & $0.8$   & L2            & $0.8$    & L2            \\
+\cite{Davidson:2017} & $0.2$   & L2            & $0.3$    & L2            \\
+\cite{Wulczyn:2016}  & $0.1$   & L2            & $1.0$    & L2
+\end{tabular}
+\caption{Optimal parameters for single task Support Vector Machines with linear kernels.}
+\label{tab:mtl_svm_parameters}
 \end{table}
 
-\section{Experimental Models}
+As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Regardless of the model, we note that the Byte-Pair encoded data prefers stronger regularisation while the LIWC encoded data prefers weaker regularisation. This trend is most notable on the models trained on \citet{Wulczyn:2016}, where the strongest possible regularisation is used for the Byte-Pair encoded dataset and the weakest possible for the LIWC encoded dataset. This difference in regularisation strength depending on the input data is likely strongly influenced by the size of the vocabularies, with $95,364$ tokens for the BPE encoded data and $1007$ for the LIWC encoded data (see \autoref{tab:mtl_vocab_sizes}). Interestingly, a difference in vocabulary sizes does not explain the lack of change in regularisation strength for the \citet{Waseem:2016}. However, we note that while the training data for \citet{Wulczyn:2016} consists of $95,364$ unique tokens over $95,692$ documents \citet{Waseem:2016} consists of $11,921$ unique tokens over only $5,526$ training documents. The vocabulary for the LIWC encoded \citet{Waseem:2016} dataset consists of $743$ tokens, where the least frequently used token \textit{`RELATIV\_COGPROC\_POWER\_CAUSE\_MOTION\_WORK\_DRIVES\_ACHIEVE'} occurs $6$ times. In comparison, only $2187$ out of the $11,921$ tokens occur $6$ or more times. In the more than $5,000$ tokens that are unique to a single document, and by extension class, allowing for a model to over-fit on such tokens requiring less regularisation of those tokens.
+\zw{Check for logic: Does this argument make sense?}
 
-To evaluate which training dataset allows for better generalisation, we train our four models described in \autoref{sec:redux_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \autoref{tab:redux_hyperparam_search}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
+\subsubsection{Ensemble Classifier}
 
-We train all of our neural network models following the same training procedure. We iterate over the training dataset in multiple epochs, shuffling the order of the data at the beginning of each epoch. As we train on a single task, the loss that is propagated through the network using backpropagation is computed on the validation set for the given task. To avoid over-training our model, we implement set our models to stop training after $15$ epochs of worse, that is strictly higher, loss values. As our training procedure closes, we apply the model on each test set, allowing us to evaluate its in-domain performance as well as its out-of-domain performance.
+As multi-task learning shares some resemblance with the ensemble training paradigm, we implement an ensemble as another baseline. Unlike the Support Vector Machines that use a single vectoriser for all datasets, in our ensemble model we train a vectoriser for each dataset and train a model to predict that task exclusively. To ensure that the model for each task performs as best possible, we perform a grid-search over each task model with a similar five-fold cross validation to the single-task Support Vector Machines.
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{ensemble_mtl.jpg}
+  \label{fig:ensemble_mtl}
+\end{figure}
 
-Using this training scheme, we define and search a hyper-parameter space for each model (see \autoref{sec:redux_neural} for the search space for each model and \autoref{tab:exp_model_parameters_davidson} and \autoref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
+Once each component model has been trained, we train a Logistic Regression Classifier on the main task training data and evaluate on the corresponding test set. The predictions from each single task model serve as features for the Logistic Regression Classifier to be trained on. Thus, the logistic regression classifier never sees any of the input text of the model, as that is only provided to the models whose predictions it relies on. To allow for this, each document must be vectorised several times, once for each task model in the ensemble. Finally, a vectoriser is fitted on the predicted labels from each task classifier, and presented to the main task model to be trained on. Please see \autoref{fig:ensemble_mtl} for a depiction of the training and prediction procedure the ensemble classifier.
 
-\zw{CODING: retrain the best parameters for the models with 4 new random seeds}
+\begin{table}[]
+\centering
+\begin{tabular}{l|ll|ll}
+                     & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c}{LIWC} \\ \hline
+                     & $C$     & Penalty       & $C$      & Penalty       \\ \hline
+\cite{Waseem:2016}   & $0.1$   & L2            & $0.2$    & L2             \\
+\cite{Davidson:2017} & $0.4$   & L2            & $0.6$    & L2             \\
+\cite{Wulczyn:2016}  & $0.2$   & L2            & $0.4$    & L2
+\end{tabular}
+\caption{Optimal parameters for the Logistic Regression ensemble classifier.}
+\label{tab:mtl_ensemble_parameters}
+\end{table}
 
+Considering the values of $C$ in \autoref{tab:mtl_ensemble_parameters}, we similarly note a similarity to \autoref{tab:mtl_svm_parameters} that the strength of regularisation drops as the input to the task models moves from Byte-Pair Encoding to LIWC encoded documents. In this case, as we are performing the parameter search on the same feature set, namely a prediction from each classifier, the vocabulary sizes and the specific vocabularies are unlikely to directly provide an impact. Instead we interpret these changes in regularisation strength as a downstream effect of the lower regularisation strength for each model.
 
-\zw{Add results and start by rough analysis of just numbers}
-\zw{Look at predictions in detail, try to identify where they still fail}
+\subsubsection{Single Task Multi-Layered Perceptron}
+
+\zw{CODING: Single task MLP model}
+
+\subsection{Experimental Models}
+
+Three different scenarios
+\begin{enumerate}
+  \item Aux tasks are also abusive language tasks
+  \item Aux tasks are not abuse tasks
+  \item Aux tasks are abuse and not abuse tasks
+\end{enumerate}
+
+To train our experimental models, and ensure direct comparability of the models with one another, we develop a single training process that we subject all models to.\vspace{5mm}
+
+To train our model robustly, we iterate over the dataset in a set number of epochs for each model, identified through the hyper-parameter search. Each epoch consists of $500$ batches of data passed through the model; the batch size, too, is identified through the hyper-parameter search. To avoid the issue of only selecting within the first $500$ batches from each dataset, we randomly shuffle all datasets at the top of each new epoch. Though several different strategies for selecting which task to select have been developed \cite{Waseem:2018}, we choose here to follow the selection process in previous work \cite{Waseem:2018,Rajamanickam:2020} in which the task is randomly selected. For our training procedure, this means that selecting the task to processed is a 6-sided fair die toss, where each task will be chosen approximately every $6$ iterations. We distinguish between the primary task and the auxiliary tasks by introducing a parameter $\beta$ that controls how much each tasks contributes to the loss function. To avoid an issue of vanishing losses, we set the $\beta_{aux} = 1$ for each auxiliary task and $beta_{primary} = \sum^{i}_{i \in \#auxiliary_tasks} 1$ for the primary task. Thus, the resulting model emphasises the contributions of the primary tasks equal to the collective contributions of all auxiliary tasks. For each task, we compute the loss using the equation given in \autoref{eq:mtl_loss} on the training data for the task. The computed loss is computed after each batch and back-propagated through the network, weighted by $\beta$. At the end of each epoch, we track the development of our model on the validation set from the primary task.
+
+\begin{equation}\label{eq:mtl_loss}
+  loss = loss(\hat{y}, y) \times \beta
+\end{equation}
+
+For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines. In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models. For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models. We do note however, that most models prefer $ReLU$ as their activation function over $tanh$. Similarly, most models prefer a batch size of $64$ over $32$. On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
+\zw{Insert insights about model hyper-parameters}.
 
 \begin{landscape}
 \begin{table}[]
 \centering
-\resizebox{1.4\textheight}{!}{%
-\begin{tabular}{l|clllll}
-  Training data             & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall \\ \hline
-\mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\
-                            &                         & Convolutional Neural Network   &          &          &           &  \\
-                            &                         & Recurrent Neural Network       &          &          &           &  \\        
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\     
-                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\
-                            &                         & Convolutional Neural Network   &          &          &           &  \\        
-                            &                         & Recurrent Neural Network       &          &          &           &  \\        
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\ \midrule       
-\mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\        
-                            &                         & Convolutional Neural Network   &          &          &           &  \\        
-                            &                         & Recurrent Neural Network       &          &          &           &  \\
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\
-                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\        
-                            &                         & Convolutional Neural Network   &          &          &           &  \\        
-                            &                         & Recurrent Neural Network       &          &          &           &  \\        
-                            &                         & Long-Short Term Memory Network &          &          &           &  
-\end{tabular}%
-}
-\caption{In-domain scores on validation set by onehot encoded neural models.}
-\label{tab:redux_onehot_neural_dev}
+\begin{tabular}{lllll|llll|llll}
+                    & \multicolumn{4}{c|}{Davidson}   & \multicolumn{4}{c|}{Wulczyn}  & \multicolumn{4}{c}{Waseem}          \\ \hline
+                    & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} &  \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} &  \multicolumn{2}{c}{BPE} &  \multicolumn{2}{c}{LIWC} \\
+                    & MLP       & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM     & MLP      & LSTM \\
+Shared Dimension    & $256$     &      & $256$    &      & $256$    &      & $256$    &      & $256$    & $256$    & $256$    &      \\
+Hidden Dimension    & -         &      & -        &      & -        &      & -        &      & -        & $300$    & -        &      \\
+Embedding Dimension & $100$     &      & $100$    &      & $100$    &      & $100$    &      & $300$    & $100$    & $100$    &      \\
+Activation Function & $ReLU$    &      & $ReLU$   &      & $ReLU$   &      & $ReLU$   &      & $Tanh$   & $ReLU$   & $ReLU$   &      \\
+Batch Size          & $64$      &      & $64$     &      & $32$     &      & $32$     &      & $64$     & $64$     & $64$     &      \\
+Learning Rate       & $0.001$   &      & $0.001$  &      & $0.01$   &      & $0.01$   &      & $0.001$  & $0.0001$ & $0.001$  &      \\
+\# Epochs           & $200$     &      & $200$    &      & $100$    &      & $100$    &      & $100$    & $200$    & $200$    &      \\
+Dropout             & $0.3$     &      & $0.2$    &      & $0.1$    &      & $0.2$    &      & $0.3$    & $0.1$    & $0.1$    &      \\
+Validation Score    & $0.5249$  &      & $0.5410$ &      & $0.6885$ &      & $0.5304$ &      & $0.4054$ & $0.3336$ & $0.2995$ &
+\end{tabular}
+\caption{Best parameter setting for each experimental model type.}
+\label{tab:mtl_exp_model_parameters}
 \end{table}
 \end{landscape}
 
+\zw{Identify which models will be experimental models once good results come out.}
 
-\begin{landscape}
-\begin{table}[]
-\centering
-\resizebox{1.4\textheight}{!}{%
-\begin{tabular}{l|clllll}
-  Training data             & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall  \\ \hline
-\mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           & \\
-                            &                         & Convolutional Neural Network   &          &          &           & \\
-                            &                         & Recurrent Neural Network       &          &          &           & \\
-                            &                         & Long-Short Term Memory Network &          &          &           & \\
-                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           & \\
-                            &                         & Convolutional Neural Network   &          &          &           & \\
-                            &                         & Recurrent Neural Network       &          &          &           & \\
-                            &                         & Long-Short Term Memory Network &          &          &           & \\ \midrule
-\mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           & \\
-                            &                         & Convolutional Neural Network   &          &          &           & \\
-                            &                         & Recurrent Neural Network       &          &          &           & \\
-                            &                         & Long-Short Term Memory Network &          &          &           & \\
-                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           & \\
-                            &                         & Convolutional Neural Network   &          &          &           & \\
-                            &                         & Recurrent Neural Network       &          &          &           & \\
-                            &                         & Long-Short Term Memory Network &          &          &           &
-\end{tabular}%
-}
-\caption{In-domain scores on validation set by index encoded neural models.}
-\label{tab:redux_index_neural_dev}
-\end{table}
-\end{landscape}
+\zw{Describe the models and experimental settings}
+\zw{CODING: Do Ablation test}
 
 \section{Results}
 
-\zw{UPDATE: Change F1, Accuracy, precision, recall names to full names from acc, prec, rec}
-\begin{landscape}
-\begin{table}[]
-\centering
-\resizebox{1.4\textheight}{!}{%
-\begin{tabular}{ccl|llll|llll|llll|llll|llll}
-                                     &                         &                                & \multicolumn{4}{c|}{Davidson} & \multicolumn{4}{c}{Wulczyn}   & \multicolumn{4}{c}{Waseem}    & \multicolumn{4}{c}{Waseem-Hovy} & \multicolumn{4}{c}{Garcia} \\
- Training data                       & Representation          & Model                          & F1    & acc    & prec & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec   & F1    & acc   & prec  & rec     & F1    & acc    & prec & rec   \\ \hline
-\multirow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$92.19$&$95.60$&$91.91$&$92.47$&$71.26$&$86.83$&$67.87$&$92.47$&$49.06$&$68.64$&$49.56$&$49.41$&$58.49$&$65.66$&$49.41$&$58.25$  &$60.62$&$60.66$&$60.71$&$60.66$\\
-                                     &                         & Logistic Regression            &$91.39$&$95.19$&$91.51$&$91.27$&$71.18$&$86.40$&$67.68$&$79.85$&$48.34$&$66.04$&$49.35$&$49.03$&$58.12$&$64.36$&$58.37$&$57.98$  &$58.15$&$58.15$&$58.16$&$58.15$\\
-                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     & \mrow{6}{*}{\rot{LIWC}} & Support Vector Machine         &$86.85$&$92.01$&$84.41$&$90.12$&$75.32$&$90.02$&$72.41$&$79.78$&$53.29$&$71.24$&$53.27$&$54.42$&$55.89$&$65.36$&$57.59$&$55.93$  &$44.92$&$49.58$&$49.36$&$49.58$\\
-                                     &                         & Logistic Regression            &$87.19$&$92.41$&$85.37$&$89.41$&$74.91$&$89.69$&$71.85$&$79.81$&$51.90$&$68.78$&$52.30$&$53.36$&$56.43$&$64.83$&$57.51$&$56.32$  &$45.23$&$48.74$&$48.31$&$48.74$\\
-                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\\hline
-
-\mrow{12}{*}{\rot{Wulczyn}}          & \mrow{6}{*}{\rot{BPE}}  & Support Vector Machine         &$63.89$&$70.55$&$66.24$&$78.47$&$86.42$&$95.59$&$89.11$&$84.15$&$53.45$&$80.34$&$55.30$&$53.23$&$51.95$&$67.90$&$59.86$&$54.19$  &$52.89$&$58.99$&$68.66$&$58.99$\\
-                                     &                         & Logistic Regression            &$59.86$&$64.30$&$64.25$&$75.47$&$86.24$&$95.63$&$89.94$&$83.31$&$51.22$&$80.92$&$53.43$&$51.64$&$50.56$&$68.14$&$60.38$&$53.64$  &$50.04$&$57.53$&$68.78$&$57.53$\\
-                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     & \mrow{6}{*}{\rot{LIWC}} & Support Vector Machine         &$76.06$&$81.72$&$73.73$&$88.34$&$83.20$&$95.05$&$90.72$&$78.42$&$54.49$&$82.51$&$59.19$&$54.12$&$49.82$&$68.02$&$59.77$&$53.23$  &$39.70$&$51.67$&$58.13$&$51.67$\\
-                                     &                         & Logistic Regression            &$72.62$&$78.17$&$71.52$&$86.30$&$82.67$&$94.95$&$90.88$&$77.65$&$54.26$&$82.94$&$59.99$&$53.99$&$49.11$&$67.78$&$58.88$&$52.81$  &$39.41$&$51.67$&$58.77$&$51.67$\\
-                                     &                         & Multi-Layered Perceptron       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Convolutional Neural Network   &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Recurrent Neural Network       &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $\\
-                                     &                         & Long-Short Term Memory network &$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $&$     $  &$     $&$     $&$     $&$     $
-\end{tabular}%
-}
-\caption{Performance of linear baseline models and index-encoded models across in-domain and out-of-domain evaluation sets.}
-\label{tab:redux_embedding_davidson}
-\end{table}
-\end{landscape}
-
-\begin{landscape}
-\begin{table}[]
-\centering
-\resizebox{1.4\textheight}{!}{%
-\begin{tabular}{ccl|llll|llll|llll|llll|llll}
-                                     &                         &                                 & \multicolumn{4}{c|}{Davidson} & \multicolumn{4}{c}{Wulczyn} & \multicolumn{4}{c}{Waseem} & \multicolumn{4}{c}{Waseem-Hovy} & \multicolumn{4}{c}{Garcia} \\
- Training data                       & Representation          & Model                           & F1 & acc & prec & rec         & F1 & acc & prec & rec       & F1 & acc & prec & rec      & F1 & acc & prec & rec           & F1 & acc & prec & rec      \\ \hline
-\mrow{12}{*}{\rot{Davidson}}         & \mrow{6}{*}{\rot{BPE}}  & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     & \mrow{6}{*}{\rot{LIWC}} & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\\hline
-
-\mrow{12}{*}{\rot{Wulczyn}}          & \mrow{6}{*}{\rot{BPE}}  & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     & \mrow{6}{*}{\rot{LIWC}} & \textit{Support Vector Machine} &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & \textit{Logistic Regression}    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Multi-Layered Perceptron        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Convolutional Neural Network    &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Recurrent Neural Network        &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-                                     &                         & Long-Short Term Memory network  &    &     &      &             &    &     &      &           &    &     &      &          &    &     &      &               &    &     &      &          \\
-\end{tabular}%
-}
-\caption{Performance of onehot-encoded models across in-domain and out-of-domain datasets (\textit{italic} denotes baseline models).}
-\label{tab:redux_embedding_davidson}
-\end{table}
-\end{landscape}
+\zw{INSERT: Baseline scores}
 \zw{Add results and start by rough analysis of just numbers}
+\zw{Add baseline experiment results}
+\zw{Show which models contribute most to ensemble models}
 \zw{Add plots for development of loss over each epoch}
 \zw{Add plots for F1 score during the evaluation set}
 \zw{Look at predictions in detail, try to identify where they still fail}
-\zw{Do logistic regression and to find out what clear patterns there are}
+\zw{Do logistic regression and find out if there are things that the models might overfit on}
 
-While the onehot and index encoded tensors should functionally be equal to one another, we see a direct influence of the input layers on the classification scores; with all models showing stronger performance using linear input layers. We propose that the reason for such discrepancies lie in the simpler training procedure of linear layers which don't seek to find relationships between different tokens but instead simply provide a linear function, and embedding layers that seek to identify the relationships between each all tokens in the dataset.
+\section{Conclusions}
 
-\section{Conclusions and future work}
-
-\zw{Some concluding remarks}
-While functionally this limits the vocabulary, there is also loss of information. Future work, could then employ both simple and complex mappings of different forms of words to single tokens that cohere with the LIWC dictionary, thus limiting information loss while retaining the predictive power.
-
-\zw{}
