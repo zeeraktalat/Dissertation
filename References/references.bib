@@ -3375,3 +3375,662 @@ month       = {Dec},}
 	keywords = {Du Bois, property, racism, slavery, whiteness},
 	pages = {6--31},
 }
+
+
+@article{salminen_developing_2020,
+	title = {Developing an online hate classifier for multiple social media platforms},
+	volume = {10},
+	issn = {2192-1962},
+	url = {https://doi.org/10.1186/s13673-019-0205-6},
+	doi = {10.1186/s13673-019-0205-6},
+	abstract = {The proliferation of social media enables people to express their opinions widely online. However, at the same time, this has resulted in the emergence of conflict and hate, making online environments uninviting for users. Although researchers have found that hate is a problem across multiple platforms, there is a lack of models for online hate detection using multi-platform data. To address this research gap, we collect a total of 197,566 comments from four platforms: YouTube, Reddit, Wikipedia, and Twitter, with 80\% of the comments labeled as non-hateful and the remaining 20\% labeled as hateful. We then experiment with several classification algorithms (Logistic Regression, Naïve Bayes, Support Vector Machines, XGBoost, and Neural Networks) and feature representations (Bag-of-Words, TF-IDF, Word2Vec, BERT, and their combination). While all the models significantly outperform the keyword-based baseline classifier, XGBoost using all features performs the best (F1 = 0.92). Feature importance analysis indicates that BERT features are the most impactful for the predictions. Findings support the generalizability of the best model, as the platform-specific results from Twitter and Wikipedia are comparable to their respective source papers. We make our code publicly available for application in real software systems as well as for further development by online hate researchers.},
+	number = {1},
+	journal = {Human-centric Computing and Information Sciences},
+	author = {Salminen, Joni and Hopf, Maximilian and Chowdhury, Shammur A. and Jung, Soon-gyo and Almerekhi, Hind and Jansen, Bernard J.},
+	month = jan,
+	year = {2020},
+	pages = {1},
+	file = {Full Text:/Users/zeerakw/Zotero/storage/RGM6JCAZ/Salminen et al. - 2020 - Developing an online hate classifier for multiple .pdf:application/pdf}
+}
+
+@inproceedings{oraby_creating_2016,
+	address = {Los Angeles},
+	title = {Creating and {Characterizing} a {Diverse} {Corpus} of {Sarcasm} in {Dialogue}},
+	url = {https://www.aclweb.org/anthology/W16-3604},
+	doi = {10.18653/v1/W16-3604},
+	urldate = {2021-01-30},
+	booktitle = {Proceedings of the 17th {Annual} {Meeting} of the {Special} {Interest} {Group} on {Discourse} and {Dialogue}},
+	publisher = {Association for Computational Linguistics},
+	author = {Oraby, Shereen and Harrison, Vrindavan and Reed, Lena and Hernandez, Ernesto and Riloff, Ellen and Walker, Marilyn},
+	month = sep,
+	year = {2016},
+	pages = {31--41}
+}
+
+@inproceedings{oraby_and_2015,
+	address = {Denver, CO},
+	title = {And {That}'s {A} {Fact}: {Distinguishing} {Factual} and {Emotional} {Argumentation} in {Online} {Dialogue}},
+	shorttitle = {And {That}'s {A} {Fact}},
+	url = {https://www.aclweb.org/anthology/W15-0515},
+	doi = {10.3115/v1/W15-0515},
+	urldate = {2021-01-30},
+	booktitle = {Proceedings of the 2nd {Workshop} on {Argumentation} {Mining}},
+	publisher = {Association for Computational Linguistics},
+	author = {Oraby, Shereen and Reed, Lena and Compton, Ryan and Riloff, Ellen and Walker, Marilyn and Whittaker, Steve},
+	month = jun,
+	year = {2015},
+	pages = {116--126}
+}
+
+@incollection{waseem_bridging_2018,
+	address = {Cham},
+	series = {Human–{Computer} {Interaction} {Series}},
+	title = {Bridging the {Gaps}: {Multi} {Task} {Learning} for {Domain} {Transfer} of {Hate} {Speech} {Detection}},
+	isbn = {978-3-319-78583-7},
+	shorttitle = {Bridging the {Gaps}},
+	url = {https://doi.org/10.1007/978-3-319-78583-7_3},
+	abstract = {Accurately detecting hate speech using supervised classification is dependent on data that is annotated by humans. Attaining high agreement amongst annotators though is difficult due to the subjective nature of the task, and different cultural, geographic and social backgrounds of the annotators. Furthermore, existing datasets capture only single types of hate speech such as sexism or racism; or single demographics such as people living in the United States, which negatively affects the recall when classifying data that are not captured in the training examples. End users of websites where hate speech may occur are exposed to risk of being exposed to explicit content due to the shortcomings in the training of automatic hate speech detection systems where unseen forms of hate speech or hate speech towards unseen groups are not captured. In this paper, we investigate methods for bridging differences in annotation and data collection of abusive language tweets such as different annotation schemes, labels, or geographic and cultural influences from data sampling. We consider three distinct sets of annotations, namely the annotations provided by Waseem (2016), Waseem and Hovy (2016), and Davidson et al. (2017). Specifically, we train a machine learning model using a multi-task learning (MTL) framework, where typically some auxiliary task is learned alongside a main task in order to gain better performance on the latter. Our approach distinguishes itself from most previous work in that we aim to train a model that is robust across data originating from different distributions and labeled under differing annotation guidelines, and that we understand these different datasets as different learning objectives in the way that classical work in multi-task learning does with different tasks. Here, we experiment with using fine-grained tags for annotation. Aided by the predictions in our models as well as the baseline models, we seek to show that it is possible to utilize distinct domains for classification as well as showing how cultural contexts influence classifier performance as the datasets we use are collected either exclusively from the U.S. Davidson et al. (2017) or collected globally with no geographic restriction (Waseem 2016; Waseem and Hovy 2016). Our choice for a multi-task learning set-up is motivated by a number of factors. Most importantly, MTL allows us to share knowledge between two or more objectives, such that we can leverage information encoded in one dataset to better fit another. As shown by Bingel and Søgaard (2017) and Martínez Alonso and Plank (2017), this is particularly promising when the auxiliary task has a more coarse-grained set of labels in comparison to the main task. Another benefit of MTL is that it lets us learn lower-level representations from greater amounts of data when compared to a single-task setup. This, in connection with MTL being known to work as a regularizer, is not only promising when it comes to fitting the training data, but also helps to prevent overfitting, especially when we have to deal with small datasets.},
+	language = {en},
+	urldate = {2021-01-30},
+	booktitle = {Online {Harassment}},
+	publisher = {Springer International Publishing},
+	author = {Waseem, Zeerak and Thorne, James and Bingel, Joachim},
+	editor = {Golbeck, Jennifer},
+	year = {2018},
+	doi = {10.1007/978-3-319-78583-7_3},
+	keywords = {Abusive language detection, Domain transfer, Multi-task learning, Social media analysis},
+	pages = {29--55}
+}
+
+@inproceedings{gamback_using_2017,
+	address = {Vancouver, BC, Canada},
+	title = {Using {Convolutional} {Neural} {Networks} to {Classify} {Hate}-{Speech}},
+	url = {https://www.aclweb.org/anthology/W17-3013},
+	doi = {10.18653/v1/W17-3013},
+	abstract = {The paper introduces a deep learning-based Twitter hate-speech text classification system. The classifier assigns each tweet to one of four predefined categories: racism, sexism, both (racism and sexism) and non-hate-speech. Four Convolutional Neural Network models were trained on resp. character 4-grams, word vectors based on semantic information built using word2vec, randomly generated word vectors, and word vectors combined with character n-grams. The feature set was down-sized in the networks by max-pooling, and a softmax function used to classify tweets. Tested by 10-fold cross-validation, the model based on word2vec embeddings performed best, with higher precision than recall, and a 78.3\% F-score.},
+	urldate = {2021-01-30},
+	booktitle = {Proceedings of the {First} {Workshop} on {Abusive} {Language} {Online}},
+	publisher = {Association for Computational Linguistics},
+	author = {Gambäck, Björn and Sikdar, Utpal Kumar},
+	month = aug,
+	year = {2017},
+	pages = {85--90}
+}
+
+@inproceedings{safaya_kuisail_2020,
+	address = {Barcelona (online)},
+	title = {{KUISAIL} at {SemEval}-2020 {Task} 12: {BERT}-{CNN} for {Offensive} {Speech} {Identification} in {Social} {Media}},
+	shorttitle = {{KUISAIL} at {SemEval}-2020 {Task} 12},
+	url = {https://www.aclweb.org/anthology/2020.semeval-1.271},
+	abstract = {In this paper, we describe our approach to utilize pre-trained BERT models with Convolutional Neural Networks for sub-task A of the Multilingual Offensive Language Identification shared task (OffensEval 2020), which is a part of the SemEval 2020. We show that combining CNN with BERT is better than using BERT on its own, and we emphasize the importance of utilizing pre-trained language models for downstream tasks. Our system, ranked 4th with macro averaged F1-Score of 0.897 in Arabic, 4th with score of 0.843 in Greek, and 3rd with score of 0.814 in Turkish. Additionally, we present ArabicBERT, a set of pre-trained transformer language models for Arabic that we share with the community.},
+	urldate = {2021-01-30},
+	booktitle = {Proceedings of the {Fourteenth} {Workshop} on {Semantic} {Evaluation}},
+	publisher = {International Committee for Computational Linguistics},
+	author = {Safaya, Ali and Abdullatif, Moutasem and Yuret, Deniz},
+	month = dec,
+	year = {2020},
+	pages = {2054--2059}
+}
+
+@inproceedings{rizwan_hate-speech_2020,
+	address = {Online},
+	title = {Hate-{Speech} and {Offensive} {Language} {Detection} in {Roman} {Urdu}},
+	url = {https://www.aclweb.org/anthology/2020.emnlp-main.197},
+	doi = {10.18653/v1/2020.emnlp-main.197},
+	abstract = {The task of automatic hate-speech and offensive language detection in social media content is of utmost importance due to its implications in unprejudiced society concerning race, gender, or religion. Existing research in this area, however, is mainly focused on the English language, limiting the applicability to particular demographics. Despite its prevalence, Roman Urdu (RU) lacks language resources, annotated datasets, and language models for this task. In this study, we: (1) Present a lexicon of hateful words in RU, (2) Develop an annotated dataset called RUHSOLD consisting of 10,012 tweets in RU with both coarse-grained and fine-grained labels of hate-speech and offensive language, (3) Explore the feasibility of transfer learning of five existing embedding models to RU, (4) Propose a novel deep learning architecture called CNN-gram for hate-speech and offensive language detection and compare its performance with seven current baseline approaches on RUHSOLD dataset, and (5) Train domain-specific embeddings on more than 4.7 million tweets and make them publicly available. We conclude that transfer learning is more beneficial as compared to training embedding from scratch and that the proposed model exhibits greater robustness as compared to the baselines.},
+	urldate = {2021-01-30},
+	booktitle = {Proceedings of the 2020 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing} ({EMNLP})},
+	publisher = {Association for Computational Linguistics},
+	author = {Rizwan, Hammad and Shakeel, Muhammad Haroon and Karim, Asim},
+	month = nov,
+	year = {2020},
+	pages = {2512--2522}
+}
+
+@article{kolhatkar_classifying_2020,
+	title = {Classifying {Constructive} {Comments}},
+	url = {http://arxiv.org/abs/2004.05476},
+	abstract = {We introduce the Constructive Comments Corpus (C3), comprised of 12,000 annotated news comments, intended to help build new tools for online communities to improve the quality of their discussions. We define constructive comments as high-quality comments that make a contribution to the conversation. We explain the crowd worker annotation scheme and define a taxonomy of sub-characteristics of constructiveness. The quality of the annotation scheme and the resulting dataset is evaluated using measurements of inter-annotator agreement, expert assessment of a sample, and by the constructiveness sub-characteristics, which we show provide a proxy for the general constructiveness concept. We provide models for constructiveness trained on C3 using both feature-based and a variety of deep learning approaches and demonstrate that these models capture general rather than topic- or domain-specific characteristics of constructiveness, through domain adaptation experiments. We examine the role that length plays in our models, as comment length could be easily gamed if models depend heavily upon this feature. By examining the errors made by each model and their distribution by length, we show that the best performing models are less correlated with comment length.The constructiveness corpus and our experiments pave the way for a moderation tool focused on promoting comments that make a contribution, rather than only filtering out undesirable content.},
+	number = {In press},
+	journal = {First Monday},
+	author = {Kolhatkar, Varada and Thain, Nithum and Sorensen, Jeffrey and Dixon, Lucas and Taboada, Maite},
+	month = aug,
+	year = {2020},
+	keywords = {Computer Science - Computation and Language, Computer Science - Information Retrieval, Computer Science - Machine Learning, Computer Science - Computers and Society}
+}
+
+@inproceedings{mitchell_model_2019,
+	address = {Atlanta, GA, USA},
+	series = {{FAT}* '19},
+	title = {Model {Cards} for {Model} {Reporting}},
+	isbn = {978-1-4503-6125-5},
+	url = {https://doi.org/10.1145/3287560.3287596},
+	doi = {10.1145/3287560.3287596},
+	abstract = {Trained machine learning models are increasingly used to perform high-impact tasks in areas such as law enforcement, medicine, education, and employment. In order to clarify the intended use cases of machine learning models and minimize their usage in contexts for which they are not well suited, we recommend that released models be accompanied by documentation detailing their performance characteristics. In this paper, we propose a framework that we call model cards, to encourage such transparent model reporting. Model cards are short documents accompanying trained machine learning models that provide benchmarked evaluation in a variety of conditions, such as across different cultural, demographic, or phenotypic groups (e.g., race, geographic location, sex, Fitzpatrick skin type [15]) and intersectional groups (e.g., age and race, or sex and Fitzpatrick skin type) that are relevant to the intended application domains. Model cards also disclose the context in which models are intended to be used, details of the performance evaluation procedures, and other relevant information. While we focus primarily on human-centered machine learning models in the application fields of computer vision and natural language processing, this framework can be used to document any trained machine learning model. To solidify the concept, we provide cards for two supervised models: One trained to detect smiling faces in images, and one trained to detect toxic comments in text. We propose model cards as a step towards the responsible democratization of machine learning and related artificial intelligence technology, increasing transparency into how well artificial intelligence technology works. We hope this work encourages those releasing trained machine learning models to accompany model releases with similar detailed evaluation numbers and other relevant documentation.},
+	urldate = {2021-01-29},
+	booktitle = {Proceedings of the {Conference} on {Fairness}, {Accountability}, and {Transparency}},
+	publisher = {Association for Computing Machinery},
+	author = {Mitchell, Margaret and Wu, Simone and Zaldivar, Andrew and Barnes, Parker and Vasserman, Lucy and Hutchinson, Ben and Spitzer, Elena and Raji, Inioluwa Deborah and Gebru, Timnit},
+	month = jan,
+	year = {2019},
+	keywords = {datasheets, disaggregated evaluation, documentation, ethical considerations, fairness evaluation, ML model evaluation, model cards},
+	pages = {220--229}
+}
+
+@inproceedings{de_gibert_hate_2018,
+	address = {Brussels, Belgium},
+	title = {Hate {Speech} {Dataset} from a {White} {Supremacy} {Forum}},
+	url = {https://www.aclweb.org/anthology/W18-5102},
+	doi = {10.18653/v1/W18-5102},
+	abstract = {Hate speech is commonly defined as any communication that disparages a target group of people based on some characteristic such as race, colour, ethnicity, gender, sexual orientation, nationality, religion, or other characteristic. Due to the massive rise of user-generated web content on social media, the amount of hate speech is also steadily increasing. Over the past years, interest in online hate speech detection and, particularly, the automation of this task has continuously grown, along with the societal impact of the phenomenon. This paper describes a hate speech dataset composed of thousands of sentences manually labelled as containing hate speech or not. The sentences have been extracted from Stormfront, a white supremacist forum. A custom annotation tool has been developed to carry out the manual labelling task which, among other things, allows the annotators to choose whether to read the context of a sentence before labelling it. The paper also provides a thoughtful qualitative and quantitative study of the resulting dataset and several baseline experiments with different classification models. The dataset is publicly available.},
+	urldate = {2021-01-29},
+	booktitle = {Proceedings of the 2nd {Workshop} on {Abusive} {Language} {Online} ({ALW2})},
+	publisher = {Association for Computational Linguistics},
+	author = {de Gibert, Ona and Perez, Naiara and García-Pablos, Aitor and Cuadros, Montse},
+	month = oct,
+	year = {2018},
+	pages = {11--20}
+}
+
+@inproceedings{arora_novel_2020,
+	address = {Online},
+	title = {A {Novel} {Methodology} for {Developing} {Automatic} {Harassment} {Classifiers} for {Twitter}},
+	url = {https://www.aclweb.org/anthology/2020.alw-1.2},
+	doi = {10.18653/v1/2020.alw-1.2},
+	abstract = {Most efforts at identifying abusive speech online rely on public corpora that have been scraped from websites using keyword-based queries or released by site or platform owners for research purposes. These are typically labeled by crowd-sourced annotators – not the targets of the abuse themselves. While this method of data collection supports fast development of machine learning classifiers, the models built on them often fail in the context of real-world harassment and abuse, which contain nuances less easily identified by non-targets. Here, we present a mixed-methods approach to create classifiers for abuse and harassment which leverages direct engagement with the target group in order to achieve high quality and ecological validity of data sets and labels, and to generate deeper insights into the key tactics of bad actors. We use women journalists' experience on Twitter as an initial community of focus. We identify several structural mechanisms of abuse that we believe will generalize to other target communities.},
+	urldate = {2021-01-29},
+	booktitle = {Proceedings of the {Fourth} {Workshop} on {Online} {Abuse} and {Harms}},
+	publisher = {Association for Computational Linguistics},
+	author = {Arora, Ishaan and Guo, Julia and Levitan, Sarah Ita and McGregor, Susan and Hirschberg, Julia},
+	month = nov,
+	year = {2020},
+	pages = {7--15}
+}
+
+@inproceedings{gorrell_twits_2018,
+	address = {California, United State of America},
+	title = {Twits, {Twats} and {Twaddle}: {Trends} in {Online} {Abuse} towards {UK} {Politicians}},
+	shorttitle = {Twits, {Twats} and {Twaddle}},
+	url = {http://www.aaai.org/Library/ICWSM/icwsm18contents.php},
+	abstract = {Concerns have reached the mainstream about how social media are affecting political outcomes. One trajectory for this is the exposure of politicians to online abuse. In this paper we use 1.4 million tweets from the months before the 2015 and 2017 UK general elections to explore the abuse directed at politicians. Results show that abuse increased substantially in 2017 compared with 2015. Abusive tweets show a strong relationship with total tweets received, indicating for the most part impersonality, but a second pathway targets less prominent individuals, suggesting different kinds of abuse. Accounts that send abuse are more likely to be throwaway. Economy and immigration were major foci of abusive tweets in 2015, whereas terrorism came to the fore in 2017.},
+	language = {en},
+	urldate = {2021-01-28},
+	booktitle = {Proceedings {Of} {The} {Twelfth} {International} {Conference} {On} {Web} {And} {Social} {Media}},
+	publisher = {Association for the Advancement of Artificial Intelligence},
+	author = {Gorrell, G. and Greenwood, M. A. and Roberts, I. and Maynard, D. and Bontcheva, K.},
+	month = jun,
+	year = {2018}
+}
+
+@article{rottger_hatecheck_2020,
+	title = {{HateCheck}: {Functional} {Tests} for {Hate} {Speech} {Detection} {Models}},
+	shorttitle = {{HateCheck}},
+	url = {http://arxiv.org/abs/2012.15606},
+	abstract = {Detecting online hate is a difficult task that even state-of-the-art models struggle with. In previous research, hate speech detection models are typically evaluated by measuring their performance on held-out test data using metrics such as accuracy and F1 score. However, this approach makes it difficult to identify specific model weak points. It also risks overestimating generalisable model quality due to increasingly well-evidenced systematic gaps and biases in hate speech datasets. To enable more targeted diagnostic insights, we introduce HateCheck, a first suite of functional tests for hate speech detection models. We specify 29 model functionalities, the selection of which we motivate by reviewing previous research and through a series of interviews with civil society stakeholders. We craft test cases for each functionality and validate data quality through a structured annotation process. To illustrate HateCheck's utility, we test near-state-of-the-art transformer detection models as well as a popular commercial model, revealing critical model weaknesses.},
+	urldate = {2021-01-28},
+	journal = {arXiv:2012.15606 [cs]},
+	author = {Röttger, Paul and Vidgen, Bertram and Nguyen, Dong and Waseem, Zeerak and Margetts, Helen and Pierrehumbert, Janet},
+	month = dec,
+	year = {2020},
+	note = {arXiv: 2012.15606},
+	keywords = {Computer Science - Computation and Language}
+}
+
+@inproceedings{isaksen_using_2020,
+	address = {Online},
+	title = {Using {Transfer}-based {Language} {Models} to {Detect} {Hateful} and {Offensive} {Language} {Online}},
+	url = {https://www.aclweb.org/anthology/2020.alw-1.3},
+	doi = {10.18653/v1/2020.alw-1.3},
+	abstract = {Distinguishing hate speech from non-hate offensive language is challenging, as hate speech not always includes offensive slurs and offensive language not always express hate. Here, four deep learners based on the Bidirectional Encoder Representations from Transformers (BERT), with either general or domain-specific language models, were tested against two datasets containing tweets labelled as either `Hateful', `Normal' or `Offensive'. The results indicate that the attention-based models profoundly confuse hate speech with offensive and normal language. However, the pre-trained models outperform state-of-the-art results in terms of accurately predicting the hateful instances.},
+	urldate = {2021-01-28},
+	booktitle = {Proceedings of the {Fourth} {Workshop} on {Online} {Abuse} and {Harms}},
+	publisher = {Association for Computational Linguistics},
+	author = {Isaksen, Vebjørn and Gambäck, Björn},
+	month = nov,
+	year = {2020},
+	pages = {16--27}
+}
+
+@inproceedings{kshirsagar_predictive_2018,
+	address = {Brussels, Belgium},
+	title = {Predictive {Embeddings} for {Hate} {Speech} {Detection} on {Twitter}},
+	url = {https://www.aclweb.org/anthology/W18-5104},
+	doi = {10.18653/v1/W18-5104},
+	abstract = {We present a neural-network based approach to classifying online hate speech in general, as well as racist and sexist speech in particular. Using pre-trained word embeddings and max/mean pooling from simple, fully-connected transformations of these embeddings, we are able to predict the occurrence of hate speech on three commonly used publicly available datasets. Our models match or outperform state of the art F1 performance on all three datasets using significantly fewer parameters and minimal feature preprocessing compared to previous methods.},
+	urldate = {2021-01-28},
+	booktitle = {Proceedings of the 2nd {Workshop} on {Abusive} {Language} {Online} ({ALW2})},
+	publisher = {Association for Computational Linguistics},
+	author = {Kshirsagar, Rohan and Cukuvac, Tyrus and McKeown, Kathy and McGregor, Susan},
+	month = oct,
+	year = {2018},
+	pages = {26--32}
+}
+
+@inproceedings{stankovic_multi-word_2020,
+	address = {online},
+	title = {Multi-word {Expressions} for {Abusive} {Speech} {Detection} in {Serbian}},
+	url = {https://www.aclweb.org/anthology/2020.mwe-1.10},
+	abstract = {This paper presents our work on the refinement and improvement of the Serbian language part of Hurtlex, a multilingual lexicon of words to hurt. We pay special attention to adding Multi-word expressions that can be seen as abusive, as such lexical entries are very important in obtaining good results in a plethora of abusive language detection tasks. We use Serbian morphological dictionaries as a basis for data cleaning and MWE dictionary creation. A connection to other lexical and semantic resources in Serbian is outlined and building of abusive language detection systems based on that connection is foreseen.},
+	urldate = {2021-01-28},
+	booktitle = {Proceedings of the {Joint} {Workshop} on {Multiword} {Expressions} and {Electronic} {Lexicons}},
+	publisher = {Association for Computational Linguistics},
+	author = {Stanković, Ranka and Mitrović, Jelena and Jokić, Danka and Krstev, Cvetana},
+	month = dec,
+	year = {2020},
+	pages = {74--84}
+}
+
+@inproceedings{chiril_multilingual_2019,
+	address = {Toulouse, France},
+	title = {Multilingual and {Multitarget} {Hate} {Speech} {Detection} in {Tweets}},
+	url = {https://www.aclweb.org/anthology/2019.jeptalnrecital-court.21},
+	abstract = {Social media networks have become a space where users are free to relate their opinions and sentiments which may lead to a large spreading of hatred or abusive messages which have to be moderated. This paper proposes a supervised approach to hate speech detection from a multilingual perspective. We focus in particular on hateful messages towards two different targets (immigrants and women) in English tweets, as well as sexist messages in both English and French. Several models have been developed ranging from feature-engineering approaches to neural ones. Our experiments show very encouraging results on both languages.},
+	urldate = {2021-01-28},
+	booktitle = {Actes de la {Conférence} sur le {Traitement} {Automatique} des {Langues} {Naturelles} ({TALN}) {PFIA} 2019. {Volume} {II} : {Articles} courts},
+	publisher = {ATALA},
+	author = {Chiril, Patricia and Benamara Zitoune, Farah and Moriceau, Véronique and Coulomb-Gully, Marlène and Kumar, Abhishek},
+	year = {2019},
+	pages = {351--360}
+}
+
+@book{roberts_behind_2019,
+	address = {New Haven},
+	title = {Behind the screen: content moderation in the shadows of social media},
+	isbn = {978-0-300-23588-3},
+	shorttitle = {Behind the screen},
+	publisher = {Yale University Press},
+	author = {Roberts, Sarah T.},
+	year = {2019},
+	note = {OCLC: on1055263168},
+	keywords = {Social media, Censorship, Internet governance, Management, User-generated content}
+}
+
+@book{noble_algorithms_2018,
+	address = {New York},
+	title = {Algorithms of oppression: how search engines reinforce racism},
+	isbn = {978-1-4798-4994-9 978-1-4798-3724-3},
+	shorttitle = {Algorithms of oppression},
+	publisher = {New York University Press},
+	author = {Noble, Safiya Umoja},
+	year = {2018},
+	keywords = {Google, Discrimination, Search engines, Sociological aspects}
+}
+
+@book{benjamin_race_2019,
+	address = {Medford, MA},
+	title = {Race after technology: abolitionist tools for the new {Jim} code},
+	isbn = {978-1-5095-2643-7},
+	shorttitle = {Race after technology},
+	publisher = {Polity},
+	author = {Benjamin, Ruha},
+	year = {2019},
+	keywords = {African Americans, Race relations, Social conditions, United States, Social aspects, 21st century, Information technology, Digital divide, SOCIAL SCIENCE / Demography, Whites}
+}
+
+@inproceedings{vidgen_detecting_2020,
+	address = {Online},
+	title = {Detecting {East} {Asian} {Prejudice} on {Social} {Media}},
+	url = {https://www.aclweb.org/anthology/2020.alw-1.19},
+	doi = {10.18653/v1/2020.alw-1.19},
+	abstract = {During COVID-19 concerns have heightened about the spread of aggressive and hateful language online, especially hostility directed against East Asia and East Asian people. We report on a new dataset and the creation of a machine learning classifier that categorizes social media posts from Twitter into four classes: Hostility against East Asia, Criticism of East Asia, Meta-discussions of East Asian prejudice, and a neutral class. The classifier achieves a macro-F1 score of 0.83. We then conduct an in-depth ground-up error analysis and show that the model struggles with edge cases and ambiguous content. We provide the 20,000 tweet training dataset (annotated by experienced analysts), which also contains several secondary categories and additional flags. We also provide the 40,000 original annotations (before adjudication), the full codebook, annotations for COVID-19 relevance and East Asian relevance and stance for 1,000 hashtags, and the final model.},
+	urldate = {2021-01-28},
+	booktitle = {Proceedings of the {Fourth} {Workshop} on {Online} {Abuse} and {Harms}},
+	publisher = {Association for Computational Linguistics},
+	author = {Vidgen, Bertie and Hale, Scott and Guest, Ella and Margetts, Helen and Broniatowski, David and Waseem, Zeerak and Botelho, Austin and Hall, Matthew and Tromble, Rebekah},
+	month = nov,
+	year = {2020},
+	pages = {162--172}
+}
+
+@inproceedings{sabou_corpus_2014,
+	address = {Reykjavik, Iceland},
+	title = {Corpus {Annotation} through {Crowdsourcing}: {Towards} {Best} {Practice} {Guidelines}},
+	shorttitle = {Corpus {Annotation} through {Crowdsourcing}},
+	url = {http://www.lrec-conf.org/proceedings/lrec2014/pdf/497_Paper.pdf},
+	abstract = {Crowdsourcing is an emerging collaborative approach that can be used for the acquisition of annotated corpora and a wide range of other linguistic resources. Although the use of this approach is intensifying in all its key genres (paid-for crowdsourcing, games with a purpose, volunteering-based approaches), the community still lacks a set of best-practice guidelines similar to the annotation best practices for traditional, expert-based corpus acquisition. In this paper we focus on the use of crowdsourcing methods for corpus acquisition and propose a set of best practice guidelines based in our own experiences in this area and an overview of related literature. We also introduce GATE Crowd, a plugin of the GATE platform that relies on these guidelines and offers tool support for using crowdsourcing in a more principled and efficient manner.},
+	urldate = {2021-01-28},
+	booktitle = {Proceedings of the {Ninth} {International} {Conference} on {Language} {Resources} and {Evaluation} ({LREC}'14)},
+	publisher = {European Language Resources Association (ELRA)},
+	author = {Sabou, Marta and Bontcheva, Kalina and Derczynski, Leon and Scharl, Arno},
+	month = may,
+	year = {2014},
+	pages = {859--866}
+}
+
+@article{haraway_situated_1988,
+	title = {Situated {Knowledges}: {The} {Science} {Question} in {Feminism} and the {Privilege} of {Partial} {Perspective}},
+	volume = {14},
+	issn = {0046-3663},
+	shorttitle = {Situated {Knowledges}},
+	url = {https://www.jstor.org/stable/3178066},
+	doi = {10.2307/3178066},
+	number = {3},
+	urldate = {2021-01-22},
+	journal = {Feminist Studies},
+	author = {Haraway, Donna},
+	year = {1988},
+	pages = {575--599}
+}
+
+@article{Foulds:2019,
+	title = {An {Intersectional} {Definition} of {Fairness}},
+	url = {http://arxiv.org/abs/1807.08362},
+	abstract = {We propose definitions of fairness in machine learning and artificial intelligence systems that are informed by the framework of intersectionality, a critical lens arising from the Humanities literature which analyzes how interlocking systems of power and oppression affect individuals along overlapping dimensions including gender, race, sexual orientation, class, and disability. We show that our criteria behave sensibly for any subset of the set of protected attributes, and we prove economic, privacy, and generalization guarantees. We provide a learning algorithm which respects our intersectional fairness criteria. Case studies on census data and the COMPAS criminal recidivism dataset demonstrate the utility of our methods.},
+	urldate = {2021-01-21},
+	journal = {arXiv:1807.08362 [cs, stat]},
+	author = {Foulds, James and Islam, Rashidul and Keya, Kamrun Naher and Pan, Shimei},
+	month = sep,
+	year = {2019},
+	note = {arXiv: 1807.08362},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning, Computer Science - Computers and Society}
+}
+
+@inproceedings{Kearns:2018,
+	title = {Preventing {Fairness} {Gerrymandering}: {Auditing} and {Learning} for {Subgroup} {Fairness}},
+	shorttitle = {Preventing {Fairness} {Gerrymandering}},
+	url = {http://proceedings.mlr.press/v80/kearns18a.html},
+	abstract = {The most prevalent notions of fairness in machine learning fix a small collection of pre-defined groups (such as race or gender), and then ask for approximate parity of some statistic of the classi...},
+	language = {en},
+	urldate = {2021-01-21},
+	booktitle = {International {Conference} on {Machine} {Learning}},
+	publisher = {PMLR},
+	author = {Kearns, Michael and Neel, Seth and Roth, Aaron and Wu, Zhiwei Steven},
+	month = jul,
+	year = {2018},
+	pages = {2564--2572}
+}
+
+@article{Myers:2019,
+	title = {Beyond the {Psychological} {Wage}: {Du} {Bois} on {White} {Dominion}},
+	volume = {47},
+	issn = {0090-5917},
+	shorttitle = {Beyond the {Psychological} {Wage}},
+	url = {https://doi.org/10.1177/0090591718791744},
+	doi = {10.1177/0090591718791744},
+	abstract = {W.E.B. Du Bois’s reading of whiteness as a “public and psychological wage” is enormously influential. This essay examines another, lesser known facet of Du Bois’s account of racialized identity: his conceptualization of whiteness as dominion. In his 1920–1940 writings, “modern” whiteness appears as a proprietary orientation toward the planet in general and toward “darker peoples” in particular. This “title to the universe” is part of chattel slavery’s uneven afterlife, in which the historical fact of “propertized human life” endures as a racialized ethos of ownership. The essay examines how this “title” is expressed and reinforced in the twentieth century by the Jim Crow system of racial signs in the United States and by violent “colonial aggrandizement” worldwide. The analytic of white dominion, I argue, allows Du Bois to productively link phenomena often regarded as discrete, namely, domestic and global forms of white supremacy and practices of exploitation and dispossession. Ultimately, the entitlement Du Bois associates with whiteness is best understood as a pervasive, taken-for-granted horizon of perception, which facilitates the transaction of the “wage” but is not reducible to it.},
+	language = {en},
+	number = {1},
+	urldate = {2021-01-21},
+	journal = {Political Theory},
+	author = {Myers, Ella},
+	month = feb,
+	year = {2019},
+	keywords = {slavery, Du Bois, property, racism, whiteness},
+	pages = {6--31}
+}
+
+@misc{Gadde:2018,
+	type = {Blog},
+	title = {Measuring healthy conversation},
+	url = {https://blog.twitter.com/en_us/topics/company/2018/measuring_healthy_conversation.html},
+	abstract = {Announcing the teams we will work with to create health metrics for Twitter},
+	language = {en\_us},
+	urldate = {2021-02-05},
+	journal = {Twitter Blog},
+	author = {Gadde, Vijaya and Gasca, David},
+	year = {2018}
+}
+
+
+@inproceedings{Bender:2021,
+	address = {Virtual, Canada},
+	title = {On the {Dangers} of {Stochastic} {Parrots}:{Can} {Language} {Models} {Be} {Too} {Big}?},
+	url = {https://faculty.washington.edu/ebender/papers/Stochastic_Parrots.pdf},
+	abstract = {The past 3 years of work in NLP have been characterized by thedevelopment and deployment of ever larger language models, es-pecially for English. BERT, its variants, GPT-2/3, and others, mostrecently Switch-C, have pushed the boundaries of the possible both through architectural innovations and through sheer size. Using these pretrained models and the methodology of fine-tuning them for specific tasks, researchers have extended the state of the arton a wide array of tasks as measured by leaderboards on specific benchmarks for English. In this paper, we take a step back and ask: How big is too big? What are the possible risks associated with this technology and what paths are available for mitigating those risks? We provide recommendations including weighing the environmental and financial costs first, investing resources into curating andcarefully documenting datasets rather than ingesting everything onthe web, carrying out pre-development exercises evaluating howthe planned approach fits into research and development goals andsupports stakeholder values, and encouraging research directionsbeyond ever larger language models.},
+	urldate = {2021-08-02},
+	publisher = {ACM},
+	author = {Bender, Emily M. and Gebru, Timnit and McMillan-Major, Angelina and Shmitchell, Shmargett},
+	month = mar,
+	year = {2021}
+}
+
+@inproceedings{Bender:2020,
+	address = {Online},
+	title = {Climbing towards {NLU}: {On} {Meaning}, {Form}, and {Understanding} in the {Age} of {Data}},
+	shorttitle = {Climbing towards {NLU}},
+	url = {https://www.aclweb.org/anthology/2020.acl-main.463},
+	doi = {10.18653/v1/2020.acl-main.463},
+	language = {en},
+	urldate = {2021-02-12},
+	booktitle = {Proceedings of the 58th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics}},
+	publisher = {Association for Computational Linguistics},
+	author = {Bender, Emily M. and Koller, Alexander},
+	year = {2020},
+	pages = {5185--5198},
+	file = {Full Text:/Users/zeerakw/Zotero/storage/ZKR59CMX/Bender and Koller - 2020 - Climbing towards NLU On Meaning, Form, and Unders.pdf:application/pdf}
+}
+
+@article{Schaffer:2015,
+	title = {Queering {Waste} {Through} {Camp}},
+	url = {https://discardstudies.com/2015/02/27/queering-waste-through-camp/},
+	urldate = {2021-02-13},
+	journal = {Discard Studies},
+	author = {Schaffer, Guy},
+	month = feb,
+	year = {2015}
+}
+
+@book{Simon:1969,
+	address = {Cambridge, MA},
+	edition = {Third edition [2019 edition]},
+	title = {The sciences of the artificial},
+	isbn = {978-0-262-53753-7},
+	abstract = {A classic for its insights on complex systems, design, and artificial intelligence, and its contribution to our understanding of human intelligence. --},
+	publisher = {The MIT Press},
+	author = {Simon, Herbert A.},
+	year = {2019},
+	keywords = {Philosophy, Science}
+}
+
+@article{Mohanty:1984,
+	title = {Under {Western} {Eyes}: {Feminist} {Scholarship} and {Colonial} {Discourses}},
+	volume = {12},
+	issn = {01903659},
+	shorttitle = {Under {Western} {Eyes}},
+	url = {https://www.jstor.org/stable/302821?origin=crossref},
+	doi = {10.2307/302821},
+	number = {3},
+	urldate = {2021-02-16},
+	journal = {boundary 2},
+	author = {Mohanty, Chandra Talpade},
+	year = {1984},
+	pages = {333}
+}
+
+@inproceedings{Blodgett:2020,
+	address = {Online},
+	title = {Language ({Technology}) is {Power}: {A} {Critical} {Survey} of “{Bias}” in {NLP}},
+	shorttitle = {Language ({Technology}) is {Power}},
+	url = {https://www.aclweb.org/anthology/2020.acl-main.485},
+	doi = {10.18653/v1/2020.acl-main.485},
+	language = {en},
+	urldate = {2021-02-16},
+	booktitle = {Proceedings of the 58th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics}},
+	publisher = {Association for Computational Linguistics},
+	author = {Blodgett, Su Lin and Barocas, Solon and Daumé III, Hal and Wallach, Hanna},
+	year = {2020},
+	pages = {5454--5476},
+	file = {Full Text:/Users/zeerakw/Zotero/storage/GT7XVWQF/Blodgett et al. - 2020 - Language (Technology) is Power A Critical Survey .pdf:application/pdf}
+}
+
+@article{Sweeney:2013,
+	title = {Discrimination in online ad delivery},
+	volume = {56},
+	issn = {0001-0782, 1557-7317},
+	url = {https://dl.acm.org/doi/10.1145/2447976.2447990},
+	doi = {10.1145/2447976.2447990},
+	language = {en},
+	number = {5},
+	urldate = {2021-02-16},
+	journal = {Communications of the ACM},
+	author = {Sweeney, Latanya},
+	month = may,
+	year = {2013},
+	pages = {44--54},
+	file = {Submitted Version:/Users/zeerakw/Zotero/storage/G258DWMU/Sweeney - 2013 - Discrimination in online ad delivery.pdf:application/pdf}
+}
+
+@book{Douglas:1966,
+	address = {London ; New York},
+	series = {Routledge classics},
+	title = {Purity and danger: an analysis of concept of pollution and taboo},
+	isbn = {978-0-415-28995-5},
+	shorttitle = {Purity and danger},
+	publisher = {Routledge},
+	author = {Douglas, Mary},
+	year = {2005},
+	note = {OCLC: ocm50333732},
+	keywords = {Purity, Ritual, Taboo}
+}
+
+@article{Risam:2015,
+	title = {Toxic femininity 4.0},
+	issn = {1396-0466},
+	url = {https://journals.uic.edu/ojs/index.php/fm/article/view/5896},
+	doi = {10.5210/fm.v20i4.5896},
+	abstract = {This paper examines constructions of toxic femininity within fourth-wave feminism. Taking hashtag feminism as its focus, this article contends that charges of toxicity lobbed online reproduce divisive dynamics that have shaped earlier trends within feminist movements in the United States. It further suggests that Twitter, as a platform, amplifies deep discomfort with theories of intersectional feminism while shaping how normative gender is reproduced online.},
+	urldate = {2021-02-16},
+	journal = {First Monday},
+	author = {Risam, Roopika},
+	month = mar,
+	year = {2015},
+	file = {Submitted Version:/Users/zeerakw/Zotero/storage/M8ZJ5NW6/Risam - 2015 - Toxic femininity 4.0.pdf:application/pdf}
+}
+
+@book{oneil:2017,
+	address = {London},
+	title = {Weapons of math destruction: how big data increases inequality and threatens democracy},
+	isbn = {978-0-14-198541-1},
+	shorttitle = {Weapons of math destruction},
+	language = {eng},
+	publisher = {Penguin Books},
+	author = {O'Neil, Cathy},
+	year = {2017},
+	note = {OCLC: 994642027}
+}
+
+@inproceedings{Shah:2020,
+	address = {Online},
+	title = {Predictive {Biases} in {Natural} {Language} {Processing} {Models}: {A} {Conceptual} {Framework} and {Overview}},
+	shorttitle = {Predictive {Biases} in {Natural} {Language} {Processing} {Models}},
+	url = {https://www.aclweb.org/anthology/2020.acl-main.468},
+	doi = {10.18653/v1/2020.acl-main.468},
+	language = {en},
+	urldate = {2021-02-16},
+	booktitle = {Proceedings of the 58th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics}},
+	publisher = {Association for Computational Linguistics},
+	author = {Shah, Deven Santosh and Schwartz, H. Andrew and Hovy, Dirk},
+	year = {2020},
+	pages = {5248--5264},
+	file = {Full Text:/Users/zeerakw/Zotero/storage/YH3EGIQV/Shah et al. - 2020 - Predictive Biases in Natural Language Processing M.pdf:application/pdf}
+}
+
+@inproceedings{Buolamwini:2018,
+	address = {New York, NY, USA},
+	series = {Proceedings of {Machine} {Learning} {Research}},
+	title = {Gender {Shades}: {Intersectional} {Accuracy} {Disparities} in {Commercial} {Gender} {Classification}},
+	volume = {81},
+	url = {http://proceedings.mlr.press/v81/buolamwini18a.html},
+	abstract = {Recent studies demonstrate that machine learning algorithms can discriminate based on classes like race and gender. In this work, we present an approach to evaluate bias present in automated facial analysis algorithms and datasets with respect to phenotypic subgroups. Using the dermatologist approved Fitzpatrick Skin Type classification system, we characterize the gender and skin type distribution of two facial analysis benchmarks, IJB-A and Adience. We find that these datasets are overwhelmingly composed of lighter-skinned subjects (79.6\% for IJB-A and 86.2\% for Adience) and introduce a new facial analysis dataset which is balanced by gender and skin type. We evaluate 3 commercial gender classification systems using our dataset and show that darker-skinned females are the most misclassified group (with error rates of up to 34.7\%). The maximum error rate for lighter-skinned males is 0.8\%. The substantial disparities in the accuracy of classifying darker females, lighter females, darker males, and lighter males in gender classification systems require urgent attention if commercial companies are to build genuinely fair, transparent and accountable facial analysis algorithms.},
+	booktitle = {Proceedings of the 1st {Conference} on {Fairness}, {Accountability} and {Transparency}},
+	publisher = {PMLR},
+	author = {Buolamwini, Joy and Gebru, Timnit},
+	editor = {Friedler, Sorelle A. and Wilson, Christo},
+	month = feb,
+	year = {2018},
+	pages = {77--91}
+}
+
+@article{Bender-Friedman:2018,
+    title = "Data Statements for Natural Language Processing: Toward Mitigating System Bias and Enabling Better Science",
+    author = "Bender, Emily M.  and
+      Friedman, Batya",
+    journal = "Transactions of the Association for Computational Linguistics",
+    volume = "6",
+    year = "2018",
+    url = "https://www.aclweb.org/anthology/Q18-1041",
+    doi = "10.1162/tacl_a_00041",
+    pages = "587--604",
+    abstract = "In this paper, we propose data statements as a design solution and professional practice for natural language processing technologists, in both research and development. Through the adoption and widespread use of data statements, the field can begin to address critical scientific and ethical issues that result from the use of data from certain populations in the development of technology for other populations. We present a form that data statements can take and explore the implications of adopting them as part of regular practice. We argue that data statements will help alleviate issues related to exclusion and bias in language technology, lead to better precision in claims about how natural language processing research can generalize and thus better engineering results, protect companies from public embarrassment, and ultimately lead to language technology that meets its users in their own preferred linguistic style and furthermore does not misrepresent them to others.",
+}
+
+@inproceedings{Romanov:2019,
+    title = "What{'}s in a Name? {R}educing Bias in Bios without Access to Protected Attributes",
+    author = "Romanov, Alexey  and
+      De-Arteaga, Maria  and
+      Wallach, Hanna  and
+      Chayes, Jennifer  and
+      Borgs, Christian  and
+      Chouldechova, Alexandra  and
+      Geyik, Sahin  and
+      Kenthapadi, Krishnaram  and
+      Rumshisky, Anna  and
+      Kalai, Adam",
+    booktitle = "Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)",
+    month = jun,
+    year = "2019",
+    address = "Minneapolis, Minnesota",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/N19-1424",
+    doi = "10.18653/v1/N19-1424",
+    pages = "4187--4195",
+    abstract = "There is a growing body of work that proposes methods for mitigating bias in machine learning systems. These methods typically rely on access to protected attributes such as race, gender, or age. However, this raises two significant challenges: (1) protected attributes may not be available or it may not be legal to use them, and (2) it is often desirable to simultaneously consider multiple protected attributes, as well as their intersections. In the context of mitigating bias in occupation classification, we propose a method for discouraging correlation between the predicted probability of an individual{'}s true occupation and a word embedding of their name. This method leverages the societal biases that are encoded in word embeddings, eliminating the need for access to protected attributes. Crucially, it only requires access to individuals{'} names at training time and not at deployment time. We evaluate two variations of our proposed method using a large-scale dataset of online biographies. We find that both variations simultaneously reduce race and gender biases, with almost no reduction in the classifier{'}s overall true positive rate.",
+}
+
+@inproceedings{Holstein:2019,
+author = {Holstein, Kenneth and Wortman Vaughan, Jennifer and Daum\'{e}, Hal and Dudik, Miro and Wallach, Hanna},
+title = {Improving Fairness in Machine Learning Systems: What Do Industry Practitioners Need?},
+year = {2019},
+isbn = {9781450359702},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3290605.3300830},
+doi = {10.1145/3290605.3300830},
+abstract = {The potential for machine learning (ML) systems to amplify social inequities and unfairness is receiving increasing popular and academic attention. A surge of recent work has focused on the development of algorithmic tools to assess and mitigate such unfairness. If these tools are to have a positive impact on industry practice, however, it is crucial that their design be informed by an understanding of real-world needs. Through 35 semi-structured interviews and an anonymous survey of 267 ML practitioners, we conduct the first systematic investigation of commercial product teams' challenges and needs for support in developing fairer ML systems. We identify areas of alignment and disconnect between the challenges faced by teams in practice and the solutions proposed in the fair ML research literature. Based on these findings, we highlight directions for future ML and HCI research that will better address practitioners' needs.},
+booktitle = {Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems},
+pages = {1–16},
+numpages = {16},
+keywords = {needfinding, fair machine learning, ux of machine learning, product teams, empirical study, algorithmic bias},
+location = {Glasgow, Scotland Uk},
+series = {CHI '19}
+}
+
+@book{Gitelman:2013,
+series = {Infrastructures series},
+abstract = {We live in the era of Big Data, with storage and transmission capacity measured not just in terabytes but in petabytes (where peta- denotes a quadrillion, or a thousand trillion). Data collection is constant and even insidious, with every click and every "like" stored somewhere for something. This book reminds us that data is anything but "raw," that we shouldn't think of data as a natural resource but as a cultural one that needs to be generated, protected, and interpreted. The book's essays describe eight episodes in the history of data from the predigital to the digital. Together they address such issues as the ways that different kinds of data and different domains of inquiry are mutually defining; how data are variously "cooked" in the processes of their collection and use; and conflicts over what can -- or can't -- be "reduced" to data. Contributors discuss the intellectual history of data as a concept; describe early financial modeling and some unusual sources for astronomical data; discover the prehistory of the database in newspaper clippings and index cards; and consider contemporary "dataveillance" of our online habits as well as the complexity of scientific data curation. Essay authors: Geoffrey C. Bowker, Kevin R. Brine, Ellen Gruber Garvey, Lisa Gitelman, Steven J. Jackson, Virginia Jackson, Markus Krajewski, Mary Poovey, Rita Raley, David Ribes, Daniel Rosenberg, Matthew Stanley, Travis D. Williams.},
+publisher = {The MIT Press},
+year = {2013},
+title = {"Raw data" is an oxymoron},
+editor = {Lisa Gitelman},
+language = {eng},
+address = {Cambridge, Massachusetts},
+keywords = {Information theory; Databases; Data transmission systems; Data warehousing; Database management; Management information systems; Multidimensional databases; Digital communications; Electronic data processing; Electronic systems; Information theory; Telecommunication systems; Computer files; Electronic information resources; Communication; Cybernetics; INFORMATION SCIENCE/General; INFORMATION SCIENCE/Internet Studies; SCIENCE, TECHNOLOGY & SOCIETY/History of Technology},
+}
+
+@incollection{Gitelman-Jackson:2013,
+  author={Lisa Gitelman and Virginia Jackson},
+  title={Introduction}, 
+  booktitle = {"Raw Data" Is an Oxymoron}, 
+  editor = {Lisa Gitelman},
+  year={2013},
+  volume={},
+  number={},
+  pages={1-14},
+  publisher = {MIT Press},
+  address = {Cambridge, Massachusetts}
+}
+  
+@inproceedings{Derczynski:2016,
+    title = "Broad {T}witter Corpus: A Diverse Named Entity Recognition Resource",
+    author = "Derczynski, Leon  and
+      Bontcheva, Kalina  and
+      Roberts, Ian",
+    booktitle = "Proceedings of {COLING} 2016, the 26th International Conference on Computational Linguistics: Technical Papers",
+    month = dec,
+    year = "2016",
+    address = "Osaka, Japan",
+    publisher = "The COLING 2016 Organizing Committee",
+    url = "https://www.aclweb.org/anthology/C16-1111",
+    pages = "1169--1179",
+    abstract = "One of the main obstacles, hampering method development and comparative evaluation of named entity recognition in social media, is the lack of a sizeable, diverse, high quality annotated corpus, analogous to the CoNLL{'}2003 news dataset. For instance, the biggest Ritter tweet corpus is only 45,000 tokens {--} a mere 15{\%} the size of CoNLL{'}2003. Another major shortcoming is the lack of temporal, geographic, and author diversity. This paper introduces the Broad Twitter Corpus (BTC), which is not only significantly bigger, but sampled across different regions, temporal periods, and types of Twitter users. The gold-standard named entity annotations are made by a combination of NLP experts and crowd workers, which enables us to harness crowd recall while maintaining high quality. We also measure the entity drift observed in our dataset (i.e. how entity representation varies over time), and compare to newswire. The corpus is released openly, including source text and intermediate annotations.",
+}
