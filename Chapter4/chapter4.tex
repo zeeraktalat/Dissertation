@@ -14,11 +14,11 @@ Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite
 
 \begin{table}
   \centering
-  \begin{tabular}{l|l|l}
-    Document  & Tokenised Document & LIWC Encoding\\\toprule
-              &                    & \\
-              &                    & \\
-              &                    &
+  \begin{tabular}{l|l|l{2cm}|l}
+    Document                   & Tokenised Document         & LIWC Encoding                                                                                                                     & Byte-Pair Encoding\\\hline
+    Man I fucking hate animals & Man I fucking hate animals & 'MALE_SOCIAL PPRON_FUNCTION_I_PRONOUN AFFECT_SEXUAL_BIO_INFORMAL_NEGEMO_ANGER_ADJ_SWEAR AFFECT_NEGEMO_ANGER_VERB_FOCUSPRESENT UNK & ▁man ▁i ▁fucking ▁hate ▁animals \\
+    Man I fking h8 animals     & Man I fking h8 animals     & MALE_SOCIAL PPRON_FUNCTION_I_PRONOUN UNK NUM UNK                                                                                  & ▁man ▁i ▁f king ▁h 0 ▁animals \\
+    Bruv I fking hate animals  & Bruv I fking hate animals  & UNK PPRON_FUNCTION_I_PRONOUN UNK AFFECT_NEGEMO_ANGER_VERB_FOCUSPRESENT UNK                                                        & ▁br uv ▁i ▁f king ▁hate ▁animals
   \end{tabular}
   \caption{Tokenisation and LIWC transformation.}
   \label{tab:liwc_transform}
@@ -28,7 +28,8 @@ Through the use of simple deep neural networks and `shallow' linear models, I sh
 
 \section{Previous work}
 
-In the interest of curtailing the spread of online abuse, a large number of technical appraoches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, we focus on three different strands of research. First, methods that rely on manually crafted feature. Such methods, potentially the most rigerous from a scientific point of view, require an understanding of the problem and dataset as well as intuition and knowledge on how it may be addressed; thus here one might find suggestions for features that have the potential to travel across datasets. Second, we examine methods that rely on automated selection and weighting of features, that is neural network based approaches. Finally, we consider the comparatively small body of research devoted to the development of computational models that explicitly seek to generalise across datasets and domains. As we apply our models to datasets in English, we limit our consideration of methods to those that have been applied to datasets on English.
+In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, I focus on three different strands of research
+Here, we focus on three different strands of research. First, methods that rely on manually crafted feature. Such methods, potentially the most rigerous from a scientific point of view, require an understanding of the problem and dataset as well as intuition and knowledge on how it may be addressed; thus here one might find suggestions for features that have the potential to travel across datasets. Second, we examine methods that rely on automated selection and weighting of features, that is neural network based approaches. Finally, we consider the comparatively small body of research devoted to the development of computational models that explicitly seek to generalise across datasets and domains. As we apply our models to datasets in English, we limit our consideration of methods to those that have been applied to datasets on English.
 
 \subsection{Modelling}
 \subsubsection{Manually Crafted Features}
