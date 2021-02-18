@@ -12,9 +12,10 @@ One of the key issues in machine learning for content moderation is that such sy
 
 Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite{LIWC:2015,Original LIWC Citation}, I pre-process documents from large vocabularies, that are riddled with obfuscations and intentionally and unintentionally misspelled words into a smaller vocabulary set representing instead psycholinguistic properties of words. Through a reduction of thousands, or in some cases hundreds of thousands, of unique tokens to hundreds of LIWC categories, I aim for models to gain deeper insight into language patterns of abuse than simply selecting the most frequently used tokens. Moreover, I show that such a reduction is accompanied by a negligible intra and inter dataset performance in comparison to models using the full surface-token vocabularies.
 
+\begin{landscape}
 \begin{table}
   \centering
-  \begin{tabular}{l|l|l{2cm}|l}
+  \begin{tabular}{l|l|p{5cm}|l}
     Document                   & Tokenised Document         & LIWC Encoding                                                                                                                     & Byte-Pair Encoding\\\hline
     Man I fucking hate animals & Man I fucking hate animals & 'MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN AFFECT\_SEXUAL\_BIO\_INFORMAL\_NEGEMO\_ANGER\_ADJ\_SWEAR AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT UNK & \▁man \▁i \▁fucking \▁hate \▁animals \\
     Man I fking h8 animals     & Man I fking h8 animals     & MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN UNK NUM UNK                                                                                  & \▁man \▁i \▁f king \▁h 0 \▁animals \\
@@ -23,6 +24,7 @@ Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite
   \caption{Tokenisation and LIWC transformation.}
   \label{tab:liwc_transform}
 \end{table}
+\end{landscape}
 
 Through the use of simple deep neural networks and `shallow' linear models, I show that through reducing the vocabulary sizes by up to $99\%$ and the number of model parameters by up to $99\%$, while increasing the depth of the information in the remaining vocabulary, it is possible to achieve comparable performances within datasets and mild improvements on out-of-domain datasets. This holds two strong implications for future research on computational hate speech detection: first that current approaches through an over-reliance on surface forms are computationally inefficient, and second that the exclusive use of surface forms of tokens can lead models to overly attend to the occurrence of certain tokens and variations (e.g. prominent misspellings) \citep{Rottger:2021}. Finally, as datasets for hate speech detection frequently contain biases along racialised and dialectal lines \citep{Waseem:2018,Davidson:2019}, the use of LIWC can serve as small aid in avoiding such biases as dialectal spellings of words are likely to not appear in the dictionary, thus being relegated to unknown tokens.
 
