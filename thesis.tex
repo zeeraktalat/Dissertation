@@ -101,9 +101,9 @@
 % Useful option to review a particular chapter or to send it to supervisior.
 % To use choose `chapter' option in the document class
 
-\ifdefineChapter
- \includeonly{Chapter3/chapter3}
-\fi
+%\ifdefineChapter
+% \includeonly{Chapter3/chapter3}
+%\fi
 
 % ******************************** Front Matter ********************************
 \begin{document}
@@ -133,16 +133,16 @@
 % ******************************** Main Matter *********************************
 \mainmatter
 
-%\include{Chapter1/chapter1}
+\include{Chapter1/chapter1}
 % \include{Outline/outline}
-%\include{Chapter2/chapter2}
-%\include{Chapter3/chapter3}
-%\include{Chapter4/chapter4}
-%\include{Chapter5/chapter5}
+\include{Chapter2/chapter2}
+\include{Chapter3/chapter3}
+\include{Chapter4/chapter4}
+\include{Chapter5/chapter5}
 \include{Chapter6/chapter6}
-%\include{Chapter7/chapter7}
-%\include{Chapter8/chapter8}
-%\include{Chapter9/chapter9}
+% \include{Chapter7/chapter7}
+\include{Chapter8/chapter8}
+\include{Chapter9/chapter9}
 
 % ********************************** Back Matter *******************************
 % Backmatter should be commented out, if you are using appendices after References
