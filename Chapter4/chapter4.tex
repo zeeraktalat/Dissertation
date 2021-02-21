@@ -10,54 +10,20 @@
 \zw{Describe problem field}
 One of the key issues in machine learning for content moderation is that such systems both in deployed settings (see \autoref{chap:filter}) and in research (see \autoref{chap:intro} and \autoref{chap:nlp}) over-fit to individual tokens that see over-representation in the positive and negative classes respectively. While research efforts have been made to address such issues \cite{CITE: cite papers that try to address overfitting}, the problem of over-fitting to words and identity markers remain an open question for the field. While some such approaches have addressed this problem by replacing certain words and phrases with more general tokens \cite{CITE: Replacing token papers} or masking \cite{CITE: Masking token paper} tokens. Other work has attempted to address the problem by treating it as a problem of dataset bias \cite{Dixon:2018}. Here, I propose a different approach which serves to address the issue of generalisable models by 1) minimising the vocabulary in order to avoid over-fitting to distributional skews of low-frequency tokens across classes; 2) representing documents in terms of how they represent thoughts, feelings, and personality; and 3) through such vocabulary minimisation highlight the importance of how words are used rather than their surface forms while retaining model performance. An additional benefit of such vocabulary reduction is a proportional reduction in model size and training time for complex models such as neural networks, resulting in models that have a smaller environmental impact \citep{Strubell:2019}.
 
-Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite{LIWC:2015,Original LIWC Citation}, I pre-process documents from large vocabularies, that are riddled with obfuscations and intentionally and unintentionally misspelled words into a smaller vocabulary set representing instead psycholinguistic properties of words. Through a reduction of thousands, or in some cases hundreds of thousands, of unique tokens to hundreds of LIWC categories, I aim for models to gain deeper insight into language patterns of abuse than simply selecting the most frequently used tokens. Moreover, I show that such a reduction is accompanied by a negligible intra and inter dataset performance in comparison to models using the full surface-token vocabularies.
+Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite{LIWC:2015,Original LIWC Citation}, I pre-process documents from large vocabularies, that are riddled with obfuscations and intentionally and unintentionally misspelled words into a smaller vocabulary set representing instead psycholinguistic properties of words. Through a reduction of thousands, or in some cases hundreds of thousands, of unique tokens to hundreds of LIWC categories, I aim for models to gain deeper insight into language patterns of abuse than simply selecting the most frequently used tokens. Moreover, I show that such a reduction is accompanied by a negligible intra and inter dataset performance in comparison to models using the full surface-token vocabularies. 
 
-\begin{table}
-  \centering
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{l|l|l}
-    Document                   & Tokenised Document         & Byte-Pair Encoding\\\hline
-    Man I fucking hate animals & Man I fucking hate animals & \_man \_i \_fucking \_hate \_animals \\
-    Man I fking h8 animals     & Man I fking h8 animals     & \_man \_i \_f king \_h 0 \_animals   \\
-    Bruv I fking hate animals  & Bruv I fking hate animals  & \_br uv \_i \_f king \_hate \_animals 
-  \end{tabular}%
-  }
-  \caption{Tokenisation and BPE representation.}
-  \label{tab:liwc_transform}
-\end{table}
-
-\begin{table}[]
-\centering
-\footnotesize
-\begin{tabular}{l|p{10.5cm}}
-Document                   & LIWC Encoding                                                                                                                                   \\ \hline
-Man I fucking hate animals & MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN AFFECT\_SEXUAL\_BIO\_INFORMAL\_NEGEMO\_ANGER\_ADJ\_SWEAR AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT UNK \\\hline
-Man I fking h8 animals     & MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN UNK NUM UNK \\\hline
-Bruv I fking hate animals  & UNK PPRON\_FUNCTION\_I\_PRONOUN UNK AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT UNK                                                              
-\end{tabular}
-\caption{LIWC}
-\label{tab:my-table}
-\end{table}
-
-Through the use of simple deep neural networks and `shallow' linear models, I show that through reducing the vocabulary sizes by up to $99\%$ and the number of model parameters by up to $99\%$, while increasing the depth of the information in the remaining vocabulary, it is possible to achieve comparable performances within datasets and mild improvements on out-of-domain datasets. This holds two strong implications for future research on computational hate speech detection: first that current approaches through an over-reliance on surface forms are computationally inefficient, and second that the exclusive use of surface forms of tokens can lead models to overly attend to the occurrence of certain tokens and variations (e.g. prominent misspellings) \citep{Rottger:2021}. Finally, as datasets for hate speech detection frequently contain biases along racialised and dialectal lines \citep{Waseem:2018,Davidson:2019}, the use of LIWC can serve as small aid in avoiding such biases as dialectal spellings of words are likely to not appear in the dictionary, thus being relegated to unknown tokens.
+Through the use of simple deep neural networks and `shallow' linear models, I show that through reducing the vocabulary sizes by up to $99\%$ and the number of model parameters by up to $99\%$, while increasing the depth of the information in the remaining vocabulary, it is possible to achieve comparable performances within datasets and mild improvements on out-of-domain datasets. This holds two strong implications for future research on computational hate speech detection: first that current approaches through an over-reliance on surface forms are computationally inefficient, and second that the exclusive use of surface forms of tokens can lead models to overly attend to the occurrence of certain tokens and variations (e.g. prominent misspellings) \citep{Rottger:2021}. Finally, as datasets for hate speech detection frequently contain biases along racialised and dialectal lines \citep{Waseem:2018,Davidson:2019}, the use of LIWC can serve as small aid in avoiding such biases as dialectal spellings of words are likely to not appear in the dictionary, thus being relegated to unknown tokens (see \autoref{tab:liwc_tok} for synthetic examples of LIWC representations).
 
 \section{Previous work}
 
-In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, I focus on three different strands of research
-Here, we focus on three different strands of research. First, methods that rely on manually crafted feature. Such methods, potentially the most rigerous from a scientific point of view, require an understanding of the problem and dataset as well as intuition and knowledge on how it may be addressed; thus here one might find suggestions for features that have the potential to travel across datasets. Second, we examine methods that rely on automated selection and weighting of features, that is neural network based approaches. Finally, we consider the comparatively small body of research devoted to the development of computational models that explicitly seek to generalise across datasets and domains. As we apply our models to datasets in English, we limit our consideration of methods to those that have been applied to datasets on English.
+In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, I focus on three different strands of research. First, I consider manual development of features for machine learning models as it is necessary to form hypotheses for what might may serve as indicators of abuse on the basis of the dataset and problem in question. Second, I examine neural network approaches for abusive language detection. Finally, I consider the growing body of research devoted to examining the generalisability of computational models for abusive language detection. I restrict my attention to studies in conducted on abuse in English as it is most pertinent to this work.
 
 \subsection{Modelling}
 \subsubsection{Manually Crafted Features}
 
-A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. While we do not manually craft the features for our experiments, we draw heavily on the rationale for manually developing features. The governing reasoning for using manually crafted features, such as Part-of-Speech tags \cite{Davidson:2017} is that they reveal intuitions of what the researcher believes may surface salient correlations that aid in high classification performance. Frequently used features are Bag-of-Words, that is the un-ordered occurrence of each word in a document; Term Frequency-Inverse Document Frequency which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination (see \autoref{eq:tfidf} detailing the implementation of \cite{Pedregosa:2011}); n-grams, e.g. bi-grams and tri-grams that consider tuples  and triplets of tokens, respectively; and Part-of-Speech tags.
+A large body of work has sought to use manually developed features for online abuse detection \cite{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019}. The primary reason for using manually crafted features, such as Part-of-Speech (POS) tags \citep{Davidson:2017} is the hypothesis that manual features can shed light to specific ways in which abusive documents are constructed. For instance, the use of POS tags reveals an assumption that the linguistic categories (and their sequences) used in abusive text differs from the categories (and their sequences) from non-abusive text. The most frequently used features for abusive language detection are Term Frequency - Inverse Document Frequency (TF-IDF), which takes the fraction of the frequency of each unique token and the number of tokens in a document and multiplies it with the natural logarithm of the fraction of the number of documents and the number of documents that contain the given token under examination; n-grams that consider sequential tuples of tokens; and POS tags \cite{Fortuna:2018}. LIWC has also been examined in the context of abusive detection, \citet{Nina-Alcocer:2019} use LIWC to compute percentages of emotions that are present in abusive documents. They also incorporate ``sexual, anxiety feeling, anger, and so on'' into their feature representation, however they do not clarify what such features may be or how they are incorporated. 
 
-\begin{equation}\label{eq:tfidf}
-  \text{Term Frequency:}tf(t, d) = f_{t, d}\\
-  \text{Inverse Document Frequency:}idf(t) = \log \dfrac{1 + n}{1 + df(t)} + 1\\
-  TF-IDF(t, d) = tf(t, d) \cdot idf(t)
-\end{equation}
 
-LIWC has previously been examined in the context of abusive detection, \citet{Nina-Alcocer:2019} use LIWC to compute percentages of emotions that are present in abusive docuemnts. They also incorporate ``sexual, anxiety feeling, anger, and so on'' into their feature representation, however withouth clarifying what such features may be or how they are incorporated.
 
 \subsubsection{Neural Networks}
 
@@ -84,6 +50,7 @@ Beyond the different specific models and types of input layer, the datasets them
 We train our models on either the Twitter dataset collected by \citet{Davidson:2017} and the Wikipedia Talk pages dataset sampled by \citet{Wulczyn:2016}, respectively, as our training datasets. We choose these datasets in part due to their sizes and in part due to the different breadth of communicative styles. To estimate cross-dataset performance, we evaluate our models on \citet{Waseem-Hovy:2016}, \citet{Waseem:2016}, and \citet{Garcia:2019}.
 
 \zw{INSERT: Table of BPE and LIWC vocabularies}
+\zw{Table of token differences and intersections between classes}
 \zw{INSERT: Short paragraph on vocabularies.}
 
 \subsubsection{Training Datasets}
@@ -107,8 +74,40 @@ On the other hand \citet{Garcia:2019} and \citet{Davidson:2017} select annotator
 While we accept that the influence of annotation guidelines have strong influences on the subject that is being examined (e.g. \citet{Davidson:2017} examine the differences in what is merely offensive and what is hateful, \citet{Garcia:2019} examine what is hateful from a white supremacist community and what is not, and \citet{Wulczyn:2017} examine things that make conversations toxic and hostile), we assume that these different guidelines and questions highlight different aspects of abuse. Through our efforts to develop methods that can identify different forms of abuse across different datasets, we accept the assumption that there are some global understandings of abuse that can be learned by machine learning models. We revisit this assumption in \autoref{chap:disembodied}.
 
 \section{Modelling}
-
 As our aim is to understand how representing documents using only the tokens derived using the Linguistic Inquiry and Word Count dictionary may influence the generalisability of models for hate speech detection across datasets and domains, we use simple modelling architectures and feature representations.
+
+\subsection{Datasets}
+
+\subsection{Pre-processing}
+
+
+\begin{table}
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|l|l}
+    Document                   & Word Token Representation & Byte-Pair Representation\\\hline
+    Man I fucking hate animals & Man I fucking hate animals & \_man \_i \_fucking \_hate \_animals \\
+    Man I fking h8 animals     & Man I fking h8 animals     & \_man \_i \_f king \_h 0 \_animals   \\
+    Bruv I fking hate animals  & Bruv I fking hate animals  & \_br uv \_i \_f king \_hate \_animals
+  \end{tabular}%
+  }
+  \caption{Word token and BPE representation.}
+  \label{tab:bpe_tok}
+\end{table}
+
+\begin{table}[]
+\centering
+\footnotesize
+\begin{tabular}{l|p{10.5cm}}
+Document                   & LIWC Representation \\ \hline
+Man I fucking hate animals & MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN AFFECT\_SEXUAL\_BIO\_INFORMAL\_NEGEMO\_ANGER\_ADJ\_SWEAR AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT UNK \\\hline
+Man I fking h8 animals     & MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN UNK NUM UNK \\\hline
+Bruv I fking hate animals  & UNK PPRON\_FUNCTION\_I\_PRONOUN UNK AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT UNK
+\end{tabular}
+\caption{Examples of LIWC representations.}
+\label{tab:liwc_tok}
+\end{table}
+
 
 \subsection{Neural Models}\ref{sec:redux_neural}
 
