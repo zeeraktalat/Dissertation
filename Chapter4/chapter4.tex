@@ -54,22 +54,12 @@ A different architecture is proposed by \citet{Park:2017}. In their work they co
 
 Another frequently used architecture is LSTMs \citep{Badjatiya:2017,Kolhatkar:2021,Meyer:2019}. Here, \citet{Kolhatkar:2021} propose using a bi-directional LSTM that, like their CNN, has a pre-trained embedding layer, a recurrent layer, a dropout layer, and a fully connected output layer with a sigmoid activation to predict the output classes. \citet{Meyer:2019} on the other hand take develop on the idea of a hybrid CNN, developing a LSTM architecture that takes documents tokenised into words and characters as input. The word representation is obtained through tokenisation passed through an embedding layer and the character representation is obtained by processing the documents with a CNN.
 
-Using these approaches, \citet{Kolhatkar:2021} show comparable performances between the CNN and bi-directional LSTM on their dataset. \citet{Meyer:2019} on the other hand show that a baseline model only using character level information performs comparably with other more complex approaches, obtaining a macro F1-score of $0.7923$ for the baseline and $0.7924$ for the final system on the dataset proposed by \citet{Waseem-Hovy:2016}, and notably outperforms several other previously proposed methods.\vspace{5mm}
+Using these approaches, \citet{Kolhatkar:2021} show comparable performances between the CNN and bi-directional LSTM on their dataset. \citet{Meyer:2019} on the other hand show that a baseline model only using character level information performs comparably with other more complex approaches, obtaining a macro F1-score of $0.7923$ for the baseline and $0.7924$ for the final system on the dataset proposed by \citet{Waseem-Hovy:2016}, and notably outperforms several other previously proposed methods.
 
-In all of these approaches it is clear that obtaining strong model improvements is a hard task as models struggle to identify the borders between abusive and non-abusive content.
-
-
-
-
-
-
-In contrast to \citet{Wang:2020}, the approach we take assumes that
-
-\cite{Zimmerman:2018,Park:2017,Gamback:2017}
-
-As our aim is to consider the influence of LIWC-represented documents, we do not consider the more recent pre-trained Transformer-based langauge models (e.g. \cite{Devlin:2019, CITE: Roberta}) as the amounts of data necessary to train such a masked language model with LIWC representations are unavailable. Moreover, as the LIWC dictionary only occupies a small fraction of the entire English lexicon, and its tokens are abstractions on use of the language, training a language model is a fruitless endeavor.
 
 \subsubsection{Generalisable Models}
+
+A common critique of many current computational methods for abuse detection is that they have poor generalisability onto other
 \zw{Talk about NLP models that try to generalise to other datasets.}
 
 \cite{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019}
