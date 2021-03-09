@@ -41,16 +41,23 @@ Many of the previously mentioned works use similar machine learning models, with
 
 In this chapter, we take inspiration from the use of manually crafted features as a way to provide testable hypothesis while departing from the notion of feature generation. Specifically, we hypothesise that LIWC categories can provide deep information for predictive modelling that can allow for high performance in spite of token sparsity when using neural network methods.
 
-
-
-
-
-
-
-
 \subsubsection{Neural Networks}
+Though the earliest models for the tasks were predominately linear models that used manually generated features \citep{Waseem-Hovy:2016,Davidson:2017,Warner:2012} more recent work has been dominated by the development of neural network based models for automated abuse detection, posting ever-evolving State-of-the-Art models and classification performances \citep[e.g.]{Park:2017,Badjatiya:2017,Zimmerman:2018,Stoop:2019,Isaksen:2020}. Here I consider a handful of neural network methods for detecting abuse, focusing on the distinct implications following the modelling choices and the logics that underpin them. As all neural network based methods that I examine receive only the text as input, the primary differences between the models is in their use and organisation of different types of layers and the loss function selected for the respective models.
 
-Neural network methods have frequently been applied to the problem of abusive language detection and hate speech detection, frequently posting ever-evolving State-of-the-Art models and classification performances \citep[e.g.]{Badjatiya:2017,Zimmerman:2018,Isaksen:2020}. In the effort to obtain State-of-the-Art classification performance, a number of modelling approaches have been proposed in structuring of the task as well as the specific implementation choices made. For instance, where \citet{Badjatiya:2017} and \citet{Isaksen:2020} keep the proposed task formulation of hate speech detection as a three-way multi-class classification problem provided by \citet{Waseem-Hovy:2016}, \citet{Park:2017} propose instead to split the classification problem into two-tiered problem, where in the first tier, a classifier is trained to predict whether a document contains abuse and the second tier operates only on the positive instances, predicting the same three-way classification task as \citet{Isaksen:2020,Waseem-Hovy:2016}.
+The most commonly used architecture for neural networks that in the surveyed literature is a CNN \citep{Park:2017,Gamback:2017,Wulczyn:2017,Kolhatkar:2021,Zimmerman:2018,Wang:2020}. As CNNs have been the subject of particularly interest, a number of distinct modelling approaches have been proposed. First, relying a simple neural network architecture, \citet{Kolhatkar:2021} use GloVe embeddings as the first layer, followed by three convolutional layers (that have window sizes $3, 4,$ and $5$, respectively) with global maximum pooling layers. Prior to passing to an output layer, dropout is applied to the output of the convolutional layers which is then passed to a dense layer. For all layers prior to the output layer use a ReLU (see \autoref{chap:nlp} for more detail) activation function. The output layer applies the sigmoid function to provide a prediction from the model. This model most closely resembles the CNN architecture used in this chapter. As this model uses a pre-trained word-embedding layer as its input layer, the input the model receives are documents that have been subject to tokenisation processes.
+
+A different architecture is proposed by \citet{Park:2017}. In their work they compare a single classifier, what they dub a `one-step classifier', that predicts the final classes directly with a stacked architecture of two models, or a `two-step classifier' in their vernacular that first predicts whether content is abusive and second predicts which type of abuse the documents predicted as abusive are. There are two governing distinctions between the two-step architecture proposed by \citet{Park:2017} and the architecture proposed by \citet{Kolhatkar:2021}. First, \citet{Kolhatkar:2021} acts as a one-step classifier whereas the architecture proposed by \citet{Park:2017} acts in two steps. Second, \citet{Kolhatkar:2021} only acts on documents tokenised into words and punctuation whereas \citet{Park:2017} propose a CNN that takes documents tokenised into words and punctuation in addition to documents tokenised into characters. \citet{Park:2017} show that through the use of a one-step CNN trained on word and character input, they achieve a performance boost obtaining a F1-score of $0.827$ on the datasets proposed by \citet{Waseem-Hovy:2016} and \citet{Waseem:2016}, though the performance boost is lost once a two-step hybrid CNN is used.
+
+Another frequently used architecture is LSTMs \citep{Badjatiya:2017,Kolhatkar:2021,Meyer:2019}. Here, \citet{Kolhatkar:2021} propose using a bi-directional LSTM that, like their CNN, has a pre-trained embedding layer, a recurrent layer, a dropout layer, and a fully connected output layer with a sigmoid activation to predict the output classes. \citet{Meyer:2019} on the other hand take develop on the idea of a hybrid CNN, developing a LSTM architecture that takes documents tokenised into words and characters as input. The word representation is obtained through tokenisation passed through an embedding layer and the character representation is obtained by processing the documents with a CNN.
+
+Using these approaches, \citet{Kolhatkar:2021} show comparable performances between the CNN and bi-directional LSTM on their dataset. \citet{Meyer:2019} on the other hand show that a baseline model only using character level information performs comparably with other more complex approaches, obtaining a macro F1-score of $0.7923$ for the baseline and $0.7924$ for the final system on the dataset proposed by \citet{Waseem-Hovy:2016}, and notably outperforms several other previously proposed methods.\vspace{5mm}
+
+In all of these approaches it is clear that obtaining strong model improvements is a hard task as models struggle to identify the borders between abusive and non-abusive content.
+
+
+
+
+
 
 In contrast to \citet{Wang:2020}, the approach we take assumes that
 
