@@ -13,12 +13,16 @@ Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite
 
 Through the use of simple deep neural networks and `shallow' linear models, I show that through reducing the vocabulary sizes by up to $99\%$ and the number of model parameters by up to $99\%$, while increasing the depth of the information in the remaining vocabulary, it is possible to achieve comparable performances within datasets and mild improvements on out-of-domain datasets. This holds two strong implications for future research on computational hate speech detection: first that current approaches through an over-reliance on surface forms are computationally inefficient, and second that the exclusive use of surface forms of tokens can lead models to overly attend to the occurrence of certain tokens and variations (e.g. prominent misspellings) \citep{Rottger:2021}. Finally, as datasets for hate speech detection frequently contain biases along racialised and dialectal lines \citep{Waseem:2018,Davidson:2019}, the use of LIWC can serve as small aid in avoiding such biases as dialectal spellings of words are likely to not appear in the dictionary, thus being relegated to unknown tokens (see \autoref{tab:liwc_tok} for synthetic examples of LIWC representations). Thus, this chapter seeks to provide answers to the following research questions:
 
-\begin{enumerate}[start=1, label={(RQ \arabic*):}]
-  \item{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}
-  \item{What are the implications of using LIWC as input on model development and model size?}
-  \item{What are the implications on generalisability of LIWC-based models?}
-\end{enumerate}
+\begin{minipage}{0.9\textwidth}
+\vspace{5mm}
+    \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
+        \item{\textit{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}}
+        \item{\textit{What are the implications of using LIWC as input on model development and model size?}}
+        \item{\textit{What are the implications on generalisability of LIWC-based models?}}
+    \end{enumerate}
+\end{minipage}
 
+\newpage
 \section{Previous work}
 
 In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \autoref{sec:nlp} for a broad overview on the topic). Here, I focus on three different strands of research. First, I consider manual development of features for machine learning models as it is necessary to form hypotheses for what might may serve as indicators of abuse on the basis of the dataset and problem in question. Second, I examine neural network approaches for abusive language detection. Finally, I consider the growing body of research devoted to examining the generalisability of computational models for abusive language detection. I restrict my attention to studies in conducted on abuse in English as it is most pertinent to this work.
