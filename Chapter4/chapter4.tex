@@ -65,19 +65,7 @@ Using these approaches, \citet{Kolhatkar:2021} show comparable performances betw
 The use of LSTMs, that rely on recurrence, break with the independence assumption of the manual feature-based models. By recurring over a document, each new token is considered in conjunction with the previous tokens that have not been forgotten. In this way, an assumption is built into the models that through processing enough token sequences, it will be possible to identify patterns that connote abuse. Such a reliance on the text alone does not consider the positionality of abuse; \citet{Waseem:2018} argue only through understanding the context within which the speaker and audience exist in, is it possible to deem something as abusive. For instance, it is only through an understanding of the speaker that one can deem whether the \textit{n-word} is weaponised as abuse or is reclaimed to connote complex social identity.\vspace{5mm}
 
 All methods described that rely on documents tokenised into sentences rely on pre-trained embedding layers (most frequently GloVe \citet{Pennington:2014}) that come with their own benefits and costs. For instance, word embeddings that are trained on web-text are likely to harbour social biases \citep{Bolukbasi:2016} that have been proven hard to address \citep{Gonen:2019}. On the other hand, they also allow for better representations of related concepts and will be less susceptible to creating different representations for closely related concepts as a result of dataset biases. For instance, the concepts `Television' and `T.V.' might only be distantly related, if at all, in a small dataset due to few co-occurrences within the dataset. In a larger dataset, spanning millions of documents, these two concepts are likely to appear as closely related as a robust language representation will likely have been achieved for such commonly occurring tokens.
-The methods that rely on character embeddings are also subject to the same distributional concerns, however this can be a benefit when used in conjunction with word embeddings. As there are only a much smaller set of possible characters compared to words, less data is needed to train robust embedding layers, though the trained character embeddings will be particularly attuned to the dataset at hand. On the other hand, due to such particularity of the character embeddings, they are less likely to map well onto other domains even if they show good performance on the dataset that they are derived from.
-
-\subsubsection{Generalisable Models}
-
-A common critique of many current computational methods for abuse detection is that they have poor generalisability onto other datasets. Although this issue of non-generalisability poses a serious issue for the abuse community, it has received relatively little attention \citep{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019,Fortuna:2021}
-\zw{Talk about NLP models that try to generalise to other datasets.}
-
-\cite{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019}
-
-\subsection{Linguistic Inquiry and Word Count}
-
-\zw{Talk about LIWC: Designed for long form documents}
-
+The methods that rely on character embeddings are also subject to similar distributional concerns, however this can be a benefit when used in conjunction with word embeddings. As there are only a much smaller set of possible characters compared to words, less data is needed to train robust embedding layers, though the trained character embeddings will be particularly attuned to the dataset at hand. On the other hand, due to such particularity of the character embeddings, they are less likely to map well onto other domains even if they show good performance on the dataset that they are derived from.\vspace{5mm}
 
 
 
