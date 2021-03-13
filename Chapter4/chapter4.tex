@@ -86,7 +86,7 @@ Second, as each dataset has been collected with different rationales and annotat
 
 With these concerns in mind, I decide to use datasets with distinct sources and are developed for different purposes. Rather than resist or seek to minimise the modelling concerns, I choose to lean into them to allow space for understanding how LIWC-based modelling may influence the training and model performance on each dataset as well as seek to gain an understanding on which axes model generalisation may be afforded using LIWC-based modelling (see \autoref{tab:vocab_sizes} for the vocabulary sizes for each dataset and input type).
 
-In this chapter I use the \textit{StormFront} dataset~\citep{Garcia:2019}, the \textit{Offence} dataset~\citep{Davidson:2017}, the \textit{Hate Speech} dataset~\citep{Waseem-Hovy:2016}, the \textit{Expert Hate} dataset~\citep{Waseem:2016}, and finally the \textit{Toxicity} dataset~\citep{Wulczyn:2017} (please see \autoref{sub:abuse_data} for a detailed overview on each dataset).
+In this chapter I use the \textit{StormFront} dataset~\citep{Garcia:2019}, the \textit{Offence} dataset \citep{Davidson:2017}, the \textit{Hate Speech} dataset~\citep{Waseem-Hovy:2016}, the \textit{Expert Hate} dataset~\citep{Waseem:2016}, and finally the \textit{Toxicity} dataset~\citep{Wulczyn:2017} (please see \autoref{sub:abuse_data} for a detailed overview on each dataset).
 
 \subsubsection{StormFront}
 First, I use the \textit{StormFront} dataset which is collected from the white supremacist web forum by \citet{Garcia:2019}. The data consists of $2,392$, split into $1,531$ training documents, $383$ documents for validation, and $478$ test documents. While the full dataset published consists of $10,000$ documents annotated as `hate' and `not-hate', with a large class imbalance towards non-abusive comments, I choose to use a balanced subset of the data provided by the authors to test how LIWC-based models perform when trained on a) small data and b) a balanced data distribution.
@@ -125,7 +125,6 @@ For the BPE-based models on the other hand, I pre-process documents by computing
 \zw{Once models are re-run update \autoref{tab:vocab_sizes}}
 \begin{table}[]
 \centering
-\resizebox{\textwidth}{!}{%
 \begin{tabular}{llll}
 Dataset     & Word Vocabulary & BPE Vocabulary & LIWC Vocabulary \\
 Offence     & $28,394$        & $16,664$       & $858$           \\
@@ -133,8 +132,7 @@ Toxicity    & $333,502$       & $95,705$       & $1,037$         \\
 Hate Expert & $12,917$        & $9,084$        & $743$           \\
 Hate Speech & $23,855$        & $14,722$       & $843$           \\
 StormFront  & $5,477$         & $5,519$        & $625$
-\end{tabular}%
-}
+\end{tabular}
 \caption{Vocabulary sizes for each input type and the training set for each dataset.}
 \label{tab:vocab_sizes}
 \end{table}
@@ -165,9 +163,9 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \footnotesize
 \begin{tabular}{l|p{10.5cm}}
 Document                   & LIWC Representation \\ \hline
-Man I fucking hate animals & MALE_SOCIAL PPRON_FUNCTION_I_PRONOUN AFFECT_SEXUAL_BIO_INFORMAL_NEGEMO_ANGER_ADJ_SWEAR AFFECT_NEGEMO_ANGER_VERB_FOCUSPRESENT UNK UNK \\\hline
-Man I fking h8 animals     & MALE_SOCIAL PPRON_FUNCTION_I_PRONOUN UNK NUM UNK UNK \\\hline
-Bruv I fking hate animals  & UNK PPRON_FUNCTION_I_PRONOUN UNK AFFECT_NEGEMO_ANGER_VERB_FOCUSPRESENT UNK UNK
+Man I fucking hate animals & MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN AFFECT\_SEXUAL\_BIO\_INFORMAL\_NEGEMO\_ANGER\_ADJ\_SWEAR AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT UNK UNK \\\hline
+Man I fking h8 animals     & MALE\_SOCIAL PPRON\_FUNCTION\_I\_PRONOUN UNK NUM UNK UNK \\\hline
+Bruv I fking hate animals  & UNK PPRON\_FUNCTION\_I\_PRONOUN UNK AFFECT\_NEGEMO\_ANGER\_VERB\_FOCUSPRESENT UNK UNK
 \end{tabular}
 \caption{Examples of LIWC representations.}
 \label{tab:liwc_tok}
@@ -212,7 +210,7 @@ Batch Size             &         &          &         &         &         &     
 Learning Rate          &         &          &         &         &         &         &         &          \\
 Dropout                &         &          &         &         &         &         &         &          \\
 Activation Function    &         &          &         &         &         &         &         &          \\
-\# Epochs               &         &          &         &         &         &         &         &          \\
+\# Epochs              &         &          &         &         &         &         &         &          \\
 Validation F1-score    &         &          &         &         &         &         &         &
 \end{tabular}
 \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
@@ -234,7 +232,7 @@ Batch Size            &         &         &         &         &         &       
 Learning Rate         &         &         &         &         &         &         &         &         \\
 Dropout               &         &         &         &         &         &         &         &         \\
 Activation Function   &         &         &         &         &         &         &         &         \\
-\# Epochs              &         &         &         &         &         &         &         &         \\
+\# Epochs             &         &         &         &         &         &         &         &         \\
 Validation F1-score   &         &         &         &         &         &         &         &
 \end{tabular}
 \caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
@@ -402,7 +400,7 @@ Using this training scheme, we define and search a hyper-parameter space for eac
   Training data             & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall \\ \hline
 \mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\
                             &                         & Convolutional Neural Network   &          &          &           &  \\
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\     
+                            &                         & Long-Short Term Memory Network &          &          &           &  \\
                             & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\
                             &                         & Convolutional Neural Network   &          &          &           &  \\        
                             &                         & Long-Short Term Memory Network &          &          &           &  \\ \midrule       
@@ -530,6 +528,7 @@ While the onehot and index encoded tensors should functionally be equal to one a
 \zw{Something about BERT based models}
 BERT \cite{Koufakou,Vidgen,Tran:2020,Isaksen:2020}
 As our aim is to consider the influence of LIWC-represented documents, we do not consider the more recent pre-trained Transformer-based language models \citep[e.g.]{Devlin:2019,Liu:2019} as the amounts of data necessary to train such a masked language model with LIWC representations are unavailable. Moreover, as the LIWC dictionary only occupies a small fraction of the entire English lexicon, and its tokens are abstractions on use of the language, training a language model is a fruitless endeavour.
+
 
 \zw{Some concluding remarks}
 While functionally this limits the vocabulary, there is also loss of information. Future work, could then employ both simple and complex mappings of different forms of words to single tokens that cohere with the LIWC dictionary, thus limiting information loss while retaining the predictive power.
