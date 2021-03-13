@@ -118,15 +118,11 @@ Prior to providing any model data, it is necessary to pre-process the data to ma
 
 For the LIWC-based models and the word-based models, I pre-process documents using the python library Ekphrasis \citep{baziotis:2017} which was developed specifically to handle the particularities of social media texts. One such particularity is the use of elongation of words which the library addresses by mapping to the unelongated form, e.g. `heyyyy' is mapped to `hey' (see \autoref{bpe_tok} and \autoref{tab:liwc_tok} for examples of tokenisation). No further processing is done for experiments using word tokens as input.
 
-For the LIWC experiments on the other hand, I take another step after the initial tokenisation to compute the LIWC categories invoked by each word. Each token obtained is passed through a function which identifies all LIWC categories that the token invokes and combines them into a single token, where each LIWC category is separated by an underscore. All tokens that are not recognised by LIWC are replaced with a general token for \textit{<UNK>} token (see \autoref{tab:liwc_tok} for examples on the result of the pre-processing of documents).
-
-For the BPE-based models on the other hand, I pre-process documents by computing using the BPE python library \citep{Heinzerling:2018}. Byte-Pair Encodings are well suited to handle the particularities of social media text, as it breaks unrecognised words into subwords, thus minimising unknown tokens in the validation and test sets. Through this minimisation, the hope is that even if part of a of a word is out-of-vocabulary for the model some of its subwords will be within a model's vocabulary, allowing the remaining subwords to be used for inference.
-
 \zw{Once models are re-run update \autoref{tab:vocab_sizes}}
 \begin{table}[]
 \centering
 \begin{tabular}{llll}
-Dataset     & Word Vocabulary & BPE Vocabulary & LIWC Vocabulary \\
+Dataset     & Word Vocabulary & BPE Vocabulary & LIWC Vocabulary \\\hline
 Offence     & $28,394$        & $16,664$       & $858$           \\
 Toxicity    & $333,502$       & $95,705$       & $1,037$         \\
 Hate Expert & $12,917$        & $9,084$        & $743$           \\
@@ -137,12 +133,9 @@ StormFront  & $5,477$         & $5,519$        & $625$
 \label{tab:vocab_sizes}
 \end{table}
 
-In reviewing \autoref{tab:vocab_sizes}, it is clear that computing LIWC representations and BPE representations of the documents results in smaller vocabulary sizes for all datasets with the exception of the BPE representation of the \textit{StormFront} dataset where the vocabulary grows. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised words are computed. More surprising are the large drops in BPE vocabulary sizes for the remaining datasets. These drops suggest that a large set of the words that are unrecognised by the pre-trained Byte-Pair Embeddings in as complete words share a relatively small set of subwords.
-There are two implications of this vocabulary reduction, a) resulting models are likely to be trained faster and have a smaller memory footprint than their word-based counter-parts and b) the embedding layer trained on the tokens will have a smaller vocabulary that it needs to learn and will have a higher frequency for many of the remaining tokens.
+For the LIWC experiments on the other hand, I take another step after the initial tokenisation to compute the LIWC categories invoked by each word. Each token obtained is passed through a function which identifies all LIWC categories that the token invokes and combines them into a single token, where each LIWC category is separated by an underscore. All tokens that are not recognised by LIWC are replaced with a general token for \textit{<UNK>} token (see \autoref{tab:liwc_tok} for examples on the result of the pre-processing of documents).
 
-For the documents represented through the LIWC categories that they invoke, I observe a sharp decline in the sizes of the vocabularies, with the smallest decrease in vocabulary being an $88.6\%$ decrease while the largest decrease is $99.7\%$. This is expected as the LIWC dictionary only encompasses a small number of words as many words used in informal conversations on online platforms are likely to fall outside of those considered when developing the dictionary. Moreover, it is also not surprising that a drop would occur as many of the datasets are created and published after the creation of the LIWC dictionary and examine domains that are unlikely to be well represented within the LIWC dictionary. Consequently will be subject to some language drift in addition to domain shifts.
-
-\zw{Table of LIWC token differences and intersections between classes}
+For the BPE-based models on the other hand, I pre-process documents by computing using the BPE python library \citep{Heinzerling:2018}. Byte-Pair Encodings are well suited to handle the particularities of social media text, as it breaks unrecognised words into subwords, thus minimising unknown tokens in the validation and test sets. Through this minimisation, the hope is that even if part of a of a word is out-of-vocabulary for the model some of its subwords will be within a model's vocabulary, allowing the remaining subwords to be used for inference.
 
 \begin{table}
   \centering
@@ -158,6 +151,9 @@ For the documents represented through the LIWC categories that they invoke, I ob
   \label{tab:bpe_tok}
 \end{table}
 
+In reviewing \autoref{tab:vocab_sizes}, it is clear that computing LIWC representations and BPE representations of the documents results in smaller vocabulary sizes for all datasets with the exception of the BPE representation of the \textit{StormFront} dataset where the vocabulary grows. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised words are computed. More surprising are the large drops in BPE vocabulary sizes for the remaining datasets. These drops suggest that a large set of the words that are unrecognised by the pre-trained Byte-Pair Embeddings in as complete words share a relatively small set of subwords.
+There are two implications of this vocabulary reduction, a) resulting models are likely to be trained faster and have a smaller memory footprint than their word-based counter-parts and b) the embedding layer trained on the tokens will have a smaller vocabulary that it needs to learn and will have a higher frequency for many of the remaining tokens.
+
 \begin{table}[]
 \centering
 \footnotesize
@@ -170,6 +166,11 @@ Bruv I fking hate animals  & UNK PPRON\_FUNCTION\_I\_PRONOUN UNK AFFECT\_NEGEMO\
 \caption{Examples of LIWC representations.}
 \label{tab:liwc_tok}
 \end{table}
+
+For the documents represented through the LIWC categories that they invoke, I observe a sharp decline in the sizes of the vocabularies, with the smallest decrease in vocabulary being an $88.6\%$ decrease while the largest decrease is $99.7\%$. This is expected as the LIWC dictionary only encompasses a small number of words as many words used in informal conversations on online platforms are likely to fall outside of those considered when developing the dictionary. Moreover, it is also not surprising that a drop would occur as many of the datasets are created and published after the creation of the LIWC dictionary and examine domains that are unlikely to be well represented within the LIWC dictionary. Consequently will be subject to some language drift in addition to domain shifts.
+
+\zw{Table of LIWC token differences and intersections between classes}
+
 
 
 \subsection{Neural Models}\ref{sec:redux_neural}
