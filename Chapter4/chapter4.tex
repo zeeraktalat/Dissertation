@@ -125,7 +125,7 @@ For the LIWC-based models and the word-based models, I pre-process documents usi
 \begin{tabular}{llll}
 Dataset     & Word Vocabulary & BPE Vocabulary & LIWC Vocabulary \\\hline
 Offence     & $16,768$        & $16,663$       & $851$           \\
-Toxicity    & $95,710$        & $95,712$       & $ $         \\
+Toxicity    & $95,710$        & $95,712$       & $1,022$         \\
 Hate Expert & $9,110$         & $9,181$        & $739$           \\
 Hate Speech & $14,730$        & $14,834$       & $837$           \\
 StormFront  & $5,566$         & $5,510$        & $622$
@@ -177,12 +177,12 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lllll}
-              & Not Abuse & Abuse   & Intersection & Vocab size\\\hline
-  Offence     & $24$      & $150$   & $677$        & $851$\\
-  Toxicity    &           &         &              & \\
-  Hate Expert & $241$     & $25$    & $473$        & $739$  \\
-  Hate Speech & $116$     & $47$    & $674$        & $837$\\
-  StormFront  & $74$      & $117$   & $431$        & $622$
+                    & Not Abuse        & Abuse            & Intersection     & Vocab size\\\hline
+  Offence           & $24\, (2.8\%)$   & $150\, (17.6\%)$ & $677\, (79.6\%)$ & $851$\\
+  Toxicity          & $131\, (12.8\%)$ & $5\, (0.5\%)$    & $886\, (86.9\%)$ & $1,022$\\
+  Hate Expert       & $241\, (32.6\%)$ & $25\, (3.4\%)$   & $473\, (64\%)$   & $739$  \\
+  Hate Speech       & $116\, (13.9\%)$ & $47\, (5.62\%)$  & $674\, (80.5\%)$ & $837$\\
+  StormFront        & $74\, (11.9\%)$  & $117\ (18.8\%)$  & $431\, (69.3\$)$ & $622$
 \end{tabular}%
 }
 \caption{Number of unique LIWC tokens in each class for each dataset and the size of their intersection.}
@@ -193,12 +193,12 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lllll}
-               & Not Abuse & Abuse   & Intersection & Vocab size\\\hline
-  Offence      & $3,303$   & $8,656$ & $4,809$      & $16,768$\\
-  Toxicity     & $71,491$  & $1,560$ & $22,659$     & $95,710$\\
-  Hate Expert  & $6,155$   & $953$   & $2,002$      & $9,110$\\
-  Hate Speech  & $7,042$   & $2,599$ & $5,089$      & $14,730$\\
-  StormFront   & $1,834$   & $2,273$ & $1,459$      & $5,566$
+                  & Not Abuse         & Abuse            & Intersection      & Vocab size\\\hline
+  Offence         & $3,303 (19.7\%)$  & $8,656 (51.6\%)$ & $4,809 (28.7\%)$  & $16,768$\\
+  Toxicity        & $71,491 (74.7\%)$ & $1,560 (1.6\%)$  & $22,659 (23.7\%)$ & $95,710$\\
+  Hate Expert     & $6,155 (67.6\%)$  & $953 (10.5\%)$   & $2,002 (22.98\%)$ & $9,110$\\
+  Hate Speech     & $7,042 (47.8\%)$  & $2,599 (17.6\%)$ & $5,089 (34.6\%)$  & $14,730$\\
+  StormFront      & $1,834 (32.9\%)$  & $2,273 (40.8\%)$ & $1,459 (26.2\%)$  & $5,566$
 \end{tabular}%
 }
 \centering
