@@ -175,13 +175,13 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \begin{minipage}[t]{0.48\textwidth}
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llll}
-              & Not Abuse & Abuse & Intersection \\\hline
-  Offence     & 24        & 150   & 677          \\
-  Toxicity    &           &       &              \\
-  Hate Expert &           &       &              \\
-  Hate Speech &           &       &              \\
-  StormFront  &           &       &             
+\begin{tabular}{lllll}
+              & Not Abuse & Abuse & Intersection & Vocab size\\\hline
+  Offence     & $24$      & $150$ & $677$        & $16768$\\
+  Toxicity    &           &       &              & \\
+  Hate Expert &           &       &              & \\
+  Hate Speech &           &       &              & \\
+  StormFront  &           &       &              &
 \end{tabular}%
 }
 \caption{Number of unique LIWC tokens in each class for each dataset and the size of their intersection.}
@@ -191,13 +191,13 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \begin{minipage}[t]{0.48\textwidth}
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llll}
-              & Not Abuse & Abuse & Intersection \\\hline
-  Offence     & 3303      & 8656  & 4809         \\
-  Toxicity    &           &       &              \\
-  Hate Expert &           &       &              \\
-  Hate Speech &           &       &              \\
-  StormFront  &           &       &             
+\begin{tabular}{lllll}
+              & Not Abuse & Abuse & Intersection & Vocab size\\\hline
+  Offence     & $3303$    & $8656$& $4809$       & $851$\\
+  Toxicity    &           &       &              & \\
+  Hate Expert &           &       &              & \\
+  Hate Speech &           &       &              & \\
+  StormFront  &           &       &              &
 \end{tabular}%
 }
 \centering
@@ -208,16 +208,16 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \begin{minipage}[t]{0.48\textwidth}
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llll}
-              & Not Abuse & Abuse & Intersection \\\hline
-  Offence     &           &       &              \\
-  Toxicity    &           &       &              \\
-  Hate Expert &           &       &              \\
-  Hate Speech &           &       &              \\
-  StormFront  &           &       &             
+\begin{tabular}{lllll}
+              & Not Abuse & Abuse & Intersection & Vocab size\\\hline
+  Offence     &           &       &              & \\
+  Toxicity    &           &       &              & \\
+  Hate Expert &           &       &              & \\
+  Hate Speech &           &       &              & \\
+  StormFront  &           &       &              &
 \end{tabular}%
 }
-\caption{Number of unique bpe tokens in each class for each dataset and the size of their intersection.}
+\caption{Number of unique BPE tokens in each class for each dataset and the size of their intersection.}
 \label{tab:bpe_vocab_overlaps}
 \end{minipage}
 \end{table}
