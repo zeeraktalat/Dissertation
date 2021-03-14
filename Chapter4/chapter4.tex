@@ -170,13 +170,10 @@ Bruv I fking hate animals  & UNK PPRON\_FUNCTION\_I\_PRONOUN UNK AFFECT\_NEGEMO\
 \zw{Double check these numbers after retraining}
 For the documents represented through the LIWC categories that they invoke, I observe a sharp decline in the sizes of the vocabularies, with the smallest decrease in vocabulary being an $88.6\%$ decrease while the largest decrease is $99.7\%$. This is expected as the LIWC dictionary only encompasses a small number of words as many words used in informal conversations on online platforms are likely to fall outside of those considered when developing the dictionary. Moreover, it is also not surprising that a drop would occur as many of the datasets are created and published after the creation of the LIWC dictionary and examine domains that are unlikely to be well represented within the LIWC dictionary. Consequently will be subject to some language drift in addition to domain shifts.
 
-\zw{Fill out tables of token differences}
-\begin{table}[htb]
+\begin{table}[h]
 \centering
-\begin{minipage}[t]{0.49\textwidth}
-\centering
-\resizebox{\textwidth}{!}{%
-\small
+\resizebox{0.8\textwidth}{!}{%
+
 \begin{tabular}{lllll}
                     & Not Abuse        & Abuse            & Intersection     & Vocab size\\\hline
   Offence           & $24\; (2.8\%)$   & $150\; (17.6\%)$ & $677\; (79.6\%)$ & $851$\\
@@ -188,12 +185,11 @@ For the documents represented through the LIWC categories that they invoke, I ob
 }
 \caption{Number of unique LIWC tokens in each class for each dataset and the size of their intersection.}
 \label{tab:liwc_vocab_overlaps}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.49\textwidth}
+\end{table}
+
+\begin{table}[h]
 \centering
-\resizebox{\textwidth}{!}{%
-\small
+\resizebox{0.8\textwidth}{!}{%
 \begin{tabular}{lllll}
                   & Not Abuse         & Abuse            & Intersection      & Vocab size\\\hline
   Offence         & $3,303\; (19.7\%)$  & $8,656\; (51.6\%)$ & $4,809\; (28.7\%)$  & $16,768$\\
@@ -206,12 +202,11 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \centering
 \caption{Number of unique word tokens in each class for each dataset and the size of their intersection.}
 \label{tab:word_vocab_overlaps}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.49\textwidth}
+\end{table}
+
+\begin{table}[h]
 \centering
-\resizebox{\textwidth}{!}{%
-\small
+\resizebox{0.8\textwidth}{!}{%
 \begin{tabular}{lllll}
                 & Not Abuse         & Abuse            & Intersection      & Vocab size\\\hline
   Offence       & $7,978\; (47.9\%)$  & $3,199\; (19.2\%)$ & $5,486\; (32.9\%)$  & $16,663$\\
@@ -223,7 +218,6 @@ For the documents represented through the LIWC categories that they invoke, I ob
 }
 \caption{Number of unique BPE tokens in each class for each dataset and the size of their intersection.}
 \label{tab:bpe_vocab_overlaps}
-\end{minipage}
 \end{table}
 
 % TODO Write paragraph on the tables above
