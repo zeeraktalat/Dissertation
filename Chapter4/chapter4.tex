@@ -253,19 +253,19 @@ As a result of the $200$ trials, several parameter settings compete to be the be
 
 % Please add the following required packages to your document preamble:
 % \usepackage{graphicx}
+\begin{landscape}
 \begin{table}[]
 \centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{llllllllllll}
-\multicolumn{12}{c}{Offence}                                                                                                                                                                \\
-                      &      & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\
-  \multirow{3}{*}{\rotatebox{90}{WORD}} & MLP  & 100                 & 200              & -           & -       & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
+\resizebox{0.75\paperheight}{!}{%
+\begin{tabular}{llcccccccccc}
+                      & Model  & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
+  \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP  & 100                 & 200              & -           & -       & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
                       & CNN  & 300                 & -                & 1, 2, 3     & 128     & 32         & 0.6387        & -       & tanh                & 200      & 0.4841              \\
-                      & LSTM & 64                  & 300              & -           & -       & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\
-\multirow{3}{*}{BPE}  & MLP  & 100                 & 300              & -           & -       & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
+                      & LSTM & 64                  & 300              & -           & -       & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP  & 100                 & 300              & -           & -       & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
                       & CNN  & 64                  & -                & 1, 2, 3     & 128     & 16         & 0.007243      & -       & tanh                & 50       & 0.9664              \\
-                      & LSTM & 200                 & 200              & -           & -       & 16         & 0.002144      & 0.05892 & tanh                & 50       & 0.9783              \\
-\multirow{3}{*}{LIWC} & MLP  & 300                 & 300              & -           & -       & 64         & 0.002731      & 0.4415  & relu                & 100      & 0.8827              \\
+                      & LSTM & 200                 & 200              & -           & -       & 16         & 0.002144      & 0.05892 & tanh                & 50       & 0.9783              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP  & 300                 & 300              & -           & -       & 64         & 0.002731      & 0.4415  & relu                & 100      & 0.8827              \\
                       & CNN  & 64                  & -                & 3, 4, 5     & 256     & 64         & 0.002429      & -       & relu                & 200      & 0.9625              \\
                       & LSTM & 200                 & 64               & -           & -       & 64         & 0.0009199     & 0.06586 & tanh                & 100      & 0.9644             
 \end{tabular}%
@@ -273,8 +273,8 @@ As a result of the $200$ trials, several parameter settings compete to be the be
 \caption{Best hyper-parameters for models train on the \textit{Offence} dataset.}
 \label{tab:redux_embedding_offence}
 \end{table}
+
 % TODO Minipage these so they stack?
-\begin{landscape}
 \begin{table}[]
 \centering
 \begin{tabular}{l|llll|llll}
