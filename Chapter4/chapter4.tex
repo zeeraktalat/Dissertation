@@ -262,15 +262,15 @@ The values for the learning rate are sampled from a uniform distribution while t
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 100                 & 200              & -           & -       & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
-                                               & CNN   & 300                 & -                & 1, 2, 3     & 128     & 32         & 0.6387        & -       & tanh                & 200      & 0.4841              \\
-                                               & LSTM  & 64                  & 300              & -           & -       & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 100                 & 300              & -           & -       & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
-                                               & CNN   & 64                  & -                & 1, 2, 3     & 128     & 16         & 0.007243      & -       & tanh                & 50       & 0.9664              \\
-                                               & LSTM  & 200                 & 200              & -           & -       & 16         & 0.002144      & 0.05892 & tanh                & 50       & 0.9783              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 300                 & 300              & -           & -       & 64         & 0.002731      & 0.4415  & relu                & 100      & 0.8827              \\
-                                               & CNN   & 64                  & -                & 3, 4, 5     & 256     & 64         & 0.002429      & -       & relu                & 200      & 0.9625              \\
-                                               & LSTM  & 200                 & 64               & -           & -       & 64         & 0.0009199     & 0.06586 & tanh                & 100      & 0.9644
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 100                 & 200              &             &         & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
+                                               & CNN   & 300                 &                  & 1, 2, 3     & 128     & 32         & 0.6387        &         & tanh                & 200      & 0.4841              \\
+                                               & LSTM  & 64                  & 300              &             &         & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 100                 & 300              &             &         & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
+                                               & CNN   & 64                  &                  & 1, 2, 3     & 128     & 16         & 0.007243      &         & tanh                & 50       & 0.9664              \\
+                                               & LSTM  & 200                 & 200              &             &         & 16         & 0.002144      & 0.05892 & tanh                & 50       & 0.9783              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 300                 & 300              &             &         & 64         & 0.002731      & 0.4415  & relu                & 100      & 0.8827              \\
+                                               & CNN   & 64                  &                  & 3, 4, 5     & 256     & 64         & 0.002429      &         & relu                & 200      & 0.9625              \\
+                                               & LSTM  & 200                 & 64               &             &         & 64         & 0.0009199     & 0.06586 & tanh                & 100      & 0.9644
 \end{tabular}%
 }
 \caption{Best hyper-parameters for models train on the \textit{Offence} dataset.}
@@ -282,15 +282,15 @@ The values for the learning rate are sampled from a uniform distribution while t
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 100                 & 200              & -           & -       & 64         & 0.000853      & 0.1695  & tanh                & 100      & 0.8367              \\
-                                               & CNN   & 100                 & -                & 1, 2, 3     & 256     & 64         & 0.2427        & -       & relu                & 50       & 0.845               \\
-                                               & LSTM  & 300                 & 300              & -           & -       & 16         & 0.8862        & 0.167   & tanh                & 200      & 0.841               \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 64                  & 300              & -           & -       & 64         & 0.00113       & 0.3273  & tanh                & 200      & 0.854               \\
-                                               & CNN   & 200                 & -                & 3, 4, 5     & 256     & 64         & 0.00009431    & -       & relu                & 100      & 0.8637              \\
-                                               & LSTM  & 200                 & 200              & -           & -       & 32         & 0.4259        & 0.2247  & tanh                & 200      & 0.8733              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 64                  & 100              & -           & -       & 64         & 0.01256       & 0.0489  & relu                & 200      & 0.8233              \\
-                                               & CNN   & 64                  & -                & 2, 3, 4     & 128     & 64         & 0.03826       & -       & tanh                & 100      & 0.7895              \\
-                                               & LSTM  & 100                 & 200              & -           & -       & 16         & 0.0698        & 0.2282  & tanh                & 50       & 0.8322
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 100                 & 200              &             &         & 64         & 0.000853      & 0.1695  & tanh                & 100      & 0.8367              \\
+                                               & CNN   & 100                 &                  & 1, 2, 3     & 256     & 64         & 0.2427        &         & relu                & 50       & 0.845               \\
+                                               & LSTM  & 300                 & 300              &             &         & 16         & 0.8862        & 0.167   & tanh                & 200      & 0.841               \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 64                  & 300              &             &         & 64         & 0.00113       & 0.3273  & tanh                & 200      & 0.854               \\
+                                               & CNN   & 200                 &                  & 3, 4, 5     & 256     & 64         & 0.00009431    &         & relu                & 100      & 0.8637              \\
+                                               & LSTM  & 200                 & 200              &             &         & 32         & 0.4259        & 0.2247  & tanh                & 200      & 0.8733              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 64                  & 100              &             &         & 64         & 0.01256       & 0.0489  & relu                & 200      & 0.8233              \\
+                                               & CNN   & 64                  &                  & 2, 3, 4     & 128     & 64         & 0.03826       &         & tanh                & 100      & 0.7895              \\
+                                               & LSTM  & 100                 & 200              &             &         & 16         & 0.0698        & 0.2282  & tanh                & 50       & 0.8322
 \end{tabular}%
 }
 \caption{Best hyper-parameters for models train on the \textit{Toxicity} dataset.}
@@ -302,15 +302,15 @@ The values for the learning rate are sampled from a uniform distribution while t
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 100                 & 100              & -           & -       & 32         & 0.2576        & 0.1904  & tanh                & 50       & 0.77                \\
-                                               & CNN   & 64                  & -                & 2, 3, 4     & 128     & 64         & 0.005644      & -       & tanh                & 200      & 0.8007              \\
-                                               & LSTM  & 300                 & 300              & -           & -       & 64         & 0.9014        & 0.4473  & tanh                & 50       & 0.8347              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 64                  & 200              & -           & -       & 16         & 0.7323        & 0.3823  & tanh                & 200      & 0.8007              \\
-                                               & CNN   & 300                 & -                & 2, 3, 4     & 256     & 64         & 0.01062       & -       & relu                & 200      & 0.7995              \\
-                                               & LSTM  & 64                  & 64               & -           & -       & 32         & 0.9958        & -0.1481 & tanh                & 200      & 0.8389              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 300                 & 200              & -           & -       & 54         & 0.0391        & 0.07923 & tanh                & 50       & 0.6543              \\
-                                               & CNN   & 100                 & -                & 3, 4, 5     & 64      & 32         & 0.01064       & -       & tanh                & 200      & 0.6103              \\
-                                               & LSTM  & 300                 & 300              & -           & -       & 16         & 0.2163        & 5789    & tanh                & 50       & 0.6546
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 100                 & 100              &             &         & 32         & 0.2576        & 0.1904  & tanh                & 50       & 0.77                \\
+                                               & CNN   & 64                  &                  & 2, 3, 4     & 128     & 64         & 0.005644      &         & tanh                & 200      & 0.8007              \\
+                                               & LSTM  & 300                 & 300              &             &         & 64         & 0.9014        & 0.4473  & tanh                & 50       & 0.8347              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 64                  & 200              &             &         & 16         & 0.7323        & 0.3823  & tanh                & 200      & 0.8007              \\
+                                               & CNN   & 300                 &                  & 2, 3, 4     & 256     & 64         & 0.01062       &         & relu                & 200      & 0.7995              \\
+                                               & LSTM  & 64                  & 64               &             &         & 32         & 0.9958        &  0.1481 & tanh                & 200      & 0.8389              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 300                 & 200              &             &         & 54         & 0.0391        & 0.07923 & tanh                & 50       & 0.6543              \\
+                                               & CNN   & 100                 &                  & 3, 4, 5     & 64      & 32         & 0.01064       &         & tanh                & 200      & 0.6103              \\
+                                               & LSTM  & 300                 & 300              &             &         & 16         & 0.2163        & 5789    & tanh                & 50       & 0.6546
 \end{tabular}%
 }
 \caption{Best hyper-parameters for models train on the \textit{Hate Expert} dataset.}
@@ -324,15 +324,15 @@ The values for the learning rate are sampled from a uniform distribution while t
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 200                 & 64               & -           & -       & 32         & 0.251         & 0.4156  &                     & 50       & 0.7536              \\
-                                               & CNN   & 200                 & -                & 2, 3, 4     & 256     & 16         & 0.004019      & -       & tanh                & 200      & 0.7365              \\
-                                               & LSTM  & 200                 & 200              & -           & -       & 16         & 0.7499        & 0.4364  & tanh                & 50       & 0.7766              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 200                 & 300              & -           & -       & 64         & 0.0005028     & 0.3471  & relu                & 50       & 0.7756              \\
-                                               & CNN   & 200                 & -                & 1, 2, 3     & 128     & 64         & 0.002686      & -       & relu                & 100      & 0.7717              \\
-                                               & LSTM  & 300                 & 300              & -           & -       & 16         & 0.2446        & 0.03933 & tanh                & 200      & 0.7972              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 100                 & 100              & -           & -       & 64         & 0.01481       & 0.214   & tanh                & 100      & 0.7348              \\
-                                               & CNN   & 100                 & -                & 2, 3, 4     & 128     & 16         & 0.002787      & -       & tanh                & 50       & 0.738               \\
-                                               & LSTM  & 64                  & 64               & -           & -       & 32         & 0.5301        & 0.4377  & tanh                & 50       & 0.7592
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 200                 & 64               &             &         & 32         & 0.251         & 0.4156  &                     & 50       & 0.7536              \\
+                                               & CNN   & 200                 &                  & 2, 3, 4     & 256     & 16         & 0.004019      &         & tanh                & 200      & 0.7365              \\
+                                               & LSTM  & 200                 & 200              &             &         & 16         & 0.7499        & 0.4364  & tanh                & 50       & 0.7766              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 200                 & 300              &             &         & 64         & 0.0005028     & 0.3471  & relu                & 50       & 0.7756              \\
+                                               & CNN   & 200                 &                  & 1, 2, 3     & 128     & 64         & 0.002686      &         & relu                & 100      & 0.7717              \\
+                                               & LSTM  & 300                 & 300              &             &         & 16         & 0.2446        & 0.03933 & tanh                & 200      & 0.7972              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 100                 & 100              &             &         & 64         & 0.01481       & 0.214   & tanh                & 100      & 0.7348              \\
+                                               & CNN   & 100                 &                  & 2, 3, 4     & 128     & 16         & 0.002787      &         & tanh                & 50       & 0.738               \\
+                                               & LSTM  & 64                  & 64               &             &         & 32         & 0.5301        & 0.4377  & tanh                & 50       & 0.7592
 \end{tabular}%
 }
 \caption{Best hyper-parameters for models train on the \textit{Hate Speech} dataset.}
@@ -344,15 +344,15 @@ The values for the learning rate are sampled from a uniform distribution while t
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llllllllllll}
                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 64                  & 200              & -           & -       & 32         & 0.4665        & 0.4862  & tanh                & 200      & 0.7395              \\
-                                               & CNN   & 200                 & -                & 1, 2, 3     & 64      & 32         & 0.07107       & -       & tanh                & 100      & 0.7198              \\
-                                               & LSTM  & 200                 & 64               & -           & -       & 32         & 0.8046        & 0.2547  & tanh                & 200      & 0.7297              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 64                  & 100              & -           & -       & 32         & 0.000325      & 0.1971  & relu                & 200      & 0.7538              \\
-                                               & CNN   & 200                 & -                & 3, 4, 5     & 256     & 64         & 0.009577      & -       & relu                & 100      & 0.7356              \\
-                                               & LSTM  & 100                 & 300              & -           & -       & 16         & 0.5939        & 0.4588  & tanh                & 200      & 0.7503              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 64                  & 100              & -           & -       & 64         & 0.01948       & 0.3201  & tanh                & 50       & 0.7118              \\
-                                               & CNN   & 64                  & -                & 2, 3, 4     & 128     & 64         & 0.01204       & -       & tanh                & 100      & 0.5873              \\
-                                               & LSTM  & 64                  & 200              & -           & -       & 16         & 0.3154        & 0.4174  & tanh                & 200      & 0.7272             
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}} & MLP   & 64                  & 200              &             &         & 32         & 0.4665        & 0.4862  & tanh                & 200      & 0.7395              \\
+                                               & CNN   & 200                 &                  & 1, 2, 3     & 64      & 32         & 0.07107       &         & tanh                & 100      & 0.7198              \\
+                                               & LSTM  & 200                 & 64               &             &         & 32         & 0.8046        & 0.2547  & tanh                & 200      & 0.7297              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}  & MLP   & 64                  & 100              &             &         & 32         & 0.000325      & 0.1971  & relu                & 200      & 0.7538              \\
+                                               & CNN   & 200                 &                  & 3, 4, 5     & 256     & 64         & 0.009577      &         & relu                & 100      & 0.7356              \\
+                                               & LSTM  & 100                 & 300              &             &         & 16         & 0.5939        & 0.4588  & tanh                & 200      & 0.7503              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}} & MLP   & 64                  & 100              &             &         & 64         & 0.01948       & 0.3201  & tanh                & 50       & 0.7118              \\
+                                               & CNN   & 64                  &                  & 2, 3, 4     & 128     & 64         & 0.01204       &         & tanh                & 100      & 0.5873              \\
+                                               & LSTM  & 64                  & 200              &             &         & 16         & 0.3154        & 0.4174  & tanh                & 200      & 0.7272
 \end{tabular}%
 }
 \caption{Best hyper-parameters for models train on the \textit{StormFront} dataset.}
