@@ -247,8 +247,13 @@ In training the neural network based models, I first perform a hyper-parameter t
 In efforts to identify the best hyper-parameters without performing a grid-search of all possible combinations, I turn towards Bayesian Hyper-Parameter Tuning \citep{Neal:1996}. Briefly, Bayesian Optimisation allows for estimating the best hyper-parameters for a model through a series of trials with different hyper-parameter settings. I use the implementation of Bayesian Hyper-Parameter Optimisation offered through \citet{Wandb} and set the objective of the hyper-parameter optimisation to maximise the macro F1-score on the development data (please refer to \cref{sub:bho} for more detail).
 
 The parameters that I perform the optimisation for varies across the different model types as they require different hyper-parameters to be defined. A set of hyper-parameters are constant across models: the size of mini-batches provided to the model for training, the learning rate, the number of epochs, and the embedding size. For each dataset and model type, I perform at last $200$ trials with different parameter settings, leading to choosing a final set of hyper-parameters that I run with five different random seeds.
+The values for the learning rate are sampled from a uniform distribution while the batch size and number of training epochs are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate are sampled from a categorical distribution.
 
-As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro F1-score performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
+\begin{itemize}
+  \item Maximum epoch count: $\{50, 100, 200\}$,
+  \item Batch size: $\{16, 32, 64\}$,
+  \item learning rate: $[0.00001, 1.0]$
+\end{itemize}
 
 \zw{Update hyper parameter tables when the models have rerun}
 \begin{landscape}
@@ -356,13 +361,7 @@ As a result of the $200$ trials, several parameter settings compete to be the be
 
 \end{landscape}
 
-For all models trained, we perform hyper-parameter tuning over the same batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution. We select a Rectified Linear Unit \cite{CITE: RELU paper} activation function for all models except for the Recurrent Neural Network and the Long-Short Term Memory model, as the latter is only implemented with a $Tanh$ activation function in PyTorch and we use the former to ensure comparison between the Long-Short Term Memory model and all other models.
-
-\begin{itemize}
-  \item Maximum epoch count: $\{50, 100, 200\}$,
-  \item Batch size: $\{16, 32, 64\}$,
-  \item learning rate: $[0.00001, 1.0]$
-\end{itemize}
+As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro F1-score performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
 
 \subsubsection{Multi-Layered Perceptron}
 
