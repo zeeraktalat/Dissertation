@@ -220,7 +220,7 @@ For the documents represented through the LIWC categories that they invoke, I ob
 \label{tab:bpe_vocab_overlaps}
 \end{table}
 
-Considering Tables \ref{tab:liwc_vocab_overlaps}, \ref{tab:word_vocab_overlaps}, and \ref{tab:bpe_vocab_overlaps} that display the token distribution for each type of input on each dataset, there are some clear implications for my research questions.
+Considering \cref{tab:liwc_vocab_overlaps,tab:word_vocab_overlaps,tab:bpe_vocab_overlaps} that display the token distribution for each type of input on each dataset, there are some clear implications for my research questions.
 First, only minor distributional shifts between word-based vocabularies (see \cref{tab:word_vocab_overlaps}) and BPE-based vocabularies (see \cref{tab:bpe_vocab_overlaps}). As processing and representing documents as their byte-pair represented counter-parts results in the computation of subwords, such small distributional discrepancies are to be expected.
 Second, observing the differences between LIWC vocabulary distributions (see \cref{tab:liwc_vocab_overlaps}) and the word vocabulary distributions, it is clear that the distributional changes are large and that the LIWC-based representation has large ramifications on the datasets and subsequently models trained for the task.
 For instance, as the vast majority of tokens are shared between both classes, there are fewer potential signals for models to overfit to, e.g. where a word-based model trained on the \textit{Toxicity} dataset may have at least $73,051$ unique tokens, that is $76.3\%$ of all unique tokens in the dataset, that it can potentially learn spurious correlations on, a LIWC-based model is only provided with $136$ unique tokens, or $13.3\%$ of all unique tokens, that it is likely to overfit to.\footnote{In both instances disregarding the possibility of over-fitting to the patterns of occurrences between different tokens.}
@@ -230,7 +230,7 @@ Similarly to n-gram character-based modelling, a smaller set of unique tokens is
 
 For the linear baseline models, I perform a cross-validated grid-search over all possible setting of the model parameters, which vary depending on the model. For both SVM and Logistic Regression models, I explore values of $C\in [0.1, 0.2, 0.3, \ldots, 0.9]$ to examine the strength of regularisation, and I explore with $L1$ and $L2$ regularisers. For Logistic Regression, I also set the parameter search to consider $Elasticnet$ as a third regulariser option.
 
-\subsection{Neural Models}\ref{sec:redux_neural}
+\subsection{Neural Models}\label{sec:redux_neural}
 
 I implement three different neural network model types using PyTorch~\citep{Paszke:2019} and perform a hyper-parameter search on each model type for every dataset. Specifically, I implement a Multi-Layered Perceptron model, a Long-Short Term Memory network, and a Convolutional Neural Network.
 I choose to implement an MLP as it is the simplest form of neural networks and it can provide early insights into the applicability of neural network based architectures.
