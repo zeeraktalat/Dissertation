@@ -106,12 +106,12 @@ The \textit{Expert Hate} dataset proposed by \citet{Waseem:2016} contains $6,909
 Finally, I use the \textit{Toxicity} dataset published by \citet{Wulczyn:2017}. This dataset was collected from Wikipedia editor discussion pages and annotated as `toxic' and `not-toxic' and it is the largest dataset with $159,686$ documents. These documents are provided split into a training set consisting of $95,692$ documents, a validation set with $32,128$ documents and a test set containing $31,866$ documents. Similarly to the \textit{Hate Speech} and \textit{Expert Hate} datasets, this dataset is highly imbalanced with the positive class accounting for $~16\%$ of the entire dataset. I use this dataset to gain an understanding of how large scale datasets can influences the performance, size, and training time of LIWC-based models.
 
 \section{Modelling}
-% RQs
-% 1. Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?
-% 2. What are the implications of using LIWC as input on model development and model size?
-% 3. What are the implications on generalisability of LIWC-based models?
 
-In efforts to understand the impact of LIWC-based modelling, I design feature-based and neural network models. I develop a Logistic Regression and a SVM model with a linear kernel for each type of input data (Word unigrams, BPE unigrams, and LIWC unigrams) to allow for feature-based analysis of what patterns are identified. To investigate how neural network models operate on the input data, I develop three types of neural networks for each input type: First, I train a MLP to provide an initial insight into whether neural network approaches might be appropriate, second I develop a LSTM model to investigate whether there are any benefits from its recurrent nature and finally, I develop a CNN model due to their dominance in the literature.
+In efforts to understand the impact of LIWC-based modelling, I design feature-based and neural network models. I develop a Logistic Regression and a SVM model with a linear kernel for each type of input data (Word unigrams, BPE unigrams, and LIWC unigrams) to allow for feature-based analysis of what patterns are identified. To investigate how neural network models operate on the input data, I develop three types of neural networks for each input type: First, I train a MLP to provide an initial insight into whether neural network approaches might be appropriate, second I develop a LSTM model to investigate whether there are any benefits from its recurrent nature and finally, I develop a CNN model due to their dominance in the literature.\vspace{5mm}
+
+I specify two different training procedures, one for the linear baseline models and one for the neural networks.
+For the linear baseline models, I tokenise and pre-process the data and perform a grid-search over the parameter space.
+For neural network models, I similarly tokenise and pre-process the data and perform a Bayesian hyper-parameter search to identify the best performing parameter setting given by macro F1-score. I then reuse this best performing parameter settings and re-run the model with 5 different random seeds to ensure that the behaviour of the model on the dataset is not the result of the consequences of the random seed propagated into a model's initialisation of its tensors.
 
 \subsection{Pre-processing}
 
