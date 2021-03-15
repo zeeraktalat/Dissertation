@@ -251,6 +251,28 @@ The parameters that I perform the optimisation for varies across the different m
 As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro F1-score performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \autoref{tab:redux_embedding_offence,tab:redux_embedding_toxicity,tab:redux_embedding_hate_expert,tab:redux_embedding_hatespeech,tab:redux_embedding_stormfront}.
 
 
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llllllllllll}
+\multicolumn{12}{c}{Offence}                                                                                                                                                                \\
+                      &      & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\
+  \multirow{3}{*}{\rotatebox{90}{WORD}} & MLP  & 100                 & 200              & -           & -       & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
+                      & CNN  & 300                 & -                & 1, 2, 3     & 128     & 32         & 0.6387        & -       & tanh                & 200      & 0.4841              \\
+                      & LSTM & 64                  & 300              & -           & -       & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\
+\multirow{3}{*}{BPE}  & MLP  & 100                 & 300              & -           & -       & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
+                      & CNN  & 64                  & -                & 1, 2, 3     & 128     & 16         & 0.007243      & -       & tanh                & 50       & 0.9664              \\
+                      & LSTM & 200                 & 200              & -           & -       & 16         & 0.002144      & 0.05892 & tanh                & 50       & 0.9783              \\
+\multirow{3}{*}{LIWC} & MLP  & 300                 & 300              & -           & -       & 64         & 0.002731      & 0.4415  & relu                & 100      & 0.8827              \\
+                      & CNN  & 64                  & -                & 3, 4, 5     & 256     & 64         & 0.002429      & -       & relu                & 200      & 0.9625              \\
+                      & LSTM & 200                 & 64               & -           & -       & 64         & 0.0009199     & 0.06586 & tanh                & 100      & 0.9644             
+\end{tabular}%
+}
+\caption{Best hyper-parameters for models train on the \textit{Offence} dataset.}
+\label{tab:redux_embedding_offence}
+\end{table}
 % TODO Minipage these so they stack?
 \begin{landscape}
 \begin{table}[]
@@ -268,32 +290,11 @@ Activation Function    &         &          &         &         &         &     
 \# Epochs              &         &          &         &         &         &         &         &          \\
 Validation F1-score    &         &          &         &         &         &         &         &
 \end{tabular}
-\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Davidson:2017}.}
-\label{tab:redux_hyperparam_search_davidson}
+\caption{Best hyper-parameter setting for neural models with embedding input layer trained on the \textit{Offence} dataset.}
+\label{tab:redux_hyperparam_search_offence}
 \end{table}
 \end{landscape}
 
-
-\begin{landscape}
-\begin{table}[]
-\centering
-\begin{tabular}{l|llll|llll}
-                      & \multicolumn{4}{c|}{BPE}                 & \multicolumn{4}{c}{LIWC} \\
-                      & MLP     & CNN     & RNN     & LSTM    & MLP     & CNN     & RNN     & LSTM    \\ \hline
-Embedding Dimension   &         &         &         &         &         &         &         &         \\
-Hidden Dimension      &         &         &         &         &         &         &         &         \\
-Window Size           &         &         &         &         &         &         &         &         \\
-Batch Size            &         &         &         &         &         &         &         &         \\
-Learning Rate         &         &         &         &         &         &         &         &         \\
-Dropout               &         &         &         &         &         &         &         &         \\
-Activation Function   &         &         &         &         &         &         &         &         \\
-\# Epochs             &         &         &         &         &         &         &         &         \\
-Validation F1-score   &         &         &         &         &         &         &         &
-\end{tabular}
-\caption{Best hyper-parameter setting for neural models with embedding input layer trained on \citet{Wulczyn:2017}.}
-\label{tab:redux_hyperparam_search_wulczyn}
-\end{table}
-\end{landscape}
 
 For all models trained, we perform hyper-parameter tuning over the same batch size, learning rate, and the maximum number of training epochs. The values for the learning rate are sampled from a uniform distribution while the batch size and epoch count are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate, are sampled from a categorical distribution. The trial values for Dropout and the learning rate are both sampled from a uniform distribution. We select a Rectified Linear Unit \cite{CITE: RELU paper} activation function for all models except for the Recurrent Neural Network and the Long-Short Term Memory model, as the latter is only implemented with a $Tanh$ activation function in PyTorch and we use the former to ensure comparison between the Long-Short Term Memory model and all other models.
 
@@ -457,7 +458,7 @@ Using this training scheme, we define and search a hyper-parameter space for eac
                             &                         & Convolutional Neural Network   &          &          &           &  \\
                             &                         & Long-Short Term Memory Network &          &          &           &  \\
                             & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\
-                            &                         & Convolutional Neural Network   &          &          &           &  \\        
+                            &                         & Convolutional Neural Network   &          &          &           &  \\
                             &                         & Long-Short Term Memory Network &          &          &           &  \\ \midrule       
 \mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\        
                             &                         & Convolutional Neural Network   &          &          &           &  \\        
@@ -584,6 +585,7 @@ While the onehot and index encoded tensors should functionally be equal to one a
 BERT \cite{Koufakou,Vidgen,Tran:2020,Isaksen:2020}
 As our aim is to consider the influence of LIWC-represented documents, we do not consider the more recent pre-trained Transformer-based language models \citep[e.g.]{Devlin:2019,Liu:2019} as the amounts of data necessary to train such a masked language model with LIWC representations are unavailable. Moreover, as the LIWC dictionary only occupies a small fraction of the entire English lexicon, and its tokens are abstractions on use of the language, training a language model is a fruitless endeavour.
 
+\zw{Something about pretrained embedding layer + training liwc embedding layer}
 
 \zw{Some concluding remarks}
 While functionally this limits the vocabulary, there is also loss of information. Future work, could then employ both simple and complex mappings of different forms of words to single tokens that cohere with the LIWC dictionary, thus limiting information loss while retaining the predictive power.
