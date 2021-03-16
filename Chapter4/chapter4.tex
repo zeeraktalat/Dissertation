@@ -235,37 +235,37 @@ All linear baseline models prefer an L2 regularisation. Considering \cref{tab:li
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lllll}
-                             &                       & Model & C   & Validation F1-score \\
-\multirow{6}{*}{Offence}     & \multirow{2}{*}{Word} & SVM   & 0.1 & \textbf{0.9222}     \\
-                             &                       & LR    & 0.9 & 0.9093              \\
-                             & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.9216              \\
-                             &                       & LR    & 0.8 & 0.9119              \\
-                             & \multirow{2}{*}{LIWC} & SVM   & 0.1 & 0.9207              \\
-                             &                       & LR    & 0.2 & 0.9140              \\\hline
-\multirow{6}{*}{Toxicity}    & \multirow{2}{*}{Word} & SVM   & 0.2 & \textbf{0.8678}     \\
-                             &                       & LR    & 1.0 & 0.8660              \\
-                             & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.8664              \\
-                             &                       & LR    & 1.0 & 0.8673              \\
-                             & \multirow{2}{*}{LIWC} & SVM   & 0.9 & 0.8514              \\
-                             &                       & LR    & 1.0 & 0.8374              \\\hline
-\multirow{6}{*}{Hate Expert} & \multirow{2}{*}{Word} & SVM   & 0.1 & 0.7587              \\
-                             &                       & LR    & 1.0 & 0.7653              \\
-                             & \multirow{2}{*}{BPE}  & SVM   & 0.1 & \textbf{0.8090}     \\
-                             &                       & LR    & 0.8 & 0.7974              \\
-                             & \multirow{2}{*}{LIWC} & SVM   & 1.0 & 0.6378              \\
-                             &                       & LR    & 0.7 & 0.6354              \\\hline
-\multirow{6}{*}{Hate Speech} & \multirow{2}{*}{Word} & SVM   & 0.1 & \textbf{0.7995}     \\
-                             &                       & LR    & 0.9 & 0.7928              \\
-                             & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.7853              \\
-                             &                       & LR    & 0.5 & 0.7676              \\
-                             & \multirow{2}{*}{LIWC} & SVM   & 0.4 & 0.7214              \\
-                             &                       & LR    & 1.0 & 0.7265              \\\hline
-\multirow{6}{*}{StormFront}  & \multirow{2}{*}{Word} & SVM   & 0.1 & 0.7485              \\
-                             &                       & LR    & 0.9 & \textbf{0.7508}     \\
-                             & \multirow{2}{*}{BPE}  & SVM   & 0.3 & 0.7041              \\
-                             &                       & LR    & 1.0 & 0.7406              \\
-                             & \multirow{2}{*}{LIWC} & SVM   & 0.1 & 0.7068              \\
-                             &                       & LR    & 0.1 & 0.7249             
+                                               &                       & Model & C   & Validation F1-score \\
+  \multirow{6}{*}{\rotatebox{90}{Offence}}     & \multirow{2}{*}{Word} & SVM   & 0.1 & \textbf{0.9222}     \\
+                                               &                       & LR    & 0.9 & 0.9093              \\
+                                               & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.9216              \\
+                                               &                       & LR    & 0.8 & 0.9119              \\
+                                               & \multirow{2}{*}{LIWC} & SVM   & 0.1 & 0.9207              \\
+                                               &                       & LR    & 0.2 & 0.9140              \\\hline
+  \multirow{6}{*}{\rotatebox{90}{Toxicity}}    & \multirow{2}{*}{Word} & SVM   & 0.2 & \textbf{0.8678}     \\
+                                               &                       & LR    & 1.0 & 0.8660              \\
+                                               & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.8664              \\
+                                               &                       & LR    & 1.0 & 0.8673              \\
+                                               & \multirow{2}{*}{LIWC} & SVM   & 0.9 & 0.8514              \\
+                                               &                       & LR    & 1.0 & 0.8374              \\\hline
+  \multirow{6}{*}{\rotatebox{90}{Hate Expert}  & \multirow{2}{*}{Word} & SVM   & 0.1 & 0.7587              \\
+                                               &                       & LR    & 1.0 & 0.7653              \\
+                                               & \multirow{2}{*}{BPE}  & SVM   & 0.1 & \textbf{0.8090}     \\
+                                               &                       & LR    & 0.8 & 0.7974              \\
+                                               & \multirow{2}{*}{LIWC} & SVM   & 1.0 & 0.6378              \\
+                                               &                       & LR    & 0.7 & 0.6354              \\\hline
+  \multirow{6}{*}{\rotatebox{90}{Hate Speech}} & \multirow{2}{*}{Word} & SVM   & 0.1 & \textbf{0.7995}     \\
+                                               &                       & LR    & 0.9 & 0.7928              \\
+                                               & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.7853              \\
+                                               &                       & LR    & 0.5 & 0.7676              \\
+                                               & \multirow{2}{*}{LIWC} & SVM   & 0.4 & 0.7214              \\
+                                               &                       & LR    & 1.0 & 0.7265              \\\hline
+  \multirow{6}{*}{\rotatebox{90}{StormFront}}  & \multirow{2}{*}{Word} & SVM   & 0.1 & 0.7485              \\
+                                               &                       & LR    & 0.9 & \textbf{0.7508}     \\
+                                               & \multirow{2}{*}{BPE}  & SVM   & 0.3 & 0.7041              \\
+                                               &                       & LR    & 1.0 & 0.7406              \\
+                                               & \multirow{2}{*}{LIWC} & SVM   & 0.1 & 0.7068              \\
+                                               &                       & LR    & 0.1 & 0.7249
 \end{tabular}%
 }
 \caption{Optimal parameter values for linear baselines.}
