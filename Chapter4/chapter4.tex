@@ -442,9 +442,9 @@ The second model I choose to implement is a LSTM model. This model was chosen as
 \end{figure}
 
 I implement a simple architecture for the LSTM model to retain focus on the input types and to avoid the influence of confounding factors such as attention. The LSTM consists of an input embedding layer, a uni-directional LSTM layer, a linear output layer, and a softmax to produce the class probabilities (see \autoref{fig:liwc_lstm} for a depiction of the LSTM model).
-I apply a dropout to the output of the input layer and the output of the LSTM layer in efforts to prevent the model from over-fitting on any particular pattern. I use the PyTorch implementation of an LSTM which uses a Tanh activation function \citep{Paszke:2019}.
+I apply a dropout to the output of the input layer and the output of the LSTM layer in efforts to prevent the model from over-fitting on any particular pattern. I use the PyTorch implementation of an LSTM which uses a Tanh activation function \citep{Paszke:2019}, for which reason I do not apply other non-linearities to the model.
 
-For these models, our hyper-parameter tuning considers the following parameters and values:
+Thus, for the LSTM our hyper-parameter tuning considers the following parameters and values:
 
 \begin{itemize}
   \item dropout probability: $[0.0, 0.5]$,
