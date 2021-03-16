@@ -454,16 +454,7 @@ Thus, for the LSTM our hyper-parameter tuning considers the following parameters
 
 \subsubsection{Convolutional Neural Network}
 
-For our final neural model type, we use a Convolutional Neural Network. We select this model as it has been applied previously in academic research \cite{CITE: CNN papers} and in industry (e.g. the Perspective API\footnote{https://github.com/conversationai/perspectiveapi}). Similarly to the previous model types, the input layer of the Convolutional Neural Network models can either be an embedding layer or a linear layer. The second layer of the model is a two-dimensional convolutional layer. Finally, there is an output layer and a softmax layer (See \cref{fig:liwc_cnn} for depiction of model architecture).
-
-For these models, we only consider the activation function, embedding, and hidden dimension in our hyper-parameter tuning, in addition to batch size and learning rate.
-
-\begin{itemize}
-  \item window size: $\{(1, 2, 3), (2, 3, 4), (3, 4, 5)\}$,
-  \item Number of filters: $\{64, 128, 256\}$,
-  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
-  \item the activation function: $\{ReLU\}$
-\end{itemize}
+For the final neural network architecture, I use a Convolutional Neural Network due to its dominance in the literature (see \cref{sec:liwc_nn}) and its use in commercial tools (e.g. the Perspective API). Similarly to the MLP and LSTM, the input layer is an embedding layer, followed by three two-dimensional convolutional layers, each of which are subject to a non-linear activation function, a one dimensional max-pooling layer, and a output layer. The representation obtained through the output layer is subjected to a softmax function that computes the probability distribution for the classes (see \cref{fig:liwc_cnn} for a depiction of the network).
 
 \begin{figure}
   \centering
@@ -472,6 +463,14 @@ For these models, we only consider the activation function, embedding, and hidde
   \label{fig:liwc_cnn}
 \end{figure}
 
+Unlike the MLP and LSTM models, the CNN models are not subject to a dropout. However as the CNN requires window sizes to be set, for the sliding window and the number of filters the convolutional layer is to apply, these are added as hyper-parameters to tune. The hyper-parameters tuned by the model are thus:
+
+\begin{itemize}
+  \item window size: $\{(1, 2, 3), (2, 3, 4), (3, 4, 5)\}$,
+  \item Number of filters: $\{64, 128, 256\}$,
+  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
+  \item the activation function: $\{ReLU\}$
+\end{itemize}
 
 \section{Experimental Models}
 
