@@ -434,7 +434,7 @@ I perform a hyper-parameter search over shared the hyper-parameters detailed in 
 
 The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \cref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer.
 
-The model is trained by first passing batches of index or onehot encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{We use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \cref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
+The model is trained by first passing batches of index encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{I use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \cref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
 
 For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
 
@@ -454,9 +454,17 @@ For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the 
 
 \subsubsection{Long-Short Term Memory}
 
-The Long-Short Term Memory network that we implement, consists of an input layer, that similarly to the RNN and MLP can be either a linear layer or an embedding layer; a one-directional Long-Short Term Memory network layer;\footnote{We use the PyTorch implementation of the Long-Short Term Memory Network layer.} an output layer; a dropout layer; and a softmax layer to compute the probabilities. The implementation of the Long-Short Term Memory layer is such that it always uses \textit{Tanh} as its non-linear activation function. We use Long-Short Term Memory networks due to their prior successes in other works \cite{CITE: LSTM papers} and because they present a development over RNNs, in that they identify information to ``forget'' in to address the issue of long-range dependencies that occur (please see \cref{chap:nlp} for more detail).
+The second model I choose to implement is a LSTM model. This model was chosen as its recurrent nature allows for experiments that can offer insights into the efficacy of the model recalling long and short-range interactions between tokens in the data. I choose the LSTM variant of an RNN over a vanilla RNN as LIWC encoded documents are likely to have several out-of-vocabulary tokens between each known token and thus retaining all information about such unknown tokens may not be conducive to identifying salient patterns in LIWC token representation.
 
-The model is trained by passing batches of documents through the input layer prior to feeding them into the Long-Short Term Memory network layer. The output of the Long-Short Term Memory network layer is then subject to the dropout layer, before the output layer maps down to the number of label classes. Finally, the softmax layer is used to obtain an estimation of the probability distributions for each class (please see \cref{fig:liwc_lstm} for depiction of model architecture.).
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{lstm.jpg}
+  \caption{Long-Short Term Memory Network model architecture.}
+  \label{fig:liwc_lstm}
+\end{figure}
+
+I implement a simple architecture for the LSTM model to retain focus on the input types and to avoid the influence of confounding factors such as attention. The LSTM consists of an input embedding layer, a uni-directional LSTM layer, a linear output layer, and a softmax to produce the class probabilities (see \autoref{fig:liwc_lstm} for a depiction of the LSTM model).
+I apply a dropout to the output of the input layer and the output of the LSTM layer in efforts to prevent the model from over-fitting on any particular pattern. I use the PyTorch implementation of an LSTM which uses a Tanh activation function \citep{Paszke:2019}.
 
 For these models, our hyper-parameter tuning considers the following parameters and values:
 
@@ -465,13 +473,6 @@ For these models, our hyper-parameter tuning considers the following parameters 
   \item embedding layer dimension: $\{64, 100, 200, 300\}$, and
   \item hidden layer dimension: $\{64, 100, 200, 300\}$
 \end{itemize}
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{lstm.jpg}
-  \caption{Long-Short Term Memory Network model architecture.}
-  \label{fig:liwc_lstm}
-\end{figure}
 
 \subsubsection{Convolutional Neural Network}
 
