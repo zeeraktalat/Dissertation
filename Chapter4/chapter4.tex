@@ -329,7 +329,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
                                                 & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   &                     &                  & N/A         & N/A     &            &               &         &                     &          &                     \\
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 200                 & 64               & N/A         & N/A     & 32         & 0.251         & 0.4156  & tanh                & 50       & 0.7536              \\
                                                 & CNN   & 200                 & N/A              & 2, 3, 4     & 256     & 16         & 0.004019      & N/A     & tanh                & 200      & 0.7365              \\
                                                 & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.7499        & 0.4364  & tanh                & 50       & 0.7766              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 200                 & 300              & N/A         & N/A     & 64         & 0.0005028     & 0.3471  & relu                & 50       & 0.7756              \\
