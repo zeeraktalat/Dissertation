@@ -459,8 +459,6 @@ We train all of our neural network models following the same training procedure.
 
 Using this training scheme, we define and search a hyper-parameter space for each model (see \cref{sec:redux_neural} for the search space for each model and \cref{tab:exp_model_parameters_davidson} and \cref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
 
-\zw{CODING: retrain the best parameters for the models with 4 new random seeds}
-
 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
