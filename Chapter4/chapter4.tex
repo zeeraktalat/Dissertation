@@ -430,28 +430,6 @@ I perform a hyper-parameter search over shared the hyper-parameters detailed in 
   \item the activation function: $\{ReLU, Tanh\}$
 \end{itemize}
 
-\subsubsection{Recurrent Neural Network}
-
-The second neural model we implement a Recurrent Neural Network; we choose this model as it offers improvements over Multi-Layered Perceptron due to the introduction of the recurrence over the tokens in the documents (see \cref{chap:nlp} for more detail). Our Recurrent Neural Network consists of an input layer, which can be a linear layer or an embedding layer, a recurrent neural network layer, a linear output layer, a dropout layer, and a softmax layer to compute the probabilities of each class. The recurrent neural network layer is provided an activation function, which is applied within the layer.
-
-The model is trained by first passing batches of index encoded documents through the input layer, and are passed on to the recurrent neural network layer.\footnote{I use the PyTorch implementation of the Recurrent Neural Network layer.} The resulting representation is then subject to a dropout layer before it subject to a linear layer that maps to the number of output classes. Finally, the softmax layer computes the probability estimates for each class. See \cref{fig:liwc_rnn} for a depiction of the models. We set the activation function for the recurrent neural network to $\tanh$.
-
-For the Recurrent Neural Networks, we perform a hyper-parameter tuning over the following parameters and values:
-
-\begin{itemize}
-  \item dropout probability: $[0.0, 0.5]$,
-  \item embedding layer dimension: $\{64, 100, 200, 300\}$,
-  \item hidden layer dimension: $\{64, 100, 200, 300\}$, and
-   \item the activation function: $\{Tanh, ReLU\}$
-\end{itemize}
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{rnn.jpg}
-  \caption{Recurrent Neural Network model architecture.}
-  \label{fig:liwc_rnn}
-\end{figure}
-
 \subsubsection{Long-Short Term Memory}
 
 The second model I choose to implement is a LSTM model. This model was chosen as its recurrent nature allows for experiments that can offer insights into the efficacy of the model recalling long and short-range interactions between tokens in the data. I choose the LSTM variant of an RNN over a vanilla RNN as LIWC encoded documents are likely to have several out-of-vocabulary tokens between each known token and thus retaining all information about such unknown tokens may not be conducive to identifying salient patterns in LIWC token representation.
