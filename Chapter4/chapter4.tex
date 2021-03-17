@@ -240,9 +240,9 @@ In the training procedure for the linear models, I first fit a count vectoriser 
 
 \begin{table}[]
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{0.5\textwidth}{!}{%
 \begin{tabular}{lllll}
-                                               &                       & Model & C   & Validation F1-score \\
+                                               &                       & Model & C   & Validation F1-score \\\hline
   \multirow{6}{*}{\rotatebox{90}{Offence}}     & \multirow{2}{*}{Word} & SVM   & 0.1 & \textbf{0.9222}     \\
                                                &                       & LR    & 0.9 & 0.9093              \\
                                                & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.9216              \\
@@ -319,7 +319,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \centering
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
-                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
+                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 100                 & 200              & N/A         & N/A     & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
                                                 & CNN   & 300                 & N/A              & 1, 2, 3     & 128     & 32         & 0.6387        & N/A     & tanh                & 200      & 0.4841              \\
                                                 & LSTM  & 64                  & 300              & N/A         & N/A     & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\\hline
@@ -339,7 +339,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \centering
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
-                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
+                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 100                 & 200              & N/A         & N/A     & 64         & 0.000853      & 0.1695  & tanh                & 100      & 0.8367              \\
                                                 & CNN   & 100                 & N/A              & 1, 2, 3     & 256     & 64         & 0.2427        & N/A     & relu                & 50       & 0.845               \\
                                                 & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.8862        & 0.167   & tanh                & 200      & 0.841               \\\hline
@@ -359,7 +359,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \centering
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
-                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout   & Activation Function & # Epochs & Validation F1-score \\\hline
+                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout   & Activation Function & \# Epochs & Validation F1-score \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 100                 & 100              & N/A         & N/A     & 32         & 0.2576        & 0.1904    & tanh                & 50       & 0.77                \\
                                                 & CNN   & 64                  & N/A              & 2, 3, 4     & 128     & 64         & 0.005644      & N/A       & tanh                & 200      & 0.8007              \\
                                                 & LSTM  & 300                 & 300              & N/A         & N/A     & 64         & 0.9014        & 0.4473    & tanh                & 50       & 0.8347              \\\hline
@@ -382,7 +382,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \centering
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
-                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
+                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 200                 & 64               & N/A         & N/A     & 32         & 0.251         & 0.4156  & tanh                & 50       & 0.7536              \\
                                                 & CNN   & 200                 & N/A              & 2, 3, 4     & 256     & 16         & 0.004019      & N/A     & tanh                & 200      & 0.7365              \\
                                                 & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.7499        & 0.4364  & tanh                & 50       & 0.7766              \\\hline
@@ -402,7 +402,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \centering
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llllllllllll}
-                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & # Epochs & Validation F1-score \\\hline
+                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 64                  & 200              & N/A         & N/A     & 32         & 0.4665        & 0.4862  & tanh                & 200      & 0.7395              \\
                                                 & CNN   & 200                 & N/A              & 1, 2, 3     & 64      & 32         & 0.07107       & N/A     & tanh                & 100      & 0.7198              \\
                                                 & LSTM  & 200                 & 64               & N/A         & N/A     & 32         & 0.8046        & 0.2547  & tanh                & 200      & 0.7297              \\\hline
@@ -503,7 +503,6 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 Considering the performances on the in-domain during training, we see in \cref{tab:redux_linear_baselines_dev} reasonable baseline performances on the validation set. The validation scores described in \cref{tab:redux_linear_baselines_dev} are not as strong as the state-of-the-art in-domain models \cite{Salminen:2020}, in fact they are comparable to the scores reported on the test set of the in the original paper \cite{Davidson:2017} which provided initial baseline scores.\footnote{We do not report these baseline scores as their work does not identify which weighting of their F1-score was used.}. While several previous work augment the textual data with syntactic knowledge \cite{Davidson:2017} or advanced token representations \cite{Salminen:2020} to boost classification performance, we only use the byte-pair encoded documents and the LIWC encoded documents, to ensure comparability with our experimental models. Moreover, as our primary concern is learning classifiers whose performance generalise to other datasets, unlike much prior work which concerns itself with learning classifiers that perform well within the dataset, we do not take further steps towards boosting our baseline classifiers in-domain performances.
 
 \begin{table}[]
-  \begin{minipage}
     \centering
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{llllllll}
@@ -533,9 +532,7 @@ Considering the performances on the in-domain during training, we see in \cref{t
     }
     \caption{Baseline scores for linear models trained on the \textit{Offence} dataset.}
     \label{tab:linear_offence_baselines}
-    \end{table}
-
-  \end{minipage}
+\end{table}
 
 
 \zw{Add results and start by rough analysis of just numbers}
