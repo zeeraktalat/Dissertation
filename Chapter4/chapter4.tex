@@ -152,7 +152,7 @@ For the BPE-based models on the other hand, I pre-process documents by computing
   \label{tab:bpe_tok}
 \end{table}
 
-In reviewing \cref{tab:vocab_sizes}, it is clear that computing LIWC representations result in smaller vocabularies while BPE representations of the documents results in similar sized vocabularies for all datasets with the exception of the BPE representation of the \textit{StormFront} dataset and the \texitit{Offence} dataset where the vocabulary sizes decrease slightly. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised tokens are computed using the Byte-Pair Encoding. More surprising is the small drop in BPE vocabulary sizes. These drops suggest that a set of the words that are unrecognised by the pre-trained Byte-Pair Embeddings as complete words share a relatively small set of subwords.
+In reviewing \cref{tab:vocab_sizes}, it is clear that computing LIWC representations result in smaller vocabularies while BPE representations of the documents results in similar sized vocabularies for all datasets with the exception of the BPE representation of the \textit{StormFront} dataset and the \textit{Offence} dataset where the vocabulary sizes decrease slightly. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised tokens are computed using the Byte-Pair Encoding. More surprising is the small drop in BPE vocabulary sizes. These drops suggest that a set of the words that are unrecognised by the pre-trained Byte-Pair Embeddings as complete words share a relatively small set of subwords.
 
 \begin{table}[]
 \centering
@@ -248,7 +248,7 @@ All linear baseline models prefer an L2 regularisation. Considering \cref{tab:li
                                                &                       & LR    & 1.0 & 0.8673              \\
                                                & \multirow{2}{*}{LIWC} & SVM   & 0.9 & 0.8514              \\
                                                &                       & LR    & 1.0 & 0.8374              \\\hline
-  \multirow{6}{*}{\rotatebox{90}{Hate Expert}  & \multirow{2}{*}{Word} & SVM   & 0.1 & 0.7587              \\
+  \multirow{6}{*}{\rotatebox{90}{Hate Expert}}  & \multirow{2}{*}{Word} & SVM   & 0.1 & 0.7587              \\
                                                &                       & LR    & 1.0 & 0.7653              \\
                                                & \multirow{2}{*}{BPE}  & SVM   & 0.1 & \textbf{0.8090}     \\
                                                &                       & LR    & 0.8 & 0.7974              \\
@@ -414,14 +414,14 @@ As a result of the $200$ trials, several parameter settings compete to be the be
 \subsubsection{Multi-Layered Perceptron}
 
 The first neural architecture that I implement is a Multi-Layered Perceptron. I choose this model as it is the simplest form of a neural network and thus well suited for an initial investigation into the feasibility of neural network approaches for the LIWC-based representations. The MLP architecture that I use also lays the basis for the architectures for all other neural network based models in this chapter. The network consists of an embedding input layer, a hidden layer, an output layer, and a softmax layer which produces the probabilities for each class (please refer to \cref{fig:liwc_mlp} for a depiction of the model). I subject the model's representation to a dropout layer and a non-linear activation function between the input layer and hidden layer, and the hidden and output layer.
-
+\afterpage{
 \begin{figure}
   \centering
   \includegraphics[scale=0.75]{mlp.jpg}
   \caption{Multi-Layered Perceptron model architecture.}
   \label{fig:liwc_mlp}
 \end{figure}
-
+}
 I perform a hyper-parameter search over shared the hyper-parameters detailed in \cref{sub:liwc_hyperparam} in addition to the following hyper-parameter values, that are specific to the MLP:
 
 \begin{itemize}
