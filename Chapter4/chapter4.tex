@@ -503,23 +503,39 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 Considering the performances on the in-domain during training, we see in \cref{tab:redux_linear_baselines_dev} reasonable baseline performances on the validation set. The validation scores described in \cref{tab:redux_linear_baselines_dev} are not as strong as the state-of-the-art in-domain models \cite{Salminen:2020}, in fact they are comparable to the scores reported on the test set of the in the original paper \cite{Davidson:2017} which provided initial baseline scores.\footnote{We do not report these baseline scores as their work does not identify which weighting of their F1-score was used.}. While several previous work augment the textual data with syntactic knowledge \cite{Davidson:2017} or advanced token representations \cite{Salminen:2020} to boost classification performance, we only use the byte-pair encoded documents and the LIWC encoded documents, to ensure comparability with our experimental models. Moreover, as our primary concern is learning classifiers whose performance generalise to other datasets, unlike much prior work which concerns itself with learning classifiers that perform well within the dataset, we do not take further steps towards boosting our baseline classifiers in-domain performances.
 
 \begin{table}[]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{l|clllll}
-Training data             & Document Representation   & Model                   & F1-macro & Accuracy & Precision & Recall \\\hline
-\multirow{4}{*}{Davidson} & \multirow{2}{*}{BPE}      & Logistic Regression     & $92.02$  & $95.52$  & $91.82$   & $92.22$  \\
-                          &                           & Support Vector Machine  & $92.13$  & $95.56$  & $91.73$   & $92.53$  \\
-                          & \multirow{2}{*}{LIWC}     & Logistic Regression     & $87.75$  & $93.09$  & $87.43$   & $88.08$  \\
-                          &                           & Support Vector Machine  & $89.02$  & $93.62$  & $87.64$   & $90.60$  \\
-\multirow{4}{*}{Wulczyn}  & \multirow{2}{*}{BPE}      & Logistic Regression     & $86.35$  & $95.67$  & $90.04$   & $83.42$  \\
-                          &                           & Support Vector Machine  & $86.47$  & $95.50$  & $89.02$   & $84.31$  \\
-                          & \multirow{2}{*}{LIWC}     & Logistic Regression     & $82.32$  & $94.86$  & $90.48$   & $77.34$  \\
-                          &                           & Support Vector Machine  & $82.98$  & $94.96$  & $90.14$   & $78.36$
-\end{tabular}%
-}
-\caption{In-domain scores on validation set by linear baselines.}
-\label{tab:redux_linear_baselines_dev}
-\end{table}
+  \begin{minipage}
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{llllllll}
+                                    &           & \multicolumn{2}{l}{Word}                   & \multicolumn{2}{l}{BPE}                   & \multicolumn{2}{l}{LIWC} \\
+                                    &           & LR                       & SVM             & LR                      & SVM             & LR              & SVM        \\ \hline
+      \multirow{4}{*}{Offence}      & Accuracy  & 0.9504                   & \textbf{0.9544} & 0.9484                  & 0.9504          & 0.9399          & 0.9407     \\
+                                    & Precision & 0.9098                   & \textbf{0.9140} & 0.9064                  & 0.9073          & 0.8772          & 0.8755     \\
+                                    & Recall    & 0.9137                   & 0.9257          & 0.9095                  & 0.9174          & 0.9275          & \textbf{0.9385}     \\
+                                    & F1-score  & 0.9118                   & \textbf{0.9197} & 0.9079                  & 0.9123          & 0.8995          & 0.9025     \\ \hline
+      \multirow{4}{*}{Toxicity}     & Accuracy  & 0.8319                   & 0.8311          & 0.8882                  & 0.8904          & \textbf{0.9342} & 0.9308     \\
+                                    & Precision & 0.6505                   & 0.6467          & 0.7055                  & 0.7077          & \textbf{0.8108} & 0.7988     \\
+                                    & Recall    & 0.7941                   & 0.7828          & 0.8006                  & 0.7949          & 0.8062          & \textbf{0.8067}     \\
+                                    & F1-score  & 0.6800                   & 0.6752          & 0.7393                  & 0.7397          & \textbf{0.8085} & 0.8027     \\ \hline
+      \multirow{4}{*}{Hate Expert}  & Accuracy  & 0.6416                   & 0.6792          & 0.6922                  & 0.7413          & 0.7630          & \textbf{0.7688}     \\
+                                    & Precision & 0.4892                   & 0.4927          & 0.5223                  & 0.5365          & \textbf{0.5738} & 0.5685     \\
+                                    & Recall    & 0.4832                   & 0.4899          & 0.5316                  & 0.5416          & \textbf{0.5857} & 0.5737     \\
+                                    & F1-score  & 0.4748                   & 0.4864          & 0.5193                  & 0.5381          & \textbf{0.5783} & 0.5708     \\ \hline
+      \multirow{4}{*}{Hate Speech}  & Accuracy  & 0.6413                   & 0.6519          & 0.6294                  & 0.6554          & \textbf{0.6738} & 0.6696     \\
+                                    & Precision & 0.5835                   & 0.5834          & 0.5565                  & 0.5778          & \textbf{0.5941} & 0.5838     \\
+                                    & Recall    & \textbf{0.5810}          & 0.5722          & 0.5503                  & 0.5601          & 0.5564          & 0.5475     \\
+                                    & F1-score  & \textbf{0.5820}          & 0.5741          & 0.5510                  & 0.5597          & 0.5490          & 0.5364     \\ \hline
+      \multirow{4}{*}{StormFront}   & Accuracy  & 0.5879                   & 0.5921          & 0.5795                  & \textbf{0.6172} & 0.5000          & 0.5314     \\
+                                    & Precision & 0.5887                   & 0.5946          & 0.5798                  & \textbf{0.6181} & 0.5000          & 0.5705     \\
+                                    & Recall    & 0.5879                   & 0.5921          & 0.5795                  & \textbf{0.6172} & 0.5000          & 0.5314     \\
+                                    & F1-score  & 0.5869                   & 0.5893          & 0.5791                  & \textbf{0.6164} & 0.4226          & 0.4559
+    \end{tabular}%
+    }
+    \caption{Baseline scores for linear models trained on the \textit{Offence} dataset.}
+    \label{tab:linear_offence_baselines}
+    \end{table}
+
+  \end{minipage}
 
 
 \zw{Add results and start by rough analysis of just numbers}
