@@ -480,6 +480,9 @@ To answer these questions, I develop three different neural network types and tr
 
 The training procedure for all neural network based models is the same. The models are given data, which they iterate over in multiple epochs, shuffling the dataset between each epoch. Within each epoch, batches of the data through are passed through the model for prediction during training. The loss following the model performance is then back-propagated through model, updating the internal representation in the process. This process is repeated for the assigned maximum number of epochs, or the model triggers the early stopping \citep{Early-stopping paper here} criteria, which is that the computed loss has been strictly increasing for at least $15$ epochs. Once a model has finished training, performance on the validation set and test sets are computed. To be able to speak to the training time, I start a timer when the model training procedure is initiated and stop the timer when the model has fully completed it's training, but prior to any inference made using the model.
 
+\zw{Note about randomisation and multiple epochs aren't the norm}
+\zw{Note about fitting vectorisers}
+For the linear baselines on the other hand, I apply a different training procedure.
 
 % To evaluate which training dataset allows for better generalisation, we train our four models described in \cref{sec:redux_neural} and their variations on each of our training dataset, resulting in $16$ different trained models. We show the best performing model parameters on the respective validation sets in \cref{tab:redux_hyperparam_search}. In order to gain confidence intervals, we select a subset of these models and train them with $5$ different initial random seeds, to allow us to make claims of statistical significance of our models.
 
