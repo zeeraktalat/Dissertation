@@ -136,7 +136,7 @@ StormFront  & $5,566$         & $5,510$        & $622$
 
 For the LIWC experiments on the other hand, I take another step after the initial tokenisation to compute the LIWC categories invoked by each word. Each token obtained is passed through a function which identifies all LIWC categories that the token invokes and combines them into a single token, where each LIWC category is separated by an underscore. All tokens that are not recognised by LIWC are replaced with a general token for \textit{<UNK>} token (see \cref{tab:liwc_tok} for examples on the result of the pre-processing of documents).
 
-For the BPE-based models on the other hand, I pre-process documents by computing using the BPE python library \citep{Heinzerling:2018}. Byte-Pair Encodings are well suited to handle the particularities of social media text, as it breaks unrecognised words into subwords, thus minimising unknown tokens in the validation and test sets. Through this minimisation, the hope is that even if part of a of a word is out-of-vocabulary for the model some of its subwords will be within a model's vocabulary, allowing the remaining subwords to be used for inference.
+For the BPE-based models on the other hand, I pre-process documents by computing using the 200-dimensional Byte-Pair Embeddings from the BPE python library \citep{Heinzerling:2018}. Byte-Pair Encodings are well suited to handle the particularities of social media text, as it breaks unrecognised words into subwords, thus minimising unknown tokens in the validation and test sets. Through this process, the hope is that even if part of a of a word is out-of-vocabulary for the model some of its subwords will be within a model's vocabulary, allowing the remaining subwords to be used for inference.
 
 \begin{table}
   \centering
@@ -295,9 +295,6 @@ Once the best hyper-parameters are selected, I rerun the models with $5$ differe
 \zw{Note about randomisation and multiple epochs aren't the norm}
 \zw{Note about fitting vectorisers}
 For the linear baselines on the other hand, I apply a different training procedure.
-
-
-Using this training scheme, we define and search a hyper-parameter space for each model (see \cref{sec:redux_neural} for the search space for each model and \cref{tab:exp_model_parameters_davidson} and \cref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
 
 \subsection{Hyper-Parameter Search}\label{sub:liwc_hyperparam}
 
