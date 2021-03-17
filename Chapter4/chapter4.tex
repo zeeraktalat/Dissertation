@@ -283,10 +283,21 @@ Finally, I train a CNN model as this model type has been dominant in the literat
 In order to focus on the utility of the different document representations, I train models with simple architectures. To this end, I also don't use pre-trained embeddings as embedding layers within the model as I am not aware of any general purpose pre-trained LIWC-embeddings and, as is apparent from \cref{tab:liwc_tok}, the LIWC tokens generated for each token would most likely be out-of-vocabulary for most pre-trained word embeddings. Instead I opt to train the embedding layer along with all other layers.
 To address the issue of the model over-fitting the data, either by identifying spurious correlations in the data or by over-training the model, I subject each model to dropout and early stopping (see \cref{sec:dropoutearly} for more detail on dropout and early stopping). To address the issues of exploding and vanishing gradients, I employ gradient clipping \citep{Bengio:1994}, to normalise the value of the gradients in the training procedures.\vspace{5mm}
 
-In training the neural network based models, provide the models with index encoded mini-batches that the models iterate over for a given number of epochs. 
-To identify the best performing hyper-parameters, I perform a hyper-parameter tuning operation for each dataset and each model type. 
-Following the hyper-parameter tuning, I identify the best-performing hyper-parameter settings for each model type on each dataset, as given by macro F1-score on the validation set.
-I then re-run the model with the best performing hyper-parameter settings with five different random seeds, to ensure that the model performances are not the result of a happen stance due to how the layers of the models are initialised with non-zero values. It is at this last step of retraining the models with different random seeds that I also obtain evaluation for each model on its performance on the external datasets.
+I use a single training procedure for all models to control the influence of confounding factors in the training process.
+The models are given data, which they iterate over in a pre-defined number of epochs, shuffling the dataset between each epoch. Within each epoch, batches of the data through are passed through the model for prediction during training.
+The loss following the model performance is then back-propagated through model, updating the internal representation in the process.
+This process is repeated for the assigned maximum number of epochs, or the model triggers the early stopping \citep{Early-stopping paper here} criteria, which is that the computed loss has been strictly increasing for at least $15$ epochs.
+Once a model has finished training, performance in terms of macro F1-score, precision, recall and accuracy are computed on the validation set and test sets. 
+To be able to speak to the training time, I start a timer when the model training procedure is initiated and stop the timer when the model has fully completed it's training, but prior to any inference made using the model.
+I repeat this process for at least $200$ unique trials for each model and dataset combination and use the F1-score on the validation set to identify the best configuration of hyper-parameters.
+Once the best hyper-parameters are selected, I rerun the models with $5$ different random seeds and obtain these models' performance on all test sets, including the in-domain test for the dataset the models are trained on and the out-of-domain test sets from the remaining datasets.
+
+\zw{Note about randomisation and multiple epochs aren't the norm}
+\zw{Note about fitting vectorisers}
+For the linear baselines on the other hand, I apply a different training procedure.
+
+
+Using this training scheme, we define and search a hyper-parameter space for each model (see \cref{sec:redux_neural} for the search space for each model and \cref{tab:exp_model_parameters_davidson} and \cref{tab:exp_model_parameters_wulczyn} for the best hyper-parameters for each model). Though some previous work \cite{Waseem:2018, CITE: Other papers that restrict vocabulary sizes} limit the vocabulary that is used to train models, we make no such limitations on the surface level tokens. Instead, for all models that use surface level representations, we pre-process the documents using the 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018} for two reasons: 1) computing the sub-words allows for a minimisation of the number of out-of-vocabulary tokens and 2) computing the sub-words also minimises the sizes of the vocabularies for each dataset. For all models that take documents represented through LIWC, we dramatically reduce the vocabulary to only the tokens that exist within LIWC, setting all other tokens to a token representing that it is out-of-vocabulary.
 
 \subsection{Hyper-Parameter Search}\label{sub:liwc_hyperparam}
 
