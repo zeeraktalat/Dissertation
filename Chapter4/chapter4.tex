@@ -484,31 +484,6 @@ Using this training scheme, we define and search a hyper-parameter space for eac
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Look at predictions in detail, try to identify where they still fail}
 
-\begin{landscape}
-\begin{table}[]
-\centering
-\resizebox{1.4\textheight}{!}{%
-\begin{tabular}{l|clllll}
-  Training data             & Document Representation & Model                          & F1-macro & Accuracy & Precision & Recall \\ \hline
-\mrow{8}{*}{\rot{Davidson}} & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\
-                            &                         & Convolutional Neural Network   &          &          &           &  \\
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\
-                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\
-                            &                         & Convolutional Neural Network   &          &          &           &  \\
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\ \midrule       
-\mrow{8}{*}{\rot{Wulczyn}}  & \mrow{4}{*}{\rot{BPE}}  & Multi-Layered Perceptron       &          &          &           &  \\        
-                            &                         & Convolutional Neural Network   &          &          &           &  \\        
-                            &                         & Long-Short Term Memory Network &          &          &           &  \\
-                            & \mrow{4}{*}{\rot{LIWC}} & Multi-Layered Perceptron       &          &          &           &  \\
-                            &                         & Convolutional Neural Network   &          &          &           &  \\        
-                            &                         & Long-Short Term Memory Network &          &          &           &  
-\end{tabular}%
-}
-\caption{In-domain scores on validation set by onehot encoded neural models.}
-\label{tab:redux_onehot_neural_dev}
-\end{table}
-\end{landscape}
-
 
 \begin{landscape}
 \begin{table}[]
