@@ -625,6 +625,10 @@ Second, though the baselines often produce substandard classification performanc
 \end{minipage}
 \end{table}
 
+Third, many of the LIWC-based models post strong performances on in-domain data, suggesting that simple linear models may be highly appropriate for the LIWC-based input.
+Moreover, these strong in-domain performances also provide a weak suggestion that neural network architectures as most of the of the datasets that are under consideration are, in neural network terms, small datasets consisting of thousands, rather than several hundred thousand documents.
+Fourth, an interesting trend of the models trained on the \textit{Offence} and the \textit{Toxicity} datasets obtain surprisingly good scores on each other. There are two potential reasons for this trend, 1) the two datasets are the largest in datasets so more general patterns may be learned, 2) as the notion of ``offensive'' as constructed by \citet{Davidson:2017} bears strong similarities with the notion of ``toxicity'' constructed by \citet{Wulczyn:2017}, yielding in subsets of the datasets that strongly share similarities with each other.
+
 \begin{table}
     \centering
     \resizebox{0.42\paperheight}{!}{%
