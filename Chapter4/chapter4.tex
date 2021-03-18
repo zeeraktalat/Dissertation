@@ -661,9 +661,8 @@ Fourth, an interesting trend of the models trained on the \textit{Offence} and t
     \label{tab:linear_stormfront_baselines}
 \end{table}
 
-\zw{Add results and start by rough analysis of just numbers}
-\zw{Look at predictions in detail, try to identify where they still fail}
-
+Finally, although these baseline models do obtain surprisingly good scores for many of the models, there are several instances of noteworthy performance drops between the word-token and BPE-token models and their LIWC counterpart, notably the LIWC-based models often perform well on some metrics, but fall short on others. For instance in \cref{tab:linear_stormfront_baselines,tab:linear_hatespeech_baselines}, the LIWC-based models perform well on recall and perform poorly on F1-score. Thus, within the space of these strong results there is room for improvement for more stable performances on other metrics.
+As most of the datasets are imbalanced, I focus my attention on the macro F1-score performance due to its particular ability to handle imbalanced data well and its use in the previous literature \citep{Macro F1 papers}.
 
 \begin{landscape}
 \begin{table}[]
