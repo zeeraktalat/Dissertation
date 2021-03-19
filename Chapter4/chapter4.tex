@@ -427,7 +427,8 @@ As a result of the $200$ trials, several parameter settings compete to be the be
 \end{landscape}
 }
 
-Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the results on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss}. 
+Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1 scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are trained.
+Note, that in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1} the standard deviations is depicted through shading whereas in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} the
 
 \begin{figure}
     \centering
