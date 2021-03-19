@@ -63,12 +63,12 @@ In order to show the utility of multi-task learning for abuse detection, we use 
 \begin{figure}
   \begin{minipage}{0.5\linewidth}
     \centering
-    \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
+%    \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
     \label{fig:mlp_mtl_embedding}
   \end{minipage}
   \begin{minipage}{0.5\linewidth}
     \centering
-    \includegraphics[scale=0.75]{lstm_mtl_embedding.jpg}
+%    \includegraphics[scale=0.75]{lstm_mtl_embedding.jpg}
     \label{fig:lstm_mtl_embedding}
   \end{minipage}
   \caption{Multi-task Learning models}
@@ -121,7 +121,7 @@ As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Reg
 As multi-task learning shares some resemblance with the ensemble training paradigm, we implement an ensemble as another baseline. Unlike the Support Vector Machines that use a single vectoriser for all datasets, in our ensemble model we train a vectoriser for each dataset and train a model to predict that task exclusively. To ensure that the model for each task performs as best possible, we perform a grid-search over each task model with a similar five-fold cross validation to the single-task Support Vector Machines.
 \begin{figure}
   \centering
-  \includegraphics[scale=0.75]{ensemble_mtl.jpg}
+%  \includegraphics[scale=0.75]{ensemble_mtl.jpg}
   \label{fig:ensemble_mtl}
 \end{figure}
 

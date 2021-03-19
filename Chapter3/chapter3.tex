@@ -115,24 +115,23 @@ As embedding layers are layers that are optimised, it is unnecessary for the res
 \zw{CITE: Add citations to the section below.}
 The Multi-task learning framework was initially proposed by \citet{Caruana:1997} as a way to train a model for a specific primary task by leveraging that (multiple) auxiliary tasks may be related and could thus provide inductive biases for the resulting model to take advantage of for its primary task. The multi-task learning framework can be trained in two different ways, through hard parameter sharing or soft parameter sharing. Training Multi-task learning models using hard parameter sharing is performed by having (some) hidden layers in the model that are shared by all tasks. When training each task, the model updates all layers of that task, including the shared hidden layers. Notably, while hard parameter sharing rely on (some) shared layers, the output layers are not shared between tasks \cite{CITE: Hard parameter sharing paper}. On the other hand, models that are trained using soft parameter sharing do not share any layers, instead the parameters of each task are regularised to be similar \cite{CITE: Soft parameter sharing paper - See Sebastian Ruder's blogpost on MTL for reference}. In \autoref{fig:mtl_types} we see the two different types of models. As seen in \autoref{fig:mtl_hard}, while each task have individual input and output layers, they all share a hidden layer. In \autoref{fig:mtl_soft}, we see that each task has its own model that would be unrelated to one another, if not for the fact that the parameters of each layer are regularised to be similar to each other. As researchers are frequently interested in one task over others, one can assign a primary task and a number of auxiliary task through a range of strategies, including weighting each task and the probability with which each task is selected for training.
 
-\begin{figure}
-  % Seehttps://tex.stackexchange.com/questions/37581/latex-figures-side-by-side
-  \centering
-  \begin{minipage}{0.5\linewidth}
-    \centering
-    \includegraphics[scale=0.75]{Figs/multitask_hard.jpg}
-    \caption{Depiction of Multi-task learning framework using hard parameter sharing.}
-    \label{fig:mtl_hard}
-  \end{minipage}
-  \begin{minipage}{0.5\linewidth}
-    \centering
-    \includegraphics[scale=0.75]{Figs/multitask_soft.jpg}
-    \caption{Depiction of Multi-task learning framework using soft parameter sharing.}
-    \label{fig:mtl_soft}
-  \end{minipage}
-  \caption{Parameter sharing strategies for Multi-task learning.}
-  \label{fig:mtl_types}
-\end{figure}
+%\begin{figure}
+%  \centering
+%  \begin{minipage}{0.5\linewidth}
+%    \centering
+%    \includegraphics[scale=0.75]{Figs/multitask_hard.jpg}
+%    \caption{Depiction of Multi-task learning framework using hard parameter sharing.}
+%    \label{fig:mtl_hard}
+%  \end{minipage}
+%  \begin{minipage}{0.5\linewidth}
+%    \centering
+%     \includegraphics[scale=0.75]{Figs/multitask_soft.jpg}
+%    \caption{Depiction of Multi-task learning framework using soft parameter sharing.}
+%    \label{fig:mtl_soft}
+%  \end{minipage}
+%  \caption{Parameter sharing strategies for Multi-task learning.}
+%  \label{fig:mtl_types}
+%\end{figure}
 
 While the idea of inductive biases from related tasks provides a compelling argument for examining multi-task learning for abuse and hate speech detection, there are some interesting attributes to the framework. First, as multi-task learning is compatible with neural networks, researchers can forego feature selection similar to other neural network approaches, with the same benefits and risks as described previously.
 Second, while the ensemble model training framework may appear very similar to multi-task learning framework, a key dissimilarity is apparent in that multi-task learning models seek to share information between the different tasks; for hard parameter sharing models this sharing occurs through shared layers \cite{CITE: Hard parameter sharing paper}, while for soft parameter sharing models this sharing happens through the regularisation that ensures similarity of the layers across the models for each task \cite{CITE: Soft parameter sharing paper}.
