@@ -327,10 +327,10 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 100                 & 200              & N/A         & N/A     & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
                                                 & CNN   & 300                 & N/A              & 1, 2, 3     & 128     & 32         & 0.6387        & N/A     & tanh                & 200      & 0.4841              \\
-                                                & LSTM  & 64                  & 300              & N/A         & N/A     & 64         & 0.001574      & \textbf{0.09701} & tanh                & 50       & 0.9742              \\\hline
+                                                & LSTM  & 64                  & 300              & N/A         & N/A     & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 100                 & 300              & N/A         & N/A     & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
                                                 & CNN   & 64                  & N/A              & 1, 2, 3     & 128     & 16         & 0.007243      & N/A     & tanh                & 50       & 0.9664              \\
-                                                & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.002144      & 0.05892 & tanh                & 50       & 0.9783              \\\hline
+                                                & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.002144      & 0.05892 & tanh                & 50       & \bf{0.9783}         \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}  & MLP   & 300                 & 300              & N/A         & N/A     & 64         & 0.002731      & 0.4415  & relu                & 100      & 0.8827              \\
                                                 & CNN   & 64                  & N/A              & 3, 4, 5     & 256     & 64         & 0.002429      & N/A     & relu                & 200      & 0.9625              \\
                                                 & LSTM  & 200                 & 64               & N/A         & N/A     & 64         & 0.0009199     & 0.06586 & tanh                & 100      & 0.9644
@@ -350,7 +350,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.8862        & 0.167   & tanh                & 200      & 0.841               \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 64                  & 300              & N/A         & N/A     & 64         & 0.00113       & 0.3273  & tanh                & 200      & 0.854               \\
                                                 & CNN   & 200                 & N/A              & 3, 4, 5     & 256     & 64         & 0.00009431    & N/A     & relu                & 100      & 0.8637              \\
-                                                & LSTM  & 200                 & 200              & N/A         & N/A     & 32         & 0.4259        & 0.2247  & tanh                & 200      & 0.8733              \\\hline
+                                                & LSTM  & 200                 & 200              & N/A         & N/A     & 32         & 0.4259        & 0.2247  & tanh                & 200      & \bf{0.8733}         \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}  & MLP   & 64                  & 100              & N/A         & N/A     & 64         & 0.01256       & 0.0489  & relu                & 200      & 0.8233              \\
                                                 & CNN   & 64                  & N/A              & 2, 3, 4     & 128     & 64         & 0.03826       & N/A     & tanh                & 100      & 0.7895              \\
                                                 & LSTM  & 100                 & 200              & N/A         & N/A     & 16         & 0.0698        & 0.2282  & tanh                & 50       & 0.8322
@@ -370,7 +370,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 300                 & 300              & N/A         & N/A     & 64         & 0.9014        & 0.4473    & tanh                & 50       & 0.8347              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 64                  & 200              & N/A         & N/A     & 16         & 0.7323        & 0.3823    & tanh                & 200      & 0.8007              \\
                                                 & CNN   & 300                 & N/A              & 2, 3, 4     & 256     & 64         & 0.01062       & N/A       & relu                & 200      & 0.7995              \\
-                                                & LSTM  & 64                  & 64               & N/A         & N/A     & 32         & 0.9958        & N/A0.1481 & tanh                & 200      & 0.8389              \\\hline
+                                                & LSTM  & 64                  & 64               & N/A         & N/A     & 32         & 0.9958        & N/A0.1481 & tanh                & 200      & \bf{0.8389}         \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}  & MLP   & 300                 & 200              & N/A         & N/A     & 54         & 0.0391        & 0.07923   & tanh                & 50       & 0.6543              \\
                                                 & CNN   & 100                 & N/A              & 3, 4, 5     & 64      & 32         & 0.01064       & N/A       & tanh                & 200      & 0.6103              \\
                                                 & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.2163        & 5789      & tanh                & 50       & 0.6546
@@ -393,7 +393,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.7499        & 0.4364  & tanh                & 50       & 0.7766              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 200                 & 300              & N/A         & N/A     & 64         & 0.0005028     & 0.3471  & relu                & 50       & 0.7756              \\
                                                 & CNN   & 200                 & N/A              & 1, 2, 3     & 128     & 64         & 0.002686      & N/A     & relu                & 100      & 0.7717              \\
-                                                & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.2446        & 0.03933 & tanh                & 200      & 0.7972              \\\hline
+                                                & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.2446        & 0.03933 & tanh                & 200      & \bf{0.7972              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}  & MLP   & 100                 & 100              & N/A         & N/A     & 64         & 0.01481       & 0.214   & tanh                & 100      & 0.7348              \\
                                                 & CNN   & 100                 & N/A              & 2, 3, 4     & 128     & 16         & 0.002787      & N/A     & tanh                & 50       & 0.738               \\
                                                 & LSTM  & 64                  & 64               & N/A         & N/A     & 32         & 0.5301        & 0.4377  & tanh                & 50       & 0.7592
@@ -768,19 +768,23 @@ The \textit{StormFront} dataset on the other hand is annotated to identify delib
 \zw{Compare with baseline model performance}
 
 \begin{landscape}
-\begin{figure}
-  \includegraphics[width=0.7\paperheight]{all_models_test_davidson.pdf}
-  \caption{Macro F1 scores for models on the \textit{Offence} test set with the standard deviation represented in error bars.}
-  \label{fig:davidson_models_test}
-\end{figure}
-\end{landscape}
-
-\begin{landscape}
-\begin{figure}
-  \includegraphics[width=0.7\paperheight]{all_models_test_wulczyn.pdf}
-  \caption{Macro F1 scores for models on the \textit{Toxicity} test set with the standard deviation represented in error bars.}
-  \label{fig:wulczyn_models_test}
-\end{figure}
+  \begin{figure}
+    \includegraphics[width=0.7\paperheight]{all_mlp_davidson_test.pdf}
+    \caption{Macro F1 scores for all MLP models on the \textit{Offence} test set with the standard deviation represented in error bars.}
+    \label{fig:davidson_mlp_test}
+  \end{figure}
+  \hfill
+  \begin{figure}
+    \includegraphics[width=0.7\paperheight]{all_models_wulczyn_test.pdf}
+    \caption{Macro F1 scores for all MLP models on the \textit{Toxicity} test set with the standard deviation represented in error bars.}
+    \label{fig:wulczyn_mlp_test}
+  \end{figure}
+  \hfill
+  \begin{figure}
+    \includegraphics[width=0.7\paperheight]{all_mlp_waseem_test.pdf}
+    \caption{Macro F1 scores for all MLP models on the \textit{Hate Expert} test set with the standard deviation represented in error bars.}
+    \label{fig:waseem_mlp_test}
+  \end{figure}
 \end{landscape}
 
 Attending to the questions surrounding the use of LIWC to represent documents for modelling abuse, I turn to the baseline and experimental model performances on the validation and test sets of the LIWC-based models. In the validation sets for the linear baselines (see \cref{tab:liwc_baseline_linear_params}), the LIWC-based methods do not outperform any other model type, for some datasets, a highly competitive score is obtained (e.g. $0.9207$ for LIWC-based SVM model against $0.9222$ for a word-token based SVM). For other datasets however, the score obtained by LIWC-based models is much lower, suggesting that LIWC-based modelling may be an appropriate means of modelling abuse under some conditions.
