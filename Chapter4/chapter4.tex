@@ -23,7 +23,6 @@ Through the use of simple deep neural networks and `shallow' linear models, I sh
     \end{enumerate}
 \end{minipage}
 
-\newpage
 \section{Previous work}
 
 In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \cref{sec:nlp} for a broad overview on the topic). Here, I focus on three different strands of research. First, I briefly introduce the LIWC dictionary. Second, I consider manual development of features for machine learning models as it is necessary to form hypotheses for what might may serve as indicators of abuse on the basis of the dataset and problem in question. Third, I examine neural network approaches for abusive language detection. Finally, I consider the growing body of research devoted to examining the generalisability of computational models for abusive language detection. I restrict my attention to studies in conducted on abuse in English as it is most pertinent to this work.
@@ -318,7 +317,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \cref{fig:waseem_dev_loss,fig:waseem_dev_f1}
 \cref{fig:waseem_hovy_dev_loss,fig:waseem_hovy_dev_f1}
 \cref{fig:garcia_dev_loss,fig:garcia_dev_f1} when models have rerun}
-\afterpage{
+
 \begin{landscape}
 \begin{table}[b]
 \centering
@@ -380,8 +379,8 @@ The values for the learning rate are sampled from a uniform distribution while t
 \label{tab:redux_embedding_hate_expert_params}
 \end{table}
 \end{landscape}
-}
-\afterpage{
+
+
 \begin{landscape}
 \begin{table}[]
 \centering
@@ -393,7 +392,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.7499        & 0.4364  & tanh                & 50       & 0.7766              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 200                 & 300              & N/A         & N/A     & 64         & 0.0005028     & 0.3471  & relu                & 50       & 0.7756              \\
                                                 & CNN   & 200                 & N/A              & 1, 2, 3     & 128     & 64         & 0.002686      & N/A     & relu                & 100      & 0.7717              \\
-                                                & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.2446        & 0.03933 & tanh                & 200      & \bf{0.7972              \\\hline
+                                                & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.2446        & 0.03933 & tanh                & 200      & \bf{0.7972}              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}  & MLP   & 100                 & 100              & N/A         & N/A     & 64         & 0.01481       & 0.214   & tanh                & 100      & 0.7348              \\
                                                 & CNN   & 100                 & N/A              & 2, 3, 4     & 128     & 16         & 0.002787      & N/A     & tanh                & 50       & 0.738               \\
                                                 & LSTM  & 64                  & 64               & N/A         & N/A     & 32         & 0.5301        & 0.4377  & tanh                & 50       & 0.7592
@@ -402,11 +401,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \caption{Best hyper-parameters for models trained on the \textit{Hate Speech} dataset.}
 \label{tab:redux_embedding_hatespeech_params}
 \end{table}
-\end{landscape}
 
-As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro F1-score performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
-
-\begin{landscape}
 \begin{table}[]
 \centering
 \resizebox{0.75\paperheight}{!}{%
@@ -427,7 +422,14 @@ As a result of the $200$ trials, several parameter settings compete to be the be
 \label{tab:redux_embedding_stormfront_params}
 \end{table}
 \end{landscape}
-}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{davidson_dev_f1.pdf}
+    \caption{In-domain macro F1-score on validation set for models trained on the \textit{Offence} dataset.}
+    \label{fig:davidson_dev_f1}
+\end{figure}
+As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro F1-score performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
 
 Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1 scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are trained.
 Note, that in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1} the standard deviations is depicted through shading whereas in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} the shading represents the standard error.\footnote{I display the standard error here, rather than the standard deviation, as displaying the standard deviation on a log scale results in unreadable graphs due to outliers. Ignoring outliers in producing the graph has the natural consequence that parts of the graph exist outside of the displayed area.}
@@ -444,12 +446,7 @@ The third trend, starts with a relatively low model performance (below $0.4$ in 
 
 Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} there are three unique patterns: first, the loss rises throughout the training process; second, the loss remains almost entirely unchanged throughout the entire training process, and finally the third pattern; the loss is volatile throughout the process, rising or dropping from epoch to epoch.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{davidson_dev_f1.pdf}
-    \caption{In-domain macro F1-score on validation set for models trained on the \textit{Offence} dataset.}
-    \label{fig:davidson_dev_f1}
-\end{figure}
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{davidson_dev_loss_stderr_logscale.pdf}
@@ -766,49 +763,94 @@ In contrast, the \textit{Hate Expert} and \textit{Hate Speech} datasets seek to 
 The \textit{StormFront} dataset on the other hand is annotated to identify deliberate attacks against ``specific group[s] of people'' on the basis of their group membership or characteristics of group's identities \citep{Garcia:2019}. This annotation criteria forms a subset of the annotation guidelines that are used for the \textit{Hate Speech} and \textit{Hate Expert} datasets. Moreover, the collection strategies for the three datasets also share common characteristics. Where \citet{Garcia:2019} specifically seek out content from a white supremacist forum for their dataset, \citet{Waseem:2016,Waseem-Hovy:2016} sample from Twitter by searching for keywords that were likely to result in a large set of abuse. Thus, while the domain of the data and the annotation guidelines are not the same, there are likely to be similarities in the content and annotations produced.
 
 \zw{Compare with baseline model performance}
-
-\begin{landscape}
-  \begin{figure}
-    \includegraphics[width=0.7\paperheight]{all_mlp_davidson_test.pdf}
+\begin{figure}
+\begin{minipage}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{all_mlp_davidson_test.pdf}
     \caption{Macro F1 scores for all MLP models on the \textit{Offence} test set with the standard deviation represented in error bars.}
     \label{fig:davidson_mlp_test}
-  \end{figure}
-  \hfill
-  \begin{figure}
-    \includegraphics[width=0.7\paperheight]{all_models_wulczyn_test.pdf}
+  \vfill
+    \includegraphics[width=\textwidth]{all_mlp_wulczyn_test.pdf}
     \caption{Macro F1 scores for all MLP models on the \textit{Toxicity} test set with the standard deviation represented in error bars.}
     \label{fig:wulczyn_mlp_test}
-  \end{figure}
-  \hfill
-  \begin{figure}
-    \includegraphics[width=0.7\paperheight]{all_mlp_waseem_test.pdf}
+  \vfill
+    \includegraphics[width=\textwidth]{all_mlp_waseem_test.pdf}
     \caption{Macro F1 scores for all MLP models on the \textit{Hate Expert} test set with the standard deviation represented in error bars.}
     \label{fig:waseem_mlp_test}
-  \end{figure}
-\end{landscape}
+\end{minipage}
+\end{figure}
 
 Attending to the questions surrounding the use of LIWC to represent documents for modelling abuse, I turn to the baseline and experimental model performances on the validation and test sets of the LIWC-based models. In the validation sets for the linear baselines (see \cref{tab:liwc_baseline_linear_params}), the LIWC-based methods do not outperform any other model type, for some datasets, a highly competitive score is obtained (e.g. $0.9207$ for LIWC-based SVM model against $0.9222$ for a word-token based SVM). For other datasets however, the score obtained by LIWC-based models is much lower, suggesting that LIWC-based modelling may be an appropriate means of modelling abuse under some conditions.
 For the neural network based models a similar story presents itself, although the LIWC-based models perform reasonably well in comparison to models that use a larger vocabulary (e.g. $0.9644$ for the LIWC-based model in \cref{tab:redux_embedding_offence_params} and $0.9783$ for the BPE-based model).
 
-% Drop changes here
-\begin{landscape}
-\hfill
-\begin{figure}
-  \includegraphics[width=0.7\paperheight,height=\textwidth]{all_mlp_waseem_hovy_test.pdf}
-  \caption{Macro F1 scores for all MLP models on the \textit{Hate Speech} test set with the standard deviation represented in error bars.}
-  \label{fig:waseem_hovy_mlp_test}
-\end{figure}
-hfill
-\begin{figure}
-  \includegraphics[width=0.7\paperheight]{all_mlp_garcia_test.pdf}
-  \caption{Macro F1 scores for models on the \textit{StormFront} test set with the standard deviation represented in error bars.}
-  \label{fig:garcia_mlp_test}
-\end{figure}
-\end{landscape}
-% Keep changes
-
 On the test sets however, a slightly different patterns plays out. For most evaluation datasets, at least one of the LIWC-based models outperform some of the surface token based models, and in some cases outperform all other models. In particular, \cref{fig:wulczyn_mlp_test}, the in-domain LIWC-based model outperforms all other model types, though notably posts lower scores than the out-of-domain LIWC-based \textit{Offence} model.
 
+\begin{figure}
+\begin{minipage}{\textwidth}
+\centering
+  \includegraphics[width=\textwidth]{all_mlp_waseem_hovy_test.pdf}
+  \caption{Macro F1 scores for all MLP models on the \textit{Hate Speech} test set with the standard deviation represented in error bars.}
+  \label{fig:waseem_hovy_mlp_test}
+\vfill
+  \includegraphics[width=\textwidth]{all_mlp_garcia_test.pdf}
+  \caption{Macro F1 scores for all MLP models on the \textit{StormFront} test set with the standard deviation represented in error bars.}
+  \label{fig:garcia_mlp_test}
+  \vfill
+    \includegraphics[width=\textwidth]{all_lstm_davidson_test.pdf}
+    \caption{Macro F1 scores for all LSTM models on the \textit{Offence} test set with the standard deviation represented in error bars.}
+    \label{fig:davidson_lstm_test}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}
+\begin{minipage}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{all_lstm_wulczyn_test.pdf}
+    \caption{Macro F1 scores for all LSTM models on the \textit{Toxicity} test set with the standard deviation represented in error bars.}
+    \label{fig:wulczyn_lstm_test}
+  \vfill
+    \includegraphics[width=\textwidth]{all_lstm_waseem_test.pdf}
+    \caption{Macro F1 scores for all LSTM models on the \textit{Hate Expert} test set with the standard deviation represented in error bars.}
+    \label{fig:waseem_lstm_test}
+    \vfill
+    \includegraphics[width=\textwidth]{all_lstm_waseem_hovy_test.pdf}
+    \caption{Macro F1 scores for all LSTM models on the \textit{Hate Speech} test set with the standard deviation represented in error bars.}
+  \label{fig:waseem_hovy_lstm_test}  
+\end{minipage}
+\end{figure}
+
+\begin{figure}
+\begin{minipage}{\textwidth}
+\centering
+  \includegraphics[width=\textwidth]{all_lstm_garcia_test.pdf}
+  \caption{Macro F1 scores for all LSTM models on the \textit{StormFront} test set with the standard deviation represented in error bars.}
+  \label{fig:garcia_lstm_test}
+  \vfill
+    \includegraphics[width=\textwidth]{all_cnn_davidson_test.pdf}
+    \caption{Macro F1 scores for all CNN models on the \textit{Offence} test set with the standard deviation represented in error bars.}
+    \label{fig:davidson_cnn_test}
+    \vfill
+    \includegraphics[width=\textwidth]{all_cnn_wulczyn_test.pdf}
+    \caption{Macro F1 scores for all CNN models on the \textit{Toxicity} test set with the standard deviation represented in error bars.}
+    \label{fig:wulczyn_cnn_test}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}
+\begin{minipage}{\textwidth}
+\centering
+    \includegraphics[width=\textwidth]{all_cnn_waseem_test.pdf}
+    \caption{Macro F1 scores for all CNN models on the \textit{Hate Expert} test set with the standard deviation represented in error bars.}
+    \label{fig:waseem_cnn_test}
+    \vfill
+    \includegraphics[width=\textwidth]{all_cnn_waseem_hovy_test.pdf}
+    \caption{Macro F1 scores for all CNN models on the \textit{Hate Speech} test set with the standard deviation represented in error bars.}
+  \label{fig:waseem_hovy_cnn_test}  
+    \includegraphics[width=\textwidth]{all_cnn_garcia_test.pdf}
+  \caption{Macro F1 scores for all CNN models on the \textit{StormFront} test set with the standard deviation represented in error bars.}
+  \label{fig:garcia_cnn_test}
+\end{minipage}
+\end{figure}
 
 \zw{Look at predictions in detail, try to identify where they still fail}
 
