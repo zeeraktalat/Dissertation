@@ -105,7 +105,7 @@ The \textit{Expert Hate} dataset proposed by \citet{Waseem:2016} contains $6,909
 \subsubsection{Toxicity}
 Finally, I use the \textit{Toxicity} dataset published by \citet{Wulczyn:2017}. This dataset was collected from Wikipedia editor discussion pages and annotated as `toxic' and `not-toxic' and it is the largest dataset with $159,686$ documents. These documents are provided split into a training set consisting of $95,692$ documents, a validation set with $32,128$ documents and a test set containing $31,866$ documents. Similarly to the \textit{Hate Speech} and \textit{Expert Hate} datasets, this dataset is highly imbalanced with the positive class accounting for $~16\%$ of the entire dataset. I use this dataset to gain an understanding of how large scale datasets can influences the performance, size, and training time of LIWC-based models.
 
-\section{Modelling}
+\section{Modelling}\label{sec:liwc_modelling}
 
 In efforts to understand the impact of LIWC-based modelling, I design feature-based and neural network models. I develop a Logistic Regression and a SVM model with a linear kernel for each type of input data (Word unigrams, BPE unigrams, and LIWC unigrams) to allow for feature-based analysis of what patterns are identified. To investigate how neural network models operate on the input data, I develop three types of neural networks for each input type: First, I train a MLP to provide an initial insight into whether neural network approaches might be appropriate, second I develop a LSTM model to investigate whether there are any benefits from its recurrent nature and finally, I develop a CNN model due to their dominance in the literature.\vspace{5mm}
 
@@ -433,7 +433,7 @@ Moreover, as loss values most frequently are small, I display the losses ona  lo
 
 In observing the F1-scores on the validation sets in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1}, a general pattern emerges in which most models, regardless of input type, display similar learning curves.
 A notable exceptions to these are the models trained on the \textit{StormFront} dataset (see \cref{fig:garcia_dev_f1}), in which two general patterns emerge: the first which has large variability in the models' performance from epoch to epoch and tends to trigger the early stopping criteria earlier, and the second which has a more stable learning curve with smaller performance drops and improvements between each epoch and trains for more epochs.
-Another exception can be observed in the models trained on \textit{Toxicity} dataset (see \cref{fig:wulczyn_dev_f1}). Here three salient trends occur. 
+Another exception can be observed in the models trained on \textit{Toxicity} dataset (see \cref{fig:wulczyn_dev_f1}). Here three salient trends occur.
 In the first, models start with a high F1-score and show little improvement as over the epochs and trigger early stopping. 
 In the second, models start with a lower F1-score and show steady improvements until early stopping is triggered,
 % TODO Move this down to when I specifically look at the Wulczyn graphs?
@@ -749,10 +749,17 @@ Fourth, an interesting trend of the models trained on the \textit{Offence} and t
 Finally, although these baseline models do obtain surprisingly good scores for many of the models, there are several instances of noteworthy performance drops between the word-token and BPE-token models and their LIWC counterpart, notably the LIWC-based models often perform well on some metrics, but fall short on others. For instance in \cref{tab:linear_stormfront_baselines,tab:linear_hatespeech_baselines}, the LIWC-based models perform well on recall and perform poorly on F1-score. Thus, within the space of these strong results there is room for improvement for more stable performances on other metrics.
 As most of the datasets are imbalanced, I focus my attention on the macro F1-score performance due to its particular ability to handle imbalanced data well and its use in the previous literature \citep{Macro F1 papers}.
 
-
 \subsection{Neural models}
 
-In the space left by the development
+In \cref{fig:davidson_models_test,fig:wulczyn_models_test,fig:waseem_models_test,fig:waseem_hovy_models_test,fig:garcia_models_test}, I show the in-domain and out-of-domain results of using the neural network architectures described in \cref{sec:liwc_modelling} for modelling abuse using the three different document representations. The bars in each figure represent the scores of each models on the test set in question, e.g. in \cref{fig:davidson_models_test} I show the macro F1-scores achieved by all models on the test set for the \citet{Offence} dataset.
+Considering figures collectively, it's clear that in-domain models in most cases, predictably, out-perform models trained on out-of-domain datasets. Interestingly, it's also clear that while LIWC-based models in many cases are comparable to models using full surface-form vocabulary. Moreover, this similarity in performance largely also holds for out-of-domain performance.
+Out-of-domain performance too is worthy of note in comparison with in-domain models and other out-of-domain models and with the linear baselines. Curiously, in spite of improved performance on in-domain test sets, there is a general trend of slightly decreased performance on out-of-domain data. 
+
+One dataset however, is notable in its in-domain and all out-of-domain predictions: The \textit{StormFront} dataset. Notably, linear models perform at par, or better than all configurations of neural models. The most likely explanation for this can be found in the small dataset size of less than $3,000$ documents. One way to address such a short-coming of this dataset is to increase the dataset size. Although the experiments I conduct with the dataset keep the number of documents lower than the total annotated set in order to maintain a balanced dataset, the dataset does in some cases outperform models trained on larger dataset for out-of-domain prediction. Specifically, models trained on the \textit{StormFront} dataset have comparable out-of-domain classification performance with the \textit{Offence} dataset on the test sets for the \textit{Hate Expert} and \textit{Hate Speech} datasets (see \cref{fig:waseem_models_test,fig:waseem_hovy_models_test}).
+
+More generally, from the out-of-domain classification performances, there seems to be a correlation with annotation guideline similarity and out-of-domain performance. For instance, in \cref{fig:davidson_models_test,fig:wulczyn_models_test} I observe that models trained on the \textit{Offence} and \textit{Toxicity} datasets outperform models trained on other datasets. For both of these datasets, the governing understanding of abuse and hate speech are that not all speech that is offensive is necessarily also problematic as the \textit{Offence} dataset specifically seeks to disentangle hate from offence and \textit{Toxicity} asks its annotators to identify the documents that may make participants in a conversation exit the conversation. Thus, for these two datasets, the governing question is not necessarily the protection of marginalised communities and identities but instead identifying a degree of acceptable abuse and hostility. 
+
+In contrast, the \textit{Hate Expert} and \textit{Hate Speech} datasets seek to identify communications that are harmful to marginalised communities. Thus, it's no surprise that the out-of-domain performances for models trained on these two datasets perform reasonably well with each other. However here it is also clear that there is an influence of dataset size. Where the \textit{Hate Speech} dataset consists of $~16,000$ documents, the \textit{Hate Expert} dataset consists of $~7,000$ documents, which is also apparent from the fact that the models trained on the \textit{Hate Speech} dataset perform better on the \textit{Hate Expert} test set than the models trained on the \textit{Hate Expert} dataset perform on the \textit{Hate Speech} dataset.
 
 \zw{Start by talking about performance on development sets}
 \zw{Then talk about performance on test set}
@@ -763,7 +770,7 @@ In the space left by the development
 \begin{landscape}
 \begin{figure}
   \includegraphics[width=0.7\paperheight]{all_models_test_davidson.pdf}
-  \caption{Macro F1 scores for models  on the \textit{Offence} test set with the standard deviation represented in error bars.}
+  \caption{Macro F1 scores for models on the \textit{Offence} test set with the standard deviation represented in error bars.}
   \label{fig:davidson_models_test}
 \end{figure}
 
@@ -788,7 +795,7 @@ In the space left by the development
 \begin{figure}
   \includegraphics[width=0.7\paperheight]{all_models_test_garcia.pdf}
   \caption{Macro F1 scores for models on the \textit{StormFront} test set with the standard deviation represented in error bars.}
-  \label{fig:waseem_hovy_models_test}
+  \label{fig:garcia_models_test}
 \end{figure}
 \end{landscape}
 
@@ -806,6 +813,7 @@ BERT \cite{Koufakou,Vidgen,Tran:2020,Isaksen:2020}
 As our aim is to consider the influence of LIWC-represented documents, we do not consider the more recent pre-trained Transformer-based language models \citep[e.g.]{Devlin:2019,Liu:2019} as the amounts of data necessary to train such a masked language model with LIWC representations are unavailable. Moreover, as the LIWC dictionary only occupies a small fraction of the entire English lexicon, and its tokens are abstractions on use of the language, training a language model is a fruitless endeavour.
 
 \zw{Something about pretrained embedding layer + training liwc embedding layer}
+\zw{Something about models being too tightly trained on the training dataset to really generalise)}
 
 \zw{Some concluding remarks}
 While functionally this limits the vocabulary, there is also loss of information. Future work, could then employ both simple and complex mappings of different forms of words to single tokens that cohere with the LIWC dictionary, thus limiting information loss while retaining the predictive power.
