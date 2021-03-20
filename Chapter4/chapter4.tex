@@ -241,7 +241,7 @@ In the training procedure for the linear models, I first fit a count vectoriser 
 \begin{table}[]
 \centering
 \resizebox{0.5\textwidth}{!}{%
-\begin{tabular}{lllll}
+\begin{tabular}{llccc}
                                                &                       & Model & C   & Validation F1-score \\\hline
   \multirow{6}{*}{\rotatebox{90}{Offence}}     & \multirow{2}{*}{Word} & SVM   & 0.1 & \textbf{0.9222}     \\
                                                &                       & LR    & 0.9 & 0.9093              \\
@@ -275,7 +275,7 @@ In the training procedure for the linear models, I first fit a count vectoriser 
                                                &                       & LR    & 0.1 & 0.7249
 \end{tabular}%
 }
-\caption{Optimal parameter values for linear baselines.}
+\caption{Optimal parameter values for linear baselines by macro F1-score on in-domain test sets.}
 \label{tab:liwc_baseline_linear_params}
 \end{table}
 
@@ -327,7 +327,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 100                 & 200              & N/A         & N/A     & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
                                                 & CNN   & 300                 & N/A              & 1, 2, 3     & 128     & 32         & 0.6387        & N/A     & tanh                & 200      & 0.4841              \\
-                                                & LSTM  & 64                  & 300              & N/A         & N/A     & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\\hline
+                                                & LSTM  & 64                  & 300              & N/A         & N/A     & 64         & 0.001574      & \textbf{0.09701} & tanh                & 50       & 0.9742              \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 100                 & 300              & N/A         & N/A     & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
                                                 & CNN   & 64                  & N/A              & 1, 2, 3     & 128     & 16         & 0.007243      & N/A     & tanh                & 50       & 0.9664              \\
                                                 & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.002144      & 0.05892 & tanh                & 50       & 0.9783              \\\hline
@@ -336,7 +336,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 200                 & 64               & N/A         & N/A     & 64         & 0.0009199     & 0.06586 & tanh                & 100      & 0.9644
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models train on the \textit{Offence} dataset.}
+\caption{Best hyper-parameters for models trained on the \textit{Offence} dataset.}
 \label{tab:redux_embedding_offence_params}
 \end{table}
 
@@ -356,7 +356,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 100                 & 200              & N/A         & N/A     & 16         & 0.0698        & 0.2282  & tanh                & 50       & 0.8322
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models train on the \textit{Toxicity} dataset.}
+\caption{Best hyper-parameters for models trained on the \textit{Toxicity} dataset.}
 \label{tab:redux_embedding_toxicity_params}
 \end{table}
 
@@ -376,7 +376,7 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 300                 & 300              & N/A         & N/A     & 16         & 0.2163        & 5789      & tanh                & 50       & 0.6546
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models train on the \textit{Hate Expert} dataset.}
+\caption{Best hyper-parameters for models trained on the \textit{Hate Expert} dataset.}
 \label{tab:redux_embedding_hate_expert_params}
 \end{table}
 \end{landscape}
@@ -399,12 +399,14 @@ The values for the learning rate are sampled from a uniform distribution while t
                                                 & LSTM  & 64                  & 64               & N/A         & N/A     & 32         & 0.5301        & 0.4377  & tanh                & 50       & 0.7592
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models train on the \textit{Hate Speech} dataset.}
+\caption{Best hyper-parameters for models trained on the \textit{Hate Speech} dataset.}
 \label{tab:redux_embedding_hatespeech_params}
 \end{table}
+\end{landscape}
 
 As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro F1-score performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
 
+\begin{landscape}
 \begin{table}[]
 \centering
 \resizebox{0.75\paperheight}{!}{%
