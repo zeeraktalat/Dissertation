@@ -785,6 +785,8 @@ The \textit{StormFront} dataset on the other hand is annotated to identify delib
 \end{figure}
 \end{landscape}
 
+Attending to the questions surrounding the use of LIWC to represent documents for modelling abuse, I turn to the baseline and experimental model performances on the validation and test sets of the LIWC-based models. In the validation sets for the linear baselines (see \cref{tab:liwc_baseline_linear_params}), the LIWC-based methods do not outperform any other model type, for some datasets, a highly competitive score is obtained (e.g. $0.9207$ for LIWC-based SVM model against $0.9222$ for a word-token based SVM). For other datasets however, the score obtained by LIWC-based models is much lower, suggesting that LIWC-based modelling may be an appropriate means of modelling abuse under some conditions.
+For the neural network based models a similar story presents itself, although
 
 \begin{landscape}
 \begin{figure}
@@ -813,6 +815,8 @@ The \textit{StormFront} dataset on the other hand is annotated to identify delib
 \zw{Look at predictions in detail, try to identify where they still fail}
 
 \subsubsection{Computational costs}
+\zw{Talk about how long models take to train}
+\zw{Talk about training time vs. model performance}
 
 
 \section{Conclusions and future work}
