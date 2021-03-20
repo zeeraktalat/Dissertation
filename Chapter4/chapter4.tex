@@ -757,10 +757,6 @@ Out-of-domain performance too is worthy of note in comparison with in-domain mod
 
 One dataset however, is notable in its in-domain and all out-of-domain predictions: The \textit{StormFront} dataset. Notably, linear models perform at par, or better than all configurations of neural models. The most likely explanation for this can be found in the small dataset size of less than $3,000$ documents. One way to address such a short-coming of this dataset is to increase the dataset size. Although the experiments I conduct with the dataset keep the number of documents lower than the total annotated set in order to maintain a balanced dataset, the dataset does in some cases outperform models trained on larger dataset for out-of-domain prediction. Specifically, models trained on the \textit{StormFront} dataset have comparable out-of-domain classification performance with the \textit{Offence} dataset on the test sets for the \textit{Hate Expert} and \textit{Hate Speech} datasets (see \cref{fig:waseem_models_test,fig:waseem_hovy_models_test}).
 
-More generally, from the out-of-domain classification performances, there seems to be a correlation with annotation guideline similarity and out-of-domain performance. For instance, in \cref{fig:davidson_models_test,fig:wulczyn_models_test} I observe that models trained on the \textit{Offence} and \textit{Toxicity} datasets outperform models trained on other datasets. For both of these datasets, the governing understanding of abuse and hate speech are that not all speech that is offensive is necessarily also problematic as the \textit{Offence} dataset specifically seeks to disentangle hate from offence and \textit{Toxicity} asks its annotators to identify the documents that may make participants in a conversation exit the conversation. Thus, for these two datasets, the governing question is not necessarily the protection of marginalised communities and identities but instead identifying a degree of acceptable abuse and hostility.
-
-In contrast, the \textit{Hate Expert} and \textit{Hate Speech} datasets seek to identify communications that are harmful to marginalised communities. Thus, it's no surprise that the out-of-domain performances for models trained on these two datasets perform reasonably well with each other. However here it is also clear that there is an influence of dataset size. Where the \textit{Hate Speech} dataset consists of $~16,000$ documents, the \textit{Hate Expert} dataset consists of $~7,000$ documents, which is also apparent from the fact that the models trained on the \textit{Hate Speech} dataset perform better on the \textit{Hate Expert} test set than the models trained on the \textit{Hate Expert} dataset perform on the \textit{Hate Speech} dataset.
-
 \zw{Start by talking about performance on development sets}
 \zw{Then talk about performance on test set}
 \zw{Compare with baseline model performance}
@@ -804,12 +800,10 @@ The \textit{StormFront} dataset on the other hand is annotated to identify delib
 \end{figure}
 \end{landscape}
 
-\zw{Add results and start by rough analysis of just numbers}
-\zw{Add plots for development of loss over each epoch}
-\zw{Add plots for F1 score during the evaluation set}
 \zw{Look at predictions in detail, try to identify where they still fail}
 
-While the onehot and index encoded tensors should functionally be equal to one another, we see a direct influence of the input layers on the classification scores; with all models showing stronger performance using linear input layers. We propose that the reason for such discrepancies lie in the simpler training procedure of linear layers which don't seek to find relationships between different tokens but instead simply provide a linear function, and embedding layers that seek to identify the relationships between each all tokens in the dataset.
+\subsubsection{Computational costs}
+
 
 \section{Conclusions and future work}
 
