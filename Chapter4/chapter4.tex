@@ -849,7 +849,13 @@ Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latt
   \end{minipage}
 \end{figure}
 
+For the LIWC-based CNN models it appears that the opposite effect is true, for small and medium sized datasets the LIWC-based CNN models improve on the in-domain evaluations. 
+The exception to this pattern is the \textit{StormFront} dataset where the LIWC-based MLP outperforms all other LIWC-based models.
+For the largest dataset, the \textit{Toxicity} dataset, the LIWC-based CNN model slightly improves on the LIWC-based MLP ($0.6722$ for the MLP and $0.6803$ for the CNN) but falls short in comparison the the LSTM model ($0.7870$).
+Curiously, the LIWC-based CNN outperforms all other LIWC-based models on the in-domain evaluation of the \textit{Offence} dataset. 
 
+In comparison to the surface-form based CNN models, the LIWC-based models underperform achieving lower scores in almost all cases. On the other hand, the surface-form based CNNs outperform their LSTM and MLP counterparts. Once again, such under-performance appears to be correlated with size, as the drop in LIWC-based CNN performance minises as the datasets grow in size.
+Considering how CNNs identify feature maps, this intuitively makes sense, as the larger the dataset, the more variety and stability there will be in the patterns of LIWC tokens that are encountered.
 
 \begin{figure}
 \begin{minipage}{\textwidth}
@@ -867,9 +873,9 @@ Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latt
 \end{minipage}
 \end{figure}
 
-\zw{Look at predictions in detail, try to identify where they still fail}
-
 \subsubsection{Computational costs}
+
+The final motivation for using LIWC representations over surface forms is the hypothesis that with a smaller vocaulary 
 \zw{Talk about how long models take to train}
 \zw{Talk about training time vs. model performance}
 
