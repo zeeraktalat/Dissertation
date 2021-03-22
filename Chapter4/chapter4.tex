@@ -875,37 +875,78 @@ Considering how CNNs identify feature maps, this intuitively makes sense, as the
 
 \subsubsection{Computational costs}
 
-The final motivation for using LIWC representations over surface forms is the hypothesis that with a smaller vocabulary, the models will train faster, thus reducing the environmental impact of developing machine learning models for abuse detection. 
-\zw{Talk about how long models take to train}
-\zw{Talk about training time vs. model performance}
+The final motivation for using LIWC representations over surface forms is the hypothesis that with a smaller vocabulary, the models will train faster, thus reducing the environmental impact of developing machine learning models for abuse detection. Figures \ref{fig:davidson_train_time} to \ref{fig:garcia_train_time} show the number of minutes taken for each model to train on each dataset with the error bars representing the standard deviation across $5$ runs.
 
-\begin{figure}
-  \begin{minipage}{0.5\textwidth}
+First, there is a predictable correlation with the complexity of the machine learning model and the time required to train a model, with the MLP models being the quickest to train and the LSTM models taking the longest, with the exception of the CNN models trained on the \textit{Hate Expert} dataset, where the LSTM and CNN models mostly taking roughly the same amount of time to train (see \cref{fig:waseem_train_time}).
+
+Considering the influence of document representation on training time, the results point in multiple directions. Using LIWC-based representations is results in faster training times for some models while slower training times for others. Unsurprisingly, the improvements in training time are negatively correlated with the size of the surface-token vocabularies: As the size of the surface token vocabulary increase, the training time for LIWC-based models decrease. 
+
+\begin{figure}[h]
+  \begin{minipage}{0.49\textwidth}
     \centering
-    \includegraphics[0.48\textwidth]{davidson_train_time}
+    \includegraphics[width=\textwidth]{davidson_train_time.pdf}
     \caption{Training time for each model type on the \textit{Offence} dataset.}
     \label{fig:davidson_train_time}
     \vfill
-    \includegraphics[0.48\textwidth]{wulczyn_train_time}
+    \includegraphics[width=\textwidth]{wulczyn_train_time.pdf}
     \caption{Training time for each model type on the \textit{Toxicity} dataset.}
     \label{fig:wulczyn_train_time}
-  \end{minipage}
+  \end{minipage}%
   \hfill
-  \begin{minipage}{0.5\textwidth}
+  \begin{minipage}{0.49\textwidth}
     \centering
-    \includegraphics[0.48\textwidth]{waseem_train_time}
+    \includegraphics[width=\textwidth]{waseem_train_time.pdf}
     \caption{Training time for each model type on the \textit{Hate Expert} dataset.}
     \label{fig:waseem_train_time}
     \vfill
-    \includegraphics[0.48\textwidth]{waseem_hovy_train_time}
-    \caption{Training time for each model type on the \textit{Hate Expert} dataset.}
+    \includegraphics[width=\textwidth]{waseem_hovy_train_time.pdf}
+    \caption{Training time for each model type on the \textit{Hate Speech} dataset.}
     \label{fig:waseem_hovy_train_time}
   \end{minipage}
+  \vfill
   \centering
-  \includegraphics[0.48\textwidth]{garcia_train_time}
+  \includegraphics[width=0.50\textwidth]{garcia_train_time.pdf}
   \caption{Training time for each model type on the \textit{StormFront} dataset.}
   \label{fig:garcia_train_time}
 \end{figure}
+
+In the medium sized datasets however, the relation between training time and vocabulary minimisation is less clear as is apparent from \cref{fig:davidson_train_time,fig:waseem_train_time,fig:waseem_hovy_train_time}. For each of these datasets, some LIWC-based models train quicker while others are slower. In part, this appears to be connected to model complexity, where the more complex the underlying model is, the slower the training time also is. For instance, in  \cref{fig:waseem_train_time} the LIWC-based MLP is the quickest MLP to be trained while the LIWC-based CNN and LSTM models are slower than all other CNN and LSTM models, respectively.
+
+\zw{Talk about training time vs. model performance}
+
+Reflecting on the feasibility of using LIWC-based document representations for training neural networks, I turn to the two largest datasets, the \textit{Offence} and \textit{Toxicity} datasets, and the performance of LIWC-based models while bearing in mind their training time (see \cref{tab:time_spent_davidson_wulczyn}). Beyond being the two largest datasets, I choose these to compare as their operationalisations of abuse share large similarities. Thus, one can consider each dataset a domain shifted dataset to the other, providing a more reasonable point of comparison than using a dataset which is annotated with a fundamentally different goal.
+
+In \cref{tab:time_spent_davidson_wulczyn}, it immediately stands out that some LIWC-based models take longer to train than their surface token-based counter-parts. Moreover, It is clear that many of the surface token-based models that perform very well on the in-domain evaluation set do not see the performance transfer to other datasets. Conversely, many of the LIWC-based models see a lesser drop in performance on external data. This suggests that LIWC-based modelling may capture more general patterns of abuse that models are otherwise prone to overfit away from in chase of improved in-domain performance. 
+
+\zw{Revisit after models have been retrained}
+\begin{table}[h]
+\centering
+\begin{tabular}{c|llll}
+Dataset                                    & Model     & \textit{Offence} & \textit{Toxicity} & Training time \\\hline
+\multirow{9}{*}{\rot{\textit{Offence}}}    & Word MLP  & 0.9544           & 0.091             & 1m 12s        \\
+                                           & BPE MLP   & 0.9726           & 0.4872            & 2m 48s        \\
+                                           & LIWC MLP  & 0.8914           & 0.7383            & 3m 30s        \\
+                                           & Word LSTM & 0.8734           & 0.2662            & 2m 0s         \\
+                                           & BPE LSTM  & 0.8664           & 0.5996            & 15m 12s       \\
+                                           & LIWC LSTM & 0.8747           & 0.6833            & 4m 6s         \\
+                                           & Word CNN  & 0.3495           & 0.3478            & 4m 30s        \\
+                                           & BPE CNN   & 0.9736           & 0.5512            & 10m 18s       \\
+                                           & LIWC CNN  & 0.9565           & 0.6803            & 10m 24s       \\\hline
+\multirow{9}{*}{\rot{\textit{Toxicity}}}   & Word MLP  & 0.6312           & 0.5787            & 40m 18s       \\
+                                           & BPE MLP   & 0.6012           & 0.5404            & 28m 12s       \\
+                                           & LIWC MLP  & 0.8269           & 0.6722            & 12m 54s       \\
+                                           & Word LSTM & 0.5901           & 0.8281            & 4h 22m 30s    \\
+                                           & BPE LSTM  & 0.6343           & 0.8612            & 5h 40m 42s    \\
+                                           & LIWC LSTM & 0.6592           & 0.6833            & 3h 25m 48s    \\
+                                           & Word CNN  & 0.6905           & 0.8414            & 33m 6s        \\
+                                           & BPE CNN   & 0.5867           & 0.8616            & 1h 9m 24s     \\
+                                           & LIWC CNN  & 0.5164           & 0.6803            & 29m 30s      
+\end{tabular}%
+\caption{Time to train models on the \textit{Offence} and \textit{Toxicity} datasets with their in-domain and cross-domain macro F1-Scores.}
+\label{tab:time_spent_davidson_wulczyn}
+\end{table}
+
+Moreover, from the table it also stands out that while gains from using LIWC-based representation in terms of training time are modest, at best, for the \textit{Offence} dataset the reduction in time used are much more substantial for the \textit{Toxicity} dataset, in many cases with only a small drop in in-domain performance. Thus, the larger the original dataset is, the greater the benefit will be when using LIWC-based representations, in terms of reduction of training time for the model.
 
 \section{Conclusions and future work}
 
@@ -915,6 +956,10 @@ As our aim is to consider the influence of LIWC-represented documents, we do not
 
 \zw{Something about pretrained embedding layer + training liwc embedding layer}
 \zw{Something about models being too tightly trained on the training dataset to really generalise)}
+
+\zw{Make this fit in}
+The question of whether the time consumed by LIWC-based modelling, whether it is less or more than surface token-based models, can be reframed as a question of in-domain validity or generalisability onto an unseen sample. As the goal for machine learning models is ultimately to generalise onto unseen data, where the distributions of data may not mirror those that the models have been trained on, one might prefer the LIWC-based models that generalise well onto other datasets. However, in development of mahcine learning models, 
+
 
 \zw{Some concluding remarks}
 While functionally this limits the vocabulary, there is also loss of information. Future work, could then employ both simple and complex mappings of different forms of words to single tokens that cohere with the LIWC dictionary, thus limiting information loss while retaining the predictive power.
