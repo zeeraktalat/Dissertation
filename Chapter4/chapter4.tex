@@ -752,7 +752,9 @@ As most of the datasets are imbalanced, I focus my attention on the macro F1-sco
 
 \subsection{Neural models}
 
-In \cref{fig:davidson_models_test,fig:wulczyn_models_test,fig:waseem_models_test,fig:waseem_hovy_models_test,fig:garcia_models_test}, I show the in-domain and out-of-domain results of using the neural network architectures described in \cref{sec:liwc_modelling} for modelling abuse using the three different document representations. The bars in each figure represent the scores of each models on the test set in question, e.g. in \cref{fig:davidson_models_test} I show the macro F1-scores achieved by all models on the test set for the \citet{Offence} dataset.
+In 
+\cref{fig:davidson_mlp_test,fig:wulczyn_mlp_test,fig:waseem_mlp_test,fig:waseem_mlp_test,fig:garcia_mlp_test,fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_lstm_test,fig:garcia_lstm_test, fig:davidson_cnn_test,fig:wulczyn_cnn_test,fig:waseem_cnn_test,fig:waseem_cnn_test,fig:garcia_cnn_test}
+, I show the in-domain and out-of-domain results of using the neural network architectures described in \cref{sec:liwc_modelling} for modelling abuse using the three different document representations. The bars in each figure represent the scores of each models on the test set in question, e.g. in \cref{fig:davidson_models_test} I show the macro F1-scores achieved by all models on the test set for the \citet{Offence} dataset.
 Considering figures collectively, it's clear that in-domain models in most cases, predictably, out-perform models trained on out-of-domain datasets. Interestingly, it's also clear that while LIWC-based models in many cases are comparable to models using full surface-form vocabulary. Moreover, this similarity in performance largely also holds for out-of-domain performance.
 Out-of-domain performance too is worthy of note in comparison with in-domain models and other out-of-domain models and with the linear baselines. Curiously, in spite of improved performance on in-domain test sets, there is a general trend of slightly decreased performance on out-of-domain data.
 
@@ -764,7 +766,6 @@ In contrast, the \textit{Hate Expert} and \textit{Hate Speech} datasets seek to 
 
 The \textit{StormFront} dataset on the other hand is annotated to identify deliberate attacks against ``specific group[s] of people'' on the basis of their group membership or characteristics of group's identities \citep{Garcia:2019}. This annotation criteria forms a subset of the annotation guidelines that are used for the \textit{Hate Speech} and \textit{Hate Expert} datasets. Moreover, the collection strategies for the three datasets also share common characteristics. Where \citet{Garcia:2019} specifically seek out content from a white supremacist forum for their dataset, \citet{Waseem:2016,Waseem-Hovy:2016} sample from Twitter by searching for keywords that were likely to result in a large set of abuse. Thus, while the domain of the data and the annotation guidelines are not the same, there are likely to be similarities in the content and annotations produced.
 
-\zw{Compare with baseline model performance}
 \begin{figure}
 \begin{minipage}{\textwidth}
     \centering
@@ -804,7 +805,7 @@ On the test sets however, a slightly different patterns plays out. For most eval
   \end{minipage}
 \end{figure}
 
-On the test sets however, a slightly different patterns plays out. For most evaluation datasets, at least one of the LIWC-based models outperform some of the surface token based models, and in some cases outperform all other models. In particular, \cref{fig:wulczyn_mlp_test}, the in-domain LIWC-based model outperforms all other model types, though curiously achieves a lower scores than the out-of-domain LIWC-based \textit{Offence} model. 
+On the test sets however, a slightly different patterns plays out. For most evaluation datasets, at least one of the LIWC-based models outperform some of the surface token based models, and in some cases outperform all other models. In particular, \cref{fig:wulczyn_mlp_test}, the in-domain LIWC-based model outperforms all other model types, though curiously achieves a lower scores than the out-of-domain LIWC-based \textit{Offence} model.
 Overall, the patterns displayed by the MLPs (see \cref{fig:garcia_mlp_test,fig:waseem_mlp_test,fig:waseem_hovy_mlp_test,fig:wulczyn_mlp_test,fig:davidson_mlp_test}) indicate that LIWC-based document representations are appropriate for the development of neural networks for abuse detection, in spite of the large reduction in vocabulary size.
 \zw{Revisit after models have re-run}
 In fact, the model performances also weakly indicate that there are benefits to be found in medium sized and large datasets.\footnote{Medium and large are relative here to to the sizes of hate speech and abuse data, often ranging between $5,000$ to $100,000$ samples, rather than large scale datasets for computing that contain millions of samples.} 
