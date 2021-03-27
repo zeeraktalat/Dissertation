@@ -58,7 +58,7 @@ It's important to note that content may be simultaneously explicit and implicit,
 
 Modelling for automated hate speech detection has also undergone a development from early to contemporary work. Early work was primarily focused on feature-based modelling \citep[e.g.][]{Waseem-Hovy:2016,Waseem:2016,Davidson:2017} whereas subsequent work has directed a greater attention to neural network based approaches \citep[e.g.][]{Kolhatkar:2021,Waseem:2018,Gamback:2017,Badjatiya:2017}. In this dissertation I follow a similar pattern of developing baseline models from feature-based models and suggest neural network architectures as extensions and improvements on these. In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models. As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks. In each chapter, I perform the review of the models that are pertinent to the work in the chapter. Here instead I provide a theoretical overview of the models, their components (e.g. dropout and activation functions) and their intended functionalities (i.e. the kind of data that they are designed to operate on and which assumptions are built into the model architectures).
 
-\subsection{Datasets}
+\subsection{Datasets}\label{sec:datasets}
 
 Here I provide an overview of the different datasets that are used throughout this dissertation. For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset.
 
@@ -68,28 +68,38 @@ Here I provide an overview of the different datasets that are used throughout th
 % TODO Annotation guidelines
 % TODO Annotator selection
 % TODO How these influence
+\subsubsection{Hate speech and abuse datasets}\label{sub:abuse_data}
 
-\subsubsection{Hate speech and abuse datasets}
-
-\paragraph{Hate Speech} Published as the first publicly available dataset for hate speech and abusive language detection, \citet{Waseem-Hovy:2016} developed a dataset for detecting abuse towards gendered and racialised minorities. In an interview in the Let's Chat Ethics Podcast, Zeerak Waseem shared that the initial motivation for developing the dataset was the somewhat na{\"i}ve hope to address online harassment as experienced by women during \#GamerGate, a harassment campaign against female game developers and games journalists \citep{Massanari:2015}. This aim of developing tools that can protect marginalised people is apparent in the data sampling and the source of data. As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as ``sexist'', ``racist'', and ``neither''.
+\paragraph*{Hate Speech} Published as the first publicly available dataset for hate speech and abusive language detection, \citet{Waseem-Hovy:2016} developed a dataset for detecting abuse towards gendered and racialised minorities. In an interview in the Let's Chat Ethics Podcast, Zeerak Waseem shared that the initial motivation for developing the dataset was the somewhat na{\"i}ve hope to address online harassment as experienced by women during \#GamerGate, a harassment campaign against female game developers and games journalists \citep{Massanari:2015}. This aim of developing tools that can protect marginalised people is apparent in the data sampling and the source of data. As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as ``sexist'', ``racist'', and ``neither''.
 In efforts to ensure that their collected and annotated sample contains gendered and racialised abuse, they bootstrap their corpus collection by first search for common slurs against women, ethnic minorities, religious minorities, and sexual minorities to identify the salient terms and users for scraping.
 To annotate this dataset, with the target group in mind, \citet{Waseem-Hovy:2016} develop $11$ questions to test whether a comment is hateful or not.
 This set of questions focuses on breadth in the types of hate expressed rather than depth in each type. This is apparent as the tests ranges from asking about explicit forms of hate, such as the use of slurs to implicit forms like questions around stereotyping and the use of straw man arguments in criticisms of minorities.
 \citet{Waseem-Hovy:2016} annotate their dataset and have their annotations verified by an external annotator.
 Collectively, these decisions are made to ensure that there was a diversity in the forms of hate in addition to the sources. However, as they note, the racist abuse only comes from $9$ different accounts. Moreover, as salient terms were sampled for annotation, some terms (i.e. the hashtag for the Australian TV show My Kitchen Rules) are over-represented in the data. In spite of these issues, the annotations in this dataset are \textit{embodied} within the context of critical race and gender studies perspectives on abuse.
 
-\paragraph{Hate Expert} In an extension of the dataset proposed by \citet{Waseem-Hovy:2016}, \citet{Waseem:2016} sample $6,909$ tweets from the original scrape and have it annotated by two groups, in efforts to understand the influence of annotator biases. The first group consisted of ``feminist and anti-racism activists'' \citep{Waseem:2016} who annotate the sample of the dataset with one of four labels ``racist'', ``sexist'', ``both'', and ``neither''. The second group of annotators were recruited from CrowdFlower to re-annotate the sample annotated by the first group.\footnote{CrowdFlower has since been renamed Appen.}
+\paragraph*{Hate Expert} In an extension of the dataset proposed by \citet{Waseem-Hovy:2016}, \citet{Waseem:2016} sample $6,909$ tweets from the original scrape and have it annotated by two groups, in efforts to understand the influence of annotator biases. The first group consisted of ``feminist and anti-racism activists'' \citep{Waseem:2016} who annotate the sample of the dataset with one of four labels ``racist'', ``sexist'', ``both'', and ``neither''. The second group of annotators were recruited from CrowdFlower to re-annotate the sample annotated by the first group.\footnote{CrowdFlower has since been renamed Appen.}
 The label set was expanded by \citet{Waseem:2016} to include the category ``both'', in acknowledgement that marginalisation can be expressed across multiple dimensions, in an \textit{Intersectional} manner. Comparing models trained on each group of annotators, \citet{Waseem:2016} find that models that use the annotations of the first group consistently outperform models trained on the second. \citet{Waseem:2016} argue that the reason for this difference is that models trained on the former group benefit from similarities in the understanding of hate speech, whereas the distinct subjective positionalities of the latter group, that does not have a salient unifying characteristic beyond their work on a crowd-sourcing platform, produces internally inconsistencies in labelling that render it harder for models to consistently identify patterns that they can learn from.
 In presenting this dataset, \citet{Waseem:2016} propose that ideologues can take similar positions on a topic, given their subjective positionalities. They argue that only through a principled understanding of hate speech is it possible to annotate reliably for hate speech and that crowd-sourced annotations for hate speech display inconsistencies that to some degree erases the meaning of the term.
 In using this dataset for this dissertation, I use the annotations provided by the feminist and anti-racist activists.
 
+\paragraph*{Offence}
 \citep{Davidson:2017}
+
+\paragraph*{Toxicity}
 \citep{Wulczyn:2017}
+
+\paragraph*{StormFront}
 \citep{Garcia:2019}
 
 \subsubsection{Non-abuse datasets}
+
+\paragraph*{Sarcasm}
 \citep{Oraby_sarcasm:2017}
+
+\paragraph*{Argument Basis}
 \citep{Oraby_fact_feel:2017}
+
+\paragraph*{Moral Sentiment}
 \citep{Hoover:2019}
 % TODO Introduce datasets used in the dissertation (abusive and non-abusive)
 % TODO Introduce annotation:
@@ -134,10 +144,10 @@ Developing models for each individual language, and in particular resources that
 %
 % As online platforms seek to remove abuse occurring on their platform, data sets that have been gathered and annotated may have the abusive documents removed, thus requiring several rounds of re-annotation of abusive language. In an attempt to deal with this, we will experiment with using documents that are assumed have a higher chance of being abusive as they are posted in forums that are known to abusive. Using these documents we will seek to build different forms of embeddings and evaluating on previously annotated data. Further, in an attempt to mitigate annotator needs, we will build an abusive language potential system which utilizes supervised methods for Named Entity Recognition (NER), Gender Identification \citep{Sap:2014}, and sentiment analysis amongst other methods. The goal of this is to identify the probability that a document has potential to contain abusive content, in efforts to exact greater control over what documents an annotator is faced with. Additionally, such a system will allow us to identify documents which are clearly abusive. Thus, we will be able to provide an automated method to create a seed set of positive documents for abusive language detection.
 %
-\subsection{Datasets}\label{sec:datasets}
-
-
-\subsubsection{Datasets for abusive language detection}\label{sub:abuse_data}
+%\subsection{Datasets}
+%
+%
+%\subsubsection{Datasets for abusive language detection}
 %
 % % TODO Rewrite these with more detail.
 % % TODO Mention the aim for each dataset
@@ -166,18 +176,18 @@ Developing models for each individual language, and in particular resources that
 %
 %
 %
-\paragraph{Generalisable Machine Learning Models for Abusive Language Detection}
+% \paragraph{Generalisable Machine Learning Models for Abusive Language Detection}
 %
 % A common critique of many current computational methods for abuse detection is that they have poor generalisability onto other datasets. Although this issue of non-generalisability poses a serious issue for the abuse community, it has received relatively little attention \citep{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019,Swamy:2019,Fortuna:2021,Glavas:2020} in comparison to single-dataset classifier performance. While the primary goal of the experiments in this chapter is to consider how to both reduce the vocabulary space without loss, the concern of generalisation is important to understand the implications beyond within dataset performance. The task of generalising onto datasets collected using different methods and sampling strategies.
 %
 % In the pursuit of models that generalise well onto other datasets, researchers have proposed a variety of architectures. As an initial investigation into the question of generalisability, \citet{Waseem:2016} note that the best performing classifier on the dataset they propose does not generalise well onto the dataset published by \citet{Waseem-Hovy:2016}, noting that the performance of their classifier drops by more than a quarter. \citet{Waseem:2018} specifically address the issue of poor generalisability between the datasets poposed by \citet{Waseem:2016,Waseem-Hovy:2016} and the dataset published by \citet{Davidson:2017}. Turning towards multi-task learning as an avenue for
 % their best performing classifier and apply it to the dataset proposed by \citet{Waseem-Hovy:2016}, finding that there is a significant performance drop of more than $20\%$. In subsequent work, \citet{Waseem:2018} c
 %
- \zw{Note about different datasets collection rationales.}
+% \zw{Note about different datasets collection rationales.}
 % Although several works have attempted to predict abuse across datasets,
 %
-\subsubsection{Datasets for Multi-Task Learning Models}
-\zw{Best described in MTL chapter?}
+%\subsubsection{Datasets for Multi-Task Learning Models}
+%\zw{Best described in MTL chapter?}
 %
 % For multi-task learning
 %
@@ -186,13 +196,14 @@ Developing models for each individual language, and in particular resources that
 \zw{Describe different annotation schemas, what they mean and how they influence}
 \zw{Describe how the different annotation schemes overlap and differ from one another}
 
+\paragraph{Generalisable Machine Learning Models for Abusive Language Detection}
 
-\section{Annotation}
+%\section{Annotation}
 
-\subsection{Annotation Guidelines}
-\zw{Write about annotator guidelines}
+%\subsection{Annotation Guidelines}
+%\zw{Write about annotator guidelines}
 %
-\subsection{Annotator Selection}
+%\subsection{Annotator Selection}
 % \zw{Write about annotator influences}
 % There are some interesting discrepancies in the selection of annotators for the datasets that we apply our models to. \citet{Waseem:2016} select their annotators based on socio-political positions, controlling for a specific interpretation of abuse. On the other hand \citet{Wulczyn:2017} select their annotators from the users of the Wikipedia Talk pages. However, the Wikipedia editor community has been accused of being a highly male space that is unwelcoming to women \cite{CITE: Cite article talking about anti-women culture on wikipedia}. This suggests that the influence of their selection of annotators, who are culturally situated in the norms and culture of the Wikipedia editor community, are also likely to be less attuned to content that may be offensive to women, but is accepted communicative practices within the Wikipedia editor community.
 %
@@ -205,7 +216,7 @@ Developing models for each individual language, and in particular resources that
 % This notion of dominant discourse, and culturally agnostic definitions of abuse stand in stark contrast to the widespread calls for moderation of abuse to be culturally contingent \cite{CITE: Articles about how content moderation fails}. More importantly, as \citet{Waseem:2017,Davidson:2019} and \citet{Sap:2019} argue, such dominant discourse perspectives on acceptability are likely to reproduce cultural, and often racial, biases towards marginalised communities.
 %
 %
-\subsection{Platform Affordances}
+%\subsection{Platform Affordances}
 %
 % \zw{Write theoretically about platform affordances, base in STS litt.}
 % As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting editors from a diverse set of backgrounds \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref} may influence which dialects are represented on the platforms, which patterns of speech (e.g. sociolects, slang, and shorthand) occur, and the style of the discussions and conversations.
