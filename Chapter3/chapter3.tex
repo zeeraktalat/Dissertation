@@ -10,12 +10,6 @@
 In this chapter I introduce related work in Natural Language Processing (NLP) and theoretical background on the machine learning methods that I use throughout this dissertation.
 
 \zw{Add a few words about how word embeddings are trained.}
-% TODO Introduce the field of abusive language detection
-% TODO Introduce datasets used in the dissertation (abusive and non-abusive)
-% TODO Introduce annotation:
-% TODO annotation guidelines, how they differ and how they influence and what that means
-% TODO annotator selection and the influence
-% TODO abusive language detection data in non-english languages
 % TODO Introduce modelling
 % TODO Introduce LIWC dictionary in depth
 % TODO Introduce Linear models: SVM, LR
@@ -68,6 +62,13 @@ Modelling for automated hate speech detection has also undergone a development f
 
 Here I provide an overview of the different datasets that are used throughout this dissertation. For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset.
 
+% TODO Order:
+% TODO Curation rationale
+% TODO Source + Sampling method
+% TODO Annotation guidelines
+% TODO Annotator selection
+% TODO How these influence
+
 \subsubsection{Hate speech and abuse datasets}
 
 \paragraph{Hate Speech} Published as the first publicly available dataset for hate speech and abusive language detection, \citet{Waseem-Hovy:2016} developed a dataset for detecting abuse towards gendered and racialised minorities. In an interview in the Let's Chat Ethics Podcast, Zeerak Waseem shared that the initial motivation for developing the dataset was the somewhat na{\"i}ve hope to address online harassment as experienced by women during \#GamerGate, a harassment campaign against female game developers and games journalists \citep{Massanari:2015}. This aim of developing tools that can protect marginalised people is apparent in the data sampling and the source of data. As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as ``sexist'', ``racist'', and ``neither''.
@@ -94,10 +95,9 @@ In using this dataset for this dissertation, I use the annotations provided by t
 % TODO Introduce annotation:
 % TODO annotation guidelines, how they differ and how they influence and what that means
 % TODO annotator selection and the influence
-% TODO abusive language detection data in non-english languages
 
 \subsection{Non-English datasets for abuse}
-
+% TODO abusive language detection data in non-english languages
 \zw{See hatespeechdatasets.com and ACL anthology}
 
 In this dissertation, I focus my attention to detecting abuse in English language datasets as my methods do not map to other languages. However, an important growing body of research and resources are being developed for other languages such as Arabic \citep{Arabic abuse papers}, Chinese \citep{Chinese abuse papers}, Croatian \citep{Croatian papers}, Danish \citep{Danish abuse data}, French \citep{French papers}, German \citep{German papers}, Greek \citep{Greek papers}, Indonesian \citep{Indonesian papers}, Italian \citep{Italian papers}, Polish \citep{Polish papers}, Portuguese \citep{Portuguese papers}, Slovene \citep{Slovenian papers}, Spanish \citep{Spanish papers}, Turkish \citep{Turkish papers}, and Urdu \citep{Urdu papers}. Beyond these mono-lingual resources and approaches, there is also a body of work dedicated to abuse in code-switching contexts \citep{Code switching papers}.
@@ -210,13 +210,6 @@ Developing models for each individual language, and in particular resources that
 % \zw{Write theoretically about platform affordances, base in STS litt.}
 % As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting editors from a diverse set of backgrounds \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref} may influence which dialects are represented on the platforms, which patterns of speech (e.g. sociolects, slang, and shorthand) occur, and the style of the discussions and conversations.
 %
-\subsection{Abusive Language Detection in Languages Other than English}\label{sub:non-english}
-
-\zw{See hatespeechdatasets.com and ACL anthology}
-%
-% In this dissertation, I focus my attention to detecting abuse in English language datasets as my methods do not map to other languages. However, an important growing body of research and resources are being developed for other languages such as Arabic \citep{Arabic abuse papers}, Chinese \citep{Chinese abuse papers}, Croatian \citep{Croatian papers}, Danish \citep{Danish abuse data}, French \citep{French papers}, German \citep{German papers}, Greek \citep{Greek papers}, Indonesian \citep{Indonesian papers}, Italian \citep{Italian papers}, Polish \citep{Polish papers}, Portuguese \citep{Portuguese papers}, Slovene \citep{Slovenian papers}, Spanish \citep{Spanish papers}, Turkish \citep{Turkish papers}, and Urdu \citep{Urdu papers}. Beyond these mono-lingual resources and approaches, there is also a body of work dedicated to abuse in code-switching contexts \citep{Code switching papers}.
-%
-% Developing models for each individual language, and in particular resources that address abuse that code-switches, require an attention to the particularities of the different languages and cultures, just as model development for English requires researchers to be attuned to the particularities and cultures represented in English language use.
 %
 \section{Models}\label{sec:model_background}
 %
