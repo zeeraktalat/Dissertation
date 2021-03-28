@@ -56,18 +56,12 @@ It's important to note that content may be simultaneously explicit and implicit,
 \label{tab:typology}
 \end{table*}
 
-Modelling for automated hate speech detection has also undergone a development from early to contemporary work. Early work was primarily focused on feature-based modelling \citep[e.g.][]{Waseem-Hovy:2016,Waseem:2016,Davidson:2017} whereas subsequent work has directed a greater attention to neural network based approaches \citep[e.g.][]{Kolhatkar:2021,Waseem:2018,Gamback:2017,Badjatiya:2017}. In this dissertation I follow a similar pattern of developing baseline models from feature-based models and suggest neural network architectures as extensions and improvements on these. In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models. As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks. In each chapter, I perform the review of the models that are pertinent to the work in the chapter. Here instead I provide a theoretical overview of the models, their components (e.g. dropout and activation functions) and their intended functionalities (i.e. the kind of data that they are designed to operate on and which assumptions are built into the model architectures).
+Modelling for automated hate speech detection has also undergone a development from early to contemporary work. Early work was primarily focused on feature-based modelling \citep[e.g.][]{Waseem-Hovy:2016,Waseem:2016,Davidson:2017,Sahlgren:2018} whereas subsequent work has directed a greater attention to neural network based approaches \citep[e.g.][]{Kolhatkar:2021,Waseem:2018,Gamback:2017,Badjatiya:2017}. In this dissertation I follow a similar pattern of developing baseline models from feature-based models and suggest neural network architectures as extensions and improvements on these. In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models. As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks. In each chapter, I perform the review of the models that are pertinent to the work in the chapter. Here instead I provide a theoretical overview of the models, their components (e.g. dropout and activation functions) and their intended functionalities (i.e. the kind of data that they are designed to operate on and which assumptions are built into the model architectures).
 
 \subsection{Datasets}\label{sec:datasets}
 
-Here I provide an overview of the different datasets that are used throughout this dissertation. For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset.
+Here I provide an overview of the different datasets that are used throughout this dissertation. For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset. In \autoref{sec:abuse_data} I describe the datasets annotated for hate speech and abuse and then in \autoref{sec:mtl_data}, I turn to the datasets used for the auxiliary tasks for \autoref{chap:mtl}.
 
-% TODO Order:
-% TODO Curation rationale
-% TODO Source + Sampling method
-% TODO Annotation guidelines
-% TODO Annotator selection
-% TODO How these influence
 \subsubsection{Hate speech and abuse datasets}\label{sub:abuse_data}
 
 \paragraph*{Hate Speech} Published as the first publicly available dataset for hate speech and abusive language detection, \citet{Waseem-Hovy:2016} developed a dataset for detecting abuse towards gendered and racialised minorities. In an interview in the Let's Chat Ethics Podcast, Zeerak Waseem shared that the initial motivation for developing the dataset was the somewhat na{\"i}ve hope to address online harassment as experienced by women during \#GamerGate, a harassment campaign against female game developers and games journalists \citep{Massanari:2015}. This aim of developing tools that can protect marginalised people is apparent in the data sampling and the source of data. As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as ``sexist'', ``racist'', and ``neither''.
@@ -99,15 +93,9 @@ The resulting dataset has been constructed to understand which comments are like
 Similarly to \citet{Davidson:2017}, there appear to be no consideration of the experiences of abuse against marginalised communities.
 Considering Wikipedia's well documented issues with being a hostile space to women \citep{Torres:2016} and the distribution of gender crowd-workers often veering towards a greater representation of men than women \citep{Posch:2018}, the lack of such a consideration may further entrench subjective positions that are hostile towards women into the datasets and subsequently into the models.
 
-% TODO Order:
-% TODO Curation rationale
-% TODO Source + Sampling method
-% TODO Annotation guidelines
-% TODO Annotator selection
-% TODO How these influence
 \paragraph*{StormFront} Focusing on the white supremacist web-forum StormFront, \citet{Garcia:2019} collect a dataset of $10,568$ sentences annotated by three of the authors for containing hateful utterances. Similarly to \citet{Davidson:2017} and \citet{Wulczyn:2016}, \citet{Garcia:2019} employ a marginalisation-blind definition and understanding of hate speech. In the case of a white supremacist web-forum, employing a marginalisation-blind definition is unlikely to be challenged as the participants are unlikely to engage in derogation against white, straight, cisgender men.
 The decision for using StormFront as a source of data was motivated by the prevalence of ``pseudo-rational discussions of race''.
-Moreover, this dataset further distinguishes itself from prior datasets by annotating on a sentence level. 
+Moreover, this dataset further distinguishes itself from prior datasets by annotating on a sentence level.
 The authors argue that annotating on a sentence level can reduce the confounding factors by only addressing content which is explicitly hateful.
 While this may, in some instances have little effect as the surrounding sentences bear no impact on whether a sentence is hateful. This particularly holds for explicit hate speech.
 However, for subtle forms of hate speech, conducting sentence level annotation may obscure hate that is only apparent when considering a post in its entirety rather than its sentence level components. In order to address this issue, \citet{Garcia:2019} introduce a ``related'' tag which is to be used when individual sentences do not convey hate but the combination of several sentences in sequence do convey hate.
