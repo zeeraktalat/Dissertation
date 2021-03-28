@@ -82,10 +82,24 @@ The label set was expanded by \citet{Waseem:2016} to include the category ``both
 In presenting this dataset, \citet{Waseem:2016} propose that ideologues can take similar positions on a topic, given their subjective positionalities. They argue that only through a principled understanding of hate speech is it possible to annotate reliably for hate speech and that crowd-sourced annotations for hate speech display inconsistencies that to some degree erases the meaning of the term.
 In using this dataset for this dissertation, I use the annotations provided by the feminist and anti-racist activists.
 
-\paragraph*{Offence}
-\citep{Davidson:2017}
+\paragraph*{Offence} Departing from the question of forms of hate speech and gender studies and critical race theory based annotation guidelines, \citet{Davidson:2017} turn instead to ask where the distinction between simply ``offensive'' speech and ``hate speech''.
+Using a list of terms from Hatebase\footnote{Hatebase.org is a website that crowd-sources slurs and insulting turns of phrase. Due to marginalised people being disproportionately targeted, there is a distributional skew towards terms that target marginalised people in the number of terms.} to identify $33,458$ users whose tweets they sample.
+From these users, they randomly sample $25,000$ tweets for annotation by CrowdFlower workers, resulting in $24,802$ annotated tweets. The crowd-workers were given guidelines to aid them in distinguishing between ``offensive content'', ``hateful content'' or ``neither offensive or hateful'', selecting only one for each tweet. \citet{Davidson:2017} instruct their annotators that hate speech is speech that ``is used in reference to certain groups that expresses hatred towards the group or is intended to be derogatory, to humiliate, or to insult the members of the group''. Moreover, they provide examples of such content which includes the straightforward ``Need to send these w******s back to their country''\footnote{Censoring of the slur is mine.} and the more conflicted ``I hate white trash''. The conflict in the latter stems from it being unclear whether the emphasis is on class-based hate or if it is targeting white people. While the former is less contentious, the latter would imply that white people too are targets of marginalisation on the basis of their race. However, as numerous scholars have argued, whiteness is the hegemonic force that marginalises \citep{CRT scholars}.
+``Offensive'' content is provided as an alternative, less serious form of potentially unwanted content. This group is defined in contrast to the hateful class ``[o]ffensive content might use some of the same words we associate with hate speech but do not \textit{necessarily} constitute hate speech because the words are not used in the same context as ``hate speech````.\footnote{Emphasis added.}
+From this definition it's clear that in spite of the instruction to select only one category, \citet{Davidson:2017} acknowledge that there is a potential overlap between offensive language and hate speech. 
+Moreover, unlike the annotation guidelines proposed by \citet{Waseem-Hovy:2016}, the definition of offensive draws in the question of context. Illustrating this point, \citet{Davidson:2017} provide the following example ``Oh shush you know I love you f****t''. This use of context, provides space for inoffensive uses of slurs and insulting terms e.g. for reclaimed and in-group uses, a space that the annotation guidelines of \citet{Waseem-Hovy:2016} does not afford.
+With the annotators being selected from CrowdFlower, the issues of multiple distinct ideologues in the annotator pool raised by \citet{Waseem:2016} are likely also manifest in this dataset.
+However, as the dataset offers a space within which one can utter offensive but not hateful messages, it also offers the space to live spaces that dominant discourse on acceptability of language use would deem as unacceptable.\footnote{By dominant discourses on acceptability, I refer to what mainstream discourses deem as acceptable and unacceptable manners of speaking. However, such a discourses are internally inconsistent, as \citet{Oliva:2020} show, acceptable speech can come to include neo-nazi and white supremacist speech that threaten social cohesion while deeming speech by queer communities as toxic and inherently holding greater threat to the boundaries within which society should operate.}
+In consideration of the marginalisation of queer people and people of colour, this dataset thus offers space for their uninterrupted existence. However, as the dataset is labelled for a multi-class classification problem, where a single label is assigned to each document, the dataset does not afford space to be exposed to hate speech in such contested spaces.
 
-\paragraph*{Toxicity}
+% TODO Order:
+% TODO Curation rationale
+% TODO Source + Sampling method
+% TODO Annotation guidelines
+% TODO Annotator selection
+% TODO How these influence
+\paragraph*{Toxicity} Starting from a similar point as \citet{Davidson:2017}, \citet{Wulczyn:2017} develop a dataset to understand which types of conversations are likely to make users depart from the conversation. Departing from the early tradition of using Twitter as a source of data, \citet{Wulczyn:2017} consider the Wikipedia editor discussion pages. 
+Wikipediak
 \citep{Wulczyn:2017}
 
 \paragraph*{StormFront}
