@@ -92,12 +92,6 @@ With the annotators being selected from CrowdFlower, the issues of multiple dist
 However, as the dataset offers a space within which one can utter offensive but not hateful messages, it also offers the space to live spaces that dominant discourse on acceptability of language use would deem as unacceptable.\footnote{By dominant discourses on acceptability, I refer to what mainstream discourses deem as acceptable and unacceptable manners of speaking. However, such a discourses are internally inconsistent, as \citet{Oliva:2020} show, acceptable speech can come to include neo-nazi and white supremacist speech that threaten social cohesion while deeming speech by queer communities as toxic and inherently holding greater threat to the boundaries within which society should operate.}
 In consideration of the marginalisation of queer people and people of colour, this dataset thus offers space for their uninterrupted existence. However, as the dataset is labelled for a multi-class classification problem, where a single label is assigned to each document, the dataset does not afford space to be exposed to hate speech in such contested spaces.
 
-% TODO Order:
-% TODO Curation rationale
-% TODO Source + Sampling method
-% TODO Annotation guidelines
-% TODO Annotator selection
-% TODO How these influence
 \paragraph*{Toxicity} Starting from a similar point as \citet{Davidson:2017}, \citet{Wulczyn:2017} develop a dataset  of $115,737$ comments to understand which types of conversations are likely to make users depart from the conversation. Departing from the early tradition of using Twitter as a source of data, \citet{Wulczyn:2017} consider the Wikipedia editor discussion pages. Taking a narrow view of behaviours that inhibits participation in conversations, \citet{Wulczyn:2017} focus on personal attacks and harassment, specifically asking their annotators whether which entity (the participant or a third party) is the subject of the attack. As a last positive category, they include whether it is ``[a]nother kind of attack or harassment'', thus relegating all forms of harassment that are not directed at specific individuals to a residual category. The dataset thus is comprised of ``personal attacks'' and ``other forms of harassment''. As the study is specifically grounded in identifying personal attacks, this categorisation of various forms of personal attacks and a residual category as positive instances is in line with the aims of the data, if not the description.
 Using this definition, \citet{Wulczyn:2017} select a random sample of $37,611$ and have it refereed by $10$ annotators for personal attacks, resulting in only $0.9\%$ of the labelled data being assigned the positive label. Subsequently, they identify $78,126$ comments that had been made by users whose comments were moderated from the discussion pages, for each user taking $5$ comments that they made around the moderated comment, and similarly subject them to annotation this time resulting in the positive class occupying $16.9\%$ of the labelled data.
 Similarly to \citet{Waseem:2016} and \citet{Davidson:2017}, \citet{Wulczyn:2017} use CrowdFlower to obtain their annotations and subsequently are prone to similar issues in their data. However, to curb such issues they obtain $10$ annotations for each comment, allowing to compute a majority vote that takes a broader perspective on the comment into account. In spite of this approach, where those annotators are from and what their position on personal attacks are, and their ability to identify subtle attacks, still remain uncertain resulting in a dataset that may take a global position or a culturally grounded position on identifying personal attacks, e.g. if a large subset of annotators live in India, a subset of the data may very well reflect Indian perceptions of personal attacks.
@@ -105,8 +99,21 @@ The resulting dataset has been constructed to understand which comments are like
 Similarly to \citet{Davidson:2017}, there appear to be no consideration of the experiences of abuse against marginalised communities.
 Considering Wikipedia's well documented issues with being a hostile space to women \citep{Torres:2016} and the distribution of gender crowd-workers often veering towards a greater representation of men than women \citep{Posch:2018}, the lack of such a consideration may further entrench subjective positions that are hostile towards women into the datasets and subsequently into the models.
 
-\paragraph*{StormFront}
-\citep{Garcia:2019}
+% TODO Order:
+% TODO Curation rationale
+% TODO Source + Sampling method
+% TODO Annotation guidelines
+% TODO Annotator selection
+% TODO How these influence
+\paragraph*{StormFront} Focusing on the white supremacist web-forum StormFront, \citet{Garcia:2019} collect a dataset of $10,568$ sentences annotated for containing hateful utterances. Similarly to \citet{Davidson:2017} and \citet{Wulczyn:2016}, \citet{Garcia:2019} employ a marginalisation-blind definition and understanding of hate speech. In the case of a white supremacist web-forum, employing a marginalisation-blind definition is unlikely to be challenged as the participants are unlikely to engage in derogation against white, straight, cisgender men.
+The decision for using StormFront as a source of data was motivated by the prevalence of ``pseudo-rational discussions of race''.
+Moreover, this dataset further distinguishes itself from prior datasets by annotating on a sentence level. 
+The authors argue that annotating on a sentence level can reduce the confounding factors by only addressing content which is explicitly hateful.
+While this may, in some instances have little effect as the surrounding sentences bear no impact on whether a sentence is hateful. This particularly holds for explicit hate speech.
+However, for subtle forms of hate speech, conducting sentence level annotation may obscure hate that is only apparent when considering a post in its entirety rather than its sentence level components. In order to address this issue, \citet{Garcia:2019} introduce a ``related'' tag which is to be used when individual sentences do not convey hate but the combination of several sentences in sequence do convey hate.
+This method for mitigation does not account for longer sequences of sentences that convey hate, as is often the case for subtle forms of hate speech and dog whistles.
+Moreover, as \citet{Garcia:2019} take a very conservative position on what constitutes hate, for instance, the use of a derogatory term, on a white supremacist web-forum, ``cannot be said to be a deliberate attack, taken without any more context, despite it likely being offensive.'' For this reason, \citet{Garcia:2019} argue that simply the occurrence of slurs weaponised against marginalised communities cannot be said to be hateful.
+Thus, while initially side-stepping the issue of marginalisation-blind definitions by sourcing data from a white supremacist web-forum, it is softly reintroduced by taking a conservative stance on what constitutes hate.
 
 \subsubsection{Non-abuse datasets}
 
