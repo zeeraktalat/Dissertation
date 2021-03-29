@@ -118,8 +118,15 @@ Similarly to the abusive language datasets annotated on CrowdFlower, this choice
 Following the annotation process a dataset of $6,520$ posts (with a $50\%$ split of sarcastic and not-sarcastic posts) is obtaned and released.
 Examining the dataset for suitability for machine learning experiments, \citet{Oraby_sarcasm:2016} train a linear SVM with Stochastic Gradient Descent (SGD) training and L2 regularisation obtaining F1-score of $0.74$ using features derived from Word2Vec \citep{Mikolov:2013}.
 
-\paragraph*{Argument Basis}
-\citep{Oraby_fact_feel:2017}
+
+\paragraph*{Argument Basis} Investigating the characteristics of factual and emotional argumentation styles, \citet{Oraby_fact_feel:2015} also draw on the IAC as the source of data. Considering quote-response pairs, each response is annotated for whether the argument presented in the response based primarily in fact or feeling.
+\citet{Oraby_fact_feel:2015} present $10,003$ from the IAC for annotation by $5-7$ crowd-workers on Amazon Mechanical Turk for annotation selecting a value ranging from $-5$ to $5$ to indicate whether the response is a feeling or fact-based argument, where negative values indicate that the argument basis is dominated by an emotional argumentation style and positive values indicate a fact-based argument.
+Each document is then given a binary label indicating its argument basis, where all texts with a score greater than $1$ are assigned as fact-based, all texts with a score lower than $-1$ are assigned to the feeling-based class, and all scores $\[-1, 1\]$ are discarded. 
+This annotation process results in $3,466$ fact-based and $2,382$ feeling-based documents.
+Similarly to the previously examined datasets that utilise crowd-workers, this dataset is also subject to the contexts which the individual annotators exist within. For instance if an annotator is from a culture where feeling-based argumentation is not experienced as impassioned but instead supportive of facts, they may be likely to rate some documents as more fact-based than annotators who hail from cultures that emphasise fact-based argumentation would deem as relying on an emotional argumentation style.
+The subjectivity of the annotation task may provide an explanation for why $4,155$ or more than $41\%$ of the documents are discarded due to being rated, in aggregate, as dominated by neither fact or emotion.
+
+\citep{Oraby_fact_feel:2015}
 
 \paragraph*{Moral Sentiment}
 \citep{Hoover:2019}
