@@ -103,10 +103,20 @@ This method for mitigation does not account for longer sequences of sentences th
 Moreover, as \citet{Garcia:2019} take a very conservative position on what constitutes hate, for instance, the use of a derogatory term, on a white supremacist web-forum, ``cannot be said to be a deliberate attack, taken without any more context, despite it likely being offensive.'' For this reason, \citet{Garcia:2019} argue that simply the occurrence of slurs weaponised against marginalised communities cannot be said to be hateful.
 Thus, while initially side-stepping the issue of marginalisation-blind definitions by sourcing data from a white supremacist web-forum, it is softly reintroduced by taking a conservative stance on what constitutes hate.
 
-\subsubsection{Non-abuse datasets}
+\subsubsection{Non-abuse datasets}\label{sec:mtl_data}
 
-\paragraph*{Sarcasm}
-\citep{Oraby_sarcasm:2017}
+% TODO Order:
+% TODO Curation rationale
+% TODO Source + Sampling method
+% TODO Annotation guidelines
+% TODO Annotator selection
+% TODO How these influence
+\paragraph*{Sarcasm} \citet{Oraby_sarcasm:2016} develop a dataset for sarcasm detection in dialogues. The dataset was developed in order to address the lack annotation for subtypes of sarcasm, i.e. rhetorical questions and hyperbole, at scale in previous datasets.
+Sourcing their data from the Internet Argument Corpus (IAC) \citep{Abbott:2016}, \citet{Oraby_sarcasm:2016} annotate their data for ``generic sarcasm, rhetorical questions, and hyperbole''.
+In order to generate a dataset from the IAC, \citet{Oraby_sarcasm:2016} train a ``weakly-supervised pattern learner'' \citep{Oraby_sarcasm:2016} to identify a set of $30,000$ posts, filtering two thirds of the posts that don't contain any ``not-sarcastic'' cues and annotate the remaining $11,040$ posts in quote-response pairs for annotation on Amazon Mechanical Turk.
+Similarly to the abusive language datasets annotated on CrowdFlower, this choice of annotators can introduce biases stemming from the subjective embodiments of the human annotators and the geo-cultural contexts in which they exist.
+Following the annotation process a dataset of $6,520$ posts (with a $50\%$ split of sarcastic and not-sarcastic posts) is obtaned and released.
+Examining the dataset for suitability for machine learning experiments, \citet{Oraby_sarcasm:2016} train a linear SVM with Stochastic Gradient Descent (SGD) training and L2 regularisation obtaining F1-score of $0.74$ using features derived from Word2Vec \citep{Mikolov:2013}.
 
 \paragraph*{Argument Basis}
 \citep{Oraby_fact_feel:2017}
