@@ -105,12 +105,6 @@ Thus, while initially side-stepping the issue of marginalisation-blind definitio
 
 \subsubsection{Non-abuse datasets}\label{sec:mtl_data}
 
-% TODO Order:
-% TODO Curation rationale
-% TODO Source + Sampling method
-% TODO Annotation guidelines
-% TODO Annotator selection
-% TODO How these influence
 \paragraph*{Sarcasm} \citet{Oraby_sarcasm:2016} develop a dataset for sarcasm detection in dialogues. The dataset was developed in order to address the lack annotation for subtypes of sarcasm, i.e. rhetorical questions and hyperbole, at scale in previous datasets.
 Sourcing their data from the Internet Argument Corpus (IAC) \citep{Abbott:2016}, \citet{Oraby_sarcasm:2016} annotate their data for ``generic sarcasm, rhetorical questions, and hyperbole''.
 In order to generate a dataset from the IAC, \citet{Oraby_sarcasm:2016} train a ``weakly-supervised pattern learner'' \citep{Oraby_sarcasm:2016} to identify a set of $30,000$ posts, filtering two thirds of the posts that don't contain any ``not-sarcastic'' cues and annotate the remaining $11,040$ posts in quote-response pairs for annotation on Amazon Mechanical Turk.
@@ -128,12 +122,16 @@ The subjectivity of the annotation task may provide an explanation for why $4,15
 
 \citep{Oraby_fact_feel:2015}
 
-\paragraph*{Moral Sentiment}
-\citep{Hoover:2019}
-% TODO Introduce datasets used in the dissertation (abusive and non-abusive)
-% TODO Introduce annotation:
-% TODO annotation guidelines, how they differ and how they influence and what that means
-% TODO annotator selection and the influence
+\paragraph*{Moral Sentiment} The final dataset used in this dissertation is the Moral Foundations Twitter Corpus \citep{Hoover:2019}. This dataset provides $35,108$ tweets annotated for $10$ different categories of moral sentiment, introducing the task of moral sentiment prediction.
+A task, and dataset designed to allow psychology researchers to investigate the relationship between comments made around events and the moral foundations found in such comments made on Twitter.
+% This task was introduced to explore the utility of NLP modelling techniques for psychology research, namely measuring psychologically relevant psychological constructs in tweets.
+\citet{Hoover:2019} draw from research in psychology around human morality using a five-factor taxonomy that reveals insights into the moral foundations \citep{Graham:2009,Graham:2013} that underlie comments about and attitudes towards topics. 
+Each of the five factors are represented through a binary, where one end of the binary represents a virtue and is contrarian to the other, representing a vice. 
+\citet{Hoover:2019} argue that the human expression of vice and virtue are distinguishable from one another through distinct language use for each.
+The five factors introduced are \texttt{care}, ``concerns related to caring for others'' and \texttt{harm}, ``concerns related to not harming others''; fairness, ``concerns related to fairness and equality'' and \texttt{cheating}, ``concerns related not not cheating or exploiting others''; \texttt{loyalty}, ``concerns related to prioritising one's ingroup'' and \texttt{betrayal}, ``concerns related to not betraying or abandoning one's ingroup''; \texttt{authority}, ``concerns related to submitting to authority and tradition'' and \texttt{subversion}, ``concerns related to not subverting authority or tradition''; \texttt{purity}, ``concerns related to maintaining the purity of sacred entities, such as the body or a relic'' and \texttt{degradation}, ``concerns focused on the contamination of such [sacred] entities.''
+Noting that there is low occurrence of moral sentiments expressed in a random sample of tweets, \citet{Hoover:2019} collect tweets related seven different discourse domains where the occurrence of moral sentiment is likely to at a high rate: Black Lives Matter, All Lives Matter, Baltimore protests following the death of Freddie Gray, the 2016 presidential elections in the United States of America, hurricane Sandy, the \#MeToo movement, and offensive language, re-annotating a sample of \citet{Davidson:2017} for the moral sentiments.
+For annotation, \citet{Hoover:2019} train $8$ undergraduate research assistants to an expert-level familiarity with the moral foundations taxonomy, annotating $4,000 - 6,000$ for each discourse domain. The annotators are trained through a training sessions and, in early stages, discussion surrounding annotator disagreement.  
+The annotator selection procedure here thus develops on the suggestion of \citet{Waseem:2016} to use expert annotators to describing a means of training expert annotators for a highly subjective task. Interestingly, as the annotation process continues past early stages, annotator disagreements are not resolved, instead the authors opt for expressing the inherent subjectivity of the human annotation task.
 
 \subsection{Non-English datasets for abuse}
 % TODO abusive language detection data in non-english languages
