@@ -115,12 +115,10 @@ Examining the dataset for suitability for machine learning experiments, \citet{O
 
 \paragraph*{Argument Basis} Investigating the characteristics of factual and emotional argumentation styles, \citet{Oraby_fact_feel:2015} also draw on the IAC as the source of data. Considering quote-response pairs, each response is annotated for whether the argument presented in the response based primarily in fact or feeling.
 \citet{Oraby_fact_feel:2015} present $10,003$ from the IAC for annotation by $5-7$ crowd-workers on Amazon Mechanical Turk for annotation selecting a value ranging from $-5$ to $5$ to indicate whether the response is a feeling or fact-based argument, where negative values indicate that the argument basis is dominated by an emotional argumentation style and positive values indicate a fact-based argument.
-Each document is then given a binary label indicating its argument basis, where all texts with a score greater than $1$ are assigned as fact-based, all texts with a score lower than $-1$ are assigned to the feeling-based class, and all scores $\[-1, 1\]$ are discarded. 
+Each document is then given a binary label indicating its argument basis, where all texts with a score greater than $1$ are assigned as fact-based, all texts with a score lower than $-1$ are assigned to the feeling-based class, and all scores $[-1, 1]$ are discarded. 
 This annotation process results in $3,466$ fact-based and $2,382$ feeling-based documents.
 Similarly to the previously examined datasets that utilise crowd-workers, this dataset is also subject to the contexts which the individual annotators exist within. For instance if an annotator is from a culture where feeling-based argumentation is not experienced as impassioned but instead supportive of facts, they may be likely to rate some documents as more fact-based than annotators who hail from cultures that emphasise fact-based argumentation would deem as relying on an emotional argumentation style.
 The subjectivity of the annotation task may provide an explanation for why $4,155$ or more than $41\%$ of the documents are discarded due to being rated, in aggregate, as dominated by neither fact or emotion.
-
-\citep{Oraby_fact_feel:2015}
 
 \paragraph*{Moral Sentiment} The final dataset used in this dissertation is the Moral Foundations Twitter Corpus \citep{Hoover:2019}. This dataset provides $35,108$ tweets annotated for $10$ different categories of moral sentiment, introducing the task of moral sentiment prediction.
 A task, and dataset designed to allow psychology researchers to investigate the relationship between comments made around events and the moral foundations found in such comments made on Twitter.
@@ -133,7 +131,7 @@ Noting that there is low occurrence of moral sentiments expressed in a random sa
 For annotation, \citet{Hoover:2019} train $8$ undergraduate research assistants to an expert-level familiarity with the moral foundations taxonomy, annotating $4,000 - 6,000$ for each discourse domain. The annotators are trained through a training sessions and, in early stages, discussion surrounding annotator disagreement.  
 The annotator selection procedure here thus develops on the suggestion of \citet{Waseem:2016} to use expert annotators to describing a means of training expert annotators for a highly subjective task. Interestingly, as the annotation process continues past early stages, annotator disagreements are not resolved, instead the authors opt for expressing the inherent subjectivity of the human annotation task.
 
-\subsection{Non-English datasets for abuse}
+\subsubsection{Non-English datasets for abuse}
 % TODO abusive language detection data in non-english languages
 \zw{See hatespeechdatasets.com and ACL anthology}
 
