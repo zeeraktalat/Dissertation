@@ -159,9 +159,28 @@ This, in concert with their conclusion that dataset overlap and out-of-domain si
 First, current computational models can, to some degree, adapt onto new distributions and samples but models using words as input are poorly suited for learning general trends of a wide variety of abuse, including closely related concepts such as ``toxicity'' and ``severe toxicity'' \citep{Fortuna:2021}.
 Second, as models do not generalise onto other concepts, even if closely related, research in the detection of online abuse must either develop methods that can generalise onto studying different objects and perspectives of online abuse, or datasets must be annotated following highly similar annotation guidelines at the cost of the depth and breadth of concepts that can be explored.
 
-% \section{Natural Language Processing}
-% In the recent years, there has been an increase in the amount of work focused on
-% In the field of natural language processing (NLP), there has been a recent increase in work focused on abusive language and bias detection. Much of the research is still early-stage work, leaving much room for further inquiry, in particular on considering how biases are employed in written language. In this section, we will provide a detailed overview of recent work and trends in the topics.
+\section{Models}\label{sec:model_background}
+% TODO Introduce modelling
+% TODO Introduce LIWC dictionary in depth
+% TODO Introduce Linear models: SVM, LR
+% TODO Neural Networks: Single-task + MTL
+% TODO LSTM (and recurrence)
+% TODO MLP
+% TODO CNN and pooling
+% TODO Introduce vectorisation & tensorisation
+% TODO Introduce byte-pair encoding
+% TODO Introduce Dropout
+% TODO Introduce optimisaton:
+% TODO L1, L2, and elasticnet
+% TODO Softmax, Losses (NLLL), Optimisers (SGD, ADAM, ADAMW, ASGD)
+% TODO Hyper parameter tuning
+% TODO Metrics: precision, recall, F1, accuracy
+% TODO Fairness work
+% TODO Limitations
+
+In this section I provide an introduction to the different modelling techniques that I use throughout the dissertation.
+
+\subsection{Byte-Pair Encoding}
 
 % \subsection{Abusive Language Detection}
 % % \zw{Update this}
