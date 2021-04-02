@@ -196,37 +196,21 @@ In terms of language, using sub-words to represent documents can minimise the nu
 
 In this dissertation, I use the pre-trained Byte-Pair Embeddings developed by \citet{Heinzerling:2018}. These embeddings were trained for $275$ languages using the Wikipedia pages in each language as the source of data. \citet{Heinzerling:2018} provide embeddings for $1,000,\, 3,000,\, 5,000,\, 10,000,\, 25,000,\, 50,000,\, 100,000$, and $200,000$ merge operations with dimensions $25,\, 50,\, 100,\, 200$, and $300$. For all chapters in this dissertation, I choose the $300$ dimensional embeddings that have been subject to $200,000$ merge operations
 
-%\subsection{Annotation Guidelines}
-%\zw{Write about annotator guidelines}
-%
-%\subsection{Annotator Selection}
-% \zw{Write about annotator influences}
-% There are some interesting discrepancies in the selection of annotators for the datasets that we apply our models to. \citet{Waseem:2016} select their annotators based on socio-political positions, controlling for a specific interpretation of abuse. On the other hand \citet{Wulczyn:2017} select their annotators from the users of the Wikipedia Talk pages. However, the Wikipedia editor community has been accused of being a highly male space that is unwelcoming to women \cite{CITE: Cite article talking about anti-women culture on wikipedia}. This suggests that the influence of their selection of annotators, who are culturally situated in the norms and culture of the Wikipedia editor community, are also likely to be less attuned to content that may be offensive to women, but is accepted communicative practices within the Wikipedia editor community.
-%
-% On the other hand \citet{Garcia:2019} and \citet{Davidson:2017} select annotators that are removed from the context of the documents they are annotating. This suggests that global understandings of what constitutes abuse are possible, and that it is possible to annotate without a deep understanding of the issues and communicative practices of the specific communities that are being investigated.
-%
-% While we accept that the influence of annotation guidelines have strong influences on the subject that is being examined (e.g. \citet{Davidson:2017} examine the differences in what is merely offensive and what is hateful, \citet{Garcia:2019} examine what is hateful from a white supremacist community and what is not, and \citet{Wulczyn:2017} examine things that make conversations toxic and hostile), we assume that these different guidelines and questions highlight different aspects of abuse. Through our efforts to develop methods that can identify different forms of abuse across different datasets, we accept the assumption that there are some global understandings of abuse that can be learned by machine learning models. We revisit this assumption in \autoref{chap:disembodied}.
-%
-% \citet{Waseem:2016} argue that due to different backgrounds and political stances, the operationalisation of annotation guidelines differ from person to person. They show that this then influences the quality of annotations of datasets, as a lack of control of socio-political backgrounds also suggests a lack of control of what is being annotated. They argue that such differences in operationalisation across a dataset influences what machine learning models are able to predict. Conversely, \citet{Founta:2017} operate with the assumption that with a large numbers of annotators, such differences will even out, such that dominant discourse understanding of what constitutes abuse and hate will even out. However, considering the argument that \citet{Douglas:1966} makes about what constitutes dirt is both contextual and cultural, what remains through majority voting by a large number of annotators, will be few salient discourses of what constitutes abuse and hate speech. Scaling annotations across cultural divides then also suggests that only what is universally accepted as abuse should be considered as abusive.
-%
-% This notion of dominant discourse, and culturally agnostic definitions of abuse stand in stark contrast to the widespread calls for moderation of abuse to be culturally contingent \cite{CITE: Articles about how content moderation fails}. More importantly, as \citet{Waseem:2017,Davidson:2019} and \citet{Sap:2019} argue, such dominant discourse perspectives on acceptability are likely to reproduce cultural, and often racial, biases towards marginalised communities.
-%
-%
-%\subsection{Platform Affordances}
-%
-% \zw{Write theoretically about platform affordances, base in STS litt.}
-% As the datasets differ quite significantly in the sizes of the raw number of documents as well as the vocabulary sizes. Moreover, as the datasets are selected from different websites with different communities, purposes, and means of interaction; the data sampled from each platform may differ in content as well as style. Considering for instance \citet{Waseem:2016}, this dataset was collected on Twitter while the maximum length of a tweet was $140$ characters. Documents are thus short as they are given an upper limit on the number of characters. On the other hand, \citet{Wulczyn:2017} collected their data from the Wikipedia Editor Talk pages, where comments are not limited by length. Additionally, these two domains differ in that conversations on Twitter may have no particular topic, conversations on Wikipedia Talk pages always refer back to a specific topic and the conversation of how to address a particular edit to a page. Finally, given Wikipedia's ongoing issues with recruiting editors from a diverse set of backgrounds \cite{CITE: Wikipedia editors issue} and Twitter's comparatively broad user base \cite{CITE: Twitter userbase by demographic ref} may influence which dialects are represented on the platforms, which patterns of speech (e.g. sociolects, slang, and shorthand) occur, and the style of the discussions and conversations.
-%
-%
-\section{Models}\label{sec:model_background}
-%
-% Throughout this thesis, we develop and train several different model types to test our hypotheses. We use a mixture between linear and non-linear models both to act as points of comparison with one another and to test how well both simple and more complex models perform given our tasks. In each chapter, we will go into greater detail with regard to the implementation details for each model while we provide a theoretical description of each of these models here.
-%
-\subsection{Byte-Pair Encoding and Linguistic Inquiry and Word Count}
+\subsection{Strategies against over-fitting}\label{sec:dropoutearly}
 
-\zw{Add info on LIWC dictionary size}
+Machine learning models are prone to identify salient patterns in the training data with the result that they perform poorly on evaluation sets and out-of-domain data. In order to address this issue, I use a number of different techniques depending on the type of model used.
+For linear models, I experiment with three different regularisers: L1 regularisation, L2 regularisation, and Elasticnet.
+For neural networks, that by virtue of their ability to identify and represent complex interaction patterns are prone to overfit, I use two different techniques, namely early stopping and dropout.
 
-\subsection{Dropout and Early Stopping}\label{sec:dropoutearly}
+\paragraph{L1 Regularisation} L1 regularisation operates by iteratively zeroing out uninformative features in order to produce a more sparse representation of the data while minimising loss the performance of a given model \citep{L1 regularisation paper}. For instance, if there are two features $x_1$ and $x_2$ that both carry an equal weight towards the same class, one of the features will be zeroed out while the other will retain its weight. While this can be helpful in an in-domain setting, it may not be quite as useful when the model is used on new data, in cases where $x_1$ exists in the document to be classified but is zeroed out $x_2$ does not occur in the document.
+
+\paragraph{L2 Regularisation} To address this short-coming, $L2$ regularisation is proposed \citep{L2 regularisation paper}. $L2$ regularisation seeks to penalise weights of features, making the weights smaller, rather than altogether zeroing out any weights. This penalisation and reduction of weights by $L2$ regularisation seeks to minimise across all features. Thus $L2$ regularisation does not necessarily zero out any individual feature but instead reduce the weight of all features to prevent over-fitting to any particular set of features.
+
+\paragraph{Elastictnet} Elastic Net seeks to combine $L1$ and $L2$ regularisation into a single regularisation function \citep{Elastic net paper}. Thus, elastic net seeks to both zero out uninformative features and minimise the weight of all features to reduce variance between them. Elastic Net is particularly fitting in modelling contexts where there is a high dimensionality in the data, for which reason it is desirable to reduce the size of the feature space while retaining a maximum number of features that are informative towards the prediction task.
+
+\paragraph{Dropout}
+
+\paragraph{Early Stopping}
 
 \subsection{Input Encoding}
 
