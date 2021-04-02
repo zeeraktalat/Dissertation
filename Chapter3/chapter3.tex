@@ -208,9 +208,11 @@ For neural networks, that by virtue of their ability to identify and represent c
 
 \paragraph{Elastictnet} Elastic Net seeks to combine $L1$ and $L2$ regularisation into a single regularisation function \citep{Elastic net paper}. Thus, elastic net seeks to both zero out uninformative features and minimise the weight of all features to reduce variance between them. Elastic Net is particularly fitting in modelling contexts where there is a high dimensionality in the data, for which reason it is desirable to reduce the size of the feature space while retaining a maximum number of features that are informative towards the prediction task.
 
-\paragraph{Dropout}
+\paragraph{Dropout} In order to prevent neural networks from over-fitting on training data, \citet{Dropout paper} introduce the notion of dropout. Dropout refers to randomly zeroing out some values of a model's internal representation between different layers. The idea behind dropout is that models may over-fit to individual tokens or interaction patterns between tokens, thus to prevent the model from learning such patterns, one can randomly zero out values in the internal representations of a document as it is passed through the layers of the model.
+Such zeroing out forces the model to adapt to different representations for a given document each time it is passed through the model and, hopefully, learn general patterns rather than ones that occur from spurious correlations in the data.
 
-\paragraph{Early Stopping}
+\paragraph{Early Stopping} A second method for addressing over-fitting in neural network models is the idea of early stopping \citep{Early stopping papers}. Early stopping, in terms of neural networks, means to end a training cycle before it passed over the data for the number of epochs specified by the researcher. The idea behind early stopping is that a model may identify an optimal representation before it the maximum number of epochs has been reached. Any further optimisation processes on the model representation are thus likely to have a detrimental effect to a model's performance on the evaluation set.
+While a number of different approaches to identifying when to trigger early stopping have been proposed \citep{early stopping papers}, in this dissertation I trigger early stopping by considering the development of model loss. Specifically, if the model loss monotonically increases for a set number of epochs, I trigger early stopping as this indicates that the model has already identified a representation that minimises the loss.
 
 \subsection{Input Encoding}
 
