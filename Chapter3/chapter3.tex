@@ -234,11 +234,13 @@ Moreover, as the resulting vector sums to $1$ we can treat the values in the vec
 Broadly, two different types of neural networks exist: feed-forward networks and networks that use back-propagation. Feed-forward networks chronologically update the model on the basis of the data it is provided without concern for how each update to the model's parameters impact the model's ability to perform the classification task. 
 Back-propagation \citep{Backprop paper} was introduced as a method with which model parameters could be updated after the forward step of the model had completed and an evaluation of the model's performance with its most recent parameter weights. 
 By obtaining the model's loss, or model error given by a loss function, one can back-propagate the loss through the model to perform an update to the model's parameters after the completion of the forward step.
-In this dissertation, I only make use of back-propagated models and I experiment with two different loss functions, namely Negative Log Likelihood and Cross Entropy loss.
+In this dissertation, I only make use of back-propagated models with Negative Log Likelihood loss.
 
-\paragraph{Negative Log Likelihood}
+\paragraph{Negative Log Likelihood} I choose Negative Log Likelihood (NLL) as a loss function as it is particularly well-suited for use with the sigmoid function. I provide the definition of NLL as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $x$ is the input, $y$ is the class label, $w$ is the weight and $N$ is the batch size.
 
-\paragraph{Cross Entropy}
+\begin{equation}\label{eq:nll}
+  \mathtext{Negative Log Likelihood} \mathcal{l}(x, y) = \Sum_{n=1}^{N} \dfrac{1}{\Sum_{n=1}^{N} w_{y_{n}}}l_n
+\end{equation}
 
 \paragraph{Sigmoid}
 
