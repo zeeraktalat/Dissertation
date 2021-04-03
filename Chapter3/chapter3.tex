@@ -218,9 +218,12 @@ Training a neural network requires a host of different techniques for optimisati
 
 Across all neural network models trained for the experiments in this dissertation, I use a \texttt{Softmax} function to produce output values representing the likelihood for each class based on the model representations. The \texttt{Softmax} function operates by producing taking a vector and producing a value of $[0,1]$ of the vector by computing the normalised exponential function of all the units in the layers (see \cref{eq:softmax} for a mathematical definition for softmax).
 
-\begin{equation}\label{eq:softmax}
-  \mathtext{Softmax:} S(f_{y_i}) = \dfrac{exp^{f_{y}_i}}{\Sum_j exp^{f_j}}
-\end{equation}
+\begin{figure}
+  \begin{equation}\label{eq:softmax}
+    S(f_{y_i}) = \dfrac{exp^{f_{y_{i}}}}{\Sigma_j exp^{f_j}}
+  \end{equation}
+  \caption{Equation for the Softmax function.}
+\end{figure}
 
 Moreover, as the resulting vector sums to $1$ we can treat the values in the vector as a probability distribution where the largest value represents the most likely class.
 
@@ -231,11 +234,14 @@ Back-propagation \citep{Backprop paper} was introduced as a method with which mo
 By obtaining the model's loss, or model error given by a loss function, one can back-propagate the loss through the model to perform an update to the model's parameters after the completion of the forward step.
 In this dissertation, I only make use of back-propagated models with Negative Log Likelihood loss.
 
-\paragraph{Negative Log Likelihood} I choose Negative Log Likelihood (NLL) as a loss function as it is particularly well-suited for use with the sigmoid function. I provide the definition of NLL as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $x$ is the input, $y$ is the class label, $w$ is the weight and $N$ is the batch size.
+\paragraph{Negative Log Likelihood} I choose Negative Log Likelihood (NLL) as a loss function as it is particularly well-suited for use with the sigmoid function. I provide the definition of NLL as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $x$ is the input, $y$ is the class label, $w$ is the weight and $N$ is the batch size.\footnote{See \url{https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html} for the implementation details for Negative Log Likelihood.}
 
-\begin{equation}\label{eq:nll}
-  \mathtext{Negative Log Likelihood} \mathcal{l}(x, y) = \Sum_{n=1}^{N} \dfrac{1}{\Sum_{n=1}^{N} w_{y_{n}}}l_n
-\end{equation}
+\begin{figure}
+  \begin{equation}\label{eq:nll}
+    \mathit{l}(x, y) = \sum_{n=1}^{N} \dfrac{1}{\Sigma_{n=1}^{N} w_{y_{n}}}l_n
+  \end{equation}
+\caption{Equation for Negative Log Likelihood.}
+\end{figure}
 
 \subsubsection{Non-linearities}
 
