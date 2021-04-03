@@ -219,9 +219,22 @@ While a number of different approaches to identifying when to trigger early stop
 %
 \subsection{Optimisation Techniques}
 
-Training a neural network requires a host of different techniques for optimisation, such that the model can identify optimal minima. Among these are the loss function, the activation function and pooling functions for Convolutional Neural Networks (CNN). Further, in order to identify optimal minima, it may be necessary to train the model with a number of different values for the hyper-parameters (i.e. model parameters such as embedding sizes and parameters for the optimisation functions such as the learning rate) which is also a process that can be subject to optimisation itself. Here, I describe the different optimisation techniques that I use in this dissertation.
+Training a neural network requires a host of different techniques for optimisation, such that the model can identify optimal minima. Among these are the loss function, the activation function and pooling functions for Convolutional Neural Networks (CNN). Further, in order to identify optimal minima, it may be necessary to train the model with a number of different values for the hyper-parameters (i.e. model parameters such as embedding sizes and parameters for the optimisation functions such as the learning rate) which is also a process that can be subject to optimisation itself. Here, I describe the different optimisation techniques that I use in this dissertation. 
+
+Across all neural network models trained for the experiments in this dissertation, I use a \texttt{Softmax} function to produce output values representing the likelihood for each class based on the model representations. The \texttt{Softmax} function operates by producing taking a vector and producing a value of $[0,1]$ of the vector by computing the normalised exponential function of all the units in the layers (see \cref{eq:softmax} for a mathematical definition for softmax).
+
+\begin{equation}\label{eq:softmax}
+  \mathtext{Softmax:} S(f_{y_i}) = \dfrac{exp^{f_{y}_i}}{\Sum_j exp^{f_j}}
+\end{equation}
+
+Moreover, as the resulting vector sums to $1$ we can treat the values in the vector as a probability distribution where the largest value represents the most likely class.
 
 \subsubsection{Loss}
+
+Broadly, two different types of neural networks exist: feed-forward networks and networks that use back-propagation. Feed-forward networks chronologically update the model on the basis of the data it is provided without concern for how each update to the model's parameters impact the model's ability to perform the classification task. 
+Back-propagation \citep{Backprop paper} was introduced as a method with which model parameters could be updated after the forward step of the model had completed and an evaluation of the model's performance with its most recent parameter weights. 
+By obtaining the model's loss, or model error given by a loss function, one can back-propagate the loss through the model to perform an update to the model's parameters after the completion of the forward step.
+In this dissertation, I only make use of back-propagated models and I experiment with two different loss functions, namely Negative Log Likelihood and Cross Entropy loss.
 
 \paragraph{Negative Log Likelihood}
 
