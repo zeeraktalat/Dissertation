@@ -220,7 +220,7 @@ Across all neural network models trained for the experiments in this dissertatio
 
 \begin{figure}
   \begin{equation}\label{eq:softmax}
-    S(f_{y_i}) = \dfrac{exp^{f_{y_{i}}}}{\Sigma_j exp^{f_j}}
+    S(f_{y_i}) = \dfrac{e^{f_{y_{i}}}}{\Sigma_j e^{f_j}}
   \end{equation}
   \caption{Equation for the \texttt{softmax} function.}
 \end{figure}
@@ -240,16 +240,25 @@ By focusing on the probability estimate for the correct, in terms of ground trut
 
 \begin{figure}
   \begin{equation}\label{eq:nll}
-    ai\mathit{l}(x, y) = \sum_{n=1}^{N} \dfrac{1}{\Sigma_{n=1}^{N} w_{y_{n}}}l_n
+    \mathit{l}(x, y) = \sum_{n=1}^{N} \dfrac{1}{\Sigma_{n=1}^{N} w_{y_{n}}}l_n
   \end{equation}
-  \caption{Equation for Negative Log Likelihood.}
+  \caption{Equation for \texttt{Negative Log Likelihood} loss.}
 \end{figure}
 
 \subsubsection{Non-linearities}
 
 In the experiments conducted in this dissertation I use two different non-linear functions that I subject various layers in the neural network models to. The role of non-linearities in neural networks is to allow for models to learn a non-linear function rather than a linear one. The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
 
-\paragraph{Tanh}
+\paragraph{Tanh} The \texttt{Tanh} non-linear function is computed as 
+
+\begin{figure}
+  \begin{equation}\label{eq:nll}
+    \tanh{x} = \dfrac{e^x - e^{-x}}{e^x + e^{-x}} 
+  \end{equation}
+  \caption{Equation for \texttt{Tanh}.}
+\end{figure}
+\begin
+$$.
 
 \paragraph{Rectified Linear Unit}
 
