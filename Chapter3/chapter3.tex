@@ -272,9 +272,13 @@ One way to address the potential issue of vanishing gradients is to use a \textt
 
 For CNN models it is necessary to use either average pooling or maximum pooling to summarise the features under a filter. Average pooling computes the mean value of the pooling features under the filter while maximum pooling extracts the largest value. In my experiments with CNN models, I use maximum pooling exclusively due to its dominance in the CNN models developed for abuse detection \citep{CNN with max pooling papers}.
 
-\subsubsection{Optimisers}
+\subsubsection{Optimisation algorithms}
 
-\paragraph{Stochastic Gradient Descent} \citep{Kiefer:1952}
+At the heart of neural networks lie the optimisation algorithms that control the rate and manner in which model weights are updated. A number of different optimisation algorithms have been proposed for neural networks, but in my experiments I focus on two algorithms, Stochastic Gradient Descent (SGD) and Adam. For each of these algorithms, I use the originally proposed algorithm and a variant that address specific short-comings of each algorithm.
+
+% TODO You are here
+
+\paragraph{Stochastic Gradient Descent} Stochastic Gradient Descent is \citep{Kiefer:1952}
 
 \paragraph{Asynchronous Gradient Descent} \citep{Polyak:1992}
 
