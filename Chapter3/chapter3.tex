@@ -230,20 +230,24 @@ Moreover, as the resulting vector sums to $1$ we can treat the values in the vec
 \subsubsection{Loss}
 
 Broadly, two different types of neural networks exist: feed-forward networks and networks that use back-propagation. Feed-forward networks chronologically update the model on the basis of the data it is provided without concern for how each update to the model's parameters impact the model's ability to perform the classification task. 
-Back-propagation \citep{Backprop paper} was introduced as a method with which model parameters could be updated after the forward step of the model had completed and an evaluation of the model's performance with its most recent parameter weights. 
+Back-propagation \citep{Backprop paper} was introduced as a method with which model parameters could be updated after the forward step of the model had completed and an evaluation of the model's performance with its most recent parameter weights.
 By obtaining the model's loss, or model error given by a loss function, one can back-propagate the loss through the model to perform an update to the model's parameters after the completion of the forward step.
 In this dissertation, I only make use of back-propagated models with Negative Log Likelihood loss.
 
-\paragraph{Negative Log Likelihood} I choose Negative Log Likelihood (NLL) as a loss function as it is particularly well-suited for use with the sigmoid function. I provide the definition of NLL as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $x$ is the input, $y$ is the class label, $w$ is the weight and $N$ is the batch size.\footnote{See \url{https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html} for the implementation details for Negative Log Likelihood.}
+\paragraph{Negative Log Likelihood} I choose Negative Log Likelihood (NLL) as a loss function as it is particularly well-suited for use with the softmax function. I provide the definition of NLL as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $x$ is the input, $y$ is the class label, $w$ is the weight tensor, $l_n$ is defined as $−w_{y_{n}} x_{n,y_{n}}$ and $N$ is the batch size.\footnote{See \url{https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html} for the implementation details for Negative Log Likelihood.}
+Negative log-likelihood operates by by assigning a higher loss to for the correct class for each document on the basis of the probability estimates (obtained through the softmax function) for the class. The higher the probability estimation for the correct class is, the lower the loss is and on the other hand the smaller the probability estimate for the correct class is, the higher the loss is.
+By focusing on the probability estimate for the correct, in terms of ground truth, label, NLL avoids the potential issue of assigning all predictions with a correct or incorrect label a specific value. Thus, NLL addresses the model's certainty rather than the prediction itself.
 
 \begin{figure}
   \begin{equation}\label{eq:nll}
     \mathit{l}(x, y) = \sum_{n=1}^{N} \dfrac{1}{\Sigma_{n=1}^{N} w_{y_{n}}}l_n
   \end{equation}
-\caption{Equation for Negative Log Likelihood.}
+  \caption{Equation for Negative Log Likelihood.}
 \end{figure}
 
 \subsubsection{Non-linearities}
+
+In the experiments conducted in this dissertation I use two different non-linear functions that I subject various layers in the neural network models to. The role of non-linearities in neural networks is to allow for models to learn a non-linear function rather than a linear one. The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
 
 \paragraph{Tanh}
 
