@@ -218,7 +218,7 @@ Training a neural network requires a host of different techniques for optimisati
 
 Across all neural network models trained for the experiments in this dissertation, I use a \texttt{softmax} function to produce output values representing the likelihood for each class based on the model representations. The \texttt{softmax} function operates by producing taking a vector and producing a value of $[0,1]$ of the vector by computing the normalised exponential function of all the units in the layers (see \cref{eq:softmax} for a mathematical definition for \texttt{softmax}).
 
-\begin{figure}
+\begin{figure}[h]
   \begin{equation}\label{eq:softmax}
     S(f_{y_i}) = \dfrac{e^{f_{y_{i}}}}{\Sigma_j e^{f_j}}
   \end{equation}
@@ -234,11 +234,11 @@ Back-propagation \citep{Backprop paper} was introduced as a method with which mo
 By obtaining the model's loss, or model error given by a loss function, one can back-propagate the loss through the model to perform an update to the model's parameters after the completion of the forward step.
 In this dissertation, I only make use of back-propagated models with \texttt{Negative Log Likelihood} loss.
 
-\paragraph{Negative Log Likelihood} I choose \texttt{Negative Log Likelihood (NLL)} as a loss function as it is particularly well-suited for use with the \texttt{softmax} function. I provide the definition of \texttt{NLL} as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $x$ is the input, $y$ is the class label, $w$ is the weight tensor, $l_n$ is defined as $−w_{y_{n}} x_{n,y_{n}}$ and $N$ is the batch size.\footnote{See \url{https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html} for the implementation details for Negative Log Likelihood.}
+\paragraph{Negative Log Likelihood} I choose \texttt{Negative Log Likelihood (NLL)} as a loss function as it is particularly well-suited for use with the \texttt{softmax} function. I provide the definition of \texttt{NLL} as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $x$ is the input, $y$ is the class label, $w$ is the weight tensor, $l_n$ is defined as $-w_{y_{n}} x_{n,y_{n}}$ and $N$ is the batch size.\footnote{See \url{https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html} for the implementation details for Negative Log Likelihood.}
 Negative log-likelihood operates by by assigning a higher loss to for the correct class for each document on the basis of the probability estimates (obtained through the \texttt{softmax} function) for the class. The higher the probability estimation for the correct class is, the lower the loss is and on the other hand the smaller the probability estimate for the correct class is, the higher the loss is.
 By focusing on the probability estimate for the correct, in terms of ground truth, label, \texttt{NLL} avoids the potential issue of assigning all predictions with a correct or incorrect label a specific value. Thus, \texttt{NLL} addresses the model's certainty rather than the prediction itself.
 
-\begin{figure}
+\begin{figure}[h]
   \begin{equation}\label{eq:nll}
     \mathit{l}(x, y) = \sum_{n=1}^{N} \dfrac{1}{\Sigma_{n=1}^{N} w_{y_{n}}}l_n
   \end{equation}
@@ -249,16 +249,15 @@ By focusing on the probability estimate for the correct, in terms of ground trut
 
 In the experiments conducted in this dissertation I use two different non-linear functions that I subject various layers in the neural network models to. The role of non-linearities in neural networks is to allow for models to learn a non-linear function rather than a linear one. The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
 
-\paragraph{Tanh} The \texttt{Tanh} non-linear function is computed as 
+\paragraph{Tanh} The \texttt{Tanh} non-linear function is computed using \cref{eq:tanh}. 
 
-\begin{figure}
-  \begin{equation}\label{eq:nll}
+\begin{figure}[h]
+  \begin{equation}\label{eq:tanh}
     \tanh{x} = \dfrac{e^x - e^{-x}}{e^x + e^{-x}} 
   \end{equation}
   \caption{Equation for \texttt{Tanh}.}
 \end{figure}
-\begin
-$$.
+
 
 \paragraph{Rectified Linear Unit}
 
