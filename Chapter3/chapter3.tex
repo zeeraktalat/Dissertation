@@ -278,14 +278,16 @@ At the heart of neural networks lie the optimisation algorithms that control the
 
 \paragraph{Stochastic Gradient Descent}
 \texttt{Stochastic Gradient Descent}~\citep{Sutskever:2013} is a popular optimisation algorithm used for neural networks and has been used by a large number of researchers for a diverse set of tasks across various machine learning research areas and tasks, including online abuse detection \citep{Singh:2018,Bodapati:2019}. \texttt{SGD} relies on gradient descent, which is an algorithm that computes the gradients of points on a function until it reaches a minima. This process can be computationally expensive as gradient descent requires a computation on the entire dataset. This approach has two issues: First it is computationally expensive as the computation is performed on the entire dataset; second, gradient descent requires a learning rate being given, which determines the position for the next point at which to compute the gradient. If the learning rate is sufficiently small, and the function under optimisation is not a convex function, gradient descent may identify and settle at a local minima rather than the desired global minima.
-\texttt{SGD} similarly computes the gradients of points on a function, but rather than computing the gradient descent on the entire dataset, a single example is selected and the gradient descent is computed for that data point, thus minimising the computation time, even when more iterations are necessary to identify the minima. The second issue of local minima is in part addressed by the random nature of selecting a data point to compute the gradient from. This randomness results in greater fluctuations in the development of the gradient, however, this exact fluctuation and variance may allow the algorithm to identify a better minima.
 
 \begin{figure}[h]
-  \begin{equation}\label{eq:sgd}
-    \mathit{w} = mathit{w} - \eta \delta Q_i
-  \end{equation}
-  \caption{Equation for \texttt{Stochastic Gradient Descent}.}
+  \begin{align}\label{eq:sgd}
+    v_{t+1} &= \mu \nu_t - \epsilon \nabla f(\theta_t + \mu \nu_t)\\
+    \theta_{t+1} &= \theta_t + \nu_{t+1}
+  \end{align}
+  \caption[Equation for \texttt{Stochastic Gradient Descent}]{Equation for \texttt{Stochastic Gradient Descent} \citep{Sutskever:2014}, where $\epsilon$ is the learning rate, $\nabla f(\theta_t + \mu\nu_t)$ is the gradient, and $\mu$ is the momentum.}
 \end{figure}
+
+\texttt{SGD} similarly computes the gradients of points on a function, but rather than computing the gradient descent on the entire dataset, a single example is selected and the gradient descent is computed for that data point, thus minimising the computation time, even when more iterations are necessary to identify the minima. The second issue of local minima is in part addressed by the random nature of selecting a data point to compute the gradient from. This randomness results in greater fluctuations in the development of the gradient, however, this exact fluctuation and variance may allow the algorithm to identify a better minima.
 
 \paragraph{Averaged Stochastic Gradient Descent} Another approach to addressing the issue of identifying optimal minima is Averaged Stochastic Gradient Descent, \citet{Polyak:1992} propose
 \citep{Polyak:1992}
