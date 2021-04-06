@@ -282,7 +282,7 @@ At the heart of neural networks lie the optimisation algorithms that control the
 
 \begin{figure}[h]
   \begin{equation}\label{eq:sgd}
-    \mathit{w} = mathit{w} - \eta \delta Q_i (\mathit{w})
+    \mathit{w} = mathit{w} - \eta \delta Q_i
   \end{equation}
   \caption{Equation for \texttt{Stochastic Gradient Descent}.}
 \end{figure}
@@ -290,11 +290,14 @@ At the heart of neural networks lie the optimisation algorithms that control the
 \paragraph{Averaged Stochastic Gradient Descent} Another approach to addressing the issue of identifying optimal minima is Averaged Stochastic Gradient Descent, \citet{Polyak:1992} propose
 \citep{Polyak:1992}
 
-\paragraph{Asynchronous Gradient Descent} \citep{Polyak:1992}
 
 \paragraph{Adam} \citep{Kingma:2014}
 
-\paragraph{AdamW} \citep{Loshchilov:2019}
+Used by: \citep{Meyer:2019,Zimmerman:2018,Kolhatkar:2021}
+
+\paragraph{Adam with decoupled weight decay} \citep{Loshchilov:2019}
+
+Used by: \citep{Rottger:2021,Vidgen:2020,}
 
 
 \subsection{Bayesian Hyper Parameter Tuning}\label{sub:bho}
