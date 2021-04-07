@@ -299,14 +299,13 @@ The \texttt{Adam} algorithm is also a stochastic optimisation algorithm, however
 The algorithm seeks to compute the value of parameters $\theta$ at time-step $t$ that achieves convergence.
 However, rather than updating all parameters with with the same learning rate, \texttt{Adam} maintains a learning rate for each parameter which is adapted as the training of the network proceeds.
 
-\texttt{Adam} achieves this by first computing the gradients with regard to the stochastic objective at time-step $t$, then updating the biased mean estimate and the biased uncentered variance estimate.
-This is followed by computing the bias-corrected mean and uncentered variance estimates, respectively which are computed by factoring in exponential decay rates for the moment (mean and uncentered variances) estimates.
+\texttt{Adam} achieves this by first computing the gradients with regard to the stochastic objective at time-step $t$, then updating the biased mean estimate and the biased uncentred variance estimate.
+This is followed by computing the bias-corrected mean and uncentred variance estimates, respectively which are computed by factoring in exponential decay rates for the moment (mean and uncentred variances) estimates.
 Finally, the value of $\theta_t$ is updated and the process is repeated if $\theta_t$ has not converged.
 
-\paragraph{Adam with decoupled weight decay} \citep{Loshchilov:2019}
+\paragraph{Adam with decoupled weight decay} \texttt{Adam with decoupled weight decay (AdamW)} was proposed by \citet{Loshchilov:2019} as a result of examining the implementation of Adam in many libraries for neural network training and finding that many had incorrectly implemented \texttt{Adam} using $L2$ regularisation rather than weight decay.
 
-Used by: \citep{Rottger:2021,Vidgen:2020,}
-
+Since this correction, papers on abuse detection have started to use this algorithm \citep{Rottger:2021,Vidgen:2020} over the initial \texttt{Adam} implementation that used $L2$ regularisation rather than weight decay.
 
 \subsection{Bayesian Hyper Parameter Tuning}\label{sub:bho}
 
