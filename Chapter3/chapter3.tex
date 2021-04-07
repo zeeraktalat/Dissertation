@@ -290,11 +290,18 @@ At the heart of neural networks lie the optimisation algorithms that control the
 \texttt{SGD} similarly computes the gradients of points on a function, but rather than computing the gradient descent on the entire dataset, a single example is selected and the gradient descent is computed for that data point, thus minimising the computation time, even when more iterations are necessary to identify the minima. The second issue of local minima is in part addressed by the random nature of selecting a data point to compute the gradient from. This randomness results in greater fluctuations in the development of the gradient, however, this exact fluctuation and variance may allow the algorithm to identify a better minima.
 
 \paragraph{Averaged Stochastic Gradient Descent}
-Another approach to addressing the issue of identifying optimal minima is \texttt{Averaged Stochastic Gradient Descent}~\citet{Polyak:1992}. \texttt{ASGD} operates similarly to \texttt{SGD} but considers averaged trajectories in order to accelerate the identification of the optimal minima. The acceleration is obtained through a reduction of noise from the stochastic nature of the selection of data point for consideration. \texttt{ASGD} takes the standard \texttt{SGD} algorithm and recursively computes the average $\bar{w_t} = \tfrac{1}{t}\Sigma_{i=1}^t w_t$.
+Another approach to addressing the issue of identifying optimal minima is \texttt{Averaged Stochastic Gradient Descent}~\citet{Polyak:1992}. \texttt{ASGD} operates similarly to \texttt{SGD} but considers averaged trajectories in order to accelerate the identification of the optimal minima. The acceleration is obtained through a reduction of noise from the stochastic nature of the selection of data point for consideration. \texttt{ASGD} takes the standard \texttt{SGD} algorithm and recursively computes the average $\bar{w_t} = \tfrac{1}{t}\Sigma_{i=1}^t w_t$ \citep{Bottou:2010}.
 
-\paragraph{Adam} \citep{Kingma:2014}
+\paragraph{Adam}
+The \texttt{Adam} algorithm~\citep{Kingma:2014} is also frequently used in abuse detection classification research \citep{Meyer:2019,Zimmerman:2018,Kolhatkar:2021}.
+The algorithm seeks to further push the goal of faster convergence onto optimal minima, \citet{Kingma:2014} propose the \texttt{Adam} algorithm.
+The \texttt{Adam} algorithm is also a stochastic optimisation algorithm, however it only requires computing the first-order gradients. 
+The algorithm seeks to compute the value of parameters $\theta$ at time-step $t$ that achieves convergence.
+However, rather than updating all parameters with with the same learning rate, \texttt{Adam} maintains a learning rate for each parameter which is adapted as the training of the network proceeds.
 
-Used by: \citep{Meyer:2019,Zimmerman:2018,Kolhatkar:2021}
+\texttt{Adam} achieves this by first computing the gradients with regard to the stochastic objective at time-step $t$, then updating the biased mean estimate and the biased uncentered variance estimate.
+This is followed by computing the bias-corrected mean and uncentered variance estimates, respectively which are computed by factoring in exponential decay rates for the moment (mean and uncentered variances) estimates.
+Finally, the value of $\theta_t$ is updated and the process is repeated if $\theta_t$ has not converged.
 
 \paragraph{Adam with decoupled weight decay} \citep{Loshchilov:2019}
 
