@@ -295,7 +295,7 @@ Another approach to addressing the issue of identifying optimal minima is \textt
 \paragraph{Adam}
 The \texttt{Adam} algorithm~\citep{Kingma:2014} is also frequently used in abuse detection classification research \citep{Meyer:2019,Zimmerman:2018,Kolhatkar:2021}.
 The algorithm seeks to further push the goal of faster convergence onto optimal minima, \citet{Kingma:2014} propose the \texttt{Adam} algorithm.
-The \texttt{Adam} algorithm is also a stochastic optimisation algorithm, however it only requires computing the first-order gradients. 
+The \texttt{Adam} algorithm is also a stochastic optimisation algorithm, however it only requires computing the first-order gradients.
 The algorithm seeks to compute the value of parameters $\theta$ at time-step $t$ that achieves convergence.
 However, rather than updating all parameters with with the same learning rate, \texttt{Adam} maintains a learning rate for each parameter which is adapted as the training of the network proceeds.
 
@@ -308,7 +308,14 @@ Finally, the value of $\theta_t$ is updated and the process is repeated if $\the
 Since this correction, papers on abuse detection have started to use this algorithm \citep{Rottger:2021,Vidgen:2020} over the initial \texttt{Adam} implementation that used $L2$ regularisation rather than weight decay.
 
 \subsection{Bayesian Hyper Parameter Tuning}\label{sub:bho}
-% TODO You are here
+The performance of neural network architectures rely on a range of hyper-parameters that control their behaviour from a number of different positions in the model. For instance, the size of the layers in the network can be treated as a hyper-parameter, the learning rate for the optimisation algorithms, and the rate with which to apply dropout in the model.
+As a result of the many different potential hyper-parameters that can be tuned, the complete search space for all hyper-parameters grows exponentially for each new hyper-parameter under consideration. 
+While the same holds true for linear models, the number of parameters to explore often figure in much smaller ranges, for instance for the linear baseline models that I use in this dissertation, only hyper-parameters are used resulting in a search space that can be fully explored in the matter of minutes.
+For neural network models, a full search of the hyper-parameter search space however quickly becomes infeasible and thus introduces the question of how a hyper-parameter search space can be adequately explored without the need for a complete search. 
+
+One way to perform a hyper-parameter space search, without searching the complete space of every combination, is through Bayesian Optimisation for hyper-parameter identification \citep{Snoek:2012}. Through the use of Gaussian Processes (GP), the selection of hyper-parameters for trial can be cast as an optimisation problem, where the hyper-parameters serve as a feature space and the performance obtained with each parameter serves as the label.
+The aim of the GP model is to estimate how each hyper-parameter contributes to the final classification performance of the model and provide suggestions for the next set of hyper-parameters to trial.
+I use \citet{Wandb}, which implements \citet{Snoek:2012}, for all hyper-parameter searches for neural network-based experiments.
 
 \subsection{Metrics}
 
@@ -359,7 +366,7 @@ Third, for hard-parameter sharing models the complexity of developing the model 
 Fourth, as \cite{Caruana:1997} show, the framework allows for training for several distinct tasks while leveraging the similarities shared by each individual task.
 For hard parameter sharing models, this approach also introduces the risk (and opportunity) of a single task dominating the representation of the model, due to either more data being available or a task being selected with for training with greater probability than the remaining tasks. \citet{CITE: Weighting paper} argue, this risk can be mitigated by either weighting the loss function, such that loss of each task is controlled by the researcher and the importance they wish to provide each task \cite{CITE: Weighting paper}. However, as \cite{CITE: Weighting/aux task paper} show, there is also an opportunity in this risk. By assigning the task of primary interest a higher weight than all other tasks, the model can be guided towards prioritising what is learned from this task over all others \cite{CITE: Paper with auxiliary tasks}. Selecting such weighting of the different tasks, in a similar vein to feature selection assumes that the researcher has knowledge and a hypothesis about how the different tasks are likely to influence each other.
 Fifth, when working with different datasets for similar and distinct tasks alike, directly leveraging them outside of a multi-task learning model can be a cause for concern due to differences in collection rationales, data sources, or annotation strategies \cite{Waseem:2018}. However, through both weighting of the different tasks and the fact that each task has either its own input and output layers or its own model, such concerns can be alleviated due to either limited shared layers that are optimised or due to distinct models being trained that are regularised to minimise dissimilarity, depending on which parameter sharing strategy is used.
-Finally, in the event that an auxiliary task does not contribute to the primary task as the researcher had hypothesised, it may still contribute to the overall generalisability of the model as the offending task will act as regulariser for the primary task, as it introduces noise into shared layer.
+Finally, in the event that an auxiliary task does not contribute to the primary task as the researcher had hypothesised, it may still contribute to the overall generalisability of the model as the offending task will act as regulariser for the primary task, as it introduces noise into shared layer \citep{Bingel:2018}.
 
 \zw{Add paragraph on how MTL works with mini batching, batch selection, etc.}
 
