@@ -373,7 +373,7 @@ For abuse detection, the macro average of the F1-score is often used. The macro 
 
 As I explore different experimental research questions, I train different machine learning algorithm for detecting abusive language. Each of the model types that I use rely on different methods of operationalising data to obtain internal representations of the different classes. Here $X$ is to mean the processed input to the model, $Y$ is to denote the corresponding ground truth labels, and $\hat{Y}$ denote the set of model predictions. For all models, the aim is to learn a function $f(X|Y)$ that can delineate between each class $y_i\in Y$.
 
-\subsubsection{Logistic Regression}
+\paragraph{Logistic Regression}
 The first linear model that I use in this dissertation is Logistic Regression (LR), which has previously been used widely in NLP tasks, and abusive language detection in particular \citep{LR papers}. Logistic Regression is a model that carries certain assumptions about the data that is represented, in particular, I call to attention its assumption of feature independence. The assumption of feature independence presumes that each individual feature, or word token in the case of language, contributes to the classes in isolation of all other features. Trivially, this assumption does not hold for language.
 
 In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (see \ref{eq:sigmoid}) which calculates the probability of a data point, or document, belonging to a class. In \cref{eq:sigmoid}, $w_0, w_1 \cdots w_n$ denote model coefficients that are obtained through maximum likelihood estimation and $x_1 \cdots x_n$ represent the features that are treated independently.
@@ -386,17 +386,30 @@ In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (
   \caption{The \texttt{sigmoid} function.}
 \end{figure}
 
+\paragraph{Support Vector Machines}
+The Support Vector Machine (SVM) algorithm seeks to identify a hyper-plane where the data can be mapped to and classes $y_i \in Y$ are linearly separable. Such mappings can be computed using different kernels.
+Kernels are functions that can map data from one plane to another and several types of kernels exist, including a linear kernel, a Gaussian kernel, and a polynomial kernel among many others.
+In this dissertation, I solely use a linear kernel due to this kernel allowing for an analysis of the features.
+
+\zw{Finish this section by adding formula for linear SVM}
+
+LR and SVM models are subject to regularisation during the training process (see \cref{sec:anti-overfit}). In general, for linear models such regularisation occurs after the model weights have been trained by multiplying the regularisation parameter, with the summed loss for all training instances \citep{Fan:2008} (see \cref{eq:linreg} for formulation of the optimisation problem from \citet{Fan:2008}).
+
+\begin{figure}[h]
+  \begin{equation}\label{eq:linreg}
+    \min_w\frac{1}{2}\mathbf{w}^T\mathbf{w} + C\Sigma_i=1^N\xi(\mathbf{w};x_i,y_i)
+  \end{equation}
+  \caption[Formulation of regularsation for SVM and LR models]{Formulation of regularisation for SVM and LR models \citep{Fan:2008}. Where $C$ is the regularisation strength, $\mathbf{w}$ is the vector of optimised weights, and $\xi$ is a loss function.}
+\end{figure}
+
+\paragraph{Multi-Layered Perceptron}
 
 
-\subsubsection{Support Vector Machines}
-
-\subsubsection{MLP}
-
-\subsubsection{LSTM}
+\paragraph{Long-Short Term Memory network}
 % TODO Start by explaining an RNN
 % TODO Explain how LSTMs differ from RNNs
 
-\subsubsection{CNN}
+\paragraph{Convolutional Neural Network}
 
 
 \subsection{Multitask Learning}
