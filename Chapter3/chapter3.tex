@@ -462,8 +462,9 @@ However, through both weighting of the different tasks and the fact that each ta
 
 Finally, in the event that an auxiliary task does not contribute to the primary task as the researcher had hypothesised, it may still contribute to the overall generalisability of the model as the offending task will act as regulariser for the primary task, as it introduces noise into shared layer \citep{Bingel:2018}.
 
-\zw{Add paragraph on how MTL works with mini batching, batch selection, etc.}
-
+For hard parameter sharing MTL models, the selection of batches for training the model requires significant consideration as the batch determines which task is being trained. Thus, if one task is selected more than others, the resulting model will be tuned towards that model.
+For this reason, there are two ways to control which task acts as the primary task, 1) through the main task being selected most frequently or 2) through weighting the different tasks according to their importance.
+The latter method controls the influence of each task by multiplying the weight of each task with the loss produced following each epoch.
 
 \section{Fairness}\label{sec:fairlitt}
 
