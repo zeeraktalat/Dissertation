@@ -330,7 +330,7 @@ The score (see \cref{eq:acc}) computes the number of correct predictions out of 
 
 \begin{figure}[h]
   \begin{equation}\label{eq:acc}
-    accuracy(y,\hat{y}) = \frac{TP + TN}{TP + TN + FP + FN}
+    accuracy(Y,\hat{Y}) = \frac{TP + TN}{TP + TN + FP + FN}
   \end{equation}
   \caption{Equation for the \textit{accuracy score}.}
 \end{figure}
@@ -341,7 +341,7 @@ Specifically precision asks to which degree classifications into positive class 
 
 \begin{figure}[h]
   \begin{equation}\label{eq:prec}
-    precision(y,\hat{y}) = \frac{TP}{TP + FP}
+    precision(Y,\hat{Y}) = \frac{TP}{TP + FP}
   \end{equation}
   \caption{Equation for the \textit{precision score}.}
 \end{figure}
@@ -352,7 +352,7 @@ By computing the fraction of data predicted correctly into the positive class an
 
 \begin{figure}[h]
   \begin{equation}\label{eq:rec}
-    recall(y,\hat{y}) = \frac{TP}{TP + FN}
+    recall(Y,\hat{Y}) = \frac{TP}{TP + FN}
   \end{equation}
   \caption{Equation for the \textit{recall score}.}
 \end{figure}
@@ -361,8 +361,8 @@ By computing the fraction of data predicted correctly into the positive class an
 In practice it is often desirable to balance \texttt{precision} and \texttt{recall} as as they allow for intuitions into two crucial aspects of model performance, it's ability to correctly retrieve data into and exclude data from the positive class. The \texttt{F1-score} provides exactly such a balancing by computing the harmonic mean of the \texttt{precision} and \texttt{recall} scores (see \cref{eq:f1score}).
 
 \begin{figure}[h]
-  \begin{equation}\label{eq:rec}
-    F1-score(y,\hat{y}) = 2\frac{Precision * Recall}{Precision + Recall}
+  \begin{equation}\label{eq:f1score}
+    F1-score(Y,\hat{Y}) = 2\cdot\frac{Precision * Recall}{Precision + Recall}
   \end{equation}
   \caption{Equation for the \textit{F1-score}.}
 \end{figure}
@@ -371,7 +371,22 @@ For abuse detection, the macro average of the F1-score is often used. The macro 
 
 \subsection{Machine Learning Models}
 
+As I explore different experimental research questions, I train different machine learning algorithm for detecting abusive language. Each of the model types that I use rely on different methods of operationalising data to obtain internal representations of the different classes. Here $X$ is to mean the processed input to the model, $Y$ is to denote the corresponding ground truth labels, and $\hat{Y}$ denote the set of model predictions. For all models, the aim is to learn a function $f(X|Y)$ that can delineate between each class $y_i\in Y$.
+
 \subsubsection{Logistic Regression}
+The first linear model that I use in this dissertation is Logistic Regression (LR), which has previously been used widely in NLP tasks, and abusive language detection in particular \citep{LR papers}. Logistic Regression is a model that carries certain assumptions about the data that is represented, in particular, I call to attention its assumption of feature independence. The assumption of feature independence presumes that each individual feature, or word token in the case of language, contributes to the classes in isolation of all other features. Trivially, this assumption does not hold for language.
+
+In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (see \ref{eq:sigmoid}) which calculates the probability of a data point, or document, belonging to a class. In \cref{eq:sigmoid}, $w_0, w_1 \cdots w_n$ denote model coefficients that are obtained through maximum likelihood estimation and $x_1 \cdots x_n$ represent the features that are treated independently.
+
+\begin{figure}[h]
+  \begin{align}\label{eq:sigmoid}
+    F(z) &= \fraq{1}{1-e^{-z}}
+    z &= w_0 + w_1 \cdot x_1 + w_2 \cdot x_2 + \cdots + w_n \cdot x_n
+  \end{align}
+  \caption{The \texttt{sigmoid} function.}
+\end{figure}
+
+
 
 \subsubsection{Support Vector Machines}
 
