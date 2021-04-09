@@ -319,8 +319,55 @@ I use \citet{Wandb}, which implements \citet{Snoek:2012}, for all hyper-paramete
 
 \subsection{Metrics}
 
-\zw{INSERT: Explanation of F1, macro-F1, Precision, Recall, Accuracy}
+Model performances can be evaluated in a number of different ways, from qualitative analyses of the model outputs to quantitative analyses. Within the bracket of quantitative analysis, further subdivisions exist including the one I will use in this dissertation, namely the use metrics computed using model predictions and the ground truth.
+For my evaluation, I use the \texttt{F1-score}, \texttt{precision}, \texttt{recall}, and \textt{accuracy}. As many of the datasets that are used for training and evaluation have heavily imbalanced class distributions, each of these scores provide different aspects into model performances and different levels of insight into the models.
+The metrics all require insights into the agreements between the ground truth and a model's predictions. These agreements can be categorised into four different groups:
+\texttt{True Positives (TP)}, where the model's prediction and the ground truth label agree and the label belongs to the positive class; \texttt{True Negatives (TN)}, similarly where model prediction and ground truth agree and the label belongs to the negative class; \texttt{False Positive (FP)}, where the model predicts the label for the positive class but the ground truth is in the negative class; and \texttt{False Negative (FN)}, which is the inverse of \texttt{True Positive}, i.e. the model predicts the negative class but the ground truth is in the positive class.
 
+\paragraph{Accuracy}
+\texttt{Accuracy} is the simplest metrics among those I use, and it's subsequently also highly volatile to class imbalances.
+The score (see \cref{eq:acc}) computes the number of correct predictions out of all predictions made. For balanced datasets, this metric provides a good insight into a model's overall performance, however for imbalanced data, it is susceptible to providing a distorted view of a model's performance. For instance, if a dataset has a heavy class imbalance, a model that only predicts the majority class will have a deceivingly high \texttt{accuracy} score.
+
+\begin{figure}[h]
+  \begin{equation}\label{eq:acc}
+    accuracy(y,\hat{y}) = \frac{TP + TN}{TP + TN + FP + FN}
+  \end{equation}
+  \caption{Equation for the \textit{accuracy score}.}
+\end{figure}
+
+\paragraph{Precision}
+\texttt{Precision} provides an estimate of how well a model predicts into the positive class.
+Specifically precision asks to which degree classifications into positive class are correct classifications into the class (see \cref{eq:prec}). Thus, one can ascertain to which degree a model can be trusted when it predicts a positive label.
+
+\begin{figure}[h]
+  \begin{equation}\label{eq:prec}
+    precision(y,\hat{y}) = \frac{TP}{TP + FP}
+  \end{equation}
+  \caption{Equation for the \textit{precision score}.}
+\end{figure}
+
+\paragraph{Recall}
+\texttt{Recall} on the other hand, provides insight into the ability of a model to retrieve correct instances of the positive class.
+By computing the fraction of data predicted correctly into the positive class and the union of data correctly predicted into the positive class or incorrectly predicted into the negative class, \texttt{recall} can allow for an intuition into how trust-worthy a model is when it predicts that data is not in the positive class.
+
+\begin{figure}[h]
+  \begin{equation}\label{eq:rec}
+    recall(y,\hat{y}) = \frac{TP}{TP + FN}
+  \end{equation}
+  \caption{Equation for the \textit{recall score}.}
+\end{figure}
+
+\paragraph{F1-score}
+In practice it is often desirable to balance \texttt{precision} and \texttt{recall} as as they allow for intuitions into two crucial aspects of model performance, it's ability to correctly retrieve data into and exclude data from the positive class. The \texttt{F1-score} provides exactly such a balancing by computing the harmonic mean of the \texttt{precision} and \texttt{recall} scores (see \cref{eq:f1score}).
+
+\begin{figure}[h]
+  \begin{equation}\label{eq:rec}
+    F1-score(y,\hat{y}) = 2\frac{Precision * Recall}{Precision + Recall}
+  \end{equation}
+  \caption{Equation for the \textit{recall score}.}
+\end{figure}
+
+For abuse detection, the macro average of the F1-score is often used. The macro averaged F1-score, or macro F1-score, sum the F1-score for each class and computes their mean, thus providing insight into the performance of models across the different classes.
 
 \subsection{Machine Learning Models}
 
