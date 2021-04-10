@@ -191,7 +191,7 @@ In terms of language, using sub-words to represent documents can minimise the nu
 
 In this dissertation, I use the pre-trained Byte-Pair Embeddings (BPE) developed by \citet{Heinzerling:2018}. These embeddings were trained for $275$ languages using the Wikipedia pages in each language as the source of data. \citet{Heinzerling:2018} provide embeddings for $1,000,\, 3,000,\, 5,000,\, 10,000,\, 25,000,\, 50,000,\, 100,000$, and $200,000$ merge operations with dimensions $25,\, 50,\, 100,\, 200$, and $300$. For all chapters in this dissertation, I choose the $300$ dimensional embeddings that have been subject to $200,000$ merge operations
 
-\subsection{Strategies against over-fitting}\label{sec:dropoutearly}
+\subsection{Strategies against over-fitting}\label{sec:anti-overfit}
 
 Machine learning models are prone to identify salient patterns in the training data with the result that they perform poorly on evaluation sets and out-of-domain data. In order to address this issue, I use a number of different techniques depending on the type of model used.
 For linear models, I experiment with three different regularisers: L1 regularisation, L2 regularisation, and Elasticnet.
