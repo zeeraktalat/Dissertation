@@ -479,7 +479,7 @@ In general, work in the field operates along three different strands
   \item{a mitigation strand focusing on how biases that are present in models and datasets can be addressed.}
 \end{enumerate}
 
-\subsection{Mapping Limitations}
+\subsection{Mapping Uses and Limitations}
 
 A number papers have sought to map limitations in prior work and proposed methods for future works to document ethical risks and ramifications.
 In early work, \citet{Hovy-Spruit:2016} design a taxonomy of ethical risks of NLP systems from over generalisation to dual use of models and from exclusion of demographies of people in datasets to over- and under-exposure of topics to a model.
@@ -506,10 +506,10 @@ Contrary to this requirement, \citet{Romanov:2019} propose a method that does no
 Using the second conceptualisation as their basis \citet{Kulynych:2020} propose a class of Protective Optimisation Technologies (POTs) that use the logics of optimisation to counteract marginalisation demographic groups experience as the result of being direct or indirect subjects of optimisation technologies.
 Notably, this class of systems deviates from all other systems in that it does not necessitate developing computational models but rather seek to interact antagonistically with the optimisation technologies that people are subject to.
 Such systems can be computational in nature, for instance \citet{Kulynych:2020} show how an automated system can address disparities in loan applications by identifying which features can be modified by a demographically dissimilar collective that have similar loan applications to reduce the number of false negatives, that is people who are incorrectly predicted to default on loans, in part as a basis of their demographic belonging.
-In an example of a non-computational POTs \citet{Kulynych:2020} describe how people who see large amounts of traffic being redirected through residential neighbourhoods by route-planning applications report road works and other obstructions, to avoid traffic from being directed through their residential neighbourhoods. Thus, while the residents that resist the optimisation of route-planning applications are not the primary users of the application, they become externalities of those applications and antagonistically use the technologies to address the harms that are inflicted upon them by the optimisation technologies.
+In an example of a non-computational POTs, \citet{Kulynych:2020} describe how people who see large amounts of traffic being redirected through residential neighbourhoods by route-planning applications report road works and other obstructions, to avoid traffic from being directed through their residential neighbourhoods. Thus, while the residents that resist the optimisation of route-planning applications are not the primary users of the application, they become externalities of those applications and antagonistically use the technologies to address the harms that are inflicted upon them by the optimisation technologies.
 
 % Note that \cite{Sap:2019} misuse \cite{Blodgett:2016} to provide assumed demographic affiliation of the author, however author attributes are computationally estimated and \cite{Blodgett:2016}'s method does not afford such attribution.
 
 \section{Summary}
 
-In this chapter, I have provided an introduction to the
+In this chapter, I have provided an introduction to the computational methods and logics that the work in this dissertation rely on. First, I introduced the task of abusive language detection; second, I provided an overview of the datasets that I used in the subsequent chapters of this dissertation; third, I detail the different parts of the modelling process that the machine learning systems developed in this dissertation rely on; and finally, I gave a brief overview of different strands of thinking for work on bias and fairness in the machine learning literature.
