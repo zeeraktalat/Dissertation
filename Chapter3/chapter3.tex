@@ -487,13 +487,11 @@ Following with considerations of datasets, \citet{Bender-Friedman:2018} and \cit
 More recently, \citet{Blodgett:2020} surveyed $146$ papers addressing questions of bias in NLP, and identify that in spite of the large body of work, the notion of ``bias'' is often under-specified to a point that ``techniques [for addressing bias] are poorly matched to their motivations, and are not comparable to one another'' \citep[p. 5455]{Blodgett:2020}.
 
 \subsection{Quantifying harms}
-\cite{Buolamwini:2018}
-\cite{Kulynych:2020}
-\cite{Shah:2020}
-\cite{Vanmassenhove:2018}
-\cite{Waseem:2016}
-\cite{Derzynski:2016}
-\cite{Birhane:2020}
+
+\citet{Shah:2020} propose a mathematical framework for quantifying biases that arise in different steps of the NLP pipeline with a basis in the taxonomy proposed by \citet{Hovy-Spruit:2016}. Here, the authors develop a method to quantify biases that may stem from the data and models trained on it, aiming to provide designers of NLP pipelines with a method to zoom away from the details of how data and models may be biased and instead obtain an abstraction that provides a guide to where human attention may be needed.
+Moving away from a laboratory setting, \citet{Buolamwini:2018} identify how commercial facial recognition systems perform and fail for people. They find that there is a correlation between a facial recognition system's ability to identify faces and the gender and skin-tone of the subject. They find that, in general the systems surveyed tend to perform worse on darker skin-tones and women, with the ability to detect dark-skinned women.
+Turning to language, \citet{Gonen:2019} highlight that many methods for addressing bias in word embeddings leave traces of stereotypes that allow for reconstruction of gendered spaces in word embeddings that have been treated for gender bias.\footnote{Although bias treatment is often termed ``debiasing'', I resist convention as the term ``debias'' is a red-herring for ``acceptable bias''. As I address in greater detail in \cref{chap:disembodied}, such language obscure how methods treated for bias exist and are politicised.}
+In a different conceptualisation and operationalisation of bias, \citet{Waseem:2016} examine how different annotator groups label hate speech. While many of the previous methods seek to eliminate, document, or redress biases in datasets and models, \citet{Waseem:2016} proposes to instead accept that social biases are an inevitable force that cannot simply be removed. Instead, they propose that one can lean into this issue by specifically biasing data towards a specific position. \citet{Waseem:2016} argue that by such deviation from requiring a ``debiased'' or ``global'' position, it is possible to train models that outperform systems that are based on data that reflects the quest for a global consensus.
 
 \subsection{Harm Reduction}
 \cite{Agarwal:2018}
