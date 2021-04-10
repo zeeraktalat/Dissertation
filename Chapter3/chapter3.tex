@@ -468,7 +468,7 @@ The latter method controls the influence of each task by multiplying the weight 
 
 \section{Fairness}\label{sec:fairlitt}
 
-Bias and fairness in machine learning is a growing field that seeks to describe and address how machine learning systems have disparate impacts on different groups, leading to downstream marginalisation of some bodies. 
+Bias and fairness in machine learning and the corresponding field for NLP are growing fields that seeks to describe and address how machine learning systems have disparate impacts on different groups, leading to downstream marginalisation of some bodies.
 The field addresses the question of marginalisation using statistically based measures to quantify and redress the harms enacted by optimisation technologies \citep{Kulynych:2020}.
 In other words, the field attempts to address issues of marginalisation by using the very abstractions that cause the exacerbation of harms by computational tools.
 In general, work in the field operates along three different strands
@@ -476,19 +476,15 @@ In general, work in the field operates along three different strands
 \begin{enumerate}
   \item{A descriptive strand which aims to map out models and datasets with their intended uses and limitations,}
   \item{a quantitative strand, which seeks the quantification and automated analysis of the quantification and analysis of disparate outcomes of model prediction, and}
-  \item{a the mitigation of biases that are present in the models and datasets, and}
+  \item{a mitigation strand focusing on how biases that are present in models and datasets can be addressed.}
 \end{enumerate}
 
 \paragraph{Mapping Limitations}
 
-A number
-
-% Mapping
-\cite{Mitchell:2019}
-\cite{Bender-Friedman:2018}
-\cite{Hovy-Spruit:2016}
-\cite{Blodget:2020}
-\cite{Holstein:2019}
+A number papers have sought to map limitations in prior work and proposed methods for future works to document ethical risks and ramifications.
+In early work, \citet{Hovy-Spruit:2016} design a taxonomy of ethical risks of NLP systems from over generalisation to dual use of models and from exclusion of demographies of people in datasets to over- and under-exposure of topics to a model.
+Following with considerations of datasets, \citet{Bender-Friedman:2018} and \citet{Gebru:2018} propose ``data statements'' and ``data sheets'', respectively, to documenting the processes with which datasets for machine learning experiments are created and the logics that they draw on for their creation, and shortly thereafter \citet{Mitchell:2019} propose an analogous ``model card'' framework for describing the design rationales for machine learning models.
+More recently, \citet{Blodgett:2020} surveyed $146$ papers addressing questions of bias in NLP, and identify that in spite of the large body of work, the notion of ``bias'' is often under-specified to a point that ``techniques [for addressing bias] are poorly matched to their motivations, and are not comparable to one another'' \citep[p. 5455]{Blodgett:2020}.
 
 \subsection{Quantifying harms}
 \cite{Buolamwini:2018}
