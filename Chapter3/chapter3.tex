@@ -494,9 +494,22 @@ Turning to language, \citet{Gonen:2019} highlight that many methods for addressi
 In a different conceptualisation and operationalisation of bias, \citet{Waseem:2016} examine how different annotator groups label hate speech. While many of the previous methods seek to eliminate, document, or redress biases in datasets and models, \citet{Waseem:2016} proposes to instead accept that social biases are an inevitable force that cannot simply be removed. Instead, they propose that one can lean into this issue by specifically biasing data towards a specific position. \citet{Waseem:2016} argue that by such deviation from requiring a ``debiased'' or ``global'' position, it is possible to train models that outperform systems that are based on data that reflects the quest for a global consensus.
 
 \subsection{Harm Reduction}
-\cite{Agarwal:2018}
-\cite{Romanov:2019}
-Note that \cite{Sap:2019} misuse \cite{Blodgett:2016} to provide assumed demographic affiliation of the author, however author attributes are computationally estimated and \cite{Blodgett:2016}'s method does not afford such attribution.
-\cite{Davidson:2019}
-\cite{Zhao:2017}
+At least two broad conceptualisations of bias can be found in the large body of work dedicated to this question \citep[e.g.][]{Agarwal:2018,Romanov:2019,Kulynych:2020,Bolukbasi:2016,Zhao:2017}.
+In the first conceptualisation, bias can be imagined as a finite and countable quantity in a model. Being a countable quantity, it can also be minimised and reduced out of the model or data representation.
+The aims of this work, is not only to minimise the discriminatory social biases that exist in the models but also maintain ``good'' performance on the primary task.
+Thus, this line of work accepts a premise that models and data representations that have been treated for bias must still be useful for their intended purpose instead of proposing that models that cannot function without encoding social biases cease to have a valid justification for their existence.
+The second conceptualisation of harm reduction accepts that machine learning models, and optimisation systems more generally, are subject to social biases and instead of direct reductions to the model, seek to identify methods that can externally counteract marginalisation.
 
+Working within the first conceptualisation, \citet{Agarwal:2018} propose a method to modify the weights of trained models such that they satisfy a given criteria for fairness. In this work, there is a reliance on the knowledge of who, in the case of language data, the speaker is and what demographics they belong to.
+Contrary to this requirement, \citet{Romanov:2019} propose a method that does not have this requirement. Instead, they propose developing an auxiliary machine learning system for the expressed purposed of identifying the demographic belongs of a person given text that they have authored. The predictions of this machine learning system is tehn encoded into the loss function of the task they seek to train a model that has been treated for bias, letting the loss be subject to the identities that the author has.
+
+Using the second conceptualisation as their basis \citet{Kulynych:2020} propose a class of Protective Optimisation Technologies (POTs) that use the logics of optimisation to counteract marginalisation demographic groups experience as the result of being direct or indirect subjects of optimisation technologies.
+Notably, this class of systems deviates from all other systems in that it does not necessitate developing computational models but rather seek to interact antagonistically with the optimisation technologies that people are subject to.
+Such systems can be computational in nature, for instance \citet{Kulynych:2020} show how an automated system can address disparities in loan applications by identifying which features can be modified by a demographically dissimilar collective that have similar loan applications to reduce the number of false negatives, that is people who are incorrectly predicted to default on loans, in part as a basis of their demographic belonging.
+In an example of a non-computational POTs \citet{Kulynych:2020} describe how people who see large amounts of traffic being redirected through residential neighbourhoods by route-planning applications report road works and other obstructions, to avoid traffic from being directed through their residential neighbourhoods. Thus, while the residents that resist the optimisation of route-planning applications are not the primary users of the application, they become externalities of those applications and antagonistically use the technologies to address the harms that are inflicted upon them by the optimisation technologies.
+
+% Note that \cite{Sap:2019} misuse \cite{Blodgett:2016} to provide assumed demographic affiliation of the author, however author attributes are computationally estimated and \cite{Blodgett:2016}'s method does not afford such attribution.
+
+\section{Summary}
+
+In this chapter, I have provided an introduction to the
