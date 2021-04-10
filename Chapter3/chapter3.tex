@@ -376,11 +376,11 @@ As I explore different experimental research questions, I train different machin
 \paragraph{Logistic Regression}
 The first linear model that I use in this dissertation is Logistic Regression (LR), which has previously been used widely in NLP tasks, and abusive language detection in particular \citep{LR papers}. Logistic Regression is a model that carries certain assumptions about the data that is represented, in particular, I call to attention its assumption of feature independence. The assumption of feature independence presumes that each individual feature, or word token in the case of language, contributes to the classes in isolation of all other features. Trivially, this assumption does not hold for language.
 
-In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (see \ref{eq:sigmoid}) which calculates the probability of a data point, or document, belonging to a class. In \cref{eq:sigmoid}, $w_0, w_1 \cdots w_n$ denote model coefficients that are obtained through maximum likelihood estimation and $x_1 \cdots x_n$ represent the features that are treated independently.
+In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (see \autoref{eq:sigmoid}) which calculates the probability of a data point, or document, belonging to a class. In \autoref{eq:sigmoid}, $w_0, w_1, \ldots, w_n$ denote model coefficients that are obtained through maximum likelihood estimation and $x_1, \ldots, x_n$ represent the features that are treated independently.
 
 \begin{figure}[h]
   \begin{align}\label{eq:sigmoid}
-    F(z) &= \fraq{1}{1-e^{-z}}\\
+    F(z) &= \frac{1}{1-e^{-z}}\\
     z &= w_0 + w_1 \cdot x_1 + w_2 \cdot x_2 + \cdots + w_n \cdot x_n
   \end{align}
   \caption{The \texttt{sigmoid} function.}
