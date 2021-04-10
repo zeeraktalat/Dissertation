@@ -387,19 +387,14 @@ In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (
 \end{figure}
 
 \paragraph{Support Vector Machines}
-The Support Vector Machine (SVM) algorithm seeks to identify a hyper-plane where the data can be mapped to and classes $y_i \in Y$ are linearly separable. Such mappings can be computed using different kernels.
-Kernels are functions that can map data from one plane to another and several types of kernels exist, including a linear kernel, a Gaussian kernel, and a polynomial kernel among many others.
-In this dissertation, I solely use a linear kernel due to this kernel allowing for an analysis of the features.
-
-\zw{Finish this section by adding formula for linear SVM}
-
-LR and SVM models are subject to regularisation during the training process (see \cref{sec:anti-overfit}). In general, for linear models such regularisation occurs after the model weights have been trained by multiplying the regularisation parameter, with the summed loss for all training instances \citep{Fan:2008} (see \cref{eq:linreg} for formulation of the optimisation problem from \citet{Fan:2008}).
+The Support Vector Machine (SVM) algorithm seeks to identify a hyper-plane where the data can be mapped to and classes $y_i \in Y$ are linearly separable. Such mappings can be computed using different kernels. Beyond identifying a hyper-plane where the classes are linearly separable, SVMs also have the additional aim of identifying a hyper-plane that maximises the margins, that is the distance between the linear separation and the closest data points for each class. Specifically, SVMs seeks to maximise the prediction given by $\sign(w^T\phi(x)+b)$ where $\phi$ is the identity function and $b$ is an independent value.
+Although many different kernels exist for SVM classifiers, I use a linear kernel (see \cref{eq:svm} for the mathematical formula used by \citet{Pedregosa:2011}) as this provides weights for each feature that can be analysed to understand which patterns the model is learning.
 
 \begin{figure}[h]
-  \begin{equation}\label{eq:linreg}
-    \min_w\frac{1}{2}\mathbf{w}^T\mathbf{w} + C\Sigma_i=1^N\xi(\mathbf{w};x_i,y_i)
+  \begin{equation}
+    \min_{w,b} \frac{1}{2}w^T w + C \Sigma_{i=1}\max(0, y_i(w^T\phi(x_i)+b))
   \end{equation}
-  \caption[Formulation of regularsation for SVM and LR models]{Formulation of regularisation for SVM and LR models \citep{Fan:2008}. Where $C$ is the regularisation strength, $\mathbf{w}$ is the vector of optimised weights, and $\xi$ is a loss function.}
+  \caption{Formulation of the Linear Support Vector Machine provided by \citet{Pedregosa:2011}, where $\phi$ is the identity function and $C$ is the regularisation strength.}
 \end{figure}
 
 \paragraph{Multi-Layered Perceptron}
