@@ -394,7 +394,7 @@ Although many different kernels exist for SVM classifiers, I use a linear kernel
 
 \begin{figure}[h]
   \begin{equation}
-    \min_{w,b} \frac{1}{2}w^T w + C \Sigma_{i=1}\max(0, y_i(w^T\phi(x_i)+b))
+    \min_{w,b} \frac{1}{2}w^T w + C\cdot \Sigma_{i=1}\max(0, y_i(w^T\phi(x_i)+b))
   \end{equation}
   \caption{Formulation of the Linear Support Vector Machine provided by \citet{Pedregosa:2011}, where $\phi$ is the identity function and $C$ is the regularisation strength.}
 \end{figure}
@@ -405,7 +405,7 @@ Similar to the linear models described in the past sections, MLPs also have an i
 
 \begin{figure}[h]
   \begin{equation}\label{eq:perceptron_update}
-    w_{i+1} = w_i(t) + \epsilon (y_i - \hat{y_i(t))x_{i}})
+    w_{i+1} = w_i(t) + \epsilon (y_i - \hat{y_i}(t))x_{i})
   \end{equation}
   \caption[The Perceptron weight update function.]{The Perceptron weight update function for binary classification. Where $t$ is the time-step, $\epsilon$ is the learning rate, $x_i$ is the training example, $y_i$ and $\hat{y_i}(t)$ are the ground truth and the model prediction at time-step $t$, respectively.}
 \end{figure}
