@@ -390,6 +390,8 @@ In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (
 The Support Vector Machine (SVM) algorithm seeks to identify a hyper-plane where the data can be mapped to and classes $y_i \in Y$ are linearly separable. Such mappings can be computed using different kernels. Beyond identifying a hyper-plane where the classes are linearly separable, SVMs also have the additional aim of identifying a hyper-plane that maximises the margins, that is the distance between the linear separation and the closest data points for each class. Specifically, SVMs seeks to maximise the prediction given by $\sign(w^T\phi(x)+b)$ where $\phi$ is the identity function and $b$ is an independent value.
 Although many different kernels exist for SVM classifiers, I use a linear kernel (see \cref{eq:svm} for the mathematical formula used by \citet{Pedregosa:2011}) as this provides weights for each feature that can be analysed to understand which patterns the model is learning.
 
+% See for SVM documentation: https://scikit-learn.org/stable/modules/svm.html#id15
+
 \begin{figure}[h]
   \begin{equation}
     \min_{w,b} \frac{1}{2}w^T w + C \Sigma_{i=1}\max(0, y_i(w^T\phi(x_i)+b))
@@ -399,6 +401,16 @@ Although many different kernels exist for SVM classifiers, I use a linear kernel
 
 \paragraph{Multi-Layered Perceptron}
 
+The Multi-Layered Perceptron (MLP) is perhaps the simplest form of neural network. This neural network consists of an input layer and an output layer, relying on the Perceptron algorithm. The Perceptron algorithm specifies a classifier that seeks to learn the weights of some given input. The weights are learned by having some pre-initialised weights for each feature that is input, and updating the weight each time a feature is encountered given an update rule (see \cref{eq:perceptron_update}).
+
+\begin{figure}[h]
+  \begin{equation}\label{eq:perceptron_update}
+    w_{i+1} = w_i(t) + \epsilon (y_i - \hat{y_i(t))x_{i}})
+  \end{equation}
+  \caption[The Perceptron weight update function.]{The Perceptron weight update function for binary classification. Where $t$ is the time-step, $\epsilon$ is the learning rate, $x_i$ is the training example, $y_i$ and $\hat{y_i}(t)$ are the ground truth and the model prediction at time-step $t$, respectively.}
+\end{figure}
+
+The MLP expands on the idea of the Perceptron by inserting one or multiple hidden layers between the input and output layers. Moreover, a MLP can be developed either as a feed-forward network or a neural network with back-propagation. In this dissertation, all MLPs are trained with back-propagation.
 
 \paragraph{Long-Short Term Memory network}
 % TODO Start by explaining an RNN
