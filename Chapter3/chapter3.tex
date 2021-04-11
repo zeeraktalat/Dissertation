@@ -417,16 +417,22 @@ In this dissertation, all MLPs are trained with back-propagation.
 \paragraph{Long-Short Term Memory Networks}
 The idea of recurrence for neural networks stems from the realisation that MLPs are poorly suited to address sequences that move through some conceptualisation of time.
 \footnote{The conceptualisation of time can vary depending on the data and task at hand. For structured prediction, time can be the sequence of tokens while for stock price prediction it can be the traditional understanding of time as a linear construct.}
-To address this short-coming, Recurrent Neural Networks (RNNs) were proposed. RNNs introduce a loop, or recurrence, in the neural network by iterating over the components of the input, linking each iteration of the loops to all prior iterations.
+To address this short-coming, Recurrent Neural Networks (RNNs) were proposed. RNNs introduce a loop, or recurrence, in the neural network by iterating over the components of the input, linking each iteration (cell) of the loops to all prior iterations.
 By linking into past iterations of the within-model loop, RNNs can model developments of data through a linear conceptualisation of time, by predicating the performance of the loop at time-step $t$ on the representation of the network at time-step $t-1$.
-For instance, when passing a document through a RNN, the model will iterate over the document, treating each token as a time-step. The representation derived for the token at time-step $t$ will then be predicated by all preceding tokens.
+For instance, when passing a document through a RNN, the model will iterate over the document, treating each token as a time-step.
+The representation derived for the token at time-step $t$ will then be predicated by all preceding tokens.
 In this way, RNN models can encode dependencies to understand complex interactions of tokens through time.
 
-In practice however, RNNs aren't well suited for long-range dependencies, as all preceding time-steps are treated with equal value, however some information occurring at an earlier time-step may not be relevant to all subsequent time-steps. To address this issue, \citet{Schmidthuber:2012} propose the Long-Short Term Memory (LSTM) network, which is a special form of RNN.
-LSTMs differ from vanilla RNNs by introducing a ``forget gate'' which determines whether information from a previous time-step is retained or is ``forgotten'' for the current time-step.
+In practice however, RNNs aren't well suited for long-range dependencies, as all preceding time-steps are treated with equal value, leading to a decay over time.
+Additionally, some information occurring at an earlier time-step may not be relevant to all subsequent time-steps.
+To address this issue, \citet{Schmidthuber:1997} propose the Long-Short Term Memory (LSTM) network, which is a special form of RNNs.
+LSTMs differ from vanilla RNNs by introducing the concepts of gates. Namely, \citet{Schmidthuber:1997} introduce a ``forget'' gate and an ``input'' gate in each cell of the LSTM. Each gate in the LSTM cell can modify the cell state.
+First, the input at time-step $h_t$ receives the output from the cell at state $h_{t-1}$ and a sigmoid function that determines what information from the cell state at $h_{t-1}$ is retained, given $x_t$.
+Next, the ``input'' gate decides which values will be stored in the cell state. This decision is made by first selecting the values that are to be updated and how much they are to be updated, and then creating a vector of candidate values to be added.
+Having computed which values to forget, store, and update, it is now a simple matter of performing the updates to the cell state at $h_{t-1}$. First modifying the cell-state to only retain the values that are to be remembered. Then, the values selected for updating and their candidate values are added to the cell-state, thus producing a new cell-state.
+Finally, a version of the cell-state, filtered by a sigmoid function to control what is passed on, is output to the next cell $h_{t+1}$.
 
-% TODO Start by explaining an RNN
-% TODO Explain how LSTMs differ from RNNs
+For my experiments using LSTMs, I use the implementation offered by \citet{Paszke:2019} which uses the variation of LSTMs proposed by \citet{Sak:2014}.
 
 \paragraph{Convolutional Neural Network}
 
