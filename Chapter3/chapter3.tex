@@ -401,6 +401,7 @@ Although many different kernels exist for SVM classifiers, I use a linear kernel
 
 \paragraph{Multi-Layered Perceptron}
 The Multi-Layered Perceptron (MLP) is perhaps the simplest form of neural network. This neural network is an extension of the Perceptron algorithm by chaining several Perceptron units into a single layer, A Perceptron is updated given the update rule in \autoref{eq:perceptron_update}. Moreover, rather than consisting of a single Perceptron that learns weights of the training data, MLPs are formed of multiple layers of chained Perceptron units. An MLP requires at least three layers, an input layer, at least one hidden layer, and an output layer.
+Similar to the linear models described in the past sections, MLPs also have an independence assumption coded in, as they assume that each input token is independent from each other.
 
 \begin{figure}[h]
   \begin{equation}\label{eq:perceptron_update}
@@ -413,7 +414,17 @@ Finally, the Perceptron, similarly SVM and LR classifiers is a classifier operat
 A network that uses back-propagation updates the model representation first in the same manner as a feed-forward network in its forward pass, second by computing the loss and propagating it backwards through the model, updating the representation as the loss is propagated through each layer of the model.
 In this dissertation, all MLPs are trained with back-propagation.
 
-\paragraph{Long-Short Term Memory network}
+\paragraph{Long-Short Term Memory Networks}
+The idea of recurrence for neural networks stems from the realisation that MLPs are poorly suited to address sequences that move through some conceptualisation of time.
+\footnote{The conceptualisation of time can vary depending on the data and task at hand. For structured prediction, time can be the sequence of tokens while for stock price prediction it can be the traditional understanding of time as a linear construct.}
+To address this short-coming, Recurrent Neural Networks (RNNs) were proposed. RNNs introduce a loop, or recurrence, in the neural network by iterating over the components of the input, linking each iteration of the loops to all prior iterations.
+By linking into past iterations of the within-model loop, RNNs can model developments of data through a linear conceptualisation of time, by predicating the performance of the loop at time-step $t$ on the representation of the network at time-step $t-1$.
+For instance, when passing a document through a RNN, the model will iterate over the document, treating each token as a time-step. The representation derived for the token at time-step $t$ will then be predicated by all preceding tokens.
+In this way, RNN models can encode dependencies to understand complex interactions of tokens through time.
+
+In practice however, RNNs aren't well suited for long-range dependencies, as all preceding time-steps are treated with equal value, however some information occurring at an earlier time-step may not be relevant to all subsequent time-steps. To address this issue, \citet{Schmidthuber:2012} propose the Long-Short Term Memory (LSTM) network, which is a special form of RNN.
+LSTMs differ from vanilla RNNs by introducing a ``forget gate'' which determines whether information from a previous time-step is retained or is ``forgotten'' for the current time-step.
+
 % TODO Start by explaining an RNN
 % TODO Explain how LSTMs differ from RNNs
 
