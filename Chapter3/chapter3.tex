@@ -214,7 +214,7 @@ While a number of different approaches to identifying when to trigger early stop
 %
 \subsection{Optimisation Techniques}
 
-Training a neural network requires a host of different techniques for optimisation, such that the model can identify optimal minima. Among these are the loss function, the activation function and pooling functions for Convolutional Neural Networks (CNN). Further, in order to identify optimal minima, it may be necessary to train the model with a number of different values for the hyper-parameters (i.e. model parameters such as embedding sizes and parameters for the optimisation functions such as the learning rate) which is also a process that can be subject to optimisation itself. Here, I describe the different optimisation techniques that I use in this dissertation. 
+Training a neural network requires a host of different techniques for optimisation, such that the model can identify optimal minima. Among these are the loss function, the activation function and pooling functions for Convolutional Neural Networks (CNN). Further, in order to identify optimal minima, it may be necessary to train the model with a number of different values for the hyper-parameters (i.e. model parameters such as embedding sizes and parameters for the optimisation functions such as the learning rate) which is also a process that can be subject to optimisation itself. Here, I describe the different optimisation techniques that I use in this dissertation.
 
 Across all neural network models trained for the experiments in this dissertation, I use a \texttt{softmax} function to produce output values representing the likelihood for each class based on the model representations. The \texttt{softmax} function operates by producing taking a vector and producing a value of $[0,1]$ of the vector by computing the normalised exponential function of all the units in the layers (see \cref{eq:softmax} for a mathematical definition for \texttt{softmax}).
 
@@ -393,8 +393,8 @@ Although many different kernels exist for SVM classifiers, I use a linear kernel
 % See for SVM documentation: https://scikit-learn.org/stable/modules/svm.html#id15
 
 \begin{figure}[h]
-  \begin{equation}
-    \min_{w,b} \frac{1}{2}w^T w + C \Sigma_{i=1}\max(0, y_i(w^T\phi(x_i)+b))
+  \begin{equation}\label{eq:svm}
+    \min_{w,b} \frac{1}{2}w^T w + C\cdot \Sigma_{i=1}\max(0, y_i(w^T\phi(x_i)+b))
   \end{equation}
   \caption{Formulation of the Linear Support Vector Machine provided by \citet{Pedregosa:2011}, where $\phi$ is the identity function and $C$ is the regularisation strength.}
 \end{figure}
@@ -405,7 +405,7 @@ Similar to the linear models described in the past sections, MLPs also have an i
 
 \begin{figure}[h]
   \begin{equation}\label{eq:perceptron_update}
-    w_{i+1} = w_i(t) + \epsilon (y_i - \hat{y_i(t))x_{i}})
+    w_{i+1} = w_i(t) + \epsilon (y_i - \hat{y_i}(t))x_{i})
   \end{equation}
   \caption[The Perceptron weight update function.]{The Perceptron weight update function for binary classification. Where $t$ is the time-step, $\epsilon$ is the learning rate, $x_i$ is the training example, $y_i$ and $\hat{y_i}(t)$ are the ground truth and the model prediction at time-step $t$, respectively.}
 \end{figure}
@@ -440,7 +440,8 @@ Like all other forms of neural networks, CNNs have an input, an output layer, an
 The hidden layers of CNNs contain \textit{convolutional layers}. These layers apply a series of convolutions, or sliding windows over a matrix of features and compute a summary of those features.
 Where other networks, MLPs for instance, often contain just a single hidden layer, CNNs often contain multiple hidden layers in the form of convolutional layers.
 After the data has been processed by each convolutional layer, a non-linearity is applied to the resulting representation.
-Once all convolutions have been completed, a pooling operation (see \cref{sub:pooling} for more detail on types of pooling) is performed as the final step unique to CNNs.
+Once all convolutions have been completed, a pooling operation (see \cref{sub:pooling} for more detail on types of pooling) is performed as the final step that is unique to CNNs.
+The operation of using convolutions that consider multiple features can be likened to the use of n-grams where $n>1$. However, unlike traditional n-grams that are processed directly, convolutional layers are subject to the non-linearity and the pooling operation, the latter of which summarises the identified features and creates a modified representation of the learned feature maps.
 
 \subsection{Multi-Task Learning}
 The Multi-task Learning (MTL) framework was initially proposed by \citet{Caruana:1993} as a way to train a model for a specific primary task by leveraging that (multiple) tasks may be related.
