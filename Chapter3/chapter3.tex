@@ -268,9 +268,9 @@ One way to address the potential issue of vanishing gradients is to use a \textt
   \caption{Equation for \texttt{ReLU}.}
 \end{figure}
 
-\subsubsection{Pooling layers}
-
-For CNN models it is necessary to use either average pooling or maximum pooling to summarise the features under a filter. Average pooling computes the mean value of the pooling features under the filter while maximum pooling extracts the largest value. In my experiments with CNN models, I use maximum pooling exclusively due to its dominance in the CNN models developed for abuse detection \citep{CNN with max pooling papers}.
+\subsubsection{Pooling layers}\label{sub:pooling}
+For CNN models it is necessary to use either average pooling or maximum pooling to summarise the features under a filter. As a summary, pooling operations act as a method for downsampling the feature representation obtained after convolutional layers. Two common kinds of pooling operations are average pooling and maximum pooling.
+Average pooling computes the mean value of the pooling features under the filter while maximum pooling extracts the largest value. In my experiments with CNN models, I use maximum pooling exclusively due to its dominance in the CNN models developed for abuse detection \citep{CNN with max pooling papers}.
 
 \subsubsection{Optimisation algorithms}
 
@@ -435,10 +435,15 @@ Finally, a version of the cell-state, filtered by a sigmoid function to control 
 For my experiments using LSTMs, I use the implementation offered by \citet{Paszke:2019} which uses the variation of LSTMs proposed by \citet{Sak:2014}.
 
 \paragraph{Convolutional Neural Network}
-
+Convolutional Neural Networks (CNN) are a type of neural network that were initially proposed for computer vision tasks.
+Like all other forms of neural networks, CNNs have an input, an output layer, and some hidden layers.
+The hidden layers of CNNs contain \textit{convolutional layers}. These layers apply a series of convolutions, or sliding windows over a matrix of features and compute a summary of those features.
+Where other networks, MLPs for instance, often contain just a single hidden layer, CNNs often contain multiple hidden layers in the form of convolutional layers.
+After the data has been processed by each convolutional layer, a non-linearity is applied to the resulting representation.
+Once all convolutions have been completed, a pooling operation (see \cref{sub:pooling} for more detail on types of pooling) is performed as the final step unique to CNNs.
 
 \subsection{Multi-Task Learning}
-The Multi-task Learning (MTL) framework was initially proposed by \citet{Caruana:1993} as a way to train a model for a specific primary task by leveraging that (multiple) tasks may be related. 
+The Multi-task Learning (MTL) framework was initially proposed by \citet{Caruana:1993} as a way to train a model for a specific primary task by leveraging that (multiple) tasks may be related.
 Choosing a primary task, one or more tasks can be chosen as auxiliary tasks that can provide inductive biases for the model to take advantage of to perform better performance for the main task.
 MTL models can be trained in two different ways, through hard parameter sharing or soft parameter sharing.
 Hard parameter sharing models are trained by having (some) hidden layers that are shared by all tasks and some layers that are individual to each task.
