@@ -9,7 +9,7 @@
 \zw{Joint work with Joachim Bingel}
 
 \begin{quote}
-  ``So hate speech detection is kind of like sentiment analysis++'' -- Anders Johannsen
+  ``So is hate speech detection kind of like sentiment analysis++'' -- Anders Johannsen
 \end{quote}
 
 \section{Introduction}
@@ -48,7 +48,7 @@ For our tasks we choose a mix of tasks that have been identified as challenges i
 
 Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2016} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2016}, \citet{Davidson:2017}, and \citet{Waseem:2016} as our primary tasks and use \citet{Waseem-Hovy:2016} as an auxiliary task.
 
-Beyond the datasets annotated for abuse, we identify several other dataset to use as auxiliary tasks. These datasets fall into two categories, those that relate to previously identified issues for abusive language detection models and datasets that address seemingly related issues. In the former category, we choose sarcasm detection as an auxiliary task, using the dataset provided by \citet{Oraby_sarcasm:2017}; for the latter we choose a dataset labelled for moral sentiments \citet{Hoover:2019} and a dataset tagged for whether an argument is based in facts or feelings \citet{Oraby_fact_feel:2017}. Please refer to \autoref{sec:datasets} for more a comprehensive view on each of the datasets that we use in our model.
+Beyond the datasets annotated for abuse, we identify several other dataset to use as auxiliary tasks. These datasets fall into two categories, those that relate to previously identified issues for abusive language detection models and datasets that address seemingly related issues. In the former category, we choose sarcasm detection as an auxiliary task, using the dataset provided by \citet{Oraby_sarcasm:2016}; for the latter we choose a dataset labelled for moral sentiments \citet{Hoover:2019} and a dataset tagged for whether an argument is based in facts or feelings \citet{Oraby_factfeel:2015}. Please refer to \autoref{sec:datasets} for more a comprehensive view on each of the datasets that we use in our model.
 
 Finally, considering \citet{Waseem:2018,Davidson:2019} and \citet{Sap:2019} who all highlight issues of dialectal biases along racial lines in hate speech datasets, we considered using \citet{Preotiuc-Unger:2018} as an auxiliary task to predict demographic attributes. However, as this dataset is annotated on a user-level we collect the Twitter timelines for all users and represent the user as the concatenation of all tweets. For modelling purposes, this poses an issue as each user is represented by up to $3,200$ tweets of $280$ characters per tweet. We use the entire Twitter histories, rather than sample from them as people who communicate in multiple dialects, particularly those that are marginalised, are likely to code-switch \cite{CITE: AAE code switching paper}. This, in combination with Mainstream American English being the largest dialect represented in the dataset as it is used by both people who only speak that dialect as well as those that speak other dialects, not using the full histories disproportionately risks erasing the exact dialects we seek to examine. On the other hand, using the full histories presents issues in fitting the into GPU memory during the training phase of the model.
 
@@ -62,23 +62,23 @@ Following the same methodology as in \autoref{chap:liwc} we pre-process all docu
 We train two variants of all models, one using the Byte-Pair encoded documents and one using the LIWC encoded documents. For our baseline models, we train a Support Vector Machine and a single task Multi-Layered Perceptron. Our experimental models are then all multi-task learning models; we train a multi-task Multi-Layered Perceptron and a Long-Short Term Memory network. Please see \autoref{sec:model_background} for more detail on the models.
 
 % \zw{Describe hyper parameter tuning}
-For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Weights and Biases \cite{Wandb} to perform Bayesian hyper-parameter optimisation. To identify the best hyper-parameter configuration, we run $100$ iterations of training our model with different hyper-parameters. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{scikit-learn:2019}.
+For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Weights and Biases \cite{Wandb} to perform Bayesian hyper-parameter optimisation. To identify the best hyper-parameter configuration, we run $100$ iterations of training our model with different hyper-parameters. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{Pedregosa:2011}.
 
 \subsection{Neural Models}
 
-We train two different multi-task model architectures, a Multi-Layered Perceptron network model and a Long-Short Term Memory network model, and a single task Multi-Layered Perceptron network. For all models, we use index-encoded tensors and use an embedding layer as the input layer. All neural models are implemented using PyTorch \cite{CITE: Pytorch paper}.
+We train two different multi-task model architectures, a Multi-Layered Perceptron network model and a Long-Short Term Memory network model, and a single task Multi-Layered Perceptron network. For all models, we use index-encoded tensors and use an embedding layer as the input layer. All neural models are implemented using PyTorch \cite{Paszke:2019}.
 
 In order to show the utility of multi-task learning for abuse detection, we use basic architectures and avoid things such as attention layers. Further, each model is subject to dropout for another measure against over-fitting.  While we do subject our model to early stopping, we find that in practice early stopping is not triggered due to the variable performances on the different tasks.
 
 \begin{figure}
   \begin{minipage}{0.5\linewidth}
     \centering
-%    \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
+    \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
     \label{fig:mlp_mtl_embedding}
   \end{minipage}
   \begin{minipage}{0.5\linewidth}
     \centering
-%    \includegraphics[scale=0.75]{lstm_mtl_embedding.jpg}
+    \includegraphics[scale=0.75]{lstm_mtl_embedding.jpg}
     \label{fig:lstm_mtl_embedding}
   \end{minipage}
   \caption{Multi-task Learning models}
