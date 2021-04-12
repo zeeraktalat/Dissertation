@@ -440,7 +440,8 @@ Like all other forms of neural networks, CNNs have an input, an output layer, an
 The hidden layers of CNNs contain \textit{convolutional layers}. These layers apply a series of convolutions, or sliding windows over a matrix of features and compute a summary of those features.
 Where other networks, MLPs for instance, often contain just a single hidden layer, CNNs often contain multiple hidden layers in the form of convolutional layers.
 After the data has been processed by each convolutional layer, a non-linearity is applied to the resulting representation.
-Once all convolutions have been completed, a pooling operation (see \cref{sub:pooling} for more detail on types of pooling) is performed as the final step unique to CNNs.
+Once all convolutions have been completed, a pooling operation (see \cref{sub:pooling} for more detail on types of pooling) is performed as the final step that is unique to CNNs.
+The operation of using convolutions that consider multiple features can be likened to the use of n-grams where $n>1$. However, unlike traditional n-grams that are processed directly, convolutional layers are subject to the non-linearity and the pooling operation, the latter of which summarises the identified features and creates a modified representation of the learned feature maps.
 
 \subsection{Multi-Task Learning}
 The Multi-task Learning (MTL) framework was initially proposed by \citet{Caruana:1993} as a way to train a model for a specific primary task by leveraging that (multiple) tasks may be related.
