@@ -15,9 +15,28 @@ One of the frequently made assumptions is that hate speech detection, and in gen
 Indeed, each of these tasks share the characteristic that the identification of each of these on the basis of text is a task of linguistic pragmatics and that the interpretation of a given statement will vary on the basis of parties involved in the communicative act.
 While they share this unifying characteristic, hate and humour, for instance occupy different but sometimes overlapping processes as highlighted by the NGO partners interviewed by \citet{Rottger:2021}.
 
-% TODO Put stuff here.
+Similarities between distinct related tasks pose several interesting questions.
+First, is it best to create multiple annotations, either through re-annotating previously published data or creating an entirely dataset, such that each task is addressed in all of the data or should one try to develop modelling architectures that are overlapping?
+Second, how much data from each task is necessary to annotate, in the case of creating multiple annotations for each document; or, if the task is approached in terms of developing modelling architectures, how much of the data from each task should be used in training the model, or alternatively, how should the data from each task be weighted to gain the largest modelling improvements?
 
-In the context of machine learning for online abuse, these overlaps make it relevant to ask how such overlaps influence the task of predicting online abuse and which tasks contain inductive biases that improve model performances.
+In this chapter, I approach the question of overlapping data through a question of developing a modelling approach that aims to use potential overlaps between each task.
+As each task may be related only in terms of the abstraction required to understand the meaning of a given text, creating mappings between different classes is a complex task that in some cases is not possible.
+Moreover, data for each task may be collected from different sources, at different times, from different populations that use different vocabularies resulting in models that may learn spurious patterns in the data that are not trivial to identify and address.
+Thus modelling can be approached in two distinct manners. Either all documents are collapsed into a single dataset without creating maps between the different classes or each task remains a distinct task and model architectures such as Multi-Task Learning (MTL) and Ensemble methods are explored.
+Here I take the latter approach, developing a MTL model that considers each task simultaneously in tandem and distinctly from all other tasks (see \cref{sub:mtl} for more details on how MTL functions).
+I select a MTL modelling approach over an ensemble approach as training an ensemble requires training and optimising $n$ entirely distinct models, one for each task, and a final model that considers the outputs of each model, MTL models on the other hand can be trained such that a models is optimised to perform on its primary task, treating all auxiliary tasks as secondary.
+Moreover, as I use a hard-parameter sharing design for my MTL models, an additional benefit is that all auxiliary tasks act as regularisers, even if they are not directly beneficial to the primary task.
+
+Through the use of of MTL models, I find that non-abusive tasks as auxiliary can be beneficial to detecting all forms of abuse examined.
+In line with the results in \cref{chap:liwc}, there is a difference in how helpful different abusive language datasets are for each other. 
+However, in spite of benefits from using MTL over some single-task baselines, some baseline models still out-perform some of the MTL models.
+% TODO Add here about how dataset combinations add.
+
+% WH - benefits from all aux tasks, abusive and non-abusive
+% Wulczyn - benefits from all non-abusive tasks; benefits from WH, Davidson, but not Waseem
+% Davidson - Benefits from all non-abusive and abusive tasks;
+
+Thus, in this chapter I ask the following research questions to gain a deeper understanding on how different tasks that may share relations to abuse impact model performance:
 
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
@@ -27,13 +46,6 @@ In the context of machine learning for online abuse, these overlaps make it rele
         \item{\textit{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}
     \end{enumerate}
 \end{minipage}
-
-In recognition that tasks like identifying hate or humour are distinct in spite of their similarities and overlaps, it is not appropriate to use a single multi-class model, where data from all different tasks are simply combined to form a single large dataset with a number of different labels, some that indicate abuse while others do not. Indeed, several issues exist with such a methodology, as the collection periods, populations that are represented, and the collection rationales may differ to such a degree that combining datasets may introduce more confounding factors that the models may learn. On the other hand, as only one of the datasets that we investigate contains labels from multiple tasks, a multi-class prediction model, that is a model that predicts one or more labels for each document it processes is also a less-than perfect solution due to the limitation of only being given space to investigate one possible avenue for influence. Finally, one could also choose to investigate ensemble methods, that rely on a set of models that are each trained for a specific subtask, and are weighted by a model that treats the outputs of the models for each subtask as features. However, a drawback of this method is that it relies on training multiple models that are each optimised for their own subtask. Multi-task learning, a machine learning paradigm for training machine learning models for a main task while through leveraging inductive biases with related auxiliary tasks for the main task. Multitask learning offers a remit from the issues that plague single-task and ensemble models through its use of either a shared or closely aligned parameter space between the different task models, allowing the parameters learned in the different tasks to influence the main task model, while retaining a focus on the primary task through weighting (please refer back to \autoref{sec:model_background} for more detail).
-
-In light of these issues and potentials, we choose to investigate multi-task learning as a framework for considering how a number of different tasks influence the modelling of abuse detection. This method, in addition to addressing the aforementioned concerns, through adding signals the auxiliary tasks, these also act as regularisers, preventing the main task model from over-fitting.
-
-\zw{DOUBLE CHECK: Check that this is actually what our results show.}
-We find that in comparison to our baselines, simply adding multi-task learning without a consideration for the data and it is represented in the model does not provide strong benefits. However, we also find that if data and models are considered in combination, then there are strong gains in using multi-task learning approaches over single task models and simplistic multi-task models.
 
 \section{Previous work}
 
