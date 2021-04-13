@@ -90,6 +90,8 @@ Finally, considering \citet{Waseem:2018,Davidson:2019} and \citet{Sap:2019} who 
 
 \section{Modelling}
 
+% TODO Use MLP without pre-trained layer to keep consistent with prior chapter.
+
 Following the same methodology as in \autoref{chap:liwc} we pre-process all documents using 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018}. Given the positive results obtained in \autoref{chap:liwc}, we also conduct experiments pre-processing all documents using the Linguistic Inquiry and Word Count (LIWC) dictionary. Through processing all documents through the Byte-Pair Encodings, we minimise the vocabulary as tokens are decomposed to their sub-words, moreover this approach allows us to reduce out-of-vocabulary tokens. Conversely, by preprocessing our documents using LIWC, we increase the number of out-of-vocabulary tokens, however, by reducing the number of unique tokens remaining after only using tokens in the LIWC dictionary. These tokens are then reduced to the smaller set of the combinations of LIWC categories. It is only through the use of LIWC categories that we limit the size of the vocabulary.\vspace{5mm}
 
 We train two variants of all models, one using the Byte-Pair encoded documents and one using the LIWC encoded documents. For our baseline models, we train a Support Vector Machine and a single task Multi-Layered Perceptron. Our experimental models are then all multi-task learning models; we train a multi-task Multi-Layered Perceptron and a Long-Short Term Memory network. Please see \autoref{sec:model_background} for more detail on the models.
