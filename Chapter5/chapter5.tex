@@ -15,6 +15,18 @@ One of the frequently made assumptions is that hate speech detection, and in gen
 Indeed, each of these tasks share the characteristic that the identification of each of these on the basis of text is a task of linguistic pragmatics and that the interpretation of a given statement will vary on the basis of parties involved in the communicative act.
 While they share this unifying characteristic, hate and humour, for instance occupy different but sometimes overlapping processes as highlighted by the NGO partners interviewed by \citet{Rottger:2021}.
 
+% TODO Put stuff here.
+
+In the context of machine learning for online abuse, these overlaps make it relevant to ask how such overlaps influence the task of predicting online abuse and which tasks contain inductive biases that improve model performances.
+
+\begin{minipage}{0.9\textwidth}
+\vspace{5mm}
+    \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
+        \item{\textit{What is the impact of using auxiliary tasks that are non-abusive in nature for detecting specific forms of abuse?}}
+        \item{\textit{Does using different forms of abusive language detection tasks as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}
+        \item{\textit{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}
+    \end{enumerate}
+\end{minipage}
 
 In recognition that tasks like identifying hate or humour are distinct in spite of their similarities and overlaps, it is not appropriate to use a single multi-class model, where data from all different tasks are simply combined to form a single large dataset with a number of different labels, some that indicate abuse while others do not. Indeed, several issues exist with such a methodology, as the collection periods, populations that are represented, and the collection rationales may differ to such a degree that combining datasets may introduce more confounding factors that the models may learn. On the other hand, as only one of the datasets that we investigate contains labels from multiple tasks, a multi-class prediction model, that is a model that predicts one or more labels for each document it processes is also a less-than perfect solution due to the limitation of only being given space to investigate one possible avenue for influence. Finally, one could also choose to investigate ensemble methods, that rely on a set of models that are each trained for a specific subtask, and are weighted by a model that treats the outputs of the models for each subtask as features. However, a drawback of this method is that it relies on training multiple models that are each optimised for their own subtask. Multi-task learning, a machine learning paradigm for training machine learning models for a main task while through leveraging inductive biases with related auxiliary tasks for the main task. Multitask learning offers a remit from the issues that plague single-task and ensemble models through its use of either a shared or closely aligned parameter space between the different task models, allowing the parameters learned in the different tasks to influence the main task model, while retaining a focus on the primary task through weighting (please refer back to \autoref{sec:model_background} for more detail).
 
