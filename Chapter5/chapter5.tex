@@ -80,6 +80,14 @@ For this reason, I choose auxiliary tasks (see \cref{sec:mtl_data} for an overvi
 
 \subsection{Learning Tasks}\label{sec:mtl_tasks}
 
+% TODO You are HERE
+Multi-task learning, as the name of the framework implies, requires distinct tasks for learning, where each unique auxiliary task asks how learning representations from that task influences model performance on the primary task.
+We saw in \cref{chap:liwc}, the trained on each abusive dataset has different applications onto other datasets in the case of binary classification. Therefore, I choose to use three different tasks for abusive language as main tasks.
+In contrast to the method in \cref{chap:liwc}, I do not binarise, or otherwise modify the classes in from those proposed by the authors of the datasets.
+For all datasets, asides from \citet{Wulczyn:2017}
+providing with the more challenging tasks of not only identifying whether content is abusive, but also which form of abuse is expressed in the document.
+
+
 % TODO Introduce datasets
 
 \zw{Use Davidson, Waseem-Hovy, and Wulczyn as main tasks.}
