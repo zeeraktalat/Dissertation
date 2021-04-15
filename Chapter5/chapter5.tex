@@ -54,17 +54,29 @@ MTL has previously been applied for a number of tasks in NLP, including language
 Further, MTL has also been used in tasks that produce social outcomes such as predicting mental health conditions \cite{Benton:2017}, hate speech detection \cite{Waseem:2018,Rajamanickam:2020,Farha:2020,Djandji:2019}, and rumour verification \cite{Kochkina:2018}.
 
 \subsection{Modelling}
-Considering the sparse previous work on different forms of abusive language detection that employ MTL, two of the approaches consider English text \cite{Waseem:2018,Rajamanickam:2020} and two operate on Arabic \cite{Farha:2020,Djandji:2019}.
-Focusing on the models applied to English, both works approach the task using hard parameter sharing \cite{Caruana:1997} and randomly choose which task is being trained on.
-\citet{Waseem:2018} apply a Multi-Layered Perceptron network while \citet{Rajamanickam:2020} use a Long-Short Term Memory network. 
-\citet{Rajamanickam:2020} implement a double encoder model in which the primary and auxiliary share an encoder and each have a stacked Bi-directional Long-Short Memory Network that generate another encoding.
-The primary and auxiliary task models diverge at this point, where the model for the auxiliary task directly passes the second encoding to a Bi-directional Long-Short Memory Network, the output of which is subject to an attention layer and finally passed through to a linear layer and subject to an activation function before producing the prediction of the model.
+For hate speech detection, and abusive language detection in general, MTL has been applied to English \citep{Waseem:2018,Rajamanickam:2020} and Arabic \citep{Farha:2020,Djandji:2019}.
+Considering that I use datasets that are entirely in English, I only consider the previous work for hate speech detection using MTL for English language data.
+
+\citet{Waseem:2018} show that the cultural gaps that exist between different datasets, as a result of their collection strategies and annotation procedures, could be addressed.
+Using a hard parameter sharing strategy, they develop a MTL model that uses two different tasks for training.
+In their model, sampling of the batches is chosen at random, with one of the tasks set as the main task and a manual mapping between the distinct classes is performed.
+The machine learning model chosen by \citet{Waseem:2018} for their MTL experiment is a back-propagated MLP with a tanh activation function and Adam as their optimisation function.
+For the input representations \citet{Waseem:2018} experiment with a Bag-of-Words model that uses the $5,000$ most frequent terms and model that uses Byte-Pair encoded input data.
+Similarly to \citet{Waseem:2018}, \citet{Rajamanickam:2020} show that using hard parameter sharing strategy for MTL with an auxiliary task can aid in the detection of hate speech.
+Rather than using a different task coded for abuse as \citet{Waseem:2018} do, \citet{Rajamanickam:2020} instead ask whether jointly learning which emotions are invoked in a given task can aid in the detection of abuse.
+Moreover, the architectures of the two different approaches diverge from one another.
+\citet{Rajamanickam:2020} implement a double encoder model in which the primary and auxiliary share an encoder and each have a stacked Bi-directional Long-Short Memory Network that generate a second encoding.
+The primary and auxiliary task models developed by \citet{Rajamanickam:2020} diverge at this point. The auxiliary task model directly passes the second encoding to a Bi-directional Long-Short Memory Network, the output of which is subject to an attention layer and finally passed through to a linear layer and subject to an activation function before producing the prediction of the model.
 The primary task model sums the encodings from the stacked Bi-directional Long-Short Term Memory networks for the primary and auxiliary task, passing this on to a Bi-directional Long Short Term Memory network.
 The resulting representation is then passed through an attention layer and passed through an output layer generating the prediction.
+A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that the latter use a weighting parameter to distinguish between the primary and auxiliary task.
+\citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set.
+The reason for this discrepancy is that \citet{Waseem:2018} seek to use multi-task learning to train a model that is capable of dealing with cross-cultural data, that is a model that is able to perform on both tasks. 
+\citet{Rajamanickam:2020} on the other hand seek to improve classification performance on the primary task, thus considering any performance gains on the auxiliary a side-benefit.
+This discrepancy is the result of a natural prioritisation question, as the goal of \citet{Rajamanickam:2020} is to improve classification performance for abuse on a single dataset whereas \citet{Waseem:2018} seek to identify a classifier that can generalise beyond beyond the single dataset.
 
-A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that \citet{Rajamanickam:2020} use a weighting parameter to distinguish between the primary and auxiliary task. \citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set. The reason for this discrepancy is that \citet{Waseem:2018} seek to use multi-task learning to train a model that is capable of dealing with cross-cultural data while \citet{Rajamanickam:2020} seek to improve classification performance on the primary task.
-
-The work described in this chapter follows \citet{Rajamanickam:2020} in its efforts to improve classification performance, as we choose auxiliary tasks that we hypothesise will be beneficial to the primary task. While \citet{Rajamanickam:2020} use emotion detection as their only auxiliary task, we use the tasks described in \autoref{sec:mtl_tasks}.
+The work described in this chapter follows \citet{Rajamanickam:2020} in their focus on improving classification performances on the primary task.
+For this reason, I choose auxiliary tasks (see \cref{sec:mtl_data} for an overview of the auxiliary datasets) that have been hypothesised as relevant to the question of detecting different forms of online abuse.
 
 \subsection{Learning Tasks}\label{sec:mtl_tasks}
 
