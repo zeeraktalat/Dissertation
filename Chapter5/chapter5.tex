@@ -80,12 +80,43 @@ For this reason, I choose auxiliary tasks (see \cref{sec:mtl_data} for an overvi
 
 \subsection{Learning Tasks}\label{sec:mtl_tasks}
 
-% TODO You are HERE
 Multi-task learning, as the name of the framework implies, requires distinct tasks for learning, where each unique auxiliary task asks how learning representations from that task influences model performance on the primary task.
 We saw in \cref{chap:liwc}, the trained on each abusive dataset has different applications onto other datasets in the case of binary classification. Therefore, I choose to use three different tasks for abusive language as main tasks.
 In contrast to the method in \cref{chap:liwc}, I do not binarise, or otherwise modify the classes in from those proposed by the authors of the datasets.
-For all datasets, asides from \citet{Wulczyn:2017}
-providing with the more challenging tasks of not only identifying whether content is abusive, but also which form of abuse is expressed in the document.
+This provides for the more challenging tasks of predicting the type of abuse in addition to whether content is abusive or not.
+A further consequence of not binarising the label sets for the main tasks is that the classes don't directly map onto other datasets.
+This means that I preclude considerations of generalisability onto other datasets for abuse without further reduction of the predicted labels into a binarised label space.
+Here I provide brief descriptions of the different datasets and the rationale for their inclusion, for more detail please refer to \cref{sec:datasets} and \cref{sub:liwc_datasets}.
+
+\subsubsection{Main Task Datasets}
+For the main tasks, I choose to use the \textit{Toxicity} dataset \citep{Wulczyn:2017}, the \textit{Offence} dataset \citep{Davidson:2017}, and the \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016}. I choose these three datasets in part due to their size and in part due to their examining of three different aspects of abuse.
+Through this choice, I aim to identify which auxiliary tasks can improve performance for each type of abuse.
+Each main task dataset is also used as an auxiliary task when it is not the used as a main task.
+
+\paragraph{Hate Speech}
+The \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016} as proposed consists of $3,383$ comments labelled as sexist, $1,972$ labelled as racist and $11,559$ labelled as neither sexist or racist.
+This dataset was proposed as a first step towards modelling racialised and gendered hate speech.
+I use this dataset to show that the MTL framework can be used to distinguish between different targets of hate, as this dataset seeks to identify different forms of hate speech.
+Beyond using this dataset to show the ability of MTL models to learn how to distinguish different forms of hate speech, this dataset also provides the largest source of hate speech, which otherwise is vanishingly small in other other main task datasets.
+
+\paragraph{Offence}
+The \textit{Offence} dataset \citep{Davidson:2017}
+
+\paragraph{Toxicity}
+The \textit{Toxicity} dataset \citep{Wulczyn:2017} provides a special case.
+For one, it is the largest dataset consisting of $159,686$ labelled comments split into a training set of $95,692$ comments, a validation set of $32,128$ comments, and an evaluation set of $31,866$ comments.
+In total, this dataset has more than $100,000$ more comments than either the \textit{Toxicity} or \textit{Hate Speech} datasets.
+Second, the dataset proposes a binary classification of `toxic' and `not toxic'.
+Thus, the results from the MTL models trained on this dataset can be directly compared with the results obtained in \cref{chap:liwc}, unlike the models where the main task is \textit{Offence} or \textit{Hate Speech}.
+
+\subsubsection{Auxiliary Task Datasets}
+
+\paragraph{Sarcasm}
+
+\paragraph{Argument Basis}
+
+\paragraph{Moral Sentiment}
+
 
 
 % TODO Introduce datasets
