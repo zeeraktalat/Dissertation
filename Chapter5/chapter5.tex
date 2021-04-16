@@ -115,11 +115,17 @@ Thus, I use this dataset to anchor the performances of the MTL models within the
 
 \subsubsection{Auxiliary Task Datasets}
 
+I choose the auxiliary task datasets for two different purposes: 1) to investigate the impact of using other datasets for abusive language as auxiliary tasks and 2) to examine how datasets that are labelled for other tasks can influence modelling for abuse.
+To answer the first question, I use the three main task datasets in turn as auxiliary datasets when they are not serving as the main task. Moreover, to address the issue of the poor representation of content labelled within as hateful, I also use the \textit{Hate Expert} dataset.
+Addressing the second motivation, I use a dataset labelled for sarcasm \citep{Oraby_sarcasm:2016}, a dataset labelled for the moral sentiment invoked by the text \citep{Hoover:2019}, and finally a dataset where documents are labelled for whether arguments are primarily based in emotion or in facts \citep{Oraby_factfeel:2015}.
+
 \paragraph{Sarcasm}
 
 \paragraph{Argument Basis}
 
 \paragraph{Moral Sentiment}
+
+\paragraph{Hate Expert}
 
 
 
