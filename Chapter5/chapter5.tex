@@ -67,7 +67,7 @@ Rather than using a different task coded for abuse as \citet{Waseem:2018} do, \c
 Moreover, the architectures of the two different approaches diverge from one another.
 \citet{Rajamanickam:2020} implement a double encoder model in which the primary and auxiliary share an encoder and each have a stacked Bi-directional Long-Short Memory Network that generate a second encoding.
 The primary and auxiliary task models developed by \citet{Rajamanickam:2020} diverge at this point. The auxiliary task model directly passes the second encoding to a Bi-directional Long-Short Memory Network, the output of which is subject to an attention layer and finally passed through to a linear layer and subject to an activation function before producing the prediction of the model.
-The primary task model sums the encodings from the stacked Bi-directional Long-Short Term Memory networks for the primary and auxiliary task, passing this on to a Bi-directional Long Short Term Memory network.
+The primary task model sums the encodings obtained from the stacked Bi-directional Long-Short Term Memory networks for the primary and auxiliary task, passing this on to a Bi-directional Long Short Term Memory network.
 The resulting representation is then passed through an attention layer and passed through an output layer generating the prediction.
 A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that the latter use a weighting parameter to distinguish between the primary and auxiliary task.
 \citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set.
