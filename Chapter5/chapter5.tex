@@ -137,23 +137,14 @@ The dataset is slightly imbalanced with $59\%$ of the dataset labelled as primar
 MTL models for abuse can take advantage of this dataset by learning a joint representation of the basis of an argument along with the main task in question.
 Thus, this auxiliary task can provide insight into the question of whether learning such a joint representation is beneficial to detecting abuse and implicitly provide another signal into the feasibility of more deeply considering the emotional and mental state of the author when writing, e.g. through the use of LIWC as done in \cref{chap:liwc}.
 
-\paragraph{Moral Sentiment}
+\paragraph{Moral Foundations}
+
 
 \paragraph{Hate Expert}
 
 
 
-% TODO Introduce datasets
 
-\zw{Use Davidson, Waseem-Hovy, and Wulczyn as main tasks.}
-\zw{Use oraby factfeel, hoover, oraby sarcasm as aux tasks.}
-% TODO Expand
-Sarcasm has been identified as one of the challenges for hate speech detection by both technical experts and civil society alike \citep{Rottger:2021}.
-
-% TODO WOrk in about Oraby_factfeel.
-A number of previous works on hate speech detection have suggested that many users who utter hate speech do so infrequently, suggesting that discriminatory speech may be produced in moments of carelessness and high emotional basis. Moreover, as is apparent from the motivations used by \citet{Garcia:2019} for using StormFront as a data source, white supremacists may seek to mask their discrimination behind the use and distortions of fact. Thus, whether hate is produced in the spur of the moment or is a part of a longer pattern, the basis upon which the argument is made, whether it is fact-based or based on emotion, may provide useful signals for learning to predict hate speech and abuse.
-
-For our tasks we choose a mix of tasks that have been identified as challenges in previous work, that relate to findings in previous work \cite{Waseem-Hovy:2016,Davidson:2017,Schmidt:2017} and datasets for distinct forms of abuse \cite{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2017}.
 
 Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2017} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2017}, \citet{Davidson:2017}, and \citet{Waseem:2016} as our primary tasks and use \citet{Waseem-Hovy:2016} as an auxiliary task.
 
