@@ -144,9 +144,14 @@ To explore this further, I use this dataset as an auxiliary task.
 While the impacts of moral sentiments on the \textit{Offence} dataset are likely beneficial, using this auxiliary task on other datasets allows for examining whether representing moral sentiments has a positive impact on other datasets labelled for abuse.
 
 \paragraph{Hate Expert}
+Finally, as learned from \cref{chap:liwc}, some datasets for abusive language appear to be more closely related to others.
+For this reason, I include the \textit{Hate Expert} dataset as an auxiliary task dataset to verify this finding and to provide a dataset to help address the poor representation of hate speech in the classes.
+In \cref{chap:liwc} I binarise this dataset, here on the other hand I retain all $4$ classes in the dataset. 
+In the expert annotated data, the four classes have a highly imbalanced distribution, the largest class being the negative class consuming $84\%$ of the data, while the second largest class `sexism' consumes $13\%$ of the data, the `racist' class consuming $1.4\%$ of the data and the final class, `both racist and sexist' contributing with $0.7\%$ of the data.
 
-
-
+Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ documents means less than $50$ documents are labelled for the minority class, and given that I create stratified splits for the training ($80\%$), validation ($10\%$), and evaluation ($10\%$) sets, less than $40$ documents remain in the training set.
+Thus there is not enough data for a machine learning model to learn patterns of abuse in the intersection between racist and sexist speech.
+However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the training process.
 
 
 Following \citet{Waseem:2018}, who train a multi-task learning model trained on \citet{Waseem-Hovy:2016} and \citet{Davidson:2017}. Beyond these two datasets, we also train in \citet{Waseem:2016}, as they examine intersection of racist and sexist hate speech and the influence of political perspectives on annotations. Finally, we include \citet{Wulczyn:2017} as this dataset considers what comments drive conversations to become toxic. Due to the differing sizes of the datasets, we experiment with using \citet{Wulczyn:2017}, \citet{Davidson:2017}, and \citet{Waseem:2016} as our primary tasks and use \citet{Waseem-Hovy:2016} as an auxiliary task.
