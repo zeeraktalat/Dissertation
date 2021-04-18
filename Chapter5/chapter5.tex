@@ -135,10 +135,10 @@ To model the hypothesis that high emotionality may influence the production of a
 This dataset was developed using the same underlying data source as the \textit{Sarcasm} dataset, however rather than annotating the dataset for the occurrence of sarcasm, \citet{Oraby_factfeel:2015} annotate $5,848$ comments as being based in either fact or emotion.
 The dataset is slightly imbalanced with $59\%$ of the dataset labelled as primarily fact-based and $41\%$ labelled as primarily based in feelings.
 MTL models for abuse can take advantage of this dataset by learning a joint representation of the basis of an argument along with the main task in question.
-Thus, this auxiliary task can provide insight into the question of whether learning such a joint representation is beneficial to detecting abuse and implicitly provide another signal into the feasibility of more deeply considering the emotional and mental state of the author when writing, e.g. through the use of LIWC as done in \cref{chap:liwc}.
+Thus, this auxiliary task can provide insight into the question of whether learning such a joint representation is beneficial to detecting abuse and implicitly provide another signal into the feasibility of more deeply considering the emotional and mental state of the author when writing, e.g. through the use of LIWC in \cref{chap:liwc}.
 
 \paragraph{Moral Sentiments}
-The \textit{Moral Sentiments} dataset is annotated for the vices and virtues represented along five different ``factors'': \texttt{Loyalty/betrayal, care/harm, fairness/cheating, authority/subversion} and \texttt{purity/degradation}.
+The \textit{Moral Sentiments} dataset is annotated for the vices and virtues represented along five different `factors': \texttt{Loyalty/betrayal}, \texttt{care/harm},\\ \texttt{fairness/cheating}, \texttt{authority/subversion} and \texttt{purity/degradation} \citep{Hoover:2019}.
 The authors of the dataset suggest that these five factors are likely to be represented in data that contains abuse, through their use of a subset of the \textit{Offence} dataset for annotation.
 To explore this further, I use this dataset as an auxiliary task.
 While the impacts of moral sentiments on the \textit{Offence} dataset are likely beneficial, using this auxiliary task on other datasets allows for examining whether representing moral sentiments has a positive impact on other datasets labelled for abuse.
