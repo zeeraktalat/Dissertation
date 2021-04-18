@@ -224,6 +224,28 @@ Considering the values of $C$ in \autoref{tab:mtl_ensemble_parameters}, we simil
 
 \zw{CODING: Single task MLP model}
 
+\subsection{Neural Models}
+% TODO Use MLP without pre-trained layer to keep consistent with prior chapter.
+
+We train two different multi-task model architectures, a Multi-Layered Perceptron network model and a Long-Short Term Memory network model, and a single task Multi-Layered Perceptron network. For all models, we use index-encoded tensors and use an embedding layer as the input layer. All neural models are implemented using PyTorch \cite{Paszke:2019}.
+
+In order to show the utility of multi-task learning for abuse detection, we use basic architectures and avoid things such as attention layers. Further, each model is subject to dropout for another measure against over-fitting.  While we do subject our model to early stopping, we find that in practice early stopping is not triggered due to the variable performances on the different tasks.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
+  \caption{Multi-task Learning MLP.}
+  \label{fig:mlp_mtl}
+\end{figure}
+
+
+\subsubsection{Multi-task Multi-Layered Perceptron}
+
+The multi-task Multi-Layered Perceptron that we implement consists of an input embedding layer, which is trainable. The output of this is then passed to a linear layer that is shared by all tasks. The resulting representation of a document, or batch of documents, is then passed on the another linear layer, and finally it is passed through a linear output layer that maps to the classes for each task, respectively. The result of this final layer is then subject to a softmax layer. Between each layer in the model, softmax, input, and output layer aside, we subject the output of all layers to an activation function and dropout. Please refer to \autoref{fig:mlp_mtl_embedding} for a depiction of this model.
+
+\zw{Insert hyper-parameter space that is searched}
+
+
 \subsection{Experimental Models}
 
 Three different scenarios
