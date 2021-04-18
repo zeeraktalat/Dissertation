@@ -154,50 +154,20 @@ Thus there is not enough data for a machine learning model to learn patterns of 
 However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the training process.
 
 \section{Modelling}
+For the experiments conducted, I only use one form of tokens to allow for an examination of the impact of the auxiliary tasks rather than the impact of tokenisation.
+I choose to represent all documents as their Byte-Pair encoded representations as these minimise the number of out-of-vocabulary tokens as this representation retains competitive performances in \cref{chap:liwc}.
+To this end, I pre-process all documents using a $200$ dimensional Byte-Pair Embedding \citep{Heinzerling:2018}.
+The pre-processing here follows the same method as in \cref{chap:liwc}, that is each document is lower-cased, all hyper-links are replaced with a `<URL>' token, all usernames are replaced with a `<USER>' token, and all hashtags are replaced with a `<HASHTAG>' token.
+Then each document is passed through the Byte-Pair Embeddings to produce the Byte-Pair encoded representations, that is their sub-word units.
 
-% TODO Use MLP without pre-trained layer to keep consistent with prior chapter.
+I train three different types of baseline models: a linear single-task model where the model is trained and evaluated on the same task, a non-linear single-task model, and a linear ensemble model where a model is trained on the basis of outputs from the auxiliary task models.
+In terms of experimental models, I follow \citet{Waseem:2018} in designing a multi-task Multi-Layered Perceptron implemented in PyTorch \citep{Paszke:2019}. I select an MLP over more complex neural networks architectures like Convolutional Neural Networks and Long-Short Term Memory networks due to the speed with which MLPs are trained along with their general performance in \cref{chap:liwc}.
 
-Following the same methodology as in \autoref{chap:liwc} we pre-process all documents using 200 dimensional Byte-Pair Encoding \cite{Heinzerling:2018}. Given the positive results obtained in \autoref{chap:liwc}, we also conduct experiments pre-processing all documents using the Linguistic Inquiry and Word Count (LIWC) dictionary. Through processing all documents through the Byte-Pair Encodings, we minimise the vocabulary as tokens are decomposed to their sub-words, moreover this approach allows us to reduce out-of-vocabulary tokens. Conversely, by preprocessing our documents using LIWC, we increase the number of out-of-vocabulary tokens, however, by reducing the number of unique tokens remaining after only using tokens in the LIWC dictionary. These tokens are then reduced to the smaller set of the combinations of LIWC categories. It is only through the use of LIWC categories that we limit the size of the vocabulary.\vspace{5mm}
+I perform parameter and hyper-parameter optimisation for the linear and non-linear models, respectively.
+For the non-linear models I use the Weights and Biases library \citep{Wandb} to perform Bayesian Hyper-Parameter Optimisation.
+For the linear models, I use grid-search as implemented in the Scikit-Learn library \citep{Pedregosa:2011}.
 
-We train two variants of all models, one using the Byte-Pair encoded documents and one using the LIWC encoded documents. For our baseline models, we train a Support Vector Machine and a single task Multi-Layered Perceptron. Our experimental models are then all multi-task learning models; we train a multi-task Multi-Layered Perceptron and a Long-Short Term Memory network. Please see \autoref{sec:model_background} for more detail on the models.
-
-% \zw{Describe hyper parameter tuning}
-For all models, we seek to optimise their parameters and hyper-parameters, respectively. For the neural models, we use the Weights and Biases \cite{Wandb} to perform Bayesian hyper-parameter optimisation. To identify the best hyper-parameter configuration, we run $100$ iterations of training our model with different hyper-parameters. For the linear model, we use randomised grid-search as implemented in the library Scikit-Learn \cite{Pedregosa:2011}.
-
-\subsection{Neural Models}
-
-We train two different multi-task model architectures, a Multi-Layered Perceptron network model and a Long-Short Term Memory network model, and a single task Multi-Layered Perceptron network. For all models, we use index-encoded tensors and use an embedding layer as the input layer. All neural models are implemented using PyTorch \cite{Paszke:2019}.
-
-In order to show the utility of multi-task learning for abuse detection, we use basic architectures and avoid things such as attention layers. Further, each model is subject to dropout for another measure against over-fitting.  While we do subject our model to early stopping, we find that in practice early stopping is not triggered due to the variable performances on the different tasks.
-
-\begin{figure}
-  \begin{minipage}{0.5\linewidth}
-    \centering
-    \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
-    \label{fig:mlp_mtl_embedding}
-  \end{minipage}
-  \begin{minipage}{0.5\linewidth}
-    \centering
-    \includegraphics[scale=0.75]{lstm_mtl_embedding.jpg}
-    \label{fig:lstm_mtl_embedding}
-  \end{minipage}
-  \caption{Multi-task Learning models}
-  \label{fig:mtl_models}
-\end{figure}
-
-
-\subsubsection{Multi-task Multi-Layered Perceptron}
-
-The multi-task Multi-Layered Perceptron that we implement consists of an input embedding layer, which is trainable. The output of this is then passed to a linear layer that is shared by all tasks. The resulting representation of a document, or batch of documents, is then passed on the another linear layer, and finally it is passed through a linear output layer that maps to the classes for each task, respectively. The result of this final layer is then subject to a softmax layer. Between each layer in the model, softmax, input, and output layer aside, we subject the output of all layers to an activation function and dropout. Please refer to \autoref{fig:mlp_mtl_embedding} for a depiction of this model.
-
-\zw{Insert hyper-parameter space that is searched}
-
-\subsubsection{Multi-task Long-Short Term Memory Network}
-
-\zw{Add mathematical function definition}
-\zw{CODING: Run LSTM hyper-parameter search.}
-The multi-task Long-Short Term Memory network, similarly initially has a trainable input embedding layer. The output is, similarly the multi-task Multi-Layered Perceptron, passed to a shared hidden layer. The obtained representation is then passed to a Long-Short Term Memory network, which feeds its output into an output-layered that is then subject to a linear layer, mapping to the possible output classes. Similarly to our multi-task Multi-Layered Perceptron, all layers in our model, save the output layer, softmax layer, output layer, and input layer are subject to dropout. Please see \autoref{fig:lstm_mtl_embedding} for a depiction of the network.
-
+% TODO You are here. Review the stuff below.
 \subsection{Baseline Models}
 
 For our baseline models, we train all single-task models using Support Vector Machines (see \autoref{sec:model_background}) while we use a Logistic Regression classifier for on top of Support Vector Machines for the ensemble baseline. For all model types, we train two variants, one that is trained on the BPE tokenised text and one that is trained on the LIWC encoded text. For our Support Vector Machines and ensemble classifiers, we perform a grid-search over the parameters of the models. For each training dataset, we fit a vectoriser to the training set and pass all other datasets through the fitted vectoriser. While this allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training dataset. For this reason, we do not perform any operations that limit the occurrence of tokens in the vocabulary. Further, for the byte-pair encoded documents out-of-vocabulary tokens are likely to appear with smaller frequency as tokens unknown to the pre-trained Byte-Pair Embeddings are broken down into subword units that are likely to be repeated across the different datasets.
