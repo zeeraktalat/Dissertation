@@ -154,6 +154,7 @@ Thus there is not enough data for a machine learning model to learn patterns of 
 However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the training process.
 
 \section{Modelling}
+\zw{Update kernel information if kernel is updated}
 For the experiments conducted, I only use one form of tokens to allow for an examination of the impact of the auxiliary tasks rather than the impact of tokenisation.
 I choose to represent all documents as their Byte-Pair encoded representations as these minimise the number of out-of-vocabulary tokens as this representation retains competitive performances in \cref{chap:liwc}.
 To this end, I pre-process all documents using a $200$ dimensional Byte-Pair Embedding \citep{Heinzerling:2018}.
@@ -168,7 +169,6 @@ For the non-linear models I use the Weights and Biases library \citep{Wandb} to 
 For the linear models, I use grid-search as implemented in the Scikit-Learn library \citep{Pedregosa:2011}.
 
 \subsection{Baseline Models}
-
 I train three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
 I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to train.
 The non-linear neural network baseline is chosen as a counter-point to the linear baseline, using a MLP to more directly be able to consider the influence of the multi-task architecture for the experimental models.
