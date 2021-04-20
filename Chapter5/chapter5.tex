@@ -167,7 +167,6 @@ I perform parameter and hyper-parameter optimisation for the linear and non-line
 For the non-linear models I use the Weights and Biases library \citep{Wandb} to perform Bayesian Hyper-Parameter Optimisation.
 For the linear models, I use grid-search as implemented in the Scikit-Learn library \citep{Pedregosa:2011}.
 
-% TODO You are here. Review the stuff below.
 \subsection{Baseline Models}
 
 I train three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
@@ -175,8 +174,24 @@ I choose to use a linear single-task model as a baseline as these often provide 
 The non-linear neural network baseline is chosen as a counter-point to the linear baseline, using a MLP to more directly be able to consider the influence of the multi-task architecture for the experimental models.
 Finally, I choose to an ensemble classifier that is trained on the outputs of linear single-task models for each of the auxiliary task models as an ensemble, similarly to a multi-task model, can take advantage of learned representations for each auxiliary task for producing a prediction for the main task.
 
-\paragraph{Linear Single-Task Baseline} 
+\paragraph{Single-Task Baselines}
+Following prior work \citep{Waseem:2016,Davidson:2017}, I train all single-task models using a Support Vector Machine with a linear kernel (see \cref{sec:model_background} for more details on SVMs).
+All linear single-task models are trained on unigram counts of the Byte-Pair encoded tokens and are subject to parameter-optimisation of the regularisation type ($L1$ and $L2$) and the strength of regularisation (using values $0.1, 0.2, \ldots, 1.0$).
+See \cref{tab:linear_singletask_params} for the best parameters for the linear single-task models for each dataset.
 
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+                                       & Regulariser & Regularisation Strength \\
+\textit{Offence} Linear Single task     & L2          & 0.2                     \\
+\textit{Hate Speech} Linear Single task & L2          & 0.1                     \\
+\textit{Toxicity} Linear Single task    & L2          & 0.1
+\end{tabular}
+\caption{Best model parameters for linear single-task models.}
+\label{tab:linear_singletask_params}
+\end{table}
+
+% TODO You are here. Review the stuff below.
 \paragraph{MLP Single-Task Baseline}
 
 \paragraph{Ensemble Baseline}
