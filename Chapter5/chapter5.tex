@@ -191,8 +191,24 @@ See \cref{tab:linear_singletask_params} for the best parameters for the linear s
 \label{tab:linear_singletask_params}
 \end{table}
 
-% TODO You are here. Review the stuff below.
 \paragraph{MLP Single-Task Baseline}
+I train a MLP as a non-linear counter-part to the linear single-task models to provide a baseline of the performance of a neural network approach that only relies on the Byte-Pair unigrams for the main task to optimise for the main task.
+To ensure that the baseline model is also tuned for optimal performance, I perform a hyper-parameter sweep  over the batch size (${16, 32, 64}$), the dropout value ($[0.0, 0.5]$), the dimensionality of the embedding layers (${64, 100, 200, 300}$), the number of training epochs (${50, 100, 200}$), the dimensionality of the hidden layers (${64, 100, 200, 300}$), the learning rate ($[1^{-5}, 1.0]$), the Non-linearity to apply ($[Tanh, ReLU]$), and the optimiser function (${SGD, ASGD, Adam, AdamW}$).
+I conduct at least $50$ independent trials of distinct hyper parameter settings which identify the best hyper parameter configuration as detailed in \cref{tab:mlp_singletask_params}.
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllllll}
+                            & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\
+Offence MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU         & SGD       \\
+Hate Speech MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh         & AdamW     \\
+Toxicity MLP Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU         & Adam     
+\end{tabular}%
+}
+\caption{Best hyper parameters for non-linear single task model for each main task dataset.}
+\label{tab:mlp_singletask_params}
+\end{table}
 
 \paragraph{Ensemble Baseline}
 
