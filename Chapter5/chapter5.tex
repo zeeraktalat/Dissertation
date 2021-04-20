@@ -168,6 +168,9 @@ I perform parameter and hyper-parameter optimisation for the linear and non-line
 For the non-linear models I use the Weights and Biases library \citep{Wandb} to perform Bayesian Hyper-Parameter Optimisation.
 For the linear models, I use grid-search as implemented in the Scikit-Learn library \citep{Pedregosa:2011}.
 
+Once models have been trained, they are each evaluated on the validation data and the evaluation data.
+For non-linear models, the performance on the validation data guides the decision on which parameter configurations are chosen for analysis while for linear models, cross-validation is applied during the grid-search which aids in determining which parameter configuration performs best.
+
 \subsection{Baseline Models}
 I train three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
 I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to train.
@@ -211,11 +214,13 @@ Toxicity MLP Single Task    & 64         & 0.1978  & 200                 & 50   
 \end{table}
 
 \paragraph{Ensemble Baseline}
-
-
-For our baseline models, we train all single-task models using Support Vector Machines (see \autoref{sec:model_background}) while we use a Logistic Regression classifier for on top of Support Vector Machines for the ensemble baseline. For all model types, we train two variants, one that is trained on the BPE tokenised text and one that is trained on the LIWC encoded text. For our Support Vector Machines and ensemble classifiers, we perform a grid-search over the parameters of the models. For each training dataset, we fit a vectoriser to the training set and pass all other datasets through the fitted vectoriser. While this allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training dataset. For this reason, we do not perform any operations that limit the occurrence of tokens in the vocabulary. Further, for the byte-pair encoded documents out-of-vocabulary tokens are likely to appear with smaller frequency as tokens unknown to the pre-trained Byte-Pair Embeddings are broken down into subword units that are likely to be repeated across the different datasets.
-
-For the grid search for the linear models, we explore the regularisation strength and the penalty provided for the models. For the regularisation strength we experiment with $C\in \{0.1, 0.2, 0.3, \ldots 1.0\}$, where the value of $C$ is inversely proportional to $C$, and we explore using an $L1$ and $L2$ penalty. The grid search is performed by training our linear baseline model trained on the training data for the primary task, using five-fold cross-validation. To arrive at the best performing parameters for a given model, a held-out subset of the training data is used to evaluate on. Following the conclusion of the parameter search, we evaluate the model with the optimal parameters on a held-out validation set, and finally we apply the model on the test data.
+The ensemble baselines require a different training scheme that relies on a classifier that is trained for each auxiliary task and an ensemble classifier that relies on the outputs of the auxiliary task classifiers, by virtue of the nature of ensemble classifiers.
+For this reason, I first train a linear SVM for each auxiliary task and perform a grid search over the type of regulariser ({$L1$, $L2$}) and the strength of the regularisation (${0.1, 0.2,\ldots, 1.0}$) (see \cref{tab:aux_ensemble_params} for the parameter settings for each auxiliary task).
+Once all auxiliary task classifiers have been trained, I train a Logistic Regression model on the outputs of the auxiliary task classifiers on the main task training data.
+During this training procedure, the ensemble is provided with the training data for the main task, which is vectorised to the vocabulary of each auxiliary task and a prediction is obtained for each task.
+For each document, predictions of all auxiliary task classifiers are vectorised and a classifier is trained on the auxiliary task predictions.
+While this method allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training datasets for the auxiliary tasks, rather than the main task.
+This risk however is mitigated by the use of subwords obtained by preprocessing all data through the Byte-Pair embeddings.
 
 \subsubsection{Linear Single Task Models}
 
