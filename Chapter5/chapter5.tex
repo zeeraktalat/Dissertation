@@ -222,6 +222,24 @@ For each document, predictions of all auxiliary task classifiers are vectorised 
 While this method allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training datasets for the auxiliary tasks, rather than the main task.
 This risk however is mitigated by the use of subwords obtained by preprocessing all data through the Byte-Pair embeddings.
 
+% TODO Add table of auxiliary task classifier configurations.
+\begin{table}[]
+  \centering
+  \begin{tabular}{lll}
+                                         & Regulariser & Regularisation Strength \\
+    Offence Auxiliary Classifier         & L2          & 0.2                     \\
+    Hate Speech Auxiliary Classifier     & L2          & 0.1                     \\
+    Toxicity Auxiliary Classifier        & L2          & 0.1                     \\
+    Hate Expert Auxiliary Classifier     & L2          & 0.5                     \\
+    Sarcasm Auxiliary Classifier         & L2          & 0.1                     \\
+    Argument Basis Auxiliary Classifier  & L2          & 0.1                     \\
+    Moral Sentiment Auxiliary Classifier & L2          & 0.1
+  \end{tabular}
+  \caption{Auxiliary task parameters for ensemble classifier.}
+  \label{tab:ensemble_aux_params}
+\end{table}
+
+% TODO You are here. Review the stuff below.
 \subsubsection{Linear Single Task Models}
 
 Following previous work \cite{Waseem:2016,Davidson:2017}, we use a Support Vector Machine with linear kernels for our single-task models. Please consult \autoref{tab:mtl_svm_parameters} for the optimal setting for parameters for the Support Vector Machine for each training set.
