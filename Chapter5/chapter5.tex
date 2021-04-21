@@ -172,6 +172,7 @@ Once models have been trained, they are each evaluated on the validation data an
 For non-linear models, the performance on the validation data guides the decision on which parameter configurations are chosen for analysis while for linear models, cross-validation is applied during the grid-search which aids in determining which parameter configuration performs best.
 
 \subsection{Baseline Models}
+% TODO Move all parameter tables to result section
 I train three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
 I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to train.
 The non-linear neural network baseline is chosen as a counter-point to the linear baseline, using a MLP to more directly be able to consider the influence of the multi-task architecture for the experimental models.
@@ -206,7 +207,7 @@ I conduct at least $50$ independent trials of distinct hyper parameter settings 
                             & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\
 Offence MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU         & SGD       \\
 Hate Speech MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh         & AdamW     \\
-Toxicity MLP Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU         & Adam     
+Toxicity MLP Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU         & Adam
 \end{tabular}%
 }
 \caption{Best hyper parameters for non-linear single task model for each main task dataset.}
@@ -255,56 +256,6 @@ This risk however is mitigated by the use of sub-words obtained by pre-processin
 \end{table}
 
 % TODO You are here. Review the stuff below.
-\subsubsection{Linear Single Task Models}
-
-% Following previous work \cite{Waseem:2016,Davidson:2017}, we use a Support Vector Machine with linear kernels for our single-task models. Please consult \autoref{tab:mtl_svm_parameters} for the optimal setting for parameters for the Support Vector Machine for each training set.
-
-% \begin{table}[]
-% \centering
-% \begin{tabular}{l|ll|ll}
-%                      & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c}{LIWC} \\ \hline
-%                      &         & Penalty       & $C$      & Penalty       \\ \hline
-% \cite{Waseem:2016}   & $0.8$   & L2            & $0.8$    & L2            \\
-% \cite{Davidson:2017} & $0.2$   & L2            & $0.3$    & L2            \\
-% \cite{Wulczyn:2017}  & $0.1$   & L2            & $1.0$    & L2
-% \end{tabular}
-% \caption{Optimal parameters for single task Support Vector Machines with linear kernels.}
-% \label{tab:mtl_svm_parameters}
-% \end{table}
-%
-As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Regardless of the model, we note that the Byte-Pair encoded data prefers stronger regularisation while the LIWC encoded data prefers weaker regularisation. This trend is most notable on the models trained on \citet{Wulczyn:2017}, where the strongest possible regularisation is used for the Byte-Pair encoded dataset and the weakest possible for the LIWC encoded dataset. This difference in regularisation strength depending on the input data is likely strongly influenced by the size of the vocabularies, with $95,364$ tokens for the BPE encoded data and $1007$ for the LIWC encoded data (see \autoref{tab:mtl_vocab_sizes}). Interestingly, a difference in vocabulary sizes does not explain the lack of change in regularisation strength for the \citet{Waseem:2016}. However, we note that while the training data for \citet{Wulczyn:2017} consists of $95,364$ unique tokens over $95,692$ documents \citet{Waseem:2016} consists of $11,921$ unique tokens over only $5,526$ training documents. The vocabulary for the LIWC encoded \citet{Waseem:2016} dataset consists of $743$ tokens, where the least frequently used token \textit{`RELATIV\_COGPROC\_POWER\_CAUSE\_MOTION\_WORK\_DRIVES\_ACHIEVE'} occurs $6$ times. In comparison, only $2187$ out of the $11,921$ tokens occur $6$ or more times. In the more than $5,000$ tokens that are unique to a single document, and by extension class, allowing for a model to over-fit on such tokens requiring less regularisation of those tokens.
-\zw{Check for logic: Does this argument make sense?}
-
-\subsubsection{Ensemble Classifier}
-
-As multi-task learning shares some resemblance with the ensemble training paradigm, we implement an ensemble as another baseline. Unlike the Support Vector Machines that use a single vectoriser for all datasets, in our ensemble model we train a vectoriser for each dataset and train a model to predict that task exclusively. To ensure that the model for each task performs as best possible, we perform a grid-search over each task model with a similar five-fold cross validation to the single-task Support Vector Machines.
-\begin{figure}
-  \centering
-%  \includegraphics[scale=0.75]{ensemble_mtl.jpg}
-  \label{fig:ensemble_mtl}
-\end{figure}
-
-Once each component model has been trained, we train a Logistic Regression Classifier on the main task training data and evaluate on the corresponding test set. The predictions from each single task model serve as features for the Logistic Regression Classifier to be trained on. Thus, the logistic regression classifier never sees any of the input text of the model, as that is only provided to the models whose predictions it relies on. To allow for this, each document must be vectorised several times, once for each task model in the ensemble. Finally, a vectoriser is fitted on the predicted labels from each task classifier, and presented to the main task model to be trained on. Please see \autoref{fig:ensemble_mtl} for a depiction of the training and prediction procedure the ensemble classifier.
-
-\begin{table}[]
-\centering
-\begin{tabular}{l|ll|ll}
-                     & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c}{LIWC} \\ \hline
-                     & $C$     & Penalty       & $C$      & Penalty       \\ \hline
-\cite{Waseem:2016}   & $0.1$   & L2            & $0.2$    & L2             \\
-\cite{Davidson:2017} & $0.4$   & L2            & $0.6$    & L2             \\
-\cite{Wulczyn:2017}  & $0.2$   & L2            & $0.4$    & L2
-\end{tabular}
-\caption{Optimal parameters for the Logistic Regression ensemble classifier.}
-\label{tab:mtl_ensemble_parameters}
-\end{table}
-
-Considering the values of $C$ in \autoref{tab:mtl_ensemble_parameters}, we similarly note a similarity to \autoref{tab:mtl_svm_parameters} that the strength of regularisation drops as the input to the task models moves from Byte-Pair Encoding to LIWC encoded documents. In this case, as we are performing the parameter search on the same feature set, namely a prediction from each classifier, the vocabulary sizes and the specific vocabularies are unlikely to directly provide an impact. Instead we interpret these changes in regularisation strength as a downstream effect of the lower regularisation strength for each model.
-
-\subsubsection{Single Task Multi-Layered Perceptron}
-
-\zw{CODING: Single task MLP model}
-
 \subsection{Neural Models}
 % TODO Use MLP without pre-trained layer to keep consistent with prior chapter.
 
