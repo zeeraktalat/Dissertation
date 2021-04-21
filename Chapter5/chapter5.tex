@@ -220,33 +220,35 @@ Once all auxiliary task classifiers have been trained, I train a Logistic Regres
 During this training procedure, the ensemble is provided with the training data for the main task, which is vectorised to the vocabulary of each auxiliary task and a prediction is obtained for each task.
 For each document, predictions of all auxiliary task classifiers are vectorised and a classifier is trained on the auxiliary task predictions.
 While this method allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training datasets for the auxiliary tasks, rather than the main task.
-This risk however is mitigated by the use of subwords obtained by preprocessing all data through the Byte-Pair embeddings.
+This risk however is mitigated by the use of sub-words obtained by pre-processing all data through the Byte-Pair embeddings.
 
 \begin{table}[h]
-  \begin{minipage}[0.42\paperwidth]
-    \centering
-    \begin{tabular}{lll}
-                                           & Regulariser & Regularisation Strength \\
-      Offence Auxiliary Classifier         & L2          & 0.2                     \\
-      Hate Speech Auxiliary Classifier     & L2          & 0.1                     \\
-      Toxicity Auxiliary Classifier        & L2          & 0.1                     \\
-      Hate Expert Auxiliary Classifier     & L2          & 0.5                     \\
-      Sarcasm Auxiliary Classifier         & L2          & 0.1                     \\
-      Argument Basis Auxiliary Classifier  & L2          & 0.1                     \\
-      Moral Sentiment Auxiliary Classifier & L2          & 0.1
-    \end{tabular}
+  \begin{minipage}{0.48\textwidth}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{l|cc}
+                                           & Regulariser & Regularisation Strength \\\hline
+      Offence Aux Classifier         & L2          & 0.2                     \\
+      Hate Speech Aux Classifier     & L2          & 0.1                     \\
+      Toxicity Aux Classifier        & L2          & 0.1                     \\
+      Hate Expert Aux Classifier     & L2          & 0.5                     \\
+      Sarcasm Aux Classifier         & L2          & 0.1                     \\
+      Argument Basis Aux Classifier  & L2          & 0.1                     \\
+      Moral Sentiment Aux Classifier & L2          & 0.1
+    \end{tabular}%
+    }
     \caption{Auxiliary task parameters for ensemble classifier.}
     \label{tab:ensemble_aux_params}
-  \end{minpage}
-  \vfill
-  \begin{minipage}[0.42\paperwidth]
-    \centering
-    \begin{tabular}{lll}
-                                      & Regulariser & Regularisation Strength \\
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{l|cc}
+                                      & Regulariser & Regularisation Strength \\\hline
       Offence Ensemble Classifier     & L2          & 0.2                     \\
       Hate Speech Ensemble Classifier & L2          & 0.5                     \\
-      Toxicity Ensemble Classifer     & L2          & 0.1
-    \end{tabular}
+      Toxicity Ensemble Classifier    & L2          & 0.1
+    \end{tabular}%
+    }
     \caption{Parameters for the ensemble classifiers.}
     \label{tab:ensemble_params}
   \end{minipage}
