@@ -255,21 +255,21 @@ This risk however is mitigated by the use of subwords obtained by preprocessing 
 % TODO You are here. Review the stuff below.
 \subsubsection{Linear Single Task Models}
 
-Following previous work \cite{Waseem:2016,Davidson:2017}, we use a Support Vector Machine with linear kernels for our single-task models. Please consult \autoref{tab:mtl_svm_parameters} for the optimal setting for parameters for the Support Vector Machine for each training set.
+% Following previous work \cite{Waseem:2016,Davidson:2017}, we use a Support Vector Machine with linear kernels for our single-task models. Please consult \autoref{tab:mtl_svm_parameters} for the optimal setting for parameters for the Support Vector Machine for each training set.
 
-\begin{table}[]
-\centering
-\begin{tabular}{l|ll|ll}
-                     & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c}{LIWC} \\ \hline
-                     &         & Penalty       & $C$      & Penalty       \\ \hline
-\cite{Waseem:2016}   & $0.8$   & L2            & $0.8$    & L2            \\
-\cite{Davidson:2017} & $0.2$   & L2            & $0.3$    & L2            \\
-\cite{Wulczyn:2017}  & $0.1$   & L2            & $1.0$    & L2
-\end{tabular}
-\caption{Optimal parameters for single task Support Vector Machines with linear kernels.}
-\label{tab:mtl_svm_parameters}
-\end{table}
-
+% \begin{table}[]
+% \centering
+% \begin{tabular}{l|ll|ll}
+%                      & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c}{LIWC} \\ \hline
+%                      &         & Penalty       & $C$      & Penalty       \\ \hline
+% \cite{Waseem:2016}   & $0.8$   & L2            & $0.8$    & L2            \\
+% \cite{Davidson:2017} & $0.2$   & L2            & $0.3$    & L2            \\
+% \cite{Wulczyn:2017}  & $0.1$   & L2            & $1.0$    & L2
+% \end{tabular}
+% \caption{Optimal parameters for single task Support Vector Machines with linear kernels.}
+% \label{tab:mtl_svm_parameters}
+% \end{table}
+%
 As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Regardless of the model, we note that the Byte-Pair encoded data prefers stronger regularisation while the LIWC encoded data prefers weaker regularisation. This trend is most notable on the models trained on \citet{Wulczyn:2017}, where the strongest possible regularisation is used for the Byte-Pair encoded dataset and the weakest possible for the LIWC encoded dataset. This difference in regularisation strength depending on the input data is likely strongly influenced by the size of the vocabularies, with $95,364$ tokens for the BPE encoded data and $1007$ for the LIWC encoded data (see \autoref{tab:mtl_vocab_sizes}). Interestingly, a difference in vocabulary sizes does not explain the lack of change in regularisation strength for the \citet{Waseem:2016}. However, we note that while the training data for \citet{Wulczyn:2017} consists of $95,364$ unique tokens over $95,692$ documents \citet{Waseem:2016} consists of $11,921$ unique tokens over only $5,526$ training documents. The vocabulary for the LIWC encoded \citet{Waseem:2016} dataset consists of $743$ tokens, where the least frequently used token \textit{`RELATIV\_COGPROC\_POWER\_CAUSE\_MOTION\_WORK\_DRIVES\_ACHIEVE'} occurs $6$ times. In comparison, only $2187$ out of the $11,921$ tokens occur $6$ or more times. In the more than $5,000$ tokens that are unique to a single document, and by extension class, allowing for a model to over-fit on such tokens requiring less regularisation of those tokens.
 \zw{Check for logic: Does this argument make sense?}
 
