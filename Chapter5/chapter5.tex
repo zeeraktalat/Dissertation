@@ -197,7 +197,7 @@ See \cref{tab:linear_singletask_params} for the best parameters for the linear s
 
 \paragraph{MLP Single-Task Baseline}
 I train a MLP as a non-linear counter-part to the linear single-task models to provide a baseline of the performance of a neural network approach that only relies on the Byte-Pair unigrams for the main task to optimise for the main task.
-To ensure that the baseline model is also tuned for optimal performance, I perform a hyper-parameter sweep  over the batch size (${16, 32, 64}$), the dropout value ($[0.0, 0.5]$), the dimensionality of the embedding layers (${64, 100, 200, 300}$), the number of training epochs (${50, 100, 200}$), the dimensionality of the hidden layers (${64, 100, 200, 300}$), the learning rate ($[1^{-5}, 1.0]$), the Non-linearity to apply ($[Tanh, ReLU]$), and the optimiser function (${SGD, ASGD, Adam, AdamW}$).
+To ensure that the baseline model is also tuned for optimal performance, I perform a hyper-parameter sweep  over the batch size ($\{16, 32, 64\}$), the dropout value ($[0.0, 0.5]$), the dimensionality of the embedding layers ($\{64, 100, 200, 300\}$), the number of training epochs ($\{50, 100, 200\}$), the dimensionality of the hidden layers ($\{64, 100, 200, 300\}$), the learning rate ($[1^{-5}, 1.0]$), the Non-linearity to apply ($\{Tanh, ReLU\}$), and the optimiser function ($\{SGD, ASGD, Adam, AdamW\}$).
 I conduct at least $50$ independent trials of distinct hyper parameter settings which identify the best hyper parameter configuration as detailed in \cref{tab:mlp_singletask_params}.
 
 \begin{table}[h]
@@ -284,8 +284,8 @@ For this reason, I limit the number of batches that are selected in each epoch, 
 Through the use of the probabilities with batches are chosen from each task in conjunction with the number of epochs and the batches being shuffled between each epoch, I ensure that my models gain a representative perspective of each dataset and their labelled data.
 These representations of the datasets afford the models the ability to jointly learn representations based on the auxiliary tasks and the primary task.
 
-For my hyper-parameter exploration, I explore the hyper-parameters listed above, that is the number of epochs (${50, 100, 200}$) and the activation function (${Tanh, ReLU}$).
-I also perform a hyper-parameter optimisation of the choice of optimisation algorithm (${Adam, AdamW, SGD,$\\$ASGD}$); the dimensionality of the shared layer (${64, 128, 256}$); the learning rate ($[1^{-5}, 1.0]$); the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$); the dimensionality of the task-specific input layers (${64, 100, 200, 300}$); the value of dropout $[0.0, 0.5]$; and lastly the batch size (${16, 32, 64}$).
+For my hyper-parameter exploration, I explore the hyper-parameters listed above, that is the number of epochs ($\{50, 100, 200\}$) and the activation function ($\{Tanh, ReLU\}$).
+I also perform a hyper-parameter optimisation of the choice of optimisation algorithm ($\{Adam, AdamW,$\\$SGD,ASGD\}$); the dimensionality of the shared layer (${64, 128, 256}$); the learning rate ($[1^{-5}, 1.0]$); the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$); the dimensionality of the task-specific input layers ($\{64, 100, 200, 300\}$); the value of dropout $[0.0, 0.5]$; and lastly the batch size ($\{16, 32, 64\}$).
 Note, that the batch size can have an influence over how much of each dataset is exposed to the model at training time as the number of batches selected per epoch does not scale with the variation in the batch size.
 
 % TODO You are here. Review the stuff below.
