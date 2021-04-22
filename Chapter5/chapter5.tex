@@ -184,8 +184,8 @@ See \cref{tab:linear_singletask_params} for the best parameters for the linear s
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lll}
-                                       & Regulariser & Regularisation Strength \\
+\begin{tabular}{l|ll}
+                                        & Regulariser & Regularisation Strength \\\hline
 \textit{Offence} Linear Single task     & L2          & 0.2                     \\
 \textit{Hate Speech} Linear Single task & L2          & 0.1                     \\
 \textit{Toxicity} Linear Single task    & L2          & 0.1
@@ -202,8 +202,8 @@ I conduct at least $50$ independent trials of distinct hyper parameter settings 
 \begin{table}[h]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{lllllllll}
-                            & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\
+\begin{tabular}{l|llllllll}
+                            & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\\hline
 Offence MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU         & SGD       \\
 Hate Speech MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh         & AdamW     \\
 Toxicity MLP Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU         & Adam
