@@ -255,13 +255,15 @@ This risk however is mitigated by the use of sub-words obtained by pre-processin
   \end{minipage}
 \end{table}
 
-% TODO You are here. Review the stuff below.
-\subsection{Neural Models}
-% TODO Use MLP without pre-trained layer to keep consistent with prior chapter.
+\subsection{Experimental Models}
+For the experimental models, I follow \citet{Waseem:2018} in using a Multi-Layered Perceptron model.
+The Multi-task MLP architecture that I design (see \cref{fig:mlp_mtl} for a depiction of the model architecture) consists of an input embedding layer which is unique to each task, a shared linear hidden layer, followed by another linear hidden layer that is specific to each task, a linear output layer for each task, and finally the \texttt{softmax} is computed on the model representation.
+I also include a dropout layer and a non-linear activation function, where I treat the decision of activation function as an hyper-parameter optimising between the choice of \texttt{ReLU} and \texttt{Tanh} activation functions.
 
-We train two different multi-task model architectures, a Multi-Layered Perceptron network model and a Long-Short Term Memory network model, and a single task Multi-Layered Perceptron network. For all models, we use index-encoded tensors and use an embedding layer as the input layer. All neural models are implemented using PyTorch \cite{Paszke:2019}.
-
-In order to show the utility of multi-task learning for abuse detection, we use basic architectures and avoid things such as attention layers. Further, each model is subject to dropout for another measure against over-fitting.  While we do subject our model to early stopping, we find that in practice early stopping is not triggered due to the variable performances on the different tasks.
+My architecture of the Multi-task MLP deviates from the architecture proposed by \citet{Waseem:2018} in two ways: the choice of input layer and the choice of activation function.
+Where I use an embedding layer as the input layer for each task, \citet{Waseem:2018} use a onehot encoded input layer and they use a \texttt{Tanh} activation function for all of their experiments.
+Following the experimental approach in \cref{chap:liwc}, I keep the embedding layer randomly initialised rather than using a pre-trained embedding layer.
+The motivation for keeping training the embedding layer, even with sparse data, is that pre-trained embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
 
 \begin{figure}
   \centering
@@ -270,13 +272,21 @@ In order to show the utility of multi-task learning for abuse detection, we use 
   \label{fig:mlp_mtl}
 \end{figure}
 
+The training procedure for the Multi-task MLP deviates significantly from the training procedures associated with the baseline models.
+For the Multi-task MLP, I train my models by giving all tasks an equal weight but distinguish between the main task and the auxiliary tasks by the probability with which a batch from task is chosen.
+A task is chosen each time a batch is to be selected, where the primary task is chosen with a probability of $0.6$ when there are two or more auxiliary tasks and $0.7$ when there is only one auxiliary task.
+As each task is chosen probabilistically, it is necessary for the probabilities to sum to $1.0$, thus the weight of each auxiliary task is $\fraq{1.0-P(M)}{N}$, where $N$ is the total number of auxiliary tasks and $P(M)$ is the probability of the main task being chosen.
+Given that I choose the task to be trained on probabilistically, I do not weight the loss as in \citet{Rajamanickam:2020}.
+Once a task has been chosen, a batch is selected from the data associated with the task and is passed through the model and the loss on the batch is computed and back-propagated through the network, a process which is repeated for a number of epochs, where the exact number of epochs is a hyper-parameter that I tune.
+For single-task models, it is common to iterate over the entire dataset, obtaining a batch count given the size of the dataset and the batch size.
+MTL models however are trained on a number of datasets, including auxiliary task datasets where obtaining a high performance on the auxiliary task may not be of concern, rather learning inductive biases from the data are.
+For this reason, I limit the number of batches that are selected in each epoch, setting a global value of $300$ batches per epoch.
+Through the use of the probabilities with batches are chosen from each task in conjunction with the number of epochs and the batches being shuffled between each epoch, I ensure that my models gain a representative perspective of each dataset and their labelled data.
+These representations of the datasets afford the models the ability to jointly learn representations based on the auxiliary tasks and the primary task.
 
-\subsubsection{Multi-task Multi-Layered Perceptron}
-
-The multi-task Multi-Layered Perceptron that we implement consists of an input embedding layer, which is trainable. The output of this is then passed to a linear layer that is shared by all tasks. The resulting representation of a document, or batch of documents, is then passed on the another linear layer, and finally it is passed through a linear output layer that maps to the classes for each task, respectively. The result of this final layer is then subject to a softmax layer. Between each layer in the model, softmax, input, and output layer aside, we subject the output of all layers to an activation function and dropout. Please refer to \autoref{fig:mlp_mtl_embedding} for a depiction of this model.
-
-\zw{Insert hyper-parameter space that is searched}
-
+For my hyper-parameter exploration, I explore the hyper-parameters listed above, that is the number of epochs (${50, 100, 200}$) and the activation function (${Tanh, ReLU}$).
+I also perform a hyper-parameter optimisation of the choice of optimisation algorithm (${Adam, AdamW, SGD, ASGD}$), the dimensionality of the shared layer (${64, 128, 256}$), the learning rate ($[1^{-5}, 1.0]$), the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$), the dimensionality of the task-specific input layers (${64, 100, 200, 300}$), the value of dropout $[0.0, 0.5]$, and lastly the batch size (${16, 32, 64}$).
+Note, that the batch size can have an influence over how much of each dataset is exposed to the model at training time as the number of batches selected per epoch does not scale with the variation in the batch size.
 
 \subsection{Experimental Models}
 
