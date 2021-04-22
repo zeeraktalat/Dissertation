@@ -285,66 +285,65 @@ Through the use of the probabilities with batches are chosen from each task in c
 These representations of the datasets afford the models the ability to jointly learn representations based on the auxiliary tasks and the primary task.
 
 For my hyper-parameter exploration, I explore the hyper-parameters listed above, that is the number of epochs (${50, 100, 200}$) and the activation function (${Tanh, ReLU}$).
-I also perform a hyper-parameter optimisation of the choice of optimisation algorithm (${Adam, AdamW, SGD, ASGD}$), the dimensionality of the shared layer (${64, 128, 256}$), the learning rate ($[1^{-5}, 1.0]$), the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$), the dimensionality of the task-specific input layers (${64, 100, 200, 300}$), the value of dropout $[0.0, 0.5]$, and lastly the batch size (${16, 32, 64}$).
+I also perform a hyper-parameter optimisation of the choice of optimisation algorithm (${Adam, AdamW, SGD,$\\$ASGD}$), the dimensionality of the shared layer (${64, 128, 256}$), the learning rate ($[1^{-5}, 1.0]$), the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$), the dimensionality of the task-specific input layers (${64, 100, 200, 300}$), the value of dropout $[0.0, 0.5]$, and lastly the batch size (${16, 32, 64}$).
 Note, that the batch size can have an influence over how much of each dataset is exposed to the model at training time as the number of batches selected per epoch does not scale with the variation in the batch size.
+
+% TODO You are here. Review the stuff below.
+\subsection{Auxiliary Task Configurations}
+In order to select the auxiliary tasks and their combinations that contribute most towards the performances of the primary, I iteratively add auxiliary tasks as they prove useful to the main task in terms of performance boosts.
+To perform this selection, I design three different scenarios of auxiliary task configurations:
+
+\begin{enumerate}
+  \item Auxiliary tasks consist only of abusive language detection tasks,
+  \item auxiliary tasks consist only of non-abusive language detection tasks, and
+  \item auxiliary tasks are a combination of abusive language detection tasks and tasks that are not abusive language detection tasks.
+\end{enumerate}
+
+
+
 
 \subsection{Experimental Models}
 
-Three different scenarios
-\begin{enumerate}
-  \item Aux tasks are also abusive language tasks
-  \item Aux tasks are not abuse tasks
-  \item Aux tasks are abuse and not abuse tasks
-\end{enumerate}
 
-To train our experimental models, and ensure direct comparability of the models with one another, we develop a single training process that we subject all models to.\vspace{5mm}
-
-To train our model robustly, we iterate over the dataset in a set number of epochs for each model, identified through the hyper-parameter search. Each epoch consists of $500$ batches of data passed through the model; the batch size, too, is identified through the hyper-parameter search. To avoid the issue of only selecting within the first $500$ batches from each dataset, we randomly shuffle all datasets at the top of each new epoch. Though several different strategies for selecting which task to select have been developed \cite{Waseem:2018}, we choose here to follow the selection process in previous work \cite{Waseem:2018,Rajamanickam:2020} in which the task is randomly selected. For our training procedure, this means that selecting the task to processed is a 6-sided fair die toss, where each task will be chosen approximately every $6$ iterations. We distinguish between the primary task and the auxiliary tasks by introducing a parameter $\beta$ that controls how much each tasks contributes to the loss function. To avoid an issue of vanishing losses, we set the $\beta_{aux} = 1$ for each auxiliary task and $beta_{primary} = \sum^{i}_{i \in \#auxiliary_tasks} 1$ for the primary task. Thus, the resulting model emphasises the contributions of the primary tasks equal to the collective contributions of all auxiliary tasks. For each task, we compute the loss using the equation given in \autoref{eq:mtl_loss} on the training data for the task. The computed loss is computed after each batch and back-propagated through the network, weighted by $\beta$. At the end of each epoch, we track the development of our model on the validation set from the primary task.
-
-\begin{equation}\label{eq:mtl_loss}
-  loss = loss(\hat{y}, y) \times \beta
-\end{equation}
-
-For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines. In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models. For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models. We do note however, that most models prefer $ReLU$ as their activation function over $tanh$. Similarly, most models prefer a batch size of $64$ over $32$. On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
+For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines.
+In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models. 
+For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models. 
+We do note however, that most models prefer $ReLU$ as their activation function over $tanh$. 
+Similarly, most models prefer a batch size of $64$ over $32$. 
+On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
 \zw{Insert insights about model hyper-parameters}.
-
-\begin{landscape}
-\begin{table}[]
-\centering
-\begin{tabular}{lllll|llll|llll}
-                    & \multicolumn{4}{c|}{Davidson}   & \multicolumn{4}{c|}{Wulczyn}  & \multicolumn{4}{c}{Waseem}          \\ \hline
-                    & \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} &  \multicolumn{2}{c}{BPE} & \multicolumn{2}{c|}{LIWC} &  \multicolumn{2}{c}{BPE} &  \multicolumn{2}{c}{LIWC} \\
-                    & MLP       & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM & MLP      & LSTM     & MLP      & LSTM \\
-Shared Dimension    & $256$     &      & $256$    &      & $256$    &      & $256$    &      & $256$    & $256$    & $256$    &      \\
-Hidden Dimension    & -         &      & -        &      & -        &      & -        &      & -        & $300$    & -        &      \\
-Embedding Dimension & $100$     &      & $100$    &      & $100$    &      & $100$    &      & $300$    & $100$    & $100$    &      \\
-Activation Function & $ReLU$    &      & $ReLU$   &      & $ReLU$   &      & $ReLU$   &      & $Tanh$   & $ReLU$   & $ReLU$   &      \\
-Batch Size          & $64$      &      & $64$     &      & $32$     &      & $32$     &      & $64$     & $64$     & $64$     &      \\
-Learning Rate       & $0.001$   &      & $0.001$  &      & $0.01$   &      & $0.01$   &      & $0.001$  & $0.0001$ & $0.001$  &      \\
-\# Epochs           & $200$     &      & $200$    &      & $100$    &      & $100$    &      & $100$    & $200$    & $200$    &      \\
-Dropout             & $0.3$     &      & $0.2$    &      & $0.1$    &      & $0.2$    &      & $0.3$    & $0.1$    & $0.1$    &      \\
-Validation Score    & $0.5249$  &      & $0.5410$ &      & $0.6885$ &      & $0.5304$ &      & $0.4054$ & $0.3336$ & $0.2995$ &
-\end{tabular}
-\caption{Best parameter setting for each experimental model type.}
-\label{tab:mtl_exp_model_parameters}
-\end{table}
-\end{landscape}
 
 \zw{Identify which models will be experimental models once good results come out.}
 
 \zw{Describe the models and experimental settings}
-\zw{CODING: Do Ablation test}
 
 \section{Results}
 
+\subsection{Baseline Performances}
+% TODO Revisit whether a sub sub section is really necessary.
+\subsubsection{Linear Single Task Models}
+As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Regardless of the model, we note that the Byte-Pair encoded data prefers stronger regularisation while the LIWC encoded data prefers weaker regularisation. This trend is most notable on the models trained on \citet{Wulczyn:2017}, where the strongest possible regularisation is used for the Byte-Pair encoded dataset and the weakest possible for the LIWC encoded dataset. This difference in regularisation strength depending on the input data is likely strongly influenced by the size of the vocabularies, with $95,364$ tokens for the BPE encoded data and $1007$ for the LIWC encoded data (see \autoref{tab:mtl_vocab_sizes}). Interestingly, a difference in vocabulary sizes does not explain the lack of change in regularisation strength for the \citet{Waseem:2016}. However, we note that while the training data for \citet{Wulczyn:2017} consists of $95,364$ unique tokens over $95,692$ documents \citet{Waseem:2016} consists of $11,921$ unique tokens over only $5,526$ training documents. The vocabulary for the LIWC encoded \citet{Waseem:2016} dataset consists of $743$ tokens, where the least frequently used token \textit{`RELATIV\_COGPROC\_POWER\_CAUSE\_MOTION\_WORK\_DRIVES\_ACHIEVE'} occurs $6$ times. In comparison, only $2187$ out of the $11,921$ tokens occur $6$ or more times. In the more than $5,000$ tokens that are unique to a single document, and by extension class, allowing for a model to over-fit on such tokens requiring less regularisation of those tokens.
+
+\subsubsection{Ensemble Classifier}
+
+Considering the values of $C$ in \autoref{tab:mtl_ensemble_parameters}, we similarly note a similarity to \autoref{tab:mtl_svm_parameters} that the strength of regularisation drops as the input to the task models moves from Byte-Pair Encoding to LIWC encoded documents. In this case, as we are performing the parameter search on the same feature set, namely a prediction from each classifier, the vocabulary sizes and the specific vocabularies are unlikely to directly provide an impact. Instead we interpret these changes in regularisation strength as a downstream effect of the lower regularisation strength for each model.
+
+\zw{Check for logic: Does this argument make sense?}
 \zw{INSERT: Baseline scores}
-\zw{Add results and start by rough analysis of just numbers}
-\zw{Add baseline experiment results}
+\zw{INSERT: Baseline parameters}
 \zw{Show which models contribute most to ensemble models}
-\zw{Add plots for development of loss over each epoch}
-\zw{Add plots for F1 score during the evaluation set}
+
+\subsection{Experimental Model Performances}
+
+\zw{Add results and start by rough analysis of just numbers}
+\zw{Add plots}
 \zw{Look at predictions in detail, try to identify where they still fail}
-\zw{Do logistic regression and find out if there are things that the models might overfit on}
 
 \section{Conclusions}
+
+Future work:
+\zw{Explore weighting of each task}
+\zw{Treat Weighting of tasks as an optimisable entity}
+\zw{Use pre-trained embeddings}
+
 
