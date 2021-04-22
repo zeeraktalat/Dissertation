@@ -275,7 +275,7 @@ The motivation for keeping training the embedding layer, even with sparse data, 
 The training procedure for the Multi-task MLP deviates significantly from the training procedures associated with the baseline models.
 For the Multi-task MLP, I train my models by giving all tasks an equal weight but distinguish between the main task and the auxiliary tasks by the probability with which a batch from task is chosen.
 A task is chosen each time a batch is to be selected, where the primary task is chosen with a probability of $0.6$ when there are two or more auxiliary tasks and $0.7$ when there is only one auxiliary task.
-As each task is chosen probabilistically, it is necessary for the probabilities to sum to $1.0$, thus the weight of each auxiliary task is $\fraq{1.0-P(M)}{N}$, where $N$ is the total number of auxiliary tasks and $P(M)$ is the probability of the main task being chosen.
+As each task is chosen probabilistically, it is necessary for the probabilities to sum to $1.0$, thus the weight of each auxiliary task is $\frac{1.0-P(M)}{N}$, where $N$ is the total number of auxiliary tasks and $P(M)$ is the probability of the main task being chosen.
 Given that I choose the task to be trained on probabilistically, I do not weight the loss as in \citet{Rajamanickam:2020}.
 Once a task has been chosen, a batch is selected from the data associated with the task and is passed through the model and the loss on the batch is computed and back-propagated through the network, a process which is repeated for a number of epochs, where the exact number of epochs is a hyper-parameter that I tune.
 For single-task models, it is common to iterate over the entire dataset, obtaining a batch count given the size of the dataset and the batch size.
