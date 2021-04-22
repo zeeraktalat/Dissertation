@@ -285,7 +285,7 @@ Through the use of the probabilities with batches are chosen from each task in c
 These representations of the datasets afford the models the ability to jointly learn representations based on the auxiliary tasks and the primary task.
 
 For my hyper-parameter exploration, I explore the hyper-parameters listed above, that is the number of epochs (${50, 100, 200}$) and the activation function (${Tanh, ReLU}$).
-I also perform a hyper-parameter optimisation of the choice of optimisation algorithm (${Adam, AdamW, SGD,$\\$ASGD}$), the dimensionality of the shared layer (${64, 128, 256}$), the learning rate ($[1^{-5}, 1.0]$), the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$), the dimensionality of the task-specific input layers (${64, 100, 200, 300}$), the value of dropout $[0.0, 0.5]$, and lastly the batch size (${16, 32, 64}$).
+I also perform a hyper-parameter optimisation of the choice of optimisation algorithm (${Adam, AdamW, SGD,$\\$ASGD}$); the dimensionality of the shared layer (${64, 128, 256}$); the learning rate ($[1^{-5}, 1.0]$); the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$); the dimensionality of the task-specific input layers (${64, 100, 200, 300}$); the value of dropout $[0.0, 0.5]$; and lastly the batch size (${16, 32, 64}$).
 Note, that the batch size can have an influence over how much of each dataset is exposed to the model at training time as the number of batches selected per epoch does not scale with the variation in the batch size.
 
 % TODO You are here. Review the stuff below.
