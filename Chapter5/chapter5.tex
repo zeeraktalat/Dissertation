@@ -301,21 +301,6 @@ I initially experiment with only one auxiliary task and select those that either
 I then construct experiments with all combinations of the selected auxiliary tasks.
 
 % TODO You are here. Review the stuff below.
-\subsection{Experimental Models}
-
-
-For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines.
-In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models. 
-For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models. 
-We do note however, that most models prefer $ReLU$ as their activation function over $tanh$. 
-Similarly, most models prefer a batch size of $64$ over $32$. 
-On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
-\zw{Insert insights about model hyper-parameters}.
-
-\zw{Identify which models will be experimental models once good results come out.}
-
-\zw{Describe the models and experimental settings}
-
 \section{Results}
 
 \subsection{Baseline Performances}
@@ -333,6 +318,17 @@ Considering the values of $C$ in \autoref{tab:mtl_ensemble_parameters}, we simil
 \zw{Show which models contribute most to ensemble models}
 
 \subsection{Experimental Model Performances}
+For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines.
+In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models.
+For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models. 
+We do note however, that most models prefer $ReLU$ as their activation function over $tanh$.
+Similarly, most models prefer a batch size of $64$ over $32$.
+On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
+\zw{Insert insights about model hyper-parameters}.
+
+\zw{Identify which models will be experimental models once good results come out.}
+
+\zw{Describe the models and experimental settings}
 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Add plots}
