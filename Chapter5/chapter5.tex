@@ -287,9 +287,8 @@ For my hyper-parameter exploration, I explore the hyper-parameters listed above,
 I also perform a hyper-parameter optimisation of the choice of optimisation algorithm (${Adam, AdamW, SGD,$\\$ASGD}$); the dimensionality of the shared layer (${64, 128, 256}$); the learning rate ($[1^{-5}, 1.0]$); the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$); the dimensionality of the task-specific input layers (${64, 100, 200, 300}$); the value of dropout $[0.0, 0.5]$; and lastly the batch size (${16, 32, 64}$).
 Note, that the batch size can have an influence over how much of each dataset is exposed to the model at training time as the number of batches selected per epoch does not scale with the variation in the batch size.
 
-% TODO You are here. Review the stuff below.
 \subsection{Auxiliary Task Configurations}
-In order to select the auxiliary tasks and their combinations that contribute most towards the performances of the primary, I iteratively add auxiliary tasks as they prove useful to the main task in terms of performance boosts.
+In order to select the auxiliary tasks and their combinations that contribute most towards the performances of the primary, I add auxiliary tasks as they prove useful to the main task in terms of performance boosts.
 To perform this selection, I design three different scenarios of auxiliary task configurations:
 
 \begin{enumerate}
@@ -298,9 +297,10 @@ To perform this selection, I design three different scenarios of auxiliary task 
   \item auxiliary tasks are a combination of abusive language detection tasks and tasks that are not abusive language detection tasks.
 \end{enumerate}
 
+I initially experiment with only one auxiliary task and select those that either outperform all baseline models or obtain the highest performances, in the case where some baseline models outperform all experimental models with one auxiliary task.
+I then construct experiments with all combinations of the selected auxiliary tasks.
 
-
-
+% TODO You are here. Review the stuff below.
 \subsection{Experimental Models}
 
 
