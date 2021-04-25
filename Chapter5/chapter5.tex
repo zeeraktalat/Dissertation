@@ -378,10 +378,10 @@ Observing the vocabulary sizes in \cref{tab:aux_vocab_sizes}, it appears that vo
   \centering
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|llllllll}
-                                         & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\\hline
-    \textit{Offence} MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU          & SGD       \\
-    \textit{Hate Speech} MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh          & AdamW     \\
-    \textit{Toxicity MLP} Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU          & Adam
+                                          & Batch Size & Dropout & Embedding Dim & Epochs & Hidden Dim & Learning Rate & Non-linearity & Optimiser \\\hline
+    \textit{Offence} MLP Single Task      & 64         & 0.318   & 300           & 200    & 100        & 0.003586      & ReLU          & SGD       \\
+    \textit{Hate Speech} MLP Single Task  & 64         & 0.1458  & 300           & 100    & 100        & 0.0007246     & Tanh          & AdamW     \\
+    \textit{Toxicity MLP} Single Task     & 64         & 0.1978  & 200           & 50     & 200        & 0.006056      & ReLU          & Adam
   \end{tabular}%
   }
   \caption{Best hyper parameters for non-linear single task model for each main task dataset.}
