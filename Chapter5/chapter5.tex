@@ -305,6 +305,9 @@ I then construct experiments with all combinations of the selected auxiliary tas
 
 \subsection{Baseline Performances}
 
+In \cref{tab:linear_singletask_params,tab:mlp_singletask_params,tab:ensemble_params} I present the best identified hyper-parameters for each model type.
+Focusing on the regulariser, all linear models prefer an $L2$ regulariser, likely because it redistributes the weights of equally important features rather than zeroing any of them out.
+Moreover, as observed in \cref{tab:linear_singletask_params} all models prefer a low regularisation strength when a linear single-task classifier is trained.
 
 \begin{table}[h]
   \centering
@@ -318,18 +321,23 @@ I then construct experiments with all combinations of the selected auxiliary tas
   \label{tab:linear_singletask_params}
 \end{table}
 
-\begin{table}[h]
+For the ensemble classifier a different picture emerges (see \cref{tab:ensemble_params}.
+As this model is trained on a very sparse feature set that consists only of the predictions of the auxiliary task classifiers, it is no surprise that an $L2$ regulariser is preferred.
+Moreover, there are indications of a correlation between the dataset size and the strength of the regularisation, with the smallest dataset requiring the greatest regularisation strength ($0.5$ for \textit{Hate Speech}) and the largest dataset requiring the lowest regularisation strength ($0.1$ for \textit{Toxicity}).
+
+\begin{table}[]
   \centering
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{l|llllllll}
-                                         & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\\hline
-    \textit{Offence} MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU          & SGD       \\
-    \textit{Hate Speech} MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh          & AdamW     \\
-    \textit{Toxicity MLP} Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU          & Adam
-  \end{tabular}%
-  }
-  \caption{Best hyper parameters for non-linear single task model for each main task dataset.}
-  \label{tab:mlp_singletask_params}
+  \begin{tabular}{ll}
+    \textit{Offence}         & 23263 \\
+    \textit{Hate Speech}     & 19981 \\
+    \textit{Toxicity}        & 95739 \\
+    \textit{Hate Expert}     & 12005 \\
+    \textit{Sarcasm}         & 21159 \\
+    \textit{Argument Basis}  & 22275 \\
+    \textit{Moral Sentiment} & 31779
+  \end{tabular}
+  \caption{Vocabulary sizes for each of the datasets used.}
+  \label{tab:aux_vocab_sizes}
 \end{table}
 
 \begin{table}[h]
