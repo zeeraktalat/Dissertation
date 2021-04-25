@@ -327,18 +327,26 @@ Moreover, there are indications of a correlation between the dataset size and th
 
 \begin{table}[]
   \centering
-  \begin{tabular}{ll}
-    \textit{Offence}         & 23263 \\
-    \textit{Hate Speech}     & 19981 \\
-    \textit{Toxicity}        & 95739 \\
-    \textit{Hate Expert}     & 12005 \\
-    \textit{Sarcasm}         & 21159 \\
-    \textit{Argument Basis}  & 22275 \\
-    \textit{Moral Sentiment} & 31779
+  \begin{tabular}{l|lll}
+    Dataset                  & Vocabulary Size & Training Documents & # Classes
+    \textit{Offence}         & 23263           & 19826              & 3\\
+    \textit{Hate Speech}     & 19981           & 13525              & 3\\
+    \textit{Toxicity}        & 95739           & 95692              & 2\\
+    \textit{Hate Expert}     & 12005           & 5527               & 4\\
+    \textit{Sarcasm}         & 21159           & 7508               & 2\\
+    \textit{Argument Basis}  & 22275           & 8433               & 2\\
+    \textit{Moral Sentiment} & 31779           & 27989              & 11
   \end{tabular}
   \caption{Vocabulary sizes for each of the datasets used.}
   \label{tab:aux_vocab_sizes}
 \end{table}
+
+This narrative however is complicated by the best parameters found in \cref{tab:ensemble_aux_params}.
+Here, the smallest abusive language dataset requires the largest regularisation power while other, in line with the observation on \cref{tab:ensemble_params}.
+However, classifiers optimised on the larger \textit{Offence} dataset require more regularisation strength than classifiers optimised the smaller \textit{Hate Speech}.
+In tandem, these observations suggest that beyond the size of the dataset in terms of numbers, other factors may influence the strength of the regularisation.
+One such potential factor may be the vocabulary size.
+Observing the vocabulary sizes in \cref{tab:aux_vocab_sizes}, it appears that vocabulary sizes in conjunction with the dataset sizes may be causes for the regularisation strength for models trained on different datasets.
 
 \begin{table}[h]
   \begin{tabular}{l|cc}
