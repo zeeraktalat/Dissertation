@@ -153,7 +153,7 @@ Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ do
 Thus there is not enough data for a machine learning model to learn patterns of abuse in the intersection between racist and sexist speech.
 However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the training process.
 
-\section{Modelling}
+\section{Modelling}\label{sec:mtl_modelling}
 For the experiments conducted, I only use one form of tokens to allow for an examination of the impact of the auxiliary tasks rather than the impact of tokenisation.
 I choose to represent all documents as their Byte-Pair encoded representations as these minimise the number of out-of-vocabulary tokens as this representation retains competitive performances in \cref{chap:liwc}.
 To this end, I pre-process all documents using a $200$ dimensional Byte-Pair Embedding \citep{Heinzerling:2018}.
@@ -170,7 +170,7 @@ For the linear models, I use grid-search as implemented in the Scikit-Learn libr
 Once models have been trained, they are each evaluated on the validation data and the evaluation data.
 For non-linear models, the performance on the validation data guides the decision on which parameter configurations are chosen for analysis while for linear models, cross-validation is applied during the grid-search which aids in determining which parameter configuration performs best.
 
-\subsection{Baseline Models}
+\subsection{Baseline Models}\label{sub:mtl_baselines}
 % TODO Move all parameter tables to result section
 I train three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
 I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to train.
@@ -304,6 +304,62 @@ I then construct experiments with all combinations of the selected auxiliary tas
 \section{Results}
 
 \subsection{Baseline Performances}
+
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|ll}
+                                            & Regulariser & Regularisation Strength \\\hline
+    \textit{Offence} Linear Single task     & L2          & 0.2                     \\
+    \textit{Hate Speech} Linear Single task & L2          & 0.1                     \\
+    \textit{Toxicity} Linear Single task    & L2          & 0.1
+  \end{tabular}
+  \caption{Best model parameters for linear single-task models.}
+  \label{tab:linear_singletask_params}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|llllllll}
+                                         & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\\hline
+    \textit{Offence} MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU          & SGD       \\
+    \textit{Hate Speech} MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh          & AdamW     \\
+    \textit{Toxicity MLP} Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU          & Adam
+  \end{tabular}%
+  }
+  \caption{Best hyper parameters for non-linear single task model for each main task dataset.}
+  \label{tab:mlp_singletask_params}
+\end{table}
+
+\begin{table}[h]
+  \begin{tabular}{l|cc}
+                                            & Regulariser & Regularisation Strength \\\hline
+    \textit{Offence} Aux Classifier         & L2          & 0.2                     \\
+    \textit{Hate Speech} Aux Classifier     & L2          & 0.1                     \\
+    \textit{Toxicity} Aux Classifier        & L2          & 0.1                     \\
+    \textit{Hate Expert} Aux Classifier     & L2          & 0.5                     \\
+    \textit{Sarcasm} Aux Classifier         & L2          & 0.1                     \\
+    \textit{Argument Basis} Aux Classifier  & L2          & 0.1                     \\
+    \textit{Moral Sentiment} Aux Classifier & L2          & 0.1
+  \end{tabular}
+  \caption{Auxiliary task parameters for ensemble classifier.}
+  \label{tab:ensemble_aux_params}
+\end{table}
+
+\begin{table}[h]
+  \begin{tabular}{l|cc}
+                                             & Regulariser & Regularisation Strength \\\hline
+    \textit{Offence} Ensemble Classifier     & L2          & 0.2                     \\
+    \textit{Hate Speech} Ensemble Classifier & L2          & 0.5                     \\
+    \textit{Toxicity} Ensemble Classifier    & L2          & 0.1
+  \end{tabular}
+  \caption{Parameters for the ensemble classifiers.}
+  \label{tab:ensemble_params}
+\end{table}
+
+\zw{Describe dev results}
+\zw{Describe test results}
 % TODO Revisit whether a sub sub section is really necessary.
 \subsubsection{Linear Single Task Models}
 As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Regardless of the model, we note that the Byte-Pair encoded data prefers stronger regularisation while the LIWC encoded data prefers weaker regularisation. This trend is most notable on the models trained on \citet{Wulczyn:2017}, where the strongest possible regularisation is used for the Byte-Pair encoded dataset and the weakest possible for the LIWC encoded dataset. This difference in regularisation strength depending on the input data is likely strongly influenced by the size of the vocabularies, with $95,364$ tokens for the BPE encoded data and $1007$ for the LIWC encoded data (see \autoref{tab:mtl_vocab_sizes}). Interestingly, a difference in vocabulary sizes does not explain the lack of change in regularisation strength for the \citet{Waseem:2016}. However, we note that while the training data for \citet{Wulczyn:2017} consists of $95,364$ unique tokens over $95,692$ documents \citet{Waseem:2016} consists of $11,921$ unique tokens over only $5,526$ training documents. The vocabulary for the LIWC encoded \citet{Waseem:2016} dataset consists of $743$ tokens, where the least frequently used token \textit{`RELATIV\_COGPROC\_POWER\_CAUSE\_MOTION\_WORK\_DRIVES\_ACHIEVE'} occurs $6$ times. In comparison, only $2187$ out of the $11,921$ tokens occur $6$ or more times. In the more than $5,000$ tokens that are unique to a single document, and by extension class, allowing for a model to over-fit on such tokens requiring less regularisation of those tokens.
