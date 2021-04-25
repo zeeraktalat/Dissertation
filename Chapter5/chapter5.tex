@@ -245,7 +245,7 @@ I then construct experiments with all combinations of the selected auxiliary tas
 \section{Results}
 \zw{Maybe add some introductory words here?}
 
-\subsection{Baseline Performances}
+\subsection{Baseline Models}
 
 In \cref{tab:linear_singletask_params,tab:mlp_singletask_params,tab:ensemble_params} I present the best identified hyper-parameters for each model type.
 Focusing on the regulariser, all linear models prefer an $L2$ regulariser, likely because it redistributes the weights of equally important features rather than zeroing any of them out.
@@ -340,7 +340,7 @@ Moreover, the baseline models optimised on these two datasets also prefer a high
 
 \begin{table}[h]
 \centering
-\begin{tabular}{l|llll}
+\begin{tabular}{l|cccc}
            & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
 Linear SVM & \textbf{0.8515} & \textbf{0.8239} & \textbf{0.7741} & \textbf{0.7962} \\
 Ensemble   & 0.8493          & 0.2123          & 0.2500          & 0.2296          \\
@@ -352,7 +352,7 @@ MLP        & 0.8117          & 0.7117          & 0.7737          & 0.7378
 
 \begin{table}[h]
 \centering
-\begin{tabular}{l|llll}
+\begin{tabular}{l|cccc}
            & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
 Linear SVM & \textbf{0.8898} & \textbf{0.7224} & \textbf{0.7107} & \textbf{0.8661} \\
 Ensemble   & 0.7744          & 0.2581          & 0.3333          & 0.2910          \\
@@ -364,7 +364,7 @@ MLP        & 0.8708          & 0.6581          & 0.7024          & 0.6773
 
 \begin{table}[h]
 \centering
-\begin{tabular}{l|llll}
+\begin{tabular}{l|cccc}
            & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
 Linear SVM & \textbf{0.9570} & \textbf{0.8967} & \textbf{0.8411} & 0.7151          \\
 Ensemble   & 0.9045          & 0.4522          & 0.5000          & 0.4749          \\
