@@ -180,79 +180,21 @@ Finally, I choose to an ensemble classifier that is trained on the outputs of li
 \paragraph{Single-Task Baselines}
 Following prior work \citep{Waseem:2016,Davidson:2017}, I train all single-task models using a Support Vector Machine with a linear kernel (see \cref{sec:model_background} for more details on SVMs).
 All linear single-task models are trained on unigram counts of the Byte-Pair encoded tokens and are subject to parameter-optimisation of the regularisation type ($L1$ and $L2$) and the strength of regularisation (using values $0.1, 0.2, \ldots, 1.0$).
-See \cref{tab:linear_singletask_params} for the best parameters for the linear single-task models for each dataset.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{l|ll}
-                                        & Regulariser & Regularisation Strength \\\hline
-\textit{Offence} Linear Single task     & L2          & 0.2                     \\
-\textit{Hate Speech} Linear Single task & L2          & 0.1                     \\
-\textit{Toxicity} Linear Single task    & L2          & 0.1
-\end{tabular}
-\caption{Best model parameters for linear single-task models.}
-\label{tab:linear_singletask_params}
-\end{table}
 
 \paragraph{MLP Single-Task Baseline}
 I train a MLP as a non-linear counter-part to the linear single-task models to provide a baseline of the performance of a neural network approach that only relies on the Byte-Pair unigrams for the main task to optimise for the main task.
 To ensure that the baseline model is also tuned for optimal performance, I perform a hyper-parameter sweep  over the batch size ($\{16, 32, 64\}$), the dropout value ($[0.0, 0.5]$), the dimensionality of the embedding layers ($\{64, 100, 200, 300\}$), the number of training epochs ($\{50, 100, 200\}$), the dimensionality of the hidden layers ($\{64, 100, 200, 300\}$), the learning rate ($[1^{-5}, 1.0]$), the Non-linearity to apply ($\{Tanh, ReLU\}$), and the optimiser function ($\{SGD, ASGD, Adam, AdamW\}$).
-I conduct at least $50$ independent trials of distinct hyper parameter settings which identify the best hyper parameter configuration as detailed in \cref{tab:mlp_singletask_params}.
-
-\begin{table}[h]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{l|llllllll}
-                            & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\\hline
-Offence MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU         & SGD       \\
-Hate Speech MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh         & AdamW     \\
-Toxicity MLP Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU         & Adam
-\end{tabular}%
-}
-\caption{Best hyper parameters for non-linear single task model for each main task dataset.}
-\label{tab:mlp_singletask_params}
-\end{table}
+I conduct at least $50$ independent trials of distinct hyper parameter settings which identify the best hyper parameter configuration.
 
 \paragraph{Ensemble Baseline}
 The ensemble baselines require a different training scheme that relies on a classifier that is trained for each auxiliary task and an ensemble classifier that relies on the outputs of the auxiliary task classifiers, by virtue of the nature of ensemble classifiers.
 For this reason, I first train a linear SVM for each auxiliary task and perform a grid search over the type of regulariser ({$L1$, $L2$}) and the strength of the regularisation (${0.1, 0.2,\ldots, 1.0}$) (see \cref{tab:aux_ensemble_params} for the parameter settings for each auxiliary task).
-Once all auxiliary task classifiers have been trained, I train a Logistic Regression model on the outputs of the auxiliary task classifiers on the main task training data, similarly subject to a grid-search over the same parameter values as the auxiliary task models (see \cref{tab:ensemble_params} for the best parameters for the ensemble classifier for each main task dataset).
+Once all auxiliary task classifiers have been trained, I train a Logistic Regression model on the outputs of the auxiliary task classifiers on the main task training data, similarly subject to a grid-search over the same parameter values as the auxiliary task models
+.
 During this training procedure, the ensemble is provided with the training data for the main task, which is vectorised to the vocabulary of each auxiliary task and a prediction is obtained for each task.
 For each document, predictions of all auxiliary task classifiers are vectorised and a classifier is trained on the auxiliary task predictions.
 While this method allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training datasets for the auxiliary tasks, rather than the main task.
 This risk however is mitigated by the use of sub-words obtained by pre-processing all data through the Byte-Pair embeddings.
-
-\begin{table}[h]
-  \begin{minipage}{0.48\textwidth}
-    \resizebox{\textwidth}{!}{%
-    \begin{tabular}{l|cc}
-                                           & Regulariser & Regularisation Strength \\\hline
-      Offence Aux Classifier               & L2          & 0.2                     \\
-      Hate Speech Aux Classifier           & L2          & 0.1                     \\
-      Toxicity Aux Classifier              & L2          & 0.1                     \\
-      Hate Expert Aux Classifier           & L2          & 0.5                     \\
-      Sarcasm Aux Classifier               & L2          & 0.1                     \\
-      Argument Basis Aux Classifier        & L2          & 0.1                     \\
-      Moral Sentiment Aux Classifier       & L2          & 0.1
-    \end{tabular}%
-    }
-    \caption{Auxiliary task parameters for ensemble classifier.}
-    \label{tab:ensemble_aux_params}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-    \resizebox{\textwidth}{!}{%
-    \begin{tabular}{l|cc}
-                                      & Regulariser & Regularisation Strength \\\hline
-      Offence Ensemble Classifier     & L2          & 0.2                     \\
-      Hate Speech Ensemble Classifier & L2          & 0.5                     \\
-      Toxicity Ensemble Classifier    & L2          & 0.1
-    \end{tabular}%
-    }
-    \caption{Parameters for the ensemble classifiers.}
-    \label{tab:ensemble_params}
-  \end{minipage}
-\end{table}
 
 \subsection{Experimental Models}
 For the experimental models, I follow \citet{Waseem:2018} in using a Multi-Layered Perceptron model.
