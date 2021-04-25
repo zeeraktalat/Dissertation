@@ -338,18 +338,20 @@ Moreover, the baseline models optimised on these two datasets also prefer a high
 
 % TODO You are here. Add writing on the baseline dev scores.
 \subsubsection{Baseline Model Performances}
-\zw{Describe dev results}
+Prior to an analysis of the baseline model performances on the evaluation set, I examine their performances on the validation set to gain an insight in the viability of the modelling approach and expected outcomes on the evaluation data.
+Considering the results for all baseline models in \cref{tab:baseline_dev_wh,tab:baseline_dev_wulczyn,tab:baseline_dev_davidson} it is immediately clear that ensemble models provide a poor method for identifying each form of abuse.
+Additionally, the linear SVM baseline models provide for good baselines to compare the experimental models with, as the SVM baselines tend to out-perform the non-linear baselines.
 
 \begin{table}[h]
-\centering
-\begin{tabular}{l|cccc}
-           & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
-Linear SVM & \textbf{0.8515} & \textbf{0.8239} & \textbf{0.7741} & \textbf{0.7962} \\
-Ensemble   & 0.8493          & 0.2123          & 0.2500          & 0.2296          \\
-MLP        & 0.8117          & 0.7117          & 0.7737          & 0.7378
-\end{tabular}
-\caption{Baseline validation scores on the \textit{Hate Speech} dataset.}
-\label{tab:baseline_dev_wh}
+  \centering
+  \begin{tabular}{l|cccc}
+               & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+    Linear SVM & \textbf{0.8515} & \textbf{0.8239} & \textbf{0.7741} & \textbf{0.7962} \\
+    Ensemble   & 0.8493          & 0.2123          & 0.2500          & 0.2296          \\
+    MLP        & 0.8117          & 0.7117          & 0.7737          & 0.7378
+  \end{tabular}
+  \caption{Baseline validation scores on the \textit{Hate Speech} dataset.}
+  \label{tab:baseline_dev_wh}
 \end{table}
 
 \begin{table}[h]
@@ -367,10 +369,10 @@ MLP        & 0.8708          & 0.6581          & 0.7024          & 0.6773
 \begin{table}[h]
 \centering
 \begin{tabular}{l|cccc}
-           & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
-Linear SVM & \textbf{0.9570} & \textbf{0.8967} & \textbf{0.8411} & 0.7151          \\
-Ensemble   & 0.9045          & 0.4522          & 0.5000          & 0.4749          \\
-MLP        & 0.9480          & 0.8145          & \textbf{0.8671} & \textbf{0.8382}
+            & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+Linear SVM  & \textbf{0.9570} & \textbf{0.8967} & 0.8411          & 0.7151          \\
+Ensemble    & 0.9045          & 0.4522          & 0.5000          & 0.4749          \\
+MLP         & 0.9480          & 0.8145          & \textbf{0.8671} & \textbf{0.8382}
 \end{tabular}
 \caption{Baseline validation scores on the \textit{Toxicity} dataset.}
 \label{tab:baseline_dev_wulczyn}
