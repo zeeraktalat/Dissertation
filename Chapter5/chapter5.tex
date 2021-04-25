@@ -375,15 +375,6 @@ MLP        & 0.9480          & 0.8145          & \textbf{0.8671} & \textbf{0.838
 \end{table}
 
 \zw{Describe test results}
-% TODO Revisit whether a sub sub section is really necessary.
-\subsubsection{Linear Single Task Models}
-As we note in \autoref{tab:mtl_svm_parameters}, all models prefer a L2-loss. Regardless of the model, we note that the Byte-Pair encoded data prefers stronger regularisation while the LIWC encoded data prefers weaker regularisation. This trend is most notable on the models trained on \citet{Wulczyn:2017}, where the strongest possible regularisation is used for the Byte-Pair encoded dataset and the weakest possible for the LIWC encoded dataset. This difference in regularisation strength depending on the input data is likely strongly influenced by the size of the vocabularies, with $95,364$ tokens for the BPE encoded data and $1007$ for the LIWC encoded data (see \autoref{tab:mtl_vocab_sizes}). Interestingly, a difference in vocabulary sizes does not explain the lack of change in regularisation strength for the \citet{Waseem:2016}. However, we note that while the training data for \citet{Wulczyn:2017} consists of $95,364$ unique tokens over $95,692$ documents \citet{Waseem:2016} consists of $11,921$ unique tokens over only $5,526$ training documents. The vocabulary for the LIWC encoded \citet{Waseem:2016} dataset consists of $743$ tokens, where the least frequently used token \textit{`RELATIV\_COGPROC\_POWER\_CAUSE\_MOTION\_WORK\_DRIVES\_ACHIEVE'} occurs $6$ times. In comparison, only $2187$ out of the $11,921$ tokens occur $6$ or more times. In the more than $5,000$ tokens that are unique to a single document, and by extension class, allowing for a model to over-fit on such tokens requiring less regularisation of those tokens.
-
-\subsubsection{Ensemble Classifier}
-
-Considering the values of $C$ in \autoref{tab:mtl_ensemble_parameters}, we similarly note a similarity to \autoref{tab:mtl_svm_parameters} that the strength of regularisation drops as the input to the task models moves from Byte-Pair Encoding to LIWC encoded documents. In this case, as we are performing the parameter search on the same feature set, namely a prediction from each classifier, the vocabulary sizes and the specific vocabularies are unlikely to directly provide an impact. Instead we interpret these changes in regularisation strength as a downstream effect of the lower regularisation strength for each model.
-
-\zw{Check for logic: Does this argument make sense?}
 \zw{INSERT: Baseline scores}
 \zw{INSERT: Baseline parameters}
 \zw{Show which models contribute most to ensemble models}
