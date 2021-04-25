@@ -358,6 +358,21 @@ I then construct experiments with all combinations of the selected auxiliary tas
   \label{tab:ensemble_params}
 \end{table}
 
+\begin{table}[h]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|llllllll}
+                                         & Batch Size & Dropout & Embedding Dimension & Epochs & Hidden Dimension & Learning Rate & Non-linearity & Optimiser \\\hline
+    \textit{Offence} MLP Single Task     & 64         & 0.318   & 300                 & 200    & 100              & 0.003586      & ReLU          & SGD       \\
+    \textit{Hate Speech} MLP Single Task & 64         & 0.1458  & 300                 & 100    & 100              & 0.0007246     & Tanh          & AdamW     \\
+    \textit{Toxicity MLP} Single Task    & 64         & 0.1978  & 200                 & 50     & 200              & 0.006056      & ReLU          & Adam
+  \end{tabular}%
+  }
+  \caption{Best hyper parameters for non-linear single task model for each main task dataset.}
+  \label{tab:mlp_singletask_params}
+\end{table}
+
+
 \zw{Describe dev results}
 \zw{Describe test results}
 % TODO Revisit whether a sub sub section is really necessary.
