@@ -253,7 +253,7 @@ Moreover, as observed in \cref{tab:linear_singletask_params} all models prefer a
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{l|ll}
+  \begin{tabular}{l|cc}
                                             & Regulariser & Regularisation Strength \\\hline
     \textit{Offence} Linear Single task     & L2          & 0.2                     \\
     \textit{Hate Speech} Linear Single task & L2          & 0.1                     \\
@@ -269,8 +269,8 @@ Moreover, there are indications of a correlation between the dataset size and th
 
 \begin{table}[]
   \centering
-  \begin{tabular}{l|lll}
-    Dataset                  & Vocabulary Size & Training Documents & # Classes
+  \begin{tabular}{l|ccc}
+    Dataset                  & Vocabulary Size & Training Documents & # Classes\\\hline
     \textit{Offence}         & 23263           & 19826              & 3\\
     \textit{Hate Speech}     & 19981           & 13525              & 3\\
     \textit{Toxicity}        & 95739           & 95692              & 2\\
@@ -323,7 +323,7 @@ Moreover, the baseline models optimised on these two datasets also prefer a high
 \begin{table}[h]
   \centering
   \resizebox{\textwidth}{!}{%
-  \begin{tabular}{l|llllllll}
+  \begin{tabular}{l|cccccccc}
                                           & Batch Size & Dropout & Embedding Dim & Epochs & Hidden Dim & Learning Rate & Non-linearity & Optimiser \\\hline
     \textit{Offence} MLP Single Task      & 64         & 0.318   & 300           & 200    & 100        & 0.003586      & ReLU          & SGD       \\
     \textit{Hate Speech} MLP Single Task  & 64         & 0.1458  & 300           & 100    & 100        & 0.0007246     & Tanh          & AdamW     \\
