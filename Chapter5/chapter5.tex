@@ -354,29 +354,49 @@ Additionally, the linear SVM baseline models provide for good baselines to compa
   \label{tab:baseline_dev_wh}
 \end{table}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{l|cccc}
-           & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
-Linear SVM & \textbf{0.8898} & \textbf{0.7224} & \textbf{0.7107} & \textbf{0.8661} \\
-Ensemble   & 0.7744          & 0.2581          & 0.3333          & 0.2910          \\
-MLP        & 0.8708          & 0.6581          & 0.7024          & 0.6773
-\end{tabular}
-\caption{Baseline validation scores on the \textit{Offence} dataset.}
-\label{tab:baseline_dev_davidson}
-\end{table}
+The exception to this pattern is provided by the MLP optimised for the \textit{Toxicity} dataset, where the MLP baseline outperforms the SVM baseline in terms of recall and F1-score.
+For all datasets, the MLP classifiers show a drop in precision on the development set, suggesting that while they may be comparable in terms of recall, the MLP models tend to misclassify the positive class at a greater rate than the negative classes.
+
+Observing the results for the baseline models trained on the \textit{Hate Speech} dataset in \cref{tab:baseline_dev_wh}, the largest drop in performance occurs for the positive classes when using the MLP.
+The relatively smaller drop in accuracy is aligned with that the positive classes are minority classes, thus a performance drop in the positive classes has a small impact as the relative number of misclassification remains small.
+For the ensemble, the negligible drop in accuracy, in comparison to precision and recall, suggests that although the performance on precision and recall are abysmal, the largest performance drop happens for the positive classes.
 
 \begin{table}[h]
-\centering
-\begin{tabular}{l|cccc}
-            & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
-Linear SVM  & \textbf{0.9570} & \textbf{0.8967} & 0.8411          & 0.7151          \\
-Ensemble    & 0.9045          & 0.4522          & 0.5000          & 0.4749          \\
-MLP         & 0.9480          & 0.8145          & \textbf{0.8671} & \textbf{0.8382}
-\end{tabular}
-\caption{Baseline validation scores on the \textit{Toxicity} dataset.}
-\label{tab:baseline_dev_wulczyn}
+  \centering
+  \begin{tabular}{l|cccc}
+               & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+    Linear SVM & \textbf{0.8898} & \textbf{0.7224} & \textbf{0.7107} & \textbf{0.8661} \\
+    Ensemble   & 0.7744          & 0.2581          & 0.3333          & 0.2910          \\
+    MLP        & 0.8708          & 0.6581          & 0.7024          & 0.6773
+  \end{tabular}
+  \caption{Baseline validation scores on the \textit{Offence} dataset.}
+  \label{tab:baseline_dev_davidson}
 \end{table}
+
+For the baseline models trained on the \textit{Offence} dataset on the other hand, the accuracy score reveals a different performance drop.
+In this dataset, the `offence' class is the majority class, thus the accuracy obtained provides insight into how well the models predict into that class.
+The drop in precision is therefore likely to primarily occur in the other two classes in the dataset, one of which, the `hate' class, also being a positive class.
+The model scores here tell a story of misclassifications primarily in the negative class and the positive `hate' class.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|cccc}
+                & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+    Linear SVM  & \textbf{0.9570} & \textbf{0.8967} & 0.8411          & 0.7151          \\
+    Ensemble    & 0.9045          & 0.4522          & 0.5000          & 0.4749          \\
+    MLP         & 0.9480          & 0.8145          & \textbf{0.8671} & \textbf{0.8382}
+  \end{tabular}
+  \caption{Baseline validation scores on the \textit{Toxicity} dataset.}
+  \label{tab:baseline_dev_wulczyn}
+\end{table}
+
+Finally, the models trained on the \textit{Toxicity} dataset are the only ones where the non-linear baseline outperforms the linear SVM.
+This dataset is developed for binary classification on an imbalanced dataset, where the minority class is the positive class.
+Thus, the negligible drops in accuracy provide information into the ability of the models to predict into negative class.
+The MLP baseline optimised on the \textit{Toxicity} classifier provides a stronger performance on the recall, meaning that it has an improved ability in correctly identifying the data that does not belong in the positive class compared to the linear SVM.
+
+On the basis of the model performances on the validation sets, we can expect that the ensemble models will uniformly under-perform on the evaluation data while the MLP models provide a competitive, but lower, performance than the linear SVM baselines.
+The primary performance drop for the MLP models is likely to be in their precision, that is their ability to classify into the positive classes.
 
 \zw{Describe test results}
 \zw{INSERT: Baseline scores}
