@@ -355,11 +355,11 @@ Additionally, the linear SVM baseline models provide for good baselines to compa
 \end{table}
 
 The exception to this pattern is provided by the MLP optimised for the \textit{Toxicity} dataset, where the MLP baseline outperforms the SVM baseline in terms of recall and F1-score.
-For all datasets, the MLP classifiers show a drop in precision on the development set, suggesting that while they may be comparable in terms of recall, the MLP models tend to misclassify the positive class at a greater rate than the negative classes.
+For all datasets, the MLP classifiers show a drop in precision on the development set, suggesting that while they may be comparable in terms of recall, the MLP models tend to misclassify into the positive class at a greater rate than the negative classes.
 
 Observing the results for the baseline models trained on the \textit{Hate Speech} dataset in \cref{tab:baseline_dev_wh}, the largest drop in performance occurs for the positive classes when using the MLP.
 The relatively smaller drop in accuracy is aligned with that the positive classes are minority classes, thus a performance drop in the positive classes has a small impact as the relative number of misclassification remains small.
-For the ensemble, the negligible drop in accuracy, in comparison to precision and recall, suggests that although the performance on precision and recall are abysmal, the largest performance drop happens for the positive classes.
+For the ensemble, the negligible drop in accuracy, in comparison to precision and recall, suggests that although the performance on precision and recall are abysmal, the largest performance drop happens into the positive classes.
 
 \begin{table}[h]
   \centering
@@ -396,7 +396,44 @@ Thus, the negligible drops in accuracy provide information into the ability of t
 The MLP baseline optimised on the \textit{Toxicity} classifier provides a stronger performance on the recall, meaning that it has an improved ability in correctly identifying the data that does not belong in the positive class compared to the linear SVM.
 
 On the basis of the model performances on the validation sets, we can expect that the ensemble models will uniformly under-perform on the evaluation data while the MLP models provide a competitive, but lower, performance than the linear SVM baselines.
-The primary performance drop for the MLP models is likely to be in their precision, that is their ability to classify into the positive classes.
+The primary performance drop for the MLP models is likely to be in their precision, that is their ability to classify into the positive classes.\vspace{5mm}
+
+\begin{table}[]
+  \centering
+  \begin{tabular}{lllll}
+             & Accuracy        & Precision       & Recall          & F1-score        \\
+    Linear   & \textbf{0.8440} & \textbf{0.8182} & 0.7671          & \textbf{0.7892} \\
+    Ensemble & 0.6803          & 0.2268          & 0.3333          & 0.2699          \\
+    MLP      & 0.8056          & 0.6686          & \textbf{0.7894} & 0.7132
+  \end{tabular}
+  \caption{Baseline model evaluation set performances on the \textit{Hate Speech} dataset.}
+  \label{tab:baseline_test_wh}
+\end{table}
+
+\begin{table}[]
+  \centering
+  \begin{tabular}{lllll}
+             & Accuracy        & Precision       & Recall          & F1-score        \\
+    Linear   & \textbf{0.8871} & \textbf{0.6997} & 0.6789          & \textbf{0.6850} \\
+    Ensemble & 0.7713          & 0.4115          & 0.3696          & 0.3622          \\
+    MLP      & 0.8790          & 0.5625          & \textbf{0.9163} & 0.5721
+  \end{tabular}
+  \caption{Baseline model evaluation set performances on the \textit{Offence} dataset.}
+  \label{tab:baseline_test_davidson}
+\end{table}
+
+\begin{table}[]
+  \centering
+  \begin{tabular}{lllll}
+             & Accuracy        & Precision       & Recall          & F1-score        \\
+    Linear   & \textbf{0.9582} & \textbf{0.9008} & 0.8450          & \textbf{0.8702} \\
+    Ensemble & \textbf{0.9582} & \textbf{0.9008} & 0.8448          & 0.8701          \\
+    MLP      & 0.9397          & 0.6979          & \textbf{0.9359} & 0.7632
+  \end{tabular}
+  \caption{Baseline model evaluation set performances on the \textit{Toxicity} dataset.}
+  \label{tab:baseline_test_wulczyn}
+\end{table}
+
 
 \zw{Describe test results}
 \zw{INSERT: Baseline scores}
