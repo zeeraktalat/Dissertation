@@ -463,7 +463,7 @@ The dataset configurations are chosen on the basis of their F1-score performance
 \begin{landscape}
   \begin{table}[]
     \centering
-    \begin{tabular}{l|lllllllllll}
+    \begin{tabular}{l|ccccccccccc}
       Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Hate Expert                                       & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200,200         & 0.9084        & ReLU          & ASGD      & 128        \\
       Toxicity                                          & 64         & 0.7              & 0.3              & 0.02884 & 100           & 100    & 64,64           & 0.3873        & Tanh          & ASGD      & 128        \\
@@ -490,7 +490,7 @@ The dataset configurations are chosen on the basis of their F1-score performance
 \begin{landscape}
   \begin{table}[]
     \centering
-    \begin{tabular}{l|lllllllllll}
+    \begin{tabular}{l|ccccccccccc}
       Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Hate Expert                                       & 32         & 0.7              & 0.3              & 0.06554 & 100           & 200    & 300,300         & 0.2921        & ReLU          & ASGD      & 256        \\
       Hate Speech                                       & 64         & 0.7              & 0.3              & 0.1785  & 100           & 50     & 100,100         & 0.281         & ReLU          & SGD       & 128        \\
@@ -519,7 +519,7 @@ The dataset configurations are chosen on the basis of their F1-score performance
 \begin{landscape}
   \begin{table}[]
     \centering
-    \begin{tabular}{l|lllllllllll}
+    \begin{tabular}{l|ccccccccccc}
       Aux                                                                & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims             & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Waseem                                                             & 64         & 0.7              & 0.3              & 0.1166  & 300           & 200    & 64,64                   & 0.4055        & ReLU          & ASGD      & 256        \\
       Hate Speech                                                        & 64         & 0.7              & 0.3              & 0.3346  & 100           & 50     & 300,300                 & 0.003051      & ReLU          & AdamW     & 256        \\
