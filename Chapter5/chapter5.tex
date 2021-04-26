@@ -459,6 +459,38 @@ Meanwhile, the MLP baseline outperforms all other models in terms of recall howe
 \zw{Show which models contribute most to ensemble models}
 
 \subsection{Experimental Model Performances}
+% TODO Fit in somewhere
+As the experimental models are MLP models that have been adapted for Multi-Task Learning, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
+
+
+\begin{landscape}
+  \begin{table}[]
+    \centering
+    \begin{tabular}{l|lllllllllll}
+      Aux                                         & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Hate Expert                                 & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200         & 0.9084        & ReLU          & ASGD      & 128        \\
+      Toxicity                                    & 64         & 0.7              & 0.3              & 0.02884 & 100           & 100    & 64          & 0.3873        & Tanh          & ASGD      & 128        \\
+      Offence                                     & 32         & 0.7              & 0.3              & 0.4568  & 64            & 100    & 200         & 0.2846        & ReLU          & ASGD      & 256        \\
+      Moral Sentiment                             & 64         & 0.7              & 0.3              & 0.1954  & 300           & 100    & 100         & 0.06402       & ReLU          & ASGD      & 256        \\
+      Sarcasm                                     & 64         & 0.7              & 0.3              & 0.4534  & 300           & 100    & 300         & 0.3894        & ReLU          & ASGD      & 128        \\
+      Argument Basis                              & 64         & 0.7              & 0.3              & 0.1556  & 100           & 50     & 100         & 0.4948        & ReLU          & ASGD      & 256        \\ \hline
+      Hate Expert Offence                         & 64         & 0.6              & 0.2              & 0.3703  & 200           & 50     & 200         & 0.9429        & ReLU          & ASGD      & 128        \\
+      Hate Expert Moral Sentiment                 & 64         & 0.6              & 0.2              & 0.311   & 100           & 50     & 300         & 0.6185        & ReLU          & ASGD      & 128        \\
+      Offence Moral Sentiment                     & 16         & 0.6              & 0.2              & 0.1408  & 300           & 100    & 64          & 0.1237        & Tanh          & SGD       & 128        \\
+      Sarcasm Hate Expert                         & 64         & 0.6              & 0.2              & 0.3054  & 100           & 50     & 64          & 0.06252       & ReLU          & SGD       & 64         \\
+      Sarcasm Offence                             & 16         & 0.6              & 0.2              & 0.4576  & 300           & 200    & 100         & 0.2276        & ReLU          & ASGD      & 256        \\
+      Sarcasm Moral Sentiment                     & 64         & 0.6              & 0.2              & 0.3586  & 300           & 50     & 100         & 0.3822        & ReLU          & ASGD      & 64         \\ \hline
+      Hate Expert Offence Moral Sentiment         & 16         & 0.6              & 0.133333333      & 0.414   & 200           & 100    & 300         & 0.8435        & ReLU          & ASGD      & 256        \\
+      Sarcasm Hate Expert Moral Sentiment         & 32         & 0.6              & 0.133333333      & 0.152   & 64            & 100    & 200         & 0.3459        & ReLU          & ASGD      & 256        \\
+      Sarcasm Offence Moral Sentiment             & 64         & 0.6              & 0.133333333      & 0.05853 & 300           & 100    & 64          & 0.04528       & ReLU          & ASGD      & 64         \\ \hline
+      Sarcasm Hate Expert Offence Moral Sentiment & 16         & 0.6              & 0.1              & 0.143   & 64            & 100    & 64          & 0.2368        & ReLU          & ASGD      & 256
+    \end{tabular}
+    \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Hate Speech} dataset.}
+    \label{tab:mtl_params_wh}
+  \end{table}
+\end{landscape}
+
+
 For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines.
 In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models.
 For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models.
