@@ -18,14 +18,14 @@ While they share this unifying characteristic, hate and humour, for instance occ
 
 Similarities between distinct related tasks pose several interesting questions.
 First, is it best to create multiple annotations, either through re-annotating previously published data or creating an entirely dataset, such that each task is addressed in all of the data or should one try to develop modelling architectures that are overlapping?
-Second, how much data from each task is necessary to annotate, in the case of creating multiple annotations for each document; or, if the task is approached in terms of developing modelling architectures, how much of the data from each task should be used in training the model, or alternatively, how should the data from each task be weighted to gain the largest modelling improvements?
+Second, how much data from each task is necessary to annotate, in the case of creating multiple annotations for each document; or, if the task is approached in terms of developing modelling architectures, how much of the data from each task should be used in optimising the model, or alternatively, how should the data from each task be weighted to gain the largest modelling improvements?
 
 In this chapter, I approach the question of overlapping data through a question of developing a modelling approach that aims to use potential overlaps between each task.
 As each task may be related only in terms of the abstraction required to understand the meaning of a given text, creating mappings between different classes is a complex task that in some cases is not possible.
 Moreover, data for each task may be collected from different sources, at different times, from different populations that use different vocabularies resulting in models that may learn spurious patterns in the data that are not trivial to identify and address.
 Thus modelling can be approached in two distinct manners. Either all documents are collapsed into a single dataset without creating maps between the different classes or each task remains a distinct task and model architectures such as Multi-Task Learning (MTL) and Ensemble methods are explored.
 Here I take the latter approach, developing a MTL model that considers each task simultaneously in tandem and distinctly from all other tasks (see \cref{sub:mtl} for more details on how MTL functions).
-I select a MTL modelling approach over an ensemble approach as training an ensemble requires training and optimising $n$ entirely distinct models, one for each task, and a final model that considers the outputs of each model, MTL models on the other hand can be trained such that a models is optimised to perform on its primary task, treating all auxiliary tasks as secondary.
+I select a MTL modelling approach over an ensemble approach as optimising an ensemble requires optimising $n$ entirely distinct models, one for each task, and a final model that considers the outputs of each model, MTL models on the other hand can be optimised such that a models is optimised to perform on its primary task, treating all auxiliary tasks as secondary.
 Moreover, as I use a hard-parameter sharing design for my MTL models, an additional benefit is that all auxiliary tasks act as regularisers, even if they are not directly beneficial to the primary task.
 
 Through the use of of MTL models, I find that non-abusive tasks as auxiliary can be beneficial to detecting all forms of abuse examined.
@@ -58,7 +58,7 @@ For hate speech detection, and abusive language detection in general, MTL has be
 Considering that I use datasets that are entirely in English, I only consider the previous work for hate speech detection using MTL for English language data.
 
 \citet{Waseem:2018} show that the cultural gaps that exist between different datasets, as a result of their collection strategies and annotation procedures, could be addressed.
-Using a hard parameter sharing strategy, they develop a MTL model that uses two different tasks for training.
+Using a hard parameter sharing strategy, they develop a MTL model that uses two different tasks for optimisation.
 In their model, sampling of the batches is chosen at random, with one of the tasks set as the main task and a manual mapping between the distinct classes is performed.
 The machine learning model chosen by \citet{Waseem:2018} for their MTL experiment is a back-propagated MLP with a tanh activation function and Adam as their optimisation function.
 For the input representations \citet{Waseem:2018} experiment with a Bag-of-Words model that uses the $5,000$ most frequent terms and model that uses Byte-Pair encoded input data.
@@ -71,7 +71,7 @@ The primary task model sums the encodings obtained from the stacked Bi-direction
 The resulting representation is then passed through an attention layer and passed through an output layer generating the prediction.
 A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that the latter use a weighting parameter to distinguish between the primary and auxiliary task.
 \citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set.
-The reason for this discrepancy is that \citet{Waseem:2018} seek to use multi-task learning to train a model that is capable of dealing with cross-cultural data, that is a model that is able to perform on both tasks. 
+The reason for this discrepancy is that \citet{Waseem:2018} seek to use multi-task learning to optimise a model that is capable of dealing with cross-cultural data, that is a model that is able to perform on both tasks.
 \citet{Rajamanickam:2020} on the other hand seek to improve classification performance on the primary task, thus considering any performance gains on the auxiliary a side-benefit.
 This discrepancy is the result of a natural prioritisation question, as the goal of \citet{Rajamanickam:2020} is to improve classification performance for abuse on a single dataset whereas \citet{Waseem:2018} seek to identify a classifier that can generalise beyond beyond the single dataset.
 
@@ -81,7 +81,7 @@ For this reason, I choose auxiliary tasks (see \cref{sec:mtl_data} for an overvi
 \subsection{Learning Tasks}\label{sec:mtl_tasks}
 
 Multi-task learning, as the name of the framework implies, requires distinct tasks for learning, where each unique auxiliary task asks how learning representations from that task influences model performance on the primary task.
-We saw in \cref{chap:liwc}, the trained on each abusive dataset has different applications onto other datasets in the case of binary classification. Therefore, I choose to use three different tasks for abusive language as main tasks.
+We saw in \cref{chap:liwc}, the optimised for each abusive dataset has different applications onto other datasets in the case of binary classification. Therefore, I choose to use three different tasks for abusive language as main tasks.
 In contrast to the method in \cref{chap:liwc}, I do not binarise, or otherwise modify the classes in from those proposed by the authors of the datasets.
 This provides for the more challenging tasks of predicting the type of abuse in addition to whether content is abusive or not.
 A further consequence of not binarising the label sets for the main tasks is that the classes don't directly map onto other datasets.
@@ -110,7 +110,7 @@ The \textit{Toxicity} dataset \citep{Wulczyn:2017} provides a special case.
 For one, it is the largest dataset consisting of $159,686$ labelled comments split into a training set of $95,692$ comments, a validation set of $32,128$ comments, and an evaluation set of $31,866$ comments.
 In total, this dataset has more than $100,000$ more comments than either the \textit{Toxicity} or \textit{Hate Speech} datasets.
 Second, the dataset proposes a binary classification of `toxic' and `not toxic'.
-Thus, the results from the MTL models trained on this dataset can be directly compared with the results obtained in \cref{chap:liwc}, unlike the models where the main task is \textit{Offence} or \textit{Hate Speech}.
+Thus, the results from the MTL models optimised for this dataset can be directly compared with the results obtained in \cref{chap:liwc}, unlike the models where the main task is \textit{Offence} or \textit{Hate Speech}.
 Thus, I use this dataset to anchor the performances of the MTL models within the context of the preceding chapter and to show the impact of using a large scale dataset for abuse for MTL modelling.
 
 \subsubsection{Auxiliary Task Datasets}
@@ -151,7 +151,7 @@ In the expert annotated data, the four classes have a highly imbalanced distribu
 
 Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ documents means less than $50$ documents are labelled for the minority class, and given that I create stratified splits for the training ($80\%$), validation ($10\%$), and evaluation ($10\%$) sets, less than $40$ documents remain in the training set.
 Thus there is not enough data for a machine learning model to learn patterns of abuse in the intersection between racist and sexist speech.
-However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the training process.
+However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the optimisation process.
 
 \section{Modelling}\label{sec:mtl_modelling}
 For the experiments conducted, I only use one form of tokens to allow for an examination of the impact of the auxiliary tasks rather than the impact of tokenisation.
@@ -160,39 +160,39 @@ To this end, I pre-process all documents using a $200$ dimensional Byte-Pair Emb
 The pre-processing here follows the same method as in \cref{chap:liwc}, that is each document is lower-cased, all hyper-links are replaced with a `<URL>' token, all usernames are replaced with a `<USER>' token, and all hashtags are replaced with a `<HASHTAG>' token.
 Then each document is passed through the Byte-Pair Embeddings to produce the Byte-Pair encoded representations, that is their sub-word units.
 
-I train three different types of baseline models: a linear single-task model where the model is trained and evaluated on the same task, a non-linear single-task model, and a linear ensemble model where a model is trained on the basis of outputs from the auxiliary task models.
-In terms of experimental models, I follow \citet{Waseem:2018} in designing a multi-task Multi-Layered Perceptron implemented in PyTorch \citep{Paszke:2019}. I select an MLP over more complex neural networks architectures like Convolutional Neural Networks and Long-Short Term Memory networks due to the speed with which MLPs are trained along with their general performance in \cref{chap:liwc}.
+I develop three different types of baseline models: a linear single-task model where the model is optimised and evaluated on the same task, a non-linear single-task model, and a linear ensemble model where a model is optimised on the basis of outputs from the auxiliary task models.
+In terms of experimental models, I follow \citet{Waseem:2018} in designing a multi-task Multi-Layered Perceptron implemented in PyTorch \citep{Paszke:2019}. I select an MLP over more complex neural networks architectures like Convolutional Neural Networks and Long-Short Term Memory networks due to the speed with which MLPs are optimised along with their general performance in \cref{chap:liwc}.
 
 I perform parameter and hyper-parameter optimisation for the linear and non-linear models, respectively.
 For the non-linear models I use the Weights and Biases library \citep{Wandb} to perform Bayesian Hyper-Parameter Optimisation.
 For the linear models, I use grid-search as implemented in the Scikit-Learn library \citep{Pedregosa:2011}.
 
-Once models have been trained, they are each evaluated on the validation data and the evaluation data.
+Once models have been optimised, they are each evaluated on the validation data and the evaluation data.
 For non-linear models, the performance on the validation data guides the decision on which parameter configurations are chosen for analysis while for linear models, cross-validation is applied during the grid-search which aids in determining which parameter configuration performs best.
 
 \subsection{Baseline Models}\label{sub:mtl_baselines}
 % TODO Move all parameter tables to result section
-I train three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
-I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to train.
+I develop three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
+I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to optimise.
 The non-linear neural network baseline is chosen as a counter-point to the linear baseline, using a MLP to more directly be able to consider the influence of the multi-task architecture for the experimental models.
-Finally, I choose to an ensemble classifier that is trained on the outputs of linear single-task models for each of the auxiliary task models as an ensemble, similarly to a multi-task model, can take advantage of learned representations for each auxiliary task for producing a prediction for the main task.
+Finally, I choose to an ensemble classifier that is optimised on the outputs of linear single-task models for each of the auxiliary task models as an ensemble, similarly to a multi-task model, can take advantage of learned representations for each auxiliary task for producing a prediction for the main task.
 
 \paragraph{Single-Task Baselines}
-Following prior work \citep{Waseem:2016,Davidson:2017}, I train all single-task models using a Support Vector Machine with a linear kernel (see \cref{sec:model_background} for more details on SVMs).
-All linear single-task models are trained on unigram counts of the Byte-Pair encoded tokens and are subject to parameter-optimisation of the regularisation type ($L1$ and $L2$) and the strength of regularisation (using values $0.1, 0.2, \ldots, 1.0$).
+Following prior work \citep{Waseem:2016,Davidson:2017}, I optimise all single-task models using a Support Vector Machine with a linear kernel (see \cref{sec:model_background} for more details on SVMs).
+All linear single-task models are optimised on unigram counts of the Byte-Pair encoded tokens and are subject to parameter-optimisation of the regularisation type ($L1$ and $L2$) and the strength of regularisation (using values $0.1, 0.2, \ldots, 1.0$).
 
 \paragraph{MLP Single-Task Baseline}
-I train a MLP as a non-linear counter-part to the linear single-task models to provide a baseline of the performance of a neural network approach that only relies on the Byte-Pair unigrams for the main task to optimise for the main task.
-To ensure that the baseline model is also tuned for optimal performance, I perform a hyper-parameter sweep  over the batch size ($\{16, 32, 64\}$), the dropout value ($[0.0, 0.5]$), the dimensionality of the embedding layers ($\{64, 100, 200, 300\}$), the number of training epochs ($\{50, 100, 200\}$), the dimensionality of the hidden layers ($\{64, 100, 200, 300\}$), the learning rate ($[1^{-5}, 1.0]$), the Non-linearity to apply ($\{Tanh, ReLU\}$), and the optimiser function ($\{SGD, ASGD, Adam, AdamW\}$).
+I develop a MLP as a non-linear counter-part to the linear single-task models to provide a baseline of the performance of a neural network approach that only relies on the Byte-Pair unigrams for the main task to optimise for the main task.
+To ensure that the baseline model is also tuned for optimal performance, I perform a hyper-parameter sweep  over the batch size ($\{16, 32, 64\}$), the dropout value ($[0.0, 0.5]$), the dimensionality of the embedding layers ($\{64, 100, 200, 300\}$), the number of epochs for optimisation ($\{50, 100, 200\}$), the dimensionality of the hidden layers ($\{64, 100, 200, 300\}$), the learning rate ($[1^{-5}, 1.0]$), the Non-linearity to apply ($\{Tanh, ReLU\}$), and the optimiser function ($\{SGD, ASGD, Adam, AdamW\}$).
 I conduct at least $50$ independent trials of distinct hyper parameter settings which identify the best hyper parameter configuration.
 
 \paragraph{Ensemble Baseline}
-The ensemble baselines require a different training scheme that relies on a classifier that is trained for each auxiliary task and an ensemble classifier that relies on the outputs of the auxiliary task classifiers, by virtue of the nature of ensemble classifiers.
-For this reason, I first train a linear SVM for each auxiliary task and perform a grid search over the type of regulariser ({$L1$, $L2$}) and the strength of the regularisation (${0.1, 0.2,\ldots, 1.0}$) (see \cref{tab:aux_ensemble_params} for the parameter settings for each auxiliary task).
-Once all auxiliary task classifiers have been trained, I train a Logistic Regression model on the outputs of the auxiliary task classifiers on the main task training data, similarly subject to a grid-search over the same parameter values as the auxiliary task models
+The ensemble baselines require a different optimisation scheme that relies on a classifier that is optimised for each auxiliary task and an ensemble classifier that relies on the outputs of the auxiliary task classifiers, by virtue of the nature of ensemble classifiers.
+For this reason, I first optimise a linear SVM for each auxiliary task and perform a grid search over the type of regulariser ({$L1$, $L2$}) and the strength of the regularisation (${0.1, 0.2,\ldots, 1.0}$) (see \cref{tab:aux_ensemble_params} for the parameter settings for each auxiliary task).
+Once all auxiliary task classifiers have been optimised, I optimise a Logistic Regression model on the outputs of the auxiliary task classifiers on the main task training data, similarly subject to a grid-search over the same parameter values as the auxiliary task models
 .
-During this training procedure, the ensemble is provided with the training data for the main task, which is vectorised to the vocabulary of each auxiliary task and a prediction is obtained for each task.
-For each document, predictions of all auxiliary task classifiers are vectorised and a classifier is trained on the auxiliary task predictions.
+During this opitimisation procedure, the ensemble is provided with the training data for the main task, which is vectorised to the vocabulary of each auxiliary task and a prediction is obtained for each task.
+For each document, predictions of all auxiliary task classifiers are vectorised and a classifier is optimised on the auxiliary task predictions.
 While this method allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training datasets for the auxiliary tasks, rather than the main task.
 This risk however is mitigated by the use of sub-words obtained by pre-processing all data through the Byte-Pair embeddings.
 
@@ -204,7 +204,7 @@ I also include a dropout layer and a non-linear activation function, where I tre
 My architecture of the Multi-task MLP deviates from the architecture proposed by \citet{Waseem:2018} in two ways: the choice of input layer and the choice of activation function.
 Where I use an embedding layer as the input layer for each task, \citet{Waseem:2018} use a onehot encoded input layer and they use a \texttt{Tanh} activation function for all of their experiments.
 Following the experimental approach in \cref{chap:liwc}, I keep the embedding layer randomly initialised rather than using a pre-trained embedding layer.
-The motivation for keeping training the embedding layer, even with sparse data, is that pre-trained embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
+The motivation for training the embedding layer, even with sparse data, is that pre-trained embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
 
 \begin{figure}
   \centering
@@ -213,14 +213,14 @@ The motivation for keeping training the embedding layer, even with sparse data, 
   \label{fig:mlp_mtl}
 \end{figure}
 
-The training procedure for the Multi-task MLP deviates significantly from the training procedures associated with the baseline models.
-For the Multi-task MLP, I train my models by giving all tasks an equal weight but distinguish between the main task and the auxiliary tasks by the probability with which a batch from task is chosen.
+The optimisation procedure for the Multi-task MLP deviates significantly from the optimisation procedures associated with the baseline models.
+For the Multi-task MLP, I optimise my models by giving all tasks an equal weight but distinguish between the main task and the auxiliary tasks by the probability with which a batch from task is chosen.
 A task is chosen each time a batch is to be selected, where the primary task is chosen with a probability of $0.6$ when there are two or more auxiliary tasks and $0.7$ when there is only one auxiliary task.
 As each task is chosen probabilistically, it is necessary for the probabilities to sum to $1.0$, thus the weight of each auxiliary task is $\frac{1.0-P(M)}{N}$, where $N$ is the total number of auxiliary tasks and $P(M)$ is the probability of the main task being chosen.
-Given that I choose the task to be trained on probabilistically, I do not weight the loss as in \citet{Rajamanickam:2020}.
+Given that I choose the task to be optimised probabilistically, I do not weight the loss as in \citet{Rajamanickam:2020}.
 Once a task has been chosen, a batch is selected from the data associated with the task and is passed through the model and the loss on the batch is computed and back-propagated through the network, a process which is repeated for a number of epochs, where the exact number of epochs is a hyper-parameter that I tune.
 For single-task models, it is common to iterate over the entire dataset, obtaining a batch count given the size of the dataset and the batch size.
-MTL models however are trained on a number of datasets, including auxiliary task datasets where obtaining a high performance on the auxiliary task may not be of concern, rather learning inductive biases from the data are.
+MTL models however are optimised for a number of datasets, including auxiliary task datasets where obtaining a high performance on the auxiliary task may not be of concern, rather learning inductive biases from the data are.
 For this reason, I limit the number of batches that are selected in each epoch, setting a global value of $300$ batches per epoch.
 Through the use of the probabilities with batches are chosen from each task in conjunction with the number of epochs and the batches being shuffled between each epoch, I ensure that my models gain a representative perspective of each dataset and their labelled data.
 These representations of the datasets afford the models the ability to jointly learn representations based on the auxiliary tasks and the primary task.
@@ -249,7 +249,7 @@ I then construct experiments with all combinations of the selected auxiliary tas
 
 In \cref{tab:linear_singletask_params,tab:mlp_singletask_params,tab:ensemble_params} I present the best identified hyper-parameters for each model type.
 Focusing on the regulariser, all linear models prefer an $L2$ regulariser, likely because it redistributes the weights of equally important features rather than zeroing any of them out.
-Moreover, as observed in \cref{tab:linear_singletask_params} all models prefer a low regularisation strength when a linear single-task classifier is trained.
+Moreover, as observed in \cref{tab:linear_singletask_params} all models prefer a low regularisation strength when a linear single-task classifier is optimised.
 
 \begin{table}[h]
   \centering
@@ -264,7 +264,7 @@ Moreover, as observed in \cref{tab:linear_singletask_params} all models prefer a
 \end{table}
 
 For the ensemble classifier a different picture emerges (see \cref{tab:ensemble_params}.
-As this model is trained on a very sparse feature set that consists only of the predictions of the auxiliary task classifiers, it is no surprise that an $L2$ regulariser is preferred.
+As this model is optimised on a very sparse feature set that consists only of the predictions of the auxiliary task classifiers, it is no surprise that an $L2$ regulariser is preferred.
 Moreover, there are indications of a correlation between the dataset size and the strength of the regularisation, with the smallest dataset requiring the greatest regularisation strength ($0.5$ for \textit{Hate Speech}) and the largest dataset requiring the lowest regularisation strength ($0.1$ for \textit{Toxicity}).
 
 \begin{table}[]
@@ -285,10 +285,10 @@ Moreover, there are indications of a correlation between the dataset size and th
 
 This narrative however is complicated by the best parameters found in \cref{tab:ensemble_aux_params}.
 Here, the smallest abusive language dataset requires the largest regularisation power while other, in line with the observation on \cref{tab:ensemble_params}.
-However, classifiers optimised on the larger \textit{Offence} dataset require more regularisation strength than classifiers optimised the smaller \textit{Hate Speech}.
+However, classifiers optimised for the larger \textit{Offence} dataset require more regularisation strength than classifiers optimised the smaller \textit{Hate Speech}.
 In tandem, these observations suggest that beyond the size of the dataset in terms of numbers, other factors may influence the strength of the regularisation.
 One such potential factor may be the vocabulary size.
-Observing the vocabulary sizes in \cref{tab:aux_vocab_sizes}, it appears that vocabulary sizes in conjunction with the dataset sizes may be causes for the regularisation strength for models trained on different datasets.
+Observing the vocabulary sizes in \cref{tab:aux_vocab_sizes}, it appears that vocabulary sizes in conjunction with the dataset sizes may be causes for the regularisation strength for models optimised for the different datasets.
 
 \begin{table}[h]
   \centering
@@ -318,9 +318,9 @@ Observing the vocabulary sizes in \cref{tab:aux_vocab_sizes}, it appears that vo
   \label{tab:ensemble_params}
 \end{table}
 
-Turning to the hyper-parameters for the non-linear baseline in \cref{tab:mlp_singletask_params}, the number of similar and shared values across models trained on each dataset decreases to share only one parameter, the batch size.
-The models trained on the larger datasets, the \textit{Offence} and \textit{Toxicity} dataset also share a preference for using ReLU as their non-linearity.
-Moreover, the baseline models optimised on these two datasets also prefer a higher learning rate compared to the model optimised on the smaller \textit{Hate Speech} dataset.
+Turning to the hyper-parameters for the non-linear baseline in \cref{tab:mlp_singletask_params}, the number of similar and shared values across models optimised for each dataset decreases to share only one parameter, the batch size.
+The models optimised for the larger datasets, the \textit{Offence} and \textit{Toxicity} dataset also share a preference for using ReLU as their non-linearity.
+Moreover, the baseline models optimised for these two datasets also prefer a higher learning rate compared to the model optimised for the smaller \textit{Hate Speech} dataset.
 
 \begin{table}[h]
   \centering
@@ -357,7 +357,7 @@ Additionally, the linear SVM baseline models provide for good baselines to compa
 The exception to this pattern is provided by the MLP optimised for the \textit{Toxicity} dataset, where the MLP baseline outperforms the SVM baseline in terms of recall and F1-score.
 For all datasets, the MLP classifiers show a drop in precision on the development set, suggesting that while they may be comparable in terms of recall, the MLP models tend to misclassify into the positive class at a greater rate than the negative classes.
 
-Observing the results for the baseline models trained on the \textit{Hate Speech} dataset in \cref{tab:baseline_dev_wh}, the largest drop in performance occurs for the positive classes when using the MLP.
+Observing the results for the baseline models optimised for the \textit{Hate Speech} dataset in \cref{tab:baseline_dev_wh}, the largest drop in performance occurs for the positive classes when using the MLP.
 The relatively smaller drop in accuracy is aligned with that the positive classes are minority classes, thus a performance drop in the positive classes has a small impact as the relative number of misclassification remains small.
 For the ensemble, the negligible drop in accuracy, in comparison to precision and recall, suggests that although the performance on precision and recall are abysmal, the largest performance drop happens into the positive classes.
 
@@ -373,7 +373,7 @@ For the ensemble, the negligible drop in accuracy, in comparison to precision an
   \label{tab:baseline_dev_davidson}
 \end{table}
 
-For the baseline models trained on the \textit{Offence} dataset on the other hand, the accuracy score reveals a different performance drop.
+For the baseline models optimised for the \textit{Offence} dataset on the other hand, the accuracy score reveals a different performance drop.
 In this dataset, the `offence' class is the majority class, thus the accuracy obtained provides insight into how well the models predict into that class.
 The drop in precision is therefore likely to primarily occur in the other two classes in the dataset, one of which, the `hate' class, also being a positive class.
 The model scores here tell a story of misclassifications primarily in the negative class and the positive `hate' class.
@@ -390,10 +390,10 @@ The model scores here tell a story of misclassifications primarily in the negati
   \label{tab:baseline_dev_wulczyn}
 \end{table}
 
-Finally, the models trained on the \textit{Toxicity} dataset are the only ones where the non-linear baseline outperforms the linear SVM.
+Finally, the models optimised for the \textit{Toxicity} dataset are the only ones where the non-linear baseline outperforms the linear SVM.
 This dataset is developed for binary classification on an imbalanced dataset, where the minority class is the positive class.
 Thus, the negligible drops in accuracy provide information into the ability of the models to predict into negative class.
-The MLP baseline optimised on the \textit{Toxicity} classifier provides a stronger performance on the recall, meaning that it has an improved ability in correctly identifying the data that does not belong in the positive class compared to the linear SVM.
+The MLP baseline optimised for the \textit{Toxicity} classifier provides a stronger performance on the recall, meaning that it has an improved ability in correctly identifying the data that does not belong in the positive class compared to the linear SVM.
 
 On the basis of the model performances on the validation sets, we can expect that the ensemble models will uniformly under-perform on the evaluation data while the MLP models provide a competitive, but lower, performance than the linear SVM baselines.
 The primary performance drop for the MLP models is likely to be in their precision, that is their ability to classify into the positive classes.\vspace{5mm}
@@ -443,7 +443,7 @@ The primary performance drop for the MLP models is likely to be in their precisi
 \subsection{Experimental Model Performances}
 For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines.
 In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models.
-For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models. 
+For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models.
 We do note however, that most models prefer $ReLU$ as their activation function over $tanh$.
 Similarly, most models prefer a batch size of $64$ over $32$.
 On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
