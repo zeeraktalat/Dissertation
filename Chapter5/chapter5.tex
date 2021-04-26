@@ -455,9 +455,8 @@ Meanwhile, the MLP baseline outperforms all other models in terms of recall howe
 % \zw{Show which models contribute most to ensemble models}
 % TODO You are here
 \subsection{Experimental Model Performances}
-% TODO Fit in somewhere
 As the experimental models are MLP models that have been adapted for Multi-Task Learning, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
-The best hyper-parameter settings for each of the experimental settings for each main task are shown in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn}.
+The best hyper-parameter settings for each of the experimental settings for each main task are shown in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn}.\footnote{Note that the `Aux Task Weight' column only contains a single value as each auxiliary task is given the same weight.}
 In these tables, I show the best hyper-parameter settings for the models with one auxiliary task and each of the subsequent dataset configurations selected based.
 The dataset configurations are chosen on the basis of their F1-score performance on the validation data where only the main task and a single auxiliary task (see further detail on dataset combination selection in \cref{sub:aux_task_selection}).
 
@@ -465,26 +464,92 @@ The dataset configurations are chosen on the basis of their F1-score performance
   \begin{table}[]
     \centering
     \begin{tabular}{l|lllllllllll}
-      Aux                                         & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
-      Hate Expert                                 & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200,200         & 0.9084        & ReLU          & ASGD      & 128        \\
-      Toxicity                                    & 64         & 0.7              & 0.3              & 0.02884 & 100           & 100    & 64,64           & 0.3873        & Tanh          & ASGD      & 128        \\
-      Offence                                     & 32         & 0.7              & 0.3              & 0.4568  & 64            & 100    & 200,200         & 0.2846        & ReLU          & ASGD      & 256        \\
-      Moral Sentiment                             & 64         & 0.7              & 0.3              & 0.1954  & 300           & 100    & 100,100         & 0.06402       & ReLU          & ASGD      & 256        \\
-      Sarcasm                                     & 64         & 0.7              & 0.3              & 0.4534  & 300           & 100    & 300,300         & 0.3894        & ReLU          & ASGD      & 128        \\
-      Argument Basis                              & 64         & 0.7              & 0.3              & 0.1556  & 100           & 50     & 100,100         & 0.4948        & ReLU          & ASGD      & 256        \\ \hline
-      Hate Expert Offence                         & 64         & 0.6              & 0.2              & 0.3703  & 200           & 50     & 200,200,200     & 0.9429        & ReLU          & ASGD      & 128        \\
-      Hate Expert Moral Sentiment                 & 64         & 0.6              & 0.2              & 0.311   & 100           & 50     & 300,300,300     & 0.6185        & ReLU          & ASGD      & 128        \\
-      Offence Moral Sentiment                     & 16         & 0.6              & 0.2              & 0.1408  & 300           & 100    & 64,64,64        & 0.1237        & Tanh          & SGD       & 128        \\
-      Sarcasm Hate Expert                         & 64         & 0.6              & 0.2              & 0.3054  & 100           & 50     & 64,64,64        & 0.06252       & ReLU          & SGD       & 64         \\
-      Sarcasm Offence                             & 16         & 0.6              & 0.2              & 0.4576  & 300           & 200    & 100,100,100     & 0.2276        & ReLU          & ASGD      & 256        \\
-      Sarcasm Moral Sentiment                     & 64         & 0.6              & 0.2              & 0.3586  & 300           & 50     & 100,100,100     & 0.3822        & ReLU          & ASGD      & 64         \\
-      Hate Expert Offence Moral Sentiment         & 16         & 0.6              & 0.133333333      & 0.414   & 200           & 100    & 300,300,300,300 & 0.8435        & ReLU          & ASGD      & 256        \\
-      Sarcasm Hate Expert Moral Sentiment         & 32         & 0.6              & 0.133333333      & 0.152   & 64            & 100    & 200,200,200,200 & 0.3459        & ReLU          & ASGD      & 256        \\
-      Sarcasm Offence Moral Sentiment             & 64         & 0.6              & 0.133333333      & 0.05853 & 300           & 100    & 64,64,64,64     & 0.04528       & ReLU          & ASGD      & 64         \\
-      Sarcasm Hate Expert Offence Moral Sentiment & 16         & 0.6              & 0.1              & 0.143   & 64            & 100    & 64,64,64,64,64  & 0.2368        & ReLU          & ASGD      & 256
+      Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Hate Expert                                       & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200,200         & 0.9084        & ReLU          & ASGD      & 128        \\
+      Toxicity                                          & 64         & 0.7              & 0.3              & 0.02884 & 100           & 100    & 64,64           & 0.3873        & Tanh          & ASGD      & 128        \\
+      Offence                                           & 32         & 0.7              & 0.3              & 0.4568  & 64            & 100    & 200,200         & 0.2846        & ReLU          & ASGD      & 256        \\
+      Moral Sentiment                                   & 64         & 0.7              & 0.3              & 0.1954  & 300           & 100    & 100,100         & 0.06402       & ReLU          & ASGD      & 256        \\
+      Sarcasm                                           & 64         & 0.7              & 0.3              & 0.4534  & 300           & 100    & 300,300         & 0.3894        & ReLU          & ASGD      & 128        \\
+      Argument Basis                                    & 64         & 0.7              & 0.3              & 0.1556  & 100           & 50     & 100,100         & 0.4948        & ReLU          & ASGD      & 256        \\ \hline
+      Hate Expert | Offence                             & 64         & 0.6              & 0.2              & 0.3703  & 200           & 50     & 200,200,200     & 0.9429        & ReLU          & ASGD      & 128        \\
+      Hate Expert | Moral Sentiment                     & 64         & 0.6              & 0.2              & 0.311   & 100           & 50     & 300,300,300     & 0.6185        & ReLU          & ASGD      & 128        \\
+      Offence | Moral Sentiment                         & 16         & 0.6              & 0.2              & 0.1408  & 300           & 100    & 64,64,64        & 0.1237        & Tanh          & SGD       & 128        \\
+      Sarcasm | Hate Expert                             & 64         & 0.6              & 0.2              & 0.3054  & 100           & 50     & 64,64,64        & 0.06252       & ReLU          & SGD       & 64         \\
+      Sarcasm | Offence                                 & 16         & 0.6              & 0.2              & 0.4576  & 300           & 200    & 100,100,100     & 0.2276        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Moral Sentiment                         & 64         & 0.6              & 0.2              & 0.3586  & 300           & 50     & 100,100,100     & 0.3822        & ReLU          & ASGD      & 64         \\
+      Hate Expert  | Offence | Moral Sentiment          & 16         & 0.6              & 0.133333333      & 0.414   & 200           & 100    & 300,300,300,300 & 0.8435        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Hate Expert | Moral Sentiment           & 32         & 0.6              & 0.133333333      & 0.152   & 64            & 100    & 200,200,200,200 & 0.3459        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Offence | Moral Sentiment               & 64         & 0.6              & 0.133333333      & 0.05853 & 300           & 100    & 64,64,64,64     & 0.04528       & ReLU          & ASGD      & 64         \\
+      Sarcasm | Hate Expert | Offence | Moral Sentiment & 16         & 0.6              & 0.1              & 0.143   & 64            & 100    & 64,64,64,64,64  & 0.2368        & ReLU          & ASGD      & 256
     \end{tabular}
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Hate Speech} dataset.}
     \label{tab:mtl_params_wh}
+  \end{table}
+\end{landscape}
+
+\begin{landscape}
+  \begin{table}[]
+    \centering
+    \begin{tabular}{l|lllllllllll}
+      Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Hate Expert                                       & 32         & 0.7              & 0.3              & 0.06554 & 100           & 200    & 300,300         & 0.2921        & ReLU          & ASGD      & 256        \\
+      Hate Speech                                       & 64         & 0.7              & 0.3              & 0.1785  & 100           & 50     & 100,100         & 0.281         & ReLU          & SGD       & 128        \\
+      Toxicity                                          & 64         & 0.7              & 0.3              & 0.4405  & 300           & 50     & 200,200         & 0.3469        & ReLU          & ASGD      & 256        \\
+      Sarcasm                                           & 32         & 0.7              & 0.3              & 0.1476  & 300           & 50     & 200,200         & 0.9616        & ReLU          & ASGD      & 128        \\
+      Argument Basis                                    & 16         & 0.7              & 0.3              & 0.2952  & 300           & 100    & 64,64           & 0.4306        & ReLU          & ASGD      & 64         \\
+      Moral Sentiment                                   & 32         & 0.7              & 0.3              & 0.1953  & 200           & 100    & 300,300         & 0.1415        & ReLU          & SGD       & 64         \\ \hline
+      Hate Speech | Toxicity                            & 64         & 0.6              & 0.2              & 0.1663  & 100           & 50     & 100,100,100     & 0.3764        & ReLU          & SGD       & 256        \\
+      Sarcasm | Hate Speech                             & 32         & 0.6              & 0.2              & 0.1497  & 100           & 100    & 300,300,300     & 0.2229        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Toxicity                                & 32         & 0.6              & 0.2              & 0.166   & 64            & 100    & 300,300,300     & 0.511         & ReLU          & ASGD      & 64         \\
+      Argument Basis | Hate Speech                      & 64         & 0.6              & 0.2              & 0.0265  & 100           & 200    & 200,200,200     & 0.4188        & ReLU          & ASGD      & 256        \\
+      Argument Basis | Toxicity                         & 64         & 0.6              & 0.2              & 0.3497  & 300           & 100    & 200,200,200     & 0.3466        & ReLU          & ASGD      & 128        \\
+      Argument Basis | Sarcasm                          & 64         & 0.6              & 0.2              & 0.4527  & 200           & 100    & 64,64,64        & 0.509         & ReLU          & ASGD      & 256        \\
+      Sarcasm | Toxicity | Hate Speech                  & 64         & 0.6              & 0.133333333      & 0.4113  & 300           & 100    & 200,200,200,200 & 0.1113        & ReLU          & ASGD      & 256        \\
+      Argument Basis | Hate Speech | Toxicity           & 16         & 0.6              & 0.133333333      & 0.2439  & 200           & 200    & 100,100,100,100 & 0.8852        & ReLU          & ASGD      & 64         \\
+      Argument Basis | Hate Speech | Sarcasm            & 64         & 0.6              & 0.133333333      & 0.3725  & 200           & 200    & 200,200,200,200 & 0.3176        & ReLU          & ASGD      & 64         \\
+      Argument Basis | Toxicity | Sarcasm               & 64         & 0.6              & 0.133333333      & 0.259   & 64            & 100    & 300,300,300,300 & 0.6679        & ReLU          & ASGD      & 128        \\
+      Argument Basis | Hate Speech | Toxicity | Sarcasm & 64         & 0.6              & 0.1              & 0.0103  & 64            & 100    & 64,64,64,64,64  & 0.4785        & ReLU          & ASGD      & 64
+    \end{tabular}
+    \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Offence} dataset.}
+    \label{tab:mtl_params_davidson}
+  \end{table}
+\end{landscape}
+
+
+\begin{landscape}
+  \begin{table}[]
+    \centering
+    \begin{tabular}{l|lllllllllll}
+      Aux                                                                & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims             & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Waseem                                                             & 64         & 0.7              & 0.3              & 0.1166  & 300           & 200    & 64,64                   & 0.4055        & ReLU          & ASGD      & 256        \\
+      Hate Speech                                                        & 64         & 0.7              & 0.3              & 0.3346  & 100           & 50     & 300,300                 & 0.003051      & ReLU          & AdamW     & 256        \\
+      Offence                                                            & 64         & 0.7              & 0.3              & 0.03044 & 300           & 200    & 200,200                 & 0.3432        & ReLU          & SGD       & 128        \\
+      Moral Sentiment                                                    & 64         & 0.7              & 0.3              & 0.3558  & 300           & 200    & 64,64                   & 0.7853        & ReLU          & ASGD      & 256        \\
+      Sarcasm                                                            & 64         & 0.7              & 0.3              & 0.3711  & 200           & 200    & 100,100                 & 0.9143        & ReLU          & ASGD      & 256        \\
+      Argument Basis                                                     & 64         & 0.7              & 0.3              & 0.3995  & 300           & 50     & 200,200                 & 0.5104        & ReLU          & SGD       & 128        \\ \hline
+      Hate Speech | Offence                                              & 64         & 0.6              & 0.2              & 0.03108 & 300           & 200    & 100,100,100             & 0.2465        & ReLU          & SGD       & 256        \\
+      Moral Sentiment | Hate Speech                                      & 64         & 0.6              & 0.2              & 0.3406  & 300           & 200    & 200,200,200             & 0.2291        & ReLU          & SGD       & 64         \\
+      Moral Sentiment | Offence                                          & 64         & 0.6              & 0.2              & 0.08389 & 200           & 200    & 64,64,64                & 0.8606        & ReLU          & ASGD      & 128        \\
+      Sarcasm | Moral Sentiment                                          & 64         & 0.6              & 0.2              & 0.2051  & 200           & 200    & 300,300,300             & 0.8602        & ReLU          & ASGD      & 64         \\
+      Sarcasm | Hate Speech                                              & 64         & 0.6              & 0.2              & 0.2315  & 300           & 200    & 300,300,300             & 0.2219        & ReLU          & SGD       & 128        \\
+      Argument Basis | Moral Sentiment                                   & 64         & 0.6              & 0.2              & 0.01288 & 200           & 200    & 300,300,300             & 0.968         & ReLU          & ASGD      & 256        \\
+      Argument Basis | Sarcasm                                           & 64         & 0.6              & 0.2              & 0.061   & 200           & 200    & 300,300,300             & 0.384         & ReLU          & SGD       & 256        \\
+      Argument Basis | Hate Speech                                       & 64         & 0.6              & 0.2              & 0.09094 & 200           & 200    & 300,300,300             & 0.8456        & ReLU          & ASGD      & 128        \\
+      Argument Basis | Offence                                           & 64         & 0.6              & 0.2              & 0.2733  & 300           & 100    & 100,100,100             & 0.3757        & ReLU          & SGD       & 256        \\
+      Sarcasm | Offence                                                  & 64         & 0.6              & 0.2              & 0.02304 & 100           & 200    & 64,64,64                & 0.804         & ReLU          & ASGD      & 256        \\
+      Moral Sentiment | Hate Speech | Offence                            & 64         & 0.6              & 0.133333333      & 0.3018  & 200           & 200    & 300,300,300,300         & 0.9543        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Moral Sentiment | Hate Speech                            & 64         & 0.6              & 0.133333333      & 0.2762  & 200           & 100    & 300,300,300,300         & 0.4007        & ReLU          & SGD       & 128        \\
+      Sarcasm | Moral Sentiment | Offence                                & 64         & 0.6              & 0.133333333      & 0.2939  & 64            & 200    & 200,200,200,200         & 0.8591        & ReLU          & ASGD      & 64         \\
+      Argument Basis | Moral Sentiment | Sarcasm                         & 64         & 0.6              & 0.133333333      & 0.03792 & 300           & 200    & 300,300,300,300         & 0.934         & ReLU          & ASGD      & 64         \\
+      Argument Basis | Moral Sentiment | Hate Speech                     & 64         & 0.6              & 0.133333333      & 0.05325 & 300           & 200    & 300,300,300,300         & 0.4349        & ReLU          & SGD       & 64         \\
+      Argument Basis | Moral Sentiment | Offence                         & 64         & 0.6              & 0.133333333      & 0.1082  & 300           & 200    & 100,100,100,100         & 0.3236        & ReLU          & SGD       & 128        \\
+      Sarcasm | Moral Sentiment | Hate Speech | Offence                  & 32         & 0.6              & 0.1              & 0.1936  & 300           & 50     & 100,100,100,100,100     & 0.004907      & ReLU          & AdamW     & 64         \\
+      Argument Basis | Moral Sentiment | Sarcasm | Hate Speech           & 64         & 0.6              & 0.1              & 0.06104 & 100           & 200    & 300,300,300,300,300     & 0.565         & ReLU          & SGD       & 256        \\
+      Argument Basis | Moral Sentiment | Sarcasm | Offence               & 64         & 0.6              & 0.1              & 0.2149  & 300           & 200    & 100,100,100,100,100     & 0.6336        & ReLU          & SGD       & 128        \\
+      Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech & 64         & 0.6              & 0.08             & 0.2348  & 100           & 100    & 200,200,200,200,200,200 & 0.546         & ReLU          & SGD       & 256
+    \end{tabular}
+    \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Toxicity} dataset.}
+    \label{tab:mtl_params_wulczyn}
   \end{table}
 \end{landscape}
 
