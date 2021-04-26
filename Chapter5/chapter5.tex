@@ -463,6 +463,7 @@ The dataset configurations are chosen on the basis of their F1-score performance
 \begin{landscape}
   \begin{table}[]
     \centering
+    \resizebox{0.7\paperheight}{!}{%
     \begin{tabular}{l|ccccccccccc}
       Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Hate Expert                                       & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200,200         & 0.9084        & ReLU          & ASGD      & 128        \\
@@ -481,7 +482,8 @@ The dataset configurations are chosen on the basis of their F1-score performance
       Sarcasm | Hate Expert | Moral Sentiment           & 32         & 0.6              & 0.133333333      & 0.152   & 64            & 100    & 200,200,200,200 & 0.3459        & ReLU          & ASGD      & 256        \\
       Sarcasm | Offence | Moral Sentiment               & 64         & 0.6              & 0.133333333      & 0.05853 & 300           & 100    & 64,64,64,64     & 0.04528       & ReLU          & ASGD      & 64         \\
       Sarcasm | Hate Expert | Offence | Moral Sentiment & 16         & 0.6              & 0.1              & 0.143   & 64            & 100    & 64,64,64,64,64  & 0.2368        & ReLU          & ASGD      & 256
-    \end{tabular}
+    \end{tabular}%
+    }
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Hate Speech} dataset.}
     \label{tab:mtl_params_wh}
   \end{table}
@@ -490,6 +492,7 @@ The dataset configurations are chosen on the basis of their F1-score performance
 \begin{landscape}
   \begin{table}[]
     \centering
+    \resizebox{0.7\paperheight}{!}{%
     \begin{tabular}{l|ccccccccccc}
       Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Hate Expert                                       & 32         & 0.7              & 0.3              & 0.06554 & 100           & 200    & 300,300         & 0.2921        & ReLU          & ASGD      & 256        \\
@@ -509,7 +512,8 @@ The dataset configurations are chosen on the basis of their F1-score performance
       Argument Basis | Hate Speech | Sarcasm            & 64         & 0.6              & 0.133333333      & 0.3725  & 200           & 200    & 200,200,200,200 & 0.3176        & ReLU          & ASGD      & 64         \\
       Argument Basis | Toxicity | Sarcasm               & 64         & 0.6              & 0.133333333      & 0.259   & 64            & 100    & 300,300,300,300 & 0.6679        & ReLU          & ASGD      & 128        \\
       Argument Basis | Hate Speech | Toxicity | Sarcasm & 64         & 0.6              & 0.1              & 0.0103  & 64            & 100    & 64,64,64,64,64  & 0.4785        & ReLU          & ASGD      & 64
-    \end{tabular}
+    \end{tabular}%
+    }
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Offence} dataset.}
     \label{tab:mtl_params_davidson}
   \end{table}
@@ -519,6 +523,7 @@ The dataset configurations are chosen on the basis of their F1-score performance
 \begin{landscape}
   \begin{table}[]
     \centering
+    \resizebox{0.7\paperheight}{!}{%
     \begin{tabular}{l|ccccccccccc}
       Aux                                                                & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims             & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Waseem                                                             & 64         & 0.7              & 0.3              & 0.1166  & 300           & 200    & 64,64                   & 0.4055        & ReLU          & ASGD      & 256        \\
@@ -547,7 +552,8 @@ The dataset configurations are chosen on the basis of their F1-score performance
       Argument Basis | Moral Sentiment | Sarcasm | Hate Speech           & 64         & 0.6              & 0.1              & 0.06104 & 100           & 200    & 300,300,300,300,300     & 0.565         & ReLU          & SGD       & 256        \\
       Argument Basis | Moral Sentiment | Sarcasm | Offence               & 64         & 0.6              & 0.1              & 0.2149  & 300           & 200    & 100,100,100,100,100     & 0.6336        & ReLU          & SGD       & 128        \\
       Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech & 64         & 0.6              & 0.08             & 0.2348  & 100           & 100    & 200,200,200,200,200,200 & 0.546         & ReLU          & SGD       & 256
-    \end{tabular}
+    \end{tabular}%
+    }
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Toxicity} dataset.}
     \label{tab:mtl_params_wulczyn}
   \end{table}
