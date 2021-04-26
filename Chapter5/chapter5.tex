@@ -229,7 +229,7 @@ For my hyper-parameter exploration, I explore the hyper-parameters listed above,
 I also perform a hyper-parameter optimisation of the choice of optimisation algorithm ($\{Adam, AdamW,$\\$SGD,ASGD\}$); the dimensionality of the shared layer (${64, 128, 256}$); the learning rate ($[1^{-5}, 1.0]$); the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$); the dimensionality of the task-specific input layers ($\{64, 100, 200, 300\}$); the value of dropout $[0.0, 0.5]$; and lastly the batch size ($\{16, 32, 64\}$).
 Note, that the batch size can have an influence over how much of each dataset is exposed to the model at training time as the number of batches selected per epoch does not scale with the variation in the batch size.
 
-\subsection{Auxiliary Task Configurations}
+\subsection{Auxiliary Task Configurations}\label{sub:aux_task_selection}
 In order to select the auxiliary tasks and their combinations that contribute most towards the performances of the primary, I add auxiliary tasks as they prove useful to the main task in terms of performance boosts.
 To perform this selection, I design three different scenarios of auxiliary task configurations:
 
@@ -336,7 +336,6 @@ Moreover, the baseline models optimised for these two datasets also prefer a hig
   \label{tab:mlp_singletask_params}
 \end{table}
 
-% TODO You are here. Add writing on the baseline dev scores.
 \subsubsection{Baseline Model Performances}
 Prior to an analysis of the baseline model performances on the evaluation set, I examine their performances on the validation set to gain an insight in the viability of the modelling approach and expected outcomes on the evaluation data.
 Considering the results for all baseline models in \cref{tab:baseline_dev_wh,tab:baseline_dev_wulczyn,tab:baseline_dev_davidson} it is immediately clear that ensemble models provide a poor method for identifying each form of abuse.
@@ -453,37 +452,36 @@ While the ensemble baseline breaks with the pattern observed on the validation s
 Similarly to its' performances on the validation data, the MLP is competitive with the linear SVM in terms of accuracy and posts poorer performance in terms of precision.
 Meanwhile, the MLP baseline outperforms all other models in terms of recall however the poor performance in terms of precision results in a F1-score that is not competitive with the other baseline models.
 
-\zw{Describe test results}
-\zw{INSERT: Baseline scores}
-\zw{INSERT: Baseline parameters}
-\zw{Show which models contribute most to ensemble models}
-
+% \zw{Show which models contribute most to ensemble models}
+% TODO You are here
 \subsection{Experimental Model Performances}
 % TODO Fit in somewhere
 As the experimental models are MLP models that have been adapted for Multi-Task Learning, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
-
+The best hyper-parameter settings for each of the experimental settings for each main task are shown in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn}.
+In these tables, I show the best hyper-parameter settings for the models with one auxiliary task and each of the subsequent dataset configurations selected based.
+The dataset configurations are chosen on the basis of their F1-score performance on the validation data where only the main task and a single auxiliary task (see further detail on dataset combination selection in \cref{sub:aux_task_selection}).
 
 \begin{landscape}
   \begin{table}[]
     \centering
     \begin{tabular}{l|lllllllllll}
-      Aux                                         & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
-      Hate Expert                                 & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200         & 0.9084        & ReLU          & ASGD      & 128        \\
-      Toxicity                                    & 64         & 0.7              & 0.3              & 0.02884 & 100           & 100    & 64          & 0.3873        & Tanh          & ASGD      & 128        \\
-      Offence                                     & 32         & 0.7              & 0.3              & 0.4568  & 64            & 100    & 200         & 0.2846        & ReLU          & ASGD      & 256        \\
-      Moral Sentiment                             & 64         & 0.7              & 0.3              & 0.1954  & 300           & 100    & 100         & 0.06402       & ReLU          & ASGD      & 256        \\
-      Sarcasm                                     & 64         & 0.7              & 0.3              & 0.4534  & 300           & 100    & 300         & 0.3894        & ReLU          & ASGD      & 128        \\
-      Argument Basis                              & 64         & 0.7              & 0.3              & 0.1556  & 100           & 50     & 100         & 0.4948        & ReLU          & ASGD      & 256        \\ \hline
-      Hate Expert Offence                         & 64         & 0.6              & 0.2              & 0.3703  & 200           & 50     & 200         & 0.9429        & ReLU          & ASGD      & 128        \\
-      Hate Expert Moral Sentiment                 & 64         & 0.6              & 0.2              & 0.311   & 100           & 50     & 300         & 0.6185        & ReLU          & ASGD      & 128        \\
-      Offence Moral Sentiment                     & 16         & 0.6              & 0.2              & 0.1408  & 300           & 100    & 64          & 0.1237        & Tanh          & SGD       & 128        \\
-      Sarcasm Hate Expert                         & 64         & 0.6              & 0.2              & 0.3054  & 100           & 50     & 64          & 0.06252       & ReLU          & SGD       & 64         \\
-      Sarcasm Offence                             & 16         & 0.6              & 0.2              & 0.4576  & 300           & 200    & 100         & 0.2276        & ReLU          & ASGD      & 256        \\
-      Sarcasm Moral Sentiment                     & 64         & 0.6              & 0.2              & 0.3586  & 300           & 50     & 100         & 0.3822        & ReLU          & ASGD      & 64         \\ \hline
-      Hate Expert Offence Moral Sentiment         & 16         & 0.6              & 0.133333333      & 0.414   & 200           & 100    & 300         & 0.8435        & ReLU          & ASGD      & 256        \\
-      Sarcasm Hate Expert Moral Sentiment         & 32         & 0.6              & 0.133333333      & 0.152   & 64            & 100    & 200         & 0.3459        & ReLU          & ASGD      & 256        \\
-      Sarcasm Offence Moral Sentiment             & 64         & 0.6              & 0.133333333      & 0.05853 & 300           & 100    & 64          & 0.04528       & ReLU          & ASGD      & 64         \\ \hline
-      Sarcasm Hate Expert Offence Moral Sentiment & 16         & 0.6              & 0.1              & 0.143   & 64            & 100    & 64          & 0.2368        & ReLU          & ASGD      & 256
+      Aux                                         & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Hate Expert                                 & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200,200         & 0.9084        & ReLU          & ASGD      & 128        \\
+      Toxicity                                    & 64         & 0.7              & 0.3              & 0.02884 & 100           & 100    & 64,64           & 0.3873        & Tanh          & ASGD      & 128        \\
+      Offence                                     & 32         & 0.7              & 0.3              & 0.4568  & 64            & 100    & 200,200         & 0.2846        & ReLU          & ASGD      & 256        \\
+      Moral Sentiment                             & 64         & 0.7              & 0.3              & 0.1954  & 300           & 100    & 100,100         & 0.06402       & ReLU          & ASGD      & 256        \\
+      Sarcasm                                     & 64         & 0.7              & 0.3              & 0.4534  & 300           & 100    & 300,300         & 0.3894        & ReLU          & ASGD      & 128        \\
+      Argument Basis                              & 64         & 0.7              & 0.3              & 0.1556  & 100           & 50     & 100,100         & 0.4948        & ReLU          & ASGD      & 256        \\ \hline
+      Hate Expert Offence                         & 64         & 0.6              & 0.2              & 0.3703  & 200           & 50     & 200,200,200     & 0.9429        & ReLU          & ASGD      & 128        \\
+      Hate Expert Moral Sentiment                 & 64         & 0.6              & 0.2              & 0.311   & 100           & 50     & 300,300,300     & 0.6185        & ReLU          & ASGD      & 128        \\
+      Offence Moral Sentiment                     & 16         & 0.6              & 0.2              & 0.1408  & 300           & 100    & 64,64,64        & 0.1237        & Tanh          & SGD       & 128        \\
+      Sarcasm Hate Expert                         & 64         & 0.6              & 0.2              & 0.3054  & 100           & 50     & 64,64,64        & 0.06252       & ReLU          & SGD       & 64         \\
+      Sarcasm Offence                             & 16         & 0.6              & 0.2              & 0.4576  & 300           & 200    & 100,100,100     & 0.2276        & ReLU          & ASGD      & 256        \\
+      Sarcasm Moral Sentiment                     & 64         & 0.6              & 0.2              & 0.3586  & 300           & 50     & 100,100,100     & 0.3822        & ReLU          & ASGD      & 64         \\
+      Hate Expert Offence Moral Sentiment         & 16         & 0.6              & 0.133333333      & 0.414   & 200           & 100    & 300,300,300,300 & 0.8435        & ReLU          & ASGD      & 256        \\
+      Sarcasm Hate Expert Moral Sentiment         & 32         & 0.6              & 0.133333333      & 0.152   & 64            & 100    & 200,200,200,200 & 0.3459        & ReLU          & ASGD      & 256        \\
+      Sarcasm Offence Moral Sentiment             & 64         & 0.6              & 0.133333333      & 0.05853 & 300           & 100    & 64,64,64,64     & 0.04528       & ReLU          & ASGD      & 64         \\
+      Sarcasm Hate Expert Offence Moral Sentiment & 16         & 0.6              & 0.1              & 0.143   & 64            & 100    & 64,64,64,64,64  & 0.2368        & ReLU          & ASGD      & 256
     \end{tabular}
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Hate Speech} dataset.}
     \label{tab:mtl_params_wh}
