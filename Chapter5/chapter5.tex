@@ -487,9 +487,7 @@ The dataset configurations are chosen on the basis of their F1-score performance
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Hate Speech} dataset.}
     \label{tab:mtl_params_wh}
   \end{table}
-\end{landscape}
-
-\begin{landscape}
+  \vfill
   \begin{table}[]
     \centering
     \resizebox{0.7\paperheight}{!}{%
@@ -517,7 +515,13 @@ The dataset configurations are chosen on the basis of their F1-score performance
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Offence} dataset.}
     \label{tab:mtl_params_davidson}
   \end{table}
-  \vfill
+\end{landscape}
+
+Observing the best hyper-parameters identified for each dataset in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn} three salient attributes are immediately clear.
+The vast majority of the models prefer a ReLU for their non-linearity and some variant of Stochastic Gradient Descent as the optimisation function.
+Moreover, a majority of models prefer a batch size of $64$, the largest option for batch size that I experiment with.
+
+\begin{landscape}
   \begin{table}[]
     \centering
     \resizebox{0.7\paperheight}{!}{%
@@ -557,13 +561,90 @@ The dataset configurations are chosen on the basis of their F1-score performance
 \end{landscape}
 
 
-For each dataset used as a primary task, we perform hyper-parameter search for each type of model, including the baselines.
-In \autoref{tab:mtl_exp_model_parameters} we see the best performing hyper-parameters for our experimental models.
-For all models, we see that they prefer a shared dimensionality of $256$ units, beyond this commonality which we set for our model, no other hyper-parameters are shared across all models.
-We do note however, that most models prefer $ReLU$ as their activation function over $tanh$.
-Similarly, most models prefer a batch size of $64$ over $32$.
-On the other hand, the number of epochs, the dropout rate, and the learning rate are variable across the models.
-\zw{Insert insights about model hyper-parameters}.
+% TODO You are here. Do dev set and test set evaluation analysis here
+
+\begin{table}[]
+  \begin{tabular}{l|cccc}
+                                                      & Accuracy        & Precision       & Recall          & F1-score        \\\hline
+    \textit{Hate Expert}                              & 0.8171          & 0.7463          & 0.7776          & \textit{0.7608} \\
+    \textit{Offence}                                  & 0.8141          & \textbf{0.7518} & 0.7609          & \textit{0.7558} \\
+    Toxicity                                          & 0.8082          & 0.7433          & 0.7562          & 0.7495          \\
+    \textit{Moral Sentiment}                          & 0.8242          & 0.7462          & 0.7865          & \textit{0.7644} \\
+    Argument Basis                                    & 0.8094          & 0.7374          & 0.7638          & 0.7494          \\
+    \textit{Sarcasm}                                  & 0.8194          & 0.7259          & 0.7944          & \textit{0.7551} \\\hline
+    Hate Expert | Moral Sentiment                     & 0.8212          & 0.7220          & 0.7996          & 0.7540          \\
+    Offence | Moral Sentiment                         & 0.7957          & 0.7552          & 0.7408          & 0.7476          \\
+    Hate Expert | Offence                             & 0.82            & 0.7521          & 0.7781          & 0.7623          \\
+    Sarcasm | Hate Expert                             & 0.8171          & 0.7068          & 0.7994          & 0.7431          \\
+    Sarcasm | Offence                                 & 0.8141          & 0.7284          & 0.7731          & 0.7449          \\
+    Sarcasm | Moral Sentiment                         & \textbf{0.8289} & 0.7425          & 0.8009          & \textbf{0.7664} \\
+    Hate Expert | Offence | Moral Sentiment           & 0.8165          & 0.7212          & 0.7913          & 0.7497          \\
+    Sarcasm | Hate Expert | Moral Sentiment           & 0.8259          & 0.7279          & \textbf{0.8051} & 0.7566          \\
+    Sarcasm | Offence | Moral Sentiment               & 0.8194          & 0.7204          & 0.7916          & 0.7497          \\
+    Sarcasm | Hate Expert | Offence | Moral Sentiment & 0.8200          & 0.7389          & 0.7834          & 0.7561
+  \end{tabular}
+  \caption{Experimental model validation scores on the \textit{Hate Speech} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
+  \label{tab:mtl_dev_wh}
+\end{table}
+
+\begin{table}[]
+  \begin{tabular}{l|cccc}
+                                                      & Accuracy        & Precision & Recall          & F1-score        \\ \hline
+    \textit{Hate Speech}                              & 0.8857          & 0.7422    & 0.7076          & \textit{0.7232} \\
+    \textit{Toxicity}                                 & 0.8962          & 0.7124    & 0.7562          & \textit{0.7286} \\
+    Hate Expert                                       & 0.8882          & 0.7122    & 0.7042          & 0.7069          \\
+    \textit{Sarcasm}                                  & 0.8845          & 0.7503    & 0.7149          & \textit{0.7312} \\
+    \textit{Argument Basis}                           & 0.8987          & 0.7039    & 0.7489          & \textit{0.7164} \\
+    Moral Sentiment                                   & 0.8853          & 0.7237    & 0.7020          & 0.7105          \\
+    Hate Speech | Toxicity                            & 0.8914          & 0.7381    & 0.7251          & 0.7309          \\
+    Sarcasm | Hate Speech                             & \textbf{0.9023} & 0.7005    & \textbf{0.7619} & 0.7167          \\
+    Sarcasm | Toxicity                                & 0.8954          & 0.7367    & 0.7361          & \textbf{0.7349} \\
+    Argument Basis | Hate Speech                      & 0.8862          & 0.7018    & 0.7136          & 0.7069          \\
+    Argument Basis | Toxicity                         & 0.8958          & 0.7076    & 0.7449          & 0.7218          \\
+    Argument Basis | Sarcasm                          & 0.8906          & 0.7126    & 0.7194          & 0.7098          \\
+    Sarcasm | Toxicity | Hate Speech                  & 0.8979          & 0.7338    & 0.7449          & 0.7345          \\
+    Argument Basis | Hate Speech | Toxicity           & 0.8765          & 0.7226    & 0.6992          & 0.7103          \\
+    Argument Basis | Hate Speech | Sarcasm            & 0.8950          & 0.6952    & 0.7354          & 0.7069          \\
+    Argument Basis | Toxicity | Sarcasm               & 0.8991          & 0.7122    & 0.7481          & 0.7211          \\
+    Argument Basis | Hate Speech | Toxicity | Sarcasm & 0.8902          & 0.6977    & 0.7281          & 0.7079
+  \end{tabular}
+  \caption{Experimental model validation scores on the \textit{Offence} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
+  \label{tab:mtl_dev_davidson}
+\end{table}
+
+\begin{table}[]
+  \begin{tabular}{l|cccc}
+                                                                       & Accuracy        & Precision       & Recall          & F1-score        \\\hline
+    \textit{Hate Speech}                                               & 0.9513          & 0.8326          & 0.8726          & \textit{0.8511} \\
+    \textit{Offence}                                                   & 0.9490          & \textbf{0.8523} & 0.8524          & \textit{0.8524} \\
+    Hate Expert                                                        & 0.9499          & 0.8001          & 0.8881          & 0.8370          \\
+    \textit{Moral Sentiment}                                           & 0.9528          & 0.8165          & 0.8918          & \textit{0.8491} \\
+    \textit{Sarcasm}                                                   & 0.9511          & 0.8130          & 0.8846          & \textit{0.8441} \\
+    \textit{Argument Basis}                                            & 0.9534          & 0.8195          & 0.8932          & \textit{0.8515} \\
+    Moral Sentiment | Offence                                          & 0.9517          & 0.8158          & 0.8862          & 0.8465          \\
+    Moral Sentiment | Hate Speech                                      & 0.9555          & 0.8167          & 0.9081          & 0.8551          \\
+    Hate Speech | Offence                                              & 0.9504          & 0.8386          & 0.8652          & 0.8512          \\
+    Sarcasm | Moral Sentiment                                          & 0.9533          & 0.8008          & 0.9093          & \textbf{0.8575} \\
+    Sarcasm | Hate Speech                                              & \textbf{0.9558} & 0.8191          & 0.9079          & 0.8566          \\
+    Sarcasm | Offence                                                  & 0.9522          & 0.7957          & 0.9068          & 0.8469          \\
+    Argument Basis | Hate Speech                                       & 0.9521          & 0.8148          & 0.8889          & 0.8421          \\
+    Argument Basis | Moral Sentiment                                   & 0.9538          & 0.8101          & 0.9038          & 0.8492          \\
+    Argument Basis | Sarcasm                                           & 0.9535          & 0.8376          & 0.8808          & \textit{0.8575} \\
+    Argument Basis | Offence                                           & 0.9542          & 0.8093          & 0.9066          & 0.8496          \\
+    Moral Sentiment | Hate Speech | Offence                            & 0.9529          & 0.7956          & 0.9121          & 0.8419          \\
+    Sarcasm | Moral Sentiment | Hate Speech                            & 0.9533          & 0.7938          & 0.917           & 0.8402          \\
+    Sarcasm | Moral Sentiment | Offence                                & 0.9523          & 0.7861          & \textbf{0.9184} & 0.8368          \\
+    Argument Basis | Moral Sentiment | Sarcasm                         & 0.9526          & 0.8214          & 0.8869          & 0.8503          \\
+    Argument Basis | Moral Sentiment | Hate Speech                     & 0.9516          & 0.8469          & 0.8661          & 0.8562          \\
+    Argument Basis | Moral Sentiment | Offence                         & 0.953           & 0.8248          & 0.8867          & 0.8523          \\
+    Sarcasm | Moral Sentiment | Hate Speech | Offence                  & 0.9548          & 0.8117          & 0.9086          & 0.8519          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Hate Speech           & 0.9514          & 0.8315          & 0.8740          & 0.8511          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence               & 0.9517          & 0.8098          & 0.8905          & 0.8442          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech & 0.9534          & 0.8039          & 0.9067          & 0.8459
+  \end{tabular}
+  \caption{Experimental model validation scores on the \textit{Toxicity} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
+  \label{tab:mtl_dev_wulczyn}
+\end{table}
 
 \zw{Identify which models will be experimental models once good results come out.}
 
