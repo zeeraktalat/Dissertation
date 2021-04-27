@@ -402,8 +402,8 @@ In addition, the linear SVM models tend to perform best in terms of precision, w
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{lllll}
-             & Accuracy        & Precision       & Recall          & F1-score        \\
+  \begin{tabular}{l|llll}
+             & Accuracy        & Precision       & Recall          & F1-score        \\\hline
     Linear   & \textbf{0.8440} & \textbf{0.8182} & 0.7671          & \textbf{0.7892} \\
     Ensemble & 0.6803          & 0.2268          & 0.3333          & 0.2699          \\
     MLP      & 0.8056          & 0.6686          & \textbf{0.7894} & 0.7132
@@ -418,8 +418,8 @@ This suggests that the MLP baseline is better suited for correctly identifying t
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{lllll}
-             & Accuracy        & Precision       & Recall          & F1-score        \\
+  \begin{tabular}{l|llll}
+             & Accuracy        & Precision       & Recall          & F1-score        \\\hline
     Linear   & \textbf{0.8871} & \textbf{0.6997} & 0.6789          & \textbf{0.6850} \\
     Ensemble & 0.7713          & 0.4115          & 0.3696          & 0.3622          \\
     MLP      & 0.8790          & 0.5625          & \textbf{0.9163} & 0.5721
@@ -435,8 +435,8 @@ This increase is obtained while there is a decrease in precision of $0.09$.
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{lllll}
-                          & Accuracy        & Precision       & Recall          & F1-score        \\
+  \begin{tabular}{l|llll}
+                          & Accuracy        & Precision       & Recall          & F1-score        \\\hline
     Linear                & \textbf{0.9582} & \textbf{0.9008} & 0.8450          & \textbf{0.8702} \\
     Ensemble\footnotemark & 0.9582          & 0.9008          & 0.8448          & 0.8701          \\
     MLP                   & 0.9397          & 0.6979          & \textbf{0.9359} & 0.7632
@@ -564,6 +564,7 @@ Moreover, a majority of models prefer a batch size of $64$, the largest option f
 % TODO You are here. Do dev set and test set evaluation analysis here
 
 \begin{table}[]
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
                                                       & Accuracy        & Precision       & Recall          & F1-score        \\\hline
     \textit{Hate Expert}                              & 0.8171          & 0.7463          & 0.7776          & \textit{0.7608} \\
@@ -582,12 +583,14 @@ Moreover, a majority of models prefer a batch size of $64$, the largest option f
     Sarcasm | Hate Expert | Moral Sentiment           & 0.8259          & 0.7279          & \textbf{0.8051} & 0.7566          \\
     Sarcasm | Offence | Moral Sentiment               & 0.8194          & 0.7204          & 0.7916          & 0.7497          \\
     Sarcasm | Hate Expert | Offence | Moral Sentiment & 0.8200          & 0.7389          & 0.7834          & 0.7561
-  \end{tabular}
+  \end{tabular}%
+  }
   \caption{Experimental model validation scores on the \textit{Hate Speech} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
   \label{tab:mtl_dev_wh}
 \end{table}
 
 \begin{table}[]
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
                                                       & Accuracy        & Precision & Recall          & F1-score        \\ \hline
     \textit{Hate Speech}                              & 0.8857          & 0.7422    & 0.7076          & \textit{0.7232} \\
@@ -607,12 +610,14 @@ Moreover, a majority of models prefer a batch size of $64$, the largest option f
     Argument Basis | Hate Speech | Sarcasm            & 0.8950          & 0.6952    & 0.7354          & 0.7069          \\
     Argument Basis | Toxicity | Sarcasm               & 0.8991          & 0.7122    & 0.7481          & 0.7211          \\
     Argument Basis | Hate Speech | Toxicity | Sarcasm & 0.8902          & 0.6977    & 0.7281          & 0.7079
-  \end{tabular}
+  \end{tabular}%
+  }
   \caption{Experimental model validation scores on the \textit{Offence} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
   \label{tab:mtl_dev_davidson}
 \end{table}
 
 \begin{table}[]
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
                                                                        & Accuracy        & Precision       & Recall          & F1-score        \\\hline
     \textit{Hate Speech}                                               & 0.9513          & 0.8326          & 0.8726          & \textit{0.8511} \\
@@ -641,7 +646,8 @@ Moreover, a majority of models prefer a batch size of $64$, the largest option f
     Argument Basis | Moral Sentiment | Sarcasm | Hate Speech           & 0.9514          & 0.8315          & 0.8740          & 0.8511          \\
     Argument Basis | Moral Sentiment | Sarcasm | Offence               & 0.9517          & 0.8098          & 0.8905          & 0.8442          \\
     Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech & 0.9534          & 0.8039          & 0.9067          & 0.8459
-  \end{tabular}
+  \end{tabular}%
+  }
   \caption{Experimental model validation scores on the \textit{Toxicity} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
   \label{tab:mtl_dev_wulczyn}
 \end{table}
