@@ -460,6 +460,10 @@ The best hyper-parameter settings for each of the experimental settings for each
 In these tables, I show the best hyper-parameter settings for the models with one auxiliary task and each of the subsequent dataset configurations selected based.
 The dataset configurations are chosen on the basis of their F1-score performance on the validation data where only the main task and a single auxiliary task (see further detail on dataset combination selection in \cref{sub:aux_task_selection}).
 
+Observing the best hyper-parameters identified for each dataset in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn} three salient attributes are immediately clear.
+The vast majority of the models prefer a ReLU for their non-linearity and some variant of Stochastic Gradient Descent as the optimisation function.
+Moreover, a majority of models prefer a batch size of $64$, the largest option for batch size that I experiment with.
+
 \begin{landscape}
   \begin{table}[]
     \centering
@@ -516,10 +520,6 @@ The dataset configurations are chosen on the basis of their F1-score performance
     \label{tab:mtl_params_davidson}
   \end{table}
 \end{landscape}
-
-Observing the best hyper-parameters identified for each dataset in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn} three salient attributes are immediately clear.
-The vast majority of the models prefer a ReLU for their non-linearity and some variant of Stochastic Gradient Descent as the optimisation function.
-Moreover, a majority of models prefer a batch size of $64$, the largest option for batch size that I experiment with.
 
 \begin{landscape}
   \begin{table}[]
