@@ -337,6 +337,7 @@ Moreover, the baseline models optimised for these two datasets also prefer a hig
 \end{table}
 
 \subsubsection{Baseline Model Performances}
+\zw{Update baseline results}
 Prior to an analysis of the baseline model performances on the evaluation set, I examine their performances on the validation set to gain an insight in the viability of the modelling approach and expected outcomes on the evaluation data.
 Considering the results for all baseline models in \cref{tab:baseline_dev_wh,tab:baseline_dev_wulczyn,tab:baseline_dev_davidson} it is immediately clear that ensemble models provide a poor method for identifying each form of abuse.
 Additionally, the linear SVM baseline models provide for good baselines to compare the experimental models with, as the SVM baselines tend to out-perform the non-linear baselines.
@@ -453,7 +454,6 @@ Similarly to its' performances on the validation data, the MLP is competitive wi
 Meanwhile, the MLP baseline outperforms all other models in terms of recall however the poor performance in terms of precision results in a F1-score that is not competitive with the other baseline models.
 
 % \zw{Show which models contribute most to ensemble models}
-% TODO You are here
 \subsection{Experimental Model Performances}
 As the experimental models are MLP models that have been adapted for Multi-Task Learning, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
 The best hyper-parameter settings for each of the experimental settings for each main task are shown in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn}.\footnote{Note that the `Aux Task Weight' column only contains a single value as each auxiliary task is given the same weight.}
