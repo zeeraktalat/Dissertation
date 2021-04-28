@@ -464,8 +464,16 @@ The selection of each hyper-parameter setting to trial is performed through Baye
 For these experiments, I set the objective to maximise the F1-score on the validation data as the models optimise for minimisation on the training loss.
 
 Observing the best hyper-parameters identified for each dataset in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn} three salient attributes are immediately clear.
-The vast majority of the models prefer a ReLU for their non-linearity and some variant of Stochastic Gradient Descent as the optimisation function.
-Moreover, a majority of models prefer a batch size of $64$, the largest option for batch size that I experiment with.
+First, the vast majority of models prefer ReLU as a non-linearity.
+Second, most models prefer the largest batch size that I experiment with, namely $64$.
+Finally, Some version of the stochastic gradient descent optimisation algorithm is preferred by all but two models, the vast majority of models preferring averaged stochastic gradient descent.
+
+Turning to the performances of the best performing models on the validation data.
+The results presented in the first 6 rows of \cref{tab:mtl_dev_wh,tab:mtl_dev_davidson,tab:mtl_dev_wulczyn} guide decision for which auxiliary task datasets to experiment with.
+The decision in which auxiliary task datasets to select is guided by two different objectives: 1) selecting auxiliary task data that outperform the MLP baselines and 2) selecting auxiliary tasks that can aid in outperforming the best-performing baseline.
+I separate these two objectives as not all MLP baselines outperform the linear SVMs (please refer back to \cref{tab:baseline_dev_wh,tab:baseline_dev_davidson,tab:baseline_dev_wulczyn} for the results on the validation sets).
+Thus, the first objective provides insight into the utility of using MTL as a modelling approach can be observed through the ability of MTL-based models to out-perform their single-task counterparts.
+However, in the interest of identifying auxiliary tasks that contribute towards improved models for different forms of abusive language detection, I set up the second objective of identifying auxiliary tasks that most positively contribute towards the prediction of abusive language.
 
 \begin{landscape}
   \begin{table}[]
@@ -524,11 +532,6 @@ Moreover, a majority of models prefer a batch size of $64$, the largest option f
   \end{table}
 \end{landscape}
 
-Observing the best hyper-parameters identified for each dataset in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn} three salient attributes are immediately clear.
-First, the vast majority of models prefer ReLU as a non-linearity.
-Second, most models prefer the largest batch size that I experiment with, namely $64$.
-Finally, Some version of the stochastic gradient descent optimisation algorithm is preferred by all but two models, the vast majority of models preferring averaged stochastic gradient descent.
-
 \begin{landscape}
   \begin{table}[]
     \centering
@@ -567,13 +570,6 @@ Finally, Some version of the stochastic gradient descent optimisation algorithm 
     \label{tab:mtl_params_wulczyn}
   \end{table}
 \end{landscape}
-
-Turning to the performances of the best performing models on the validation data. 
-The results presented in the first 6 rows of \cref{tab:mtl_dev_wh,tab:mtl_dev_davidson,tab:mtl_dev_wulczyn} guide decision for which auxiliary task datasets to experiment with.
-The decision in which auxiliary task datasets to select is guided by two different objectives: 1) selecting auxiliary task data that outperform the MLP baselines and 2) selecting auxiliary tasks that can aid in outperforming the best-performing baseline.
-I separate these two objectives as not all MLP baselines outperform the linear SVMs (please refer back to \cref{tab:baseline_dev_wh,tab:baseline_dev_davidson,tab:baseline_dev_wulczyn} for the results on the validation sets).
-Thus, the first objective provides insight into the utility of using MTL as a modelling approach can be observed through the ability of MTL-based models to out-perform their single-task counterparts.
-However, in the interest of identifying auxiliary tasks that contribute towards improved models for different forms of abusive language detection, I set up the second objective of identifying auxiliary tasks that most positively contribute towards the prediction of abusive language.
 
 % TODO You are here. Do dev set and test set evaluation analysis here
 
@@ -680,9 +676,9 @@ For the \textit{Offence} dataset, the auxiliary tasks that are most beneficial t
   \label{tab:mtl_dev_wulczyn}
 \end{table}
 
-\zw{Identify which models will be experimental models once good results come out.}
-
-\zw{Describe the models and experimental settings}
+% TODO For once the test results are also added. Add more to this.
+Considering the auxiliary tasks that are beneficial to each main task, very few surprises appear. Some similar patterns occur here in this chapter as they do in \cref{chap:liwc}.
+For instance, the \textit{Hate Expert} data when used as an auxiliary task for the \textit{Hate Speech} dataset affords increased performances.
 
 \zw{Add results and start by rough analysis of just numbers}
 \zw{Add plots}
@@ -692,6 +688,7 @@ For the \textit{Offence} dataset, the auxiliary tasks that are most beneficial t
 
 Future work:
 \zw{Finer values of regularisation strength for linear regularisers}
+\zw{Larger batch sizes}
 \zw{Explore weighting of each task}
 \zw{Treat Weighting of tasks as an optimisable entity}
 \zw{Use pre-trained embeddings}
