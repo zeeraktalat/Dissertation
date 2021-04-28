@@ -480,6 +480,8 @@ For this reason, I choose the best performing MTL auxiliary task configurations 
 I select the top four auxiliary tasks as they are have a maximal difference of $0.01$ from one another.
 The auxiliary task datasets that I proceed to experiment with are the \textit{Hate Expert} dataset, the \textit{Offence} dataset, the \textit{Moral Sentiment} dataset and the \textit{Sarcasm} dataset.
 
+Similarly to the pattern observed for the baseline models optimised for the \textit{Hate Speech} data, most of the MTL MLP dataset configurations outperform the baselines in terms of recall while struggling in the precision score.
+
 \begin{landscape}
   \begin{table}[]
     \centering
@@ -573,12 +575,13 @@ The auxiliary task datasets that I proceed to experiment with are the \textit{Ha
     \label{tab:mtl_params_wulczyn}
   \end{table}
 \end{landscape}
-Similarly to the pattern for the baseline models optimised for the \textit{Hate Speech} data, most of the MTL MLP dataset configurations outperform the baselines in terms of recall while struggling in the precision score.
+
 Although none of the auxiliary task datasets outperform all baselines, they all outperform the MLP baseline thus providing early indication that learning a representation that all auxiliary tasks that I consider provide some beneficial information to the main task of detecting abuse.
 
 % TODO You are here. Do dev set and test set evaluation analysis here
 
-\begin{table}[]
+\begin{table}[h]
+  \centering
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
                                                       & Accuracy        & Precision       & Recall          & F1-score        \\\hline
@@ -604,8 +607,13 @@ Although none of the auxiliary task datasets outperform all baselines, they all 
   \label{tab:mtl_dev_wh}
 \end{table}
 
-\begin{table}[]
-  \resizebox{\textwidth}{!}{%
+For the MTL models optimised on the \textit{Offence} dataset, a similar issue of the linear SVM baseline outperforming the MTL configurations with one auxiliary task.
+Here, I set the same $0.01$ cut off in difference from the best performing auxiliary task as a criteria for inclusion.
+This results in the \textit{Hate Speech}, \textit{Toxicity} and the \textit{Sarcasm} datasets to be selected for further experiments.
+
+\begin{table}[h]
+  \centering
+  %\resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
                                                          & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
     \textit{Hate Speech}                                 & 0.8857          & 0.7422          & 0.7076          & \textit{0.7232} \\
@@ -625,19 +633,17 @@ Although none of the auxiliary task datasets outperform all baselines, they all 
     % Argument Basis | Hate Speech | Sarcasm             & 0.8950          & 0.6952          & 0.7354          & 0.7069          \\
     % Argument Basis | Toxicity | Sarcasm                & 0.8991          & 0.7122          & 0.7481          & 0.7211          \\
     % Argument Basis | Hate Speech | Toxicity | Sarcasm  & 0.8902          & 0.6977          & 0.7281          & 0.7079
-  \end{tabular}%
-  }
+  \end{tabular}
+  %%
+  %}
   \caption{Experimental model validation scores on the \textit{Offence} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
   \label{tab:mtl_dev_davidson}
 \end{table}
 
-For the MTL models optimised on the \textit{Offence} dataset, a similar issue of the linear SVM baseline outperforming the MTL configurations with one auxiliary task.
-Here, I set the same $0.01$ cut off in difference from the best performing auxiliary task as a criteria for inclusion.
-This results in the \textit{Hate Speech}, \textit{Toxicity} and the \textit{Sarcasm} datasets to be selected for further experiments.
-
 For the \textit{Offence} dataset, the auxiliary tasks that are most beneficial turn out to be two other datasets for abusive language and one for sarcasm detection, unlike the \textit{Hate Speech} dataset, where the two best performing non-abusive tasks obtain scores that are competitive with the two best abusive language detection tasks.
 
-\begin{table}[]
+\begin{table}[h]
+  \centering
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
                                                                        & Accuracy        & Precision       & Recall          & F1-score        \\\hline
