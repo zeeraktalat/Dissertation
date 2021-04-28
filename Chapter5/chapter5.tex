@@ -707,8 +707,27 @@ Turning to the performance on the test sets, the results presented in \cref{tab:
     Sarcasm | Hate Expert | Offence | Moral Sentiment & 0.8124 ($\sigma$ 0.0101)          & 0.6898 ($\sigma$ 0.0221)          & 0.8142 ($\sigma$ 0.0053)          & 0.7278 ($\sigma$ 0.0234)
   \end{tabular}%
 }
-  \caption{Experimental model validation scores on the \textit{Hate Speech} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
+  \caption{Experimental model evaluation scores on the \textit{Hate Speech} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
   \label{tab:mtl_test_wh}
+\end{table}
+
+\begin{table}[]
+  \centering
+  \begin{tabular}{l|cccc}
+                                  & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
+    Hate Speech                   & 0.8970 ($\sigma$ 0.0028)          & \textbf{0.6952} ($\sigma$ 0.0240) & 0.7685 ($\sigma$ 0.0339)          & \textbf{0.7119} ($\sigma$ 0.0138) \\
+    Toxicity                      & 0.8916 ($\sigma$ 0.0036)          & 0.6829 ($\sigma$ 0.0176)          & 0.7659 ($\sigma$ 0.0074)          & 0.7099 ($\sigma$ 0.0159)          \\
+    Hate Expert                   & 0.8871 ($\sigma$ 0.0048)          & 0.6794 ($\sigma$ 0.0274)          & 0.7552 ($\sigma$ 0.0110)          & 0.7028 ($\sigma$ 0.0193)          \\
+    Sarcasm                       & 0.8933 ($\sigma$ 0.0029)          & 0.6790 ($\sigma$ 0.0303)          & 0.7594 ($\sigma$ 0.0141)          & 0.6987 ($\sigma$ 0.0271)          \\
+    Argument Basis                & 0.8973 ($\sigma$ 0.0045)          & 0.6740 ($\sigma$ 0.0238)          & 0.7775 ($\sigma$ 0.0202)          & 0.6847 ($\sigma$ 0.0207)          \\
+    Moral Sentiment               & 0.8956 ($\sigma$ 0.0045)          & 0.6860 ($\sigma$ 0.0344)          & 0.7541 ($\sigma$ 0.0267)          & 0.6938 ($\sigma$ 0.0356)          \\
+    Hate Speech Toxicity          & 0.8860 ($\sigma$ 0.0046)          & 0.6961 ($\sigma$ 0.0157)          & 0.7294 ($\sigma$ 0.0211)          & 0.7033 ($\sigma$ 0.0135)          \\
+    Sarcasm Hate Speech           & 0.8891 ($\sigma$ 0.0080)          & 0.6561 ($\sigma$ 0.0239)          & 0.7757 ($\sigma$ 0.0157)          & 0.6806 ($\sigma$ 0.0200)          \\
+    Sarcasm Toxicity              & \textbf{0.8977} ($\sigma$ 0.0011) & 0.6723 ($\sigma$ 0.0126)          & \textbf{0.7899} ($\sigma$ 0.0063) & 0.6811 ($\sigma$ 0.0227)          \\
+    Sarcasm Toxicity Hate Speech  & 0.8923 ($\sigma$ 0.0028)          & 0.6877 ($\sigma$ 0.0213)          & 0.7601 ($\sigma$ 0.0079)          & 0.7091 ($\sigma$ 0.0151)
+  \end{tabular}
+  \caption{Experimental model evaluation scores on the \textit{Offence} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
+  \label{tab:mtl_test_davidson}
 \end{table}
 
 % TODO For once the test results are also added. Add more to this.
