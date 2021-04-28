@@ -706,13 +706,14 @@ Turning to the performance on the test sets, the results presented in \cref{tab:
     Sarcasm | Offence | Moral Sentiment               & 0.8151 ($\sigma$ 0.0066)          & \textbf{0.7502} ($\sigma$ 0.0070) & 0.7762 ($\sigma$ 0.0103)          & \textbf{0.7623} ($\sigma$ 0.0051) \\
     Sarcasm | Hate Expert | Offence | Moral Sentiment & 0.8124 ($\sigma$ 0.0101)          & 0.6898 ($\sigma$ 0.0221)          & 0.8142 ($\sigma$ 0.0053)          & 0.7278 ($\sigma$ 0.0234)
   \end{tabular}%
-}
+  }
   \caption{Experimental model evaluation scores on the \textit{Hate Speech} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
   \label{tab:mtl_test_wh}
 \end{table}
 
 \begin{table}[]
   \centering
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
                                   & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
     Hate Speech                   & 0.8970 ($\sigma$ 0.0028)          & \textbf{0.6952} ($\sigma$ 0.0240) & 0.7685 ($\sigma$ 0.0339)          & \textbf{0.7119} ($\sigma$ 0.0138) \\
@@ -725,7 +726,8 @@ Turning to the performance on the test sets, the results presented in \cref{tab:
     Sarcasm Hate Speech           & 0.8891 ($\sigma$ 0.0080)          & 0.6561 ($\sigma$ 0.0239)          & 0.7757 ($\sigma$ 0.0157)          & 0.6806 ($\sigma$ 0.0200)          \\
     Sarcasm Toxicity              & \textbf{0.8977} ($\sigma$ 0.0011) & 0.6723 ($\sigma$ 0.0126)          & \textbf{0.7899} ($\sigma$ 0.0063) & 0.6811 ($\sigma$ 0.0227)          \\
     Sarcasm Toxicity Hate Speech  & 0.8923 ($\sigma$ 0.0028)          & 0.6877 ($\sigma$ 0.0213)          & 0.7601 ($\sigma$ 0.0079)          & 0.7091 ($\sigma$ 0.0151)
-  \end{tabular}
+  \end{tabular}%
+  }
   \caption{Experimental model evaluation scores on the \textit{Offence} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
   \label{tab:mtl_test_davidson}
 \end{table}
