@@ -453,7 +453,6 @@ While the ensemble baseline breaks with the pattern observed on the validation s
 Similarly to its' performances on the validation data, the MLP is competitive with the linear SVM in terms of accuracy and posts poorer performance in terms of precision.
 Meanwhile, the MLP baseline outperforms all other models in terms of recall however the poor performance in terms of precision results in a F1-score that is not competitive with the other baseline models.
 
-% \zw{Show which models contribute most to ensemble models}
 \subsection{Experimental Model Performances}
 As the experimental models are MLP models that have been adapted for Multi-Task Learning, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
 The best hyper-parameter settings for each of the experimental settings for each main task are shown in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn}.\footnote{Note that the `Aux Task Weight' column only contains a single value as each auxiliary task is given the same weight.}
@@ -470,7 +469,7 @@ Finally, Some version of the stochastic gradient descent optimisation algorithm 
 
 Turning to the performances of the best performing models on the validation data.
 The results presented in the first 6 rows of \cref{tab:mtl_dev_wh,tab:mtl_dev_davidson,tab:mtl_dev_wulczyn} guide decision for which auxiliary task datasets to experiment with.
-The decision in which auxiliary task datasets to select is guided by two different objectives: 1) selecting auxiliary task data that outperform the MLP baselines and 2) selecting auxiliary tasks that can aid in outperforming the best-performing baseline.
+The decision in which auxiliary task datasets to select is guided by two different objectives: 1) selecting auxiliary task data that outperform the MLP baselines in terms of Macro F1 score and 2) selecting auxiliary tasks that can aid in outperforming the best-performing baseline.
 I separate these two objectives as not all MLP baselines outperform the linear SVMs (please refer back to \cref{tab:baseline_dev_wh,tab:baseline_dev_davidson,tab:baseline_dev_wulczyn} for the results on the validation sets).
 Thus, the first objective provides insight into the utility of using MTL as a modelling approach can be observed through the ability of MTL-based models to out-perform their single-task counterparts.
 However, in the interest of identifying auxiliary tasks that contribute towards improved models for different forms of abusive language detection, I set up the second objective of identifying auxiliary tasks that most positively contribute towards the prediction of abusive language.
@@ -678,6 +677,13 @@ For the \textit{Offence} dataset, the auxiliary tasks that are most beneficial t
   \caption{Experimental model validation scores on the \textit{Toxicity} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
   \label{tab:mtl_dev_wulczyn}
 \end{table}
+
+Finally, turning to the \textit{Toxicity} dataset, several of the MTL models using a single auxiliary task outperform all linear baselines.
+In fact, all auxiliary tasks, with the exception of the \textit{Hate Expert} dataset outperform all baseline models on the validation set in terms of F1-score.
+Thus, all auxiliary tasks, asides from the \textit{Hate Expert} task, are selected for further experimentation.\vspace{5mm}
+
+Turning to the performance on the test sets, the results presented in \cref{tab:mtl_test_wh,tab:mtl_test_davidson,tab:mtl_test_wulczyn} are the mean of five runs with different random seeds.
+
 
 % TODO For once the test results are also added. Add more to this.
 Considering the auxiliary tasks that are beneficial to each main task, very few surprises appear. Some similar patterns occur here in this chapter as they do in \cref{chap:liwc}.
