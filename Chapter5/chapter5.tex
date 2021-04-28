@@ -270,7 +270,7 @@ Moreover, there are indications of a correlation between the dataset size and th
 \begin{table}[]
   \centering
   \begin{tabular}{l|ccc}
-    Dataset                  & Vocabulary Size & Training Documents & # Classes\\\hline
+    Dataset                  & Vocabulary Size & Training Documents & \# Classes\\\hline
     \textit{Offence}         & 23263           & 19826              & 3\\
     \textit{Hate Speech}     & 19981           & 13525              & 3\\
     \textit{Toxicity}        & 95739           & 95692              & 2\\
@@ -475,10 +475,15 @@ I separate these two objectives as not all MLP baselines outperform the linear S
 Thus, the first objective provides insight into the utility of using MTL as a modelling approach can be observed through the ability of MTL-based models to out-perform their single-task counterparts.
 However, in the interest of identifying auxiliary tasks that contribute towards improved models for different forms of abusive language detection, I set up the second objective of identifying auxiliary tasks that most positively contribute towards the prediction of abusive language.
 
+Selecting the auxiliary tasks for the models optimised for the \textit{Hate Speech} dataset poses the challenge that none of the model configurations with a single auxiliary task outperform the linear SVM baseline on the development set though they all outperform the MLP baseline (see \cref{tab:baseline_dev_wh} for the baseline models and the first six rows of \cref{tab:mtl_dev_wh} for the MTL models).
+For this reason, I choose the best performing MTL auxiliary task configurations to continue further experiments with.
+I select the top four auxiliary tasks as they are have a maximal difference of $0.01$ from one another.
+The auxiliary task datasets that I proceed to experiment with are the \textit{Hate Expert} dataset, the \textit{Offence} dataset, the \textit{Moral Sentiment} dataset and the \textit{Sarcasm} dataset.
+
 \begin{landscape}
   \begin{table}[]
     \centering
-    \resizebox{0.7\paperheight}{!}{%
+    \resizebox{0.75\paperheight}{!}{%
     \begin{tabular}{l|ccccccccccc}
       Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Hate Expert                                       & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200,200         & 0.9084        & ReLU          & ASGD      & 128        \\
@@ -505,7 +510,7 @@ However, in the interest of identifying auxiliary tasks that contribute towards 
   \vfill
   \begin{table}[]
     \centering
-    \resizebox{0.7\paperheight}{!}{%
+    \resizebox{0.75\paperheight}{!}{%
     \begin{tabular}{l|ccccccccccc}
       Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Hate Expert                                       & 32         & 0.7              & 0.3              & 0.06554 & 100           & 200    & 300,300         & 0.2921        & ReLU          & ASGD      & 256        \\
@@ -530,12 +535,10 @@ However, in the interest of identifying auxiliary tasks that contribute towards 
     \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Offence} dataset.}
     \label{tab:mtl_params_davidson}
   \end{table}
-\end{landscape}
-
-\begin{landscape}
+  \vfill  
   \begin{table}[]
     \centering
-    \resizebox{0.7\paperheight}{!}{%
+    \resizebox{0.75\paperheight}{!}{%
     \begin{tabular}{l|ccccccccccc}
       Aux                                                                & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims             & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
       Waseem                                                             & 64         & 0.7              & 0.3              & 0.1166  & 300           & 200    & 64,64                   & 0.4055        & ReLU          & ASGD      & 256        \\
@@ -570,6 +573,8 @@ However, in the interest of identifying auxiliary tasks that contribute towards 
     \label{tab:mtl_params_wulczyn}
   \end{table}
 \end{landscape}
+Similarly to the pattern for the baseline models optimised for the \textit{Hate Speech} data, most of the MTL MLP dataset configurations outperform the baselines in terms of recall while struggling in the precision score.
+Although none of the auxiliary task datasets outperform all baselines, they all outperform the MLP baseline thus providing early indication that learning a representation that all auxiliary tasks that I consider provide some beneficial information to the main task of detecting abuse.
 
 % TODO You are here. Do dev set and test set evaluation analysis here
 
@@ -598,14 +603,6 @@ However, in the interest of identifying auxiliary tasks that contribute towards 
   \caption{Experimental model validation scores on the \textit{Hate Speech} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
   \label{tab:mtl_dev_wh}
 \end{table}
-
-Selecting the auxiliary tasks for the models optimised for the \textit{Hate Speech} dataset poses the challenge that none of the model configurations with a single auxiliary task outperform the linear SVM baseline on the development set though they all outperform the MLP baseline (see \cref{tab:baseline_dev_wh} for the baseline models and the first six rows of \cref{tab:mtl_dev_wh} for the MTL models).
-For this reason, I choose the best performing MTL auxiliary task configurations to continue further experiments with.
-I select the top four auxiliary tasks as they are have a maximal difference of $0.01$ from one another.
-The auxiliary task datasets that I proceed to experiment with are the \textit{Hate Expert} dataset, the \textit{Offence} dataset, the \textit{Moral Sentiment} dataset and the \textit{Sarcasm} dataset.
-
-Similarly to the pattern for the baseline models optimised for the \textit{Hate Speech} data, most of the MTL MLP dataset configurations outperform the baselines in terms of recall while struggling in the precision score.
-Although none of the auxiliary task datasets outperform all baselines, they all outperform the MLP baseline thus providing early indication that learning a representation that all auxiliary tasks that I consider provide some beneficial information to the main task of detecting abuse.
 
 \begin{table}[]
   \resizebox{\textwidth}{!}{%
