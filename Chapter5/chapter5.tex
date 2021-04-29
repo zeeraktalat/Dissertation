@@ -730,6 +730,23 @@ The selection of the \textit{Hate Expert} auxiliary task also suggests that an a
   \label{tab:mtl_test_wh}
 \end{table}
 
+\paragraph{Offence Main Task}
+When using \textit{Offence} detection as the main task, most models outperform all baselines in terms of F1-score (see \cref{tab:mtl_test_davidson}).
+The exception to this pattern are two auxiliary task configurations: the first where only the \textit{Argument Basis} auxiliary task is used, and the second where the \textit{Sarcasm} auxiliary task is used in conjunction with one abusive language detection task.
+In the setting where only one auxiliary task is used, the \textit{Hate Speech} auxiliary task somewhat surprisingly provides for slightly bigger improvements across all scores than the \textit{Toxicity} auxiliary task.
+This further evidences that abusive tasks from the same data source provide for a good source of data.
+When combining multiple auxiliary tasks however, the \textit{Toxicity} data provides for more stable improvements across different auxiliary task combinations.
+This further lends credibility to the observation that a similarity of dataset goals is useful in a multi-task setting.
+
+Focusing on the non-abusive auxiliary tasks, only the \textit{Sarcasm} auxiliary task is selected for further experimentation given the results on the validation data.
+The \textit{Sarcasm} auxiliary task, when used in isolation from other auxiliary tasks, offers competitive results with the abusive language detection auxiliary tasks used in isolation, and outperforms the closely related \textit{Toxicity} auxiliary task in terms of accuracy.
+However, the \textit{Argument Basis} auxiliary tasks outperforms the \textit{Sarcasm} on the validation data in terms of accuracy and recall, suggesting that it may be beneficial to look beyond the F1-score for ranking and selecting auxiliary tasks.
+
+The experimental models optimised for the \textit{Offence} detection task post a poorer recall than the best performing baseline model, thus the increased performances in F1-score are driven by improvements in precision score.
+The best performing baseline model, in terms of recall, obtains a score of $0.91$ but only obtains $0.57$ in terms of precision.
+Thus, adding auxiliary tasks provides for models that are more balanced in terms of performance on precision and recall, yielding an improved performance in terms of F1-score as neither precision or recall are being neglected in favour of the other.
+Comparing the MTL models to the SVM baseline, all auxiliary task settings models strongly outperform the baseline in terms of recall.
+
 \begin{table}[]
   \centering
   \resizebox{\textwidth}{!}{%
