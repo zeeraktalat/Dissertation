@@ -768,6 +768,12 @@ Comparing the MTL models to the SVM baseline, all auxiliary task settings models
   \label{tab:mtl_test_davidson}
 \end{table}
 
+\paragraph{Toxicity Main Task}
+For the machine learning models optimise on the \textit{Toxicity} dataset, none of the models outperform the linear SVM in terms of F1-score.
+All configurations outperform the MLP in terms of F1-score, precision and accuracy.
+However, no configuration of the auxiliary tasks outperform the MLP baseline or the ensemble baseline, the highest performing baseline.
+The best performing model in terms F1 scores are models that have at least one auxiliary task that is an abusive language task.
+
 \begin{table}[]
   \centering
   \resizebox{\textwidth}{!}{%
