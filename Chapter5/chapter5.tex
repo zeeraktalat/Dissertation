@@ -684,6 +684,7 @@ Thus, all auxiliary tasks, asides from the \textit{Hate Expert} task, are select
 
 Turning to the performance on the test sets, the results presented in \cref{tab:mtl_test_wh,tab:mtl_test_davidson,tab:mtl_test_wulczyn} are the means of five runs with different random seeds and the standard deviation for each metric.
 
+\paragraph{Hate Speech Main Task}
 Considering first the results in \cref{tab:mtl_test_wh} for the MTL models optimised for the \textit{Hate Speech} task.
 All but one dataset configurations yield an improved accuracy over the MLP baseline, though none outperform the SVM baseline.
 The best auxiliary task configuration for accuracy is one that uses the \textit{Hate Expert} and the \textit{Sarcasm} auxiliary tasks.
@@ -696,6 +697,11 @@ The strongest performance here is obtained by an auxiliary task combination wher
 This performance gain is obtained through an increase in the experimental model's ability in precision at the cost of a slightly lower recall score.
 Although, on their own, none of the non-abusive tasks obtain the highest performances out of all auxiliary task configurations, they frequently post highly competitive scores with the all other configurations.
 This suggests that some of the improvements obtained when using multiple auxiliary tasks is obtained through the information of non-abusive information encoded into the shared layer of the model.
+
+Aligning with the insights on dataset mappings identified in \cref{chap:liwc}, the \textit{Hate Expert} dataset provides for boosted predicted power when used in conjunction with a non-abusive auxiliary task. 
+Somewhat surprisingly, the \textit{Offence} auxiliary task equally provides boosts in performance.
+These improvements in performance indicate that the source domain of the data offer greater inductive biases, that can be optimised, than the size, as evidenced by the \textit{Toxicity} dataset not being selected for further experimentation.
+The selection of the \textit{Hate Expert} auxiliary task also suggests that an alignment of dataset goals, and the processes to achieve those goals, also have a positive factor.
 
 \begin{table}[]
   \centering
