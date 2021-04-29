@@ -682,7 +682,7 @@ Finally, turning to the \textit{Toxicity} dataset, several of the MTL models usi
 In fact, all auxiliary tasks, with the exception of the \textit{Hate Expert} dataset outperform all baseline models on the validation set in terms of F1-score.
 Thus, all auxiliary tasks, asides from the \textit{Hate Expert} task, are selected for further experimentation.\vspace{5mm}
 
-Turning to the performance on the test sets, the results presented in \cref{tab:mtl_test_wh,tab:mtl_test_davidson,tab:mtl_test_wulczyn} are the mean of five runs with different random seeds.
+Turning to the performance on the test sets, the results presented in \cref{tab:mtl_test_wh,tab:mtl_test_davidson,tab:mtl_test_wulczyn} are the means of five runs with different random seeds and the standard deviation for each metric.
 
 \begin{table}[]
   \centering
@@ -715,21 +715,58 @@ Turning to the performance on the test sets, the results presented in \cref{tab:
   \centering
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
-                                     & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
-    Hate Speech                      & 0.8970 ($\sigma$ 0.0028)          & \textbf{0.6952} ($\sigma$ 0.0240) & 0.7685 ($\sigma$ 0.0339)          & \textbf{0.7119} ($\sigma$ 0.0138) \\
-    Toxicity                         & 0.8916 ($\sigma$ 0.0036)          & 0.6829 ($\sigma$ 0.0176)          & 0.7659 ($\sigma$ 0.0074)          & 0.7099 ($\sigma$ 0.0159)          \\
-    Hate Expert                      & 0.8871 ($\sigma$ 0.0048)          & 0.6794 ($\sigma$ 0.0274)          & 0.7552 ($\sigma$ 0.0110)          & 0.7028 ($\sigma$ 0.0193)          \\
-    Sarcasm                          & 0.8933 ($\sigma$ 0.0029)          & 0.6790 ($\sigma$ 0.0303)          & 0.7594 ($\sigma$ 0.0141)          & 0.6987 ($\sigma$ 0.0271)          \\
-    Argument Basis                   & 0.8973 ($\sigma$ 0.0045)          & 0.6740 ($\sigma$ 0.0238)          & 0.7775 ($\sigma$ 0.0202)          & 0.6847 ($\sigma$ 0.0207)          \\
-    Moral Sentiment                  & 0.8956 ($\sigma$ 0.0045)          & 0.6860 ($\sigma$ 0.0344)          & 0.7541 ($\sigma$ 0.0267)          & 0.6938 ($\sigma$ 0.0356)          \\
-    Hate Speech | Toxicity           & 0.8860 ($\sigma$ 0.0046)          & 0.6961 ($\sigma$ 0.0157)          & 0.7294 ($\sigma$ 0.0211)          & 0.7033 ($\sigma$ 0.0135)          \\
-    Sarcasm | Hate Speech            & 0.8891 ($\sigma$ 0.0080)          & 0.6561 ($\sigma$ 0.0239)          & 0.7757 ($\sigma$ 0.0157)          & 0.6806 ($\sigma$ 0.0200)          \\
-    Sarcasm | Toxicity               & \textbf{0.8977} ($\sigma$ 0.0011) & 0.6723 ($\sigma$ 0.0126)          & \textbf{0.7899} ($\sigma$ 0.0063) & 0.6811 ($\sigma$ 0.0227)          \\
-    Sarcasm | Toxicity | Hate Speech & 0.8923 ($\sigma$ 0.0028)          & 0.6877 ($\sigma$ 0.0213)          & 0.7601 ($\sigma$ 0.0079)          & 0.7091 ($\sigma$ 0.0151)
+                                      & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
+    Hate Speech                       & 0.8970 ($\sigma$ 0.0028)          & 0.6952 ($\sigma$ 0.0240)          & 0.7685 ($\sigma$ 0.0339)          & \textbf{0.7119} ($\sigma$ 0.0138) \\
+    Toxicity                          & 0.8916 ($\sigma$ 0.0036)          & 0.6829 ($\sigma$ 0.0176)          & 0.7659 ($\sigma$ 0.0074)          & 0.7099 ($\sigma$ 0.0159)          \\
+    Hate Expert                       & 0.8871 ($\sigma$ 0.0048)          & 0.6794 ($\sigma$ 0.0274)          & 0.7552 ($\sigma$ 0.0110)          & 0.7028 ($\sigma$ 0.0193)          \\
+    Sarcasm                           & 0.8933 ($\sigma$ 0.0029)          & 0.6790 ($\sigma$ 0.0303)          & 0.7594 ($\sigma$ 0.0141)          & 0.6987 ($\sigma$ 0.0271)          \\
+    Argument Basis                    & 0.8973 ($\sigma$ 0.0045)          & 0.6740 ($\sigma$ 0.0238)          & 0.7775 ($\sigma$ 0.0202)          & 0.6847 ($\sigma$ 0.0207)          \\
+    Moral Sentiment                   & 0.8956 ($\sigma$ 0.0045)          & 0.6860 ($\sigma$ 0.0344)          & 0.7541 ($\sigma$ 0.0267)          & 0.6938 ($\sigma$ 0.0356)          \\
+    Hate Speech | Toxicity            & 0.8860 ($\sigma$ 0.0046)          & \textbf{0.6961} ($\sigma$ 0.0157) & 0.7294 ($\sigma$ 0.0211)          & 0.7033 ($\sigma$ 0.0135)          \\
+    Sarcasm | Hate Speech             & 0.8891 ($\sigma$ 0.0080)          & 0.6561 ($\sigma$ 0.0239)          & 0.7757 ($\sigma$ 0.0157)          & 0.6806 ($\sigma$ 0.0200)          \\
+    Sarcasm | Toxicity                & \textbf{0.8977} ($\sigma$ 0.0011) & 0.6723 ($\sigma$ 0.0126)          & \textbf{0.7899} ($\sigma$ 0.0063) & 0.6811 ($\sigma$ 0.0227)          \\
+    Sarcasm | Toxicity | Hate Speech  & 0.8923 ($\sigma$ 0.0028)          & 0.6877 ($\sigma$ 0.0213)          & 0.7601 ($\sigma$ 0.0079)          & 0.7091 ($\sigma$ 0.0151)
   \end{tabular}%
   }
   \caption{Experimental model evaluation scores on the \textit{Offence} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
   \label{tab:mtl_test_davidson}
+\end{table}
+
+\begin{table}[]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lllll}
+                                                                       & Accuracy                          & Precision                         & Recall                            & F1-score                 \\
+    Hate Speech                                                        & 0.9523 ($\sigma$ 0.0006)          & 0.8265 ($\sigma$ 0.0184)          & 0.8836 ($\sigma$ 0.01505)         & 0.8513 ($\sigma$ 0.0052)          \\
+    Offence                                                            & 0.9506 ($\sigma$ 0.0027)          & \textbf{0.8445 ($\sigma$ 0.0091)} & 0.8637 ($\sigma$ 0.0147)          & 0.8535 ($\sigma$ 0.0049)          \\
+    Hate Expert                                                        & 0.9497 ($\sigma$ 0.0008)          & 0.7794 ($\sigma$ 0.0081)          & 0.9074 ($\sigma$ 0.0124)          & 0.8283 ($\sigma$ 0.0027)          \\
+    Moral Sentiment                                                    & 0.9535 ($\sigma$ 0.0005)          & 0.8058 ($\sigma$ 0.0074)          & 0.9061 ($\sigma$ 0.0088)          & 0.8469 ($\sigma$ 0.0025)          \\
+    Sarcasm                                                            & 0.9532 ($\sigma$ 0.0004)          & 0.8029 ($\sigma$ 0.0131)          & 0.9078 ($\sigma$ 0.0130)          & 0.8452 ($\sigma$ 0.0050)          \\
+    Argument Basis                                                     & 0.9477 ($\sigma$ 0.0040)          & 0.7604 ($\sigma$ 0.0307)          & 0.9152 ($\sigma$ 0.0098)          & 0.8145 ($\sigma$ 0.0245)          \\
+    Moral Sentiment | Offence                                          & 0.9518 ($\sigma$ 0.0005)          & 0.7897 ($\sigma$ 0.0125)          & 0.9118 ($\sigma$ 0.0144)          & 0.8370 ($\sigma$ 0.0048)          \\
+    Moral Sentiment | Hate Speech                                      & 0.9530 ($\sigma$ 0.0013)          & 0.7984 ($\sigma$ 0.0163)          & 0.9109 ($\sigma$ 0.0114)          & 0.8430 ($\sigma$ 0.0088)          \\
+    Hate Speech | Offence                                              & \textbf{0.9538 ($\sigma$ 0.0008)} & 0.8238 ($\sigma$ 0.0142)          & 0.8931 ($\sigma$ 0.0139)          & \textbf{0.8537 ($\sigma$ 0.0038)} \\
+    Sarcasm | Moral Sentiment                                          & 0.9526 ($\sigma$ 0.0007)          & 0.7929 ($\sigma$ 0.0092)          & 0.9132 ($\sigma$ 0.0054)          & 0.8401 ($\sigma$ 0.0052)          \\
+    Sarcasm | Hate Speech                                              & 0.8947 ($\sigma$ 0.0798)          & 0.7800 ($\sigma$ 0.0733)          & 0.8467 ($\sigma$ 0.0535)          & 0.8070 ($\sigma$ 0.0654)          \\
+    Sarcasm | Offence                                                  & 0.9523 ($\sigma$ 0.0007)          & 0.7949 ($\sigma$ 0.0138)          & 0.9099 ($\sigma$ 0.0113)          & 0.8402 ($\sigma$ 0.0065)          \\
+    Argument Basis | Hate Speech                                       & 0.9514 ($\sigma$ 0.0008)          & 0.8027 ($\sigma$ 0.0153)          & 0.8966 ($\sigma$ 0.0159)          & 0.8410 ($\sigma$ 0.0057)          \\
+    Argument Basis | Moral Sentiment                                   & 0.9528 ($\sigma$ 0.0004)          & 0.8026 ($\sigma$ 0.0070)          & 0.9047 ($\sigma$ 0.0060)          & 0.8443 ($\sigma$ 0.0031)          \\
+    Argument Basis | Sarcasm                                           & 0.9528 ($\sigma$ 0.0011)          & 0.8182 ($\sigma$ 0.0224)          & 0.8925 ($\sigma$ 0.0144)          & 0.8495 ($\sigma$ 0.0095)          \\
+    Argument Basis | Offence                                           & 0.9511 ($\sigma$ 0.0014)          & 0.7813 ($\sigma$ 0.0132)          & 0.9162 ($\sigma$ 0.0139)          & 0.8321 ($\sigma$ 0.0079)          \\
+    Moral Sentiment | Hate Speech | Offence                            & 0.9532 ($\sigma$ 0.0005)          & 0.7932 ($\sigma$ 0.0095)          & 0.9174 ($\sigma$ 0.0100)          & 0.8415 ($\sigma$ 0.0042)          \\
+    Sarcasm | Moral Sentiment | Hate Speech                            & 0.9517 ($\sigma$ 0.0012)          & 0.7845 ($\sigma$ 0.0115)          & 0.9165 ($\sigma$ 0.0051)          & 0.8348 ($\sigma$ 0.0072)          \\
+    Sarcasm | Moral Sentiment | Offence                                & 0.9513 ($\sigma$ 0.0012)          & 0.7760 ($\sigma$ 0.0106)          & \textbf{0.9235 ($\sigma$ 0.0065)} & 0.8303 ($\sigma$ 0.0071)          \\
+    Argument Basis | Moral Sentiment | Sarcasm                         & 0.9535 ($\sigma$ 0.0005)          & 0.8053 ($\sigma$ 0.0160)          & 0.9083 ($\sigma$ 0.0177)          & 0.8467 ($\sigma$ 0.0054)          \\
+    Argument Basis | Moral Sentiment | Hate Speech                     & 0.9532 ($\sigma$ 0.0018)          & 0.817 ($\sigma$ 0.0075)           & 0.8947 ($\sigma$ 0.0133)          & 0.8503 ($\sigma$ 0.0046)          \\
+    Argument Basis | Moral Sentiment | Offence                         & 0.9537 ($\sigma$ 0.0007)          & 0.8194 ($\sigma$ 0.0142)          & 0.8958 ($\sigma$ 0.0102)          & 0.8520 ($\sigma$ 0.0057)          \\
+    Sarcasm | Moral Sentiment | Hate Speech | Offence                  & 0.9526 ($\sigma$ 0.0018)          & 0.7883 ($\sigma$ 0.0228)          & 0.9197 ($\sigma$ 0.0131)          & 0.8379 ($\sigma$ 0.0128)          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Hate Speech           & 0.9526 ($\sigma$ 0.0003)          & 0.8242 ($\sigma$ 0.0190)          & 0.8869 ($\sigma$ 0.0155)          & 0.8512 ($\sigma$ 0.0060)          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence               & 0.9505 ($\sigma$ 0.0017)          & 0.8107 ($\sigma$ 0.0232)          & 0.8852 ($\sigma$ 0.0183)          & 0.8417 ($\sigma$ 0.0098)          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech & 0.9512 ($\sigma$ 0.0018)          & 0.7948 ($\sigma$ 0.0236)          & 0.9035 ($\sigma$ 0.0187)          & 0.8374 ($\sigma$ 0.0118)
+  \end{tabular}%
+  }
+  \caption{Experimental model evaluation scores on the \textit{Toxicity} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
+  \label{tab:mtl_test_wulczyn}
 \end{table}
 
 % TODO For once the test results are also added. Add more to this.
