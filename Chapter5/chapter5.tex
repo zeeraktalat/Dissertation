@@ -775,25 +775,7 @@ Comparing the MTL models to the SVM baseline, all auxiliary task settings models
 \end{table}
 
 \paragraph{Toxicity Main Task}
-The final task that I explore experimentally through MTL is the \textit{Toxicity} detection task.
-This task is the task that has the most auxiliary tasks that are explored experimentally with five out of six tasks explored, the only task that is note explored is the \textit{Hate Expert} task.
-Moreover, this is also the task with the largest dataset available and the only binary task, meaning that this is the only task where the results are directly comparable with the results obtained in \cref{chap:liwc}.
-
-Observing experimental model results in \cref{tab:mtl_test_wulczyn} with the performances of the baseline models in \cref{tab:baseline_test_wulczyn}, we see that no setting of the auxiliary tasks outperform the SVM baseline in terms of F1-score or accuracy.
-However, all task configurations outperform the SVM in terms of recall and are competitive in terms of the accuracy score with the worst performing configuration, one that uses the \textit{Sarcasm} and the \textit{Hate Speech} auxiliary tasks scoring $0.0635$ below the SVM baseline and $0.045$ lower the MLP baseline.
-On the other hand, the best performing model in terms of accuracy has a score that is $0.0044$ lower than the SVM baseline and $0.0141$ higher than the MLP baseline.
-For precision, similarly none of the experimental settings outperform the SVM or the ensemble baselines.
-The best auxiliary task configuration only uses the \textit{Offence} auxiliary task and obtains a precision score of $0.8445$, $0.0563$ lower than the SVM baseline, while the worst performing auxiliary task setting only uses the \textit{Argument Basis} with a score of $0.7604$ or $0.1404$ lower than the SVM baseline.
-Here again is an indication that using the F1-score as the only metric by which the auxiliary tasks are chosen is suboptimal as the \textit{Hate Expert} auxiliary task outperforms the \textit{Argument Basis} auxiliary task for all metrics asides from the recall score.
-Although the performance in terms of precision is lower than the SVM baseline, all auxiliary task configurations outperform the MLP baseline with the worst performing task setting outperforming the MLP baseline by $0.0625$ and a $0.1466$ improvement over the baseline for the best-performing task setting.
-For the recall score, the best performing baseline model is the ensemble baseline, closely followed by the MLP baseline.
-Neither of these baselines are outperformed by the MTL models though all experimental models improve on the SVM baseline.
-The best performing model here uses three different auxiliary tasks, namely the \textit{Sarcasm} task, the \textit{Moral Sentiment} task, and the \textit{Offence} task and only underperforms by $0.0124$ in comparison to the MLP baseline.
-Finally, focusing on the F1-score.
-Although no auxiliary task setting outperforms the best performing baseline, the SVM baseline, task configurations strongly outperform the MLP baseline.
-The best performing auxiliary task setting uses the \textit{Hate Speech} and the \textit{Offence} auxiliary tasks, that is all of the abusive language detection tasks under consideration and it outperforms the MLP baseline by $0.0905$.
-The worst performing auxiliary task setting outscores the MLP baseline by $0.0438$ and uses the \textit{Sarcasm} and the \textit{hate Speech} auxiliary tasks.
-
+\afterpage{
 \begin{landscape}
 \begin{table}[]
   \centering
@@ -832,6 +814,28 @@ The worst performing auxiliary task setting outscores the MLP baseline by $0.043
   \label{tab:mtl_test_wulczyn}
 \end{table}
 \end{landscape}
+}
+
+The final task that I explore experimentally through MTL is the \textit{Toxicity} detection task.
+This task is the task that has the most auxiliary tasks that are explored experimentally with five out of six tasks explored, the only task that is note explored is the \textit{Hate Expert} task.
+Moreover, this is also the task with the largest dataset available and the only binary task, meaning that this is the only task where the results are directly comparable with the results obtained in \cref{chap:liwc}.
+
+Observing experimental model results in \cref{tab:mtl_test_wulczyn} with the performances of the baseline models in \cref{tab:baseline_test_wulczyn}, we see that no setting of the auxiliary tasks outperform the SVM baseline in terms of F1-score or accuracy.
+However, all task configurations outperform the SVM in terms of recall and are competitive in terms of the accuracy score with the worst performing configuration, one that uses the \textit{Sarcasm} and the \textit{Hate Speech} auxiliary tasks scoring $0.0635$ below the SVM baseline and $0.045$ lower the MLP baseline.
+On the other hand, the best performing model in terms of accuracy has a score that is $0.0044$ lower than the SVM baseline and $0.0141$ higher than the MLP baseline.
+For precision, similarly none of the experimental settings outperform the SVM or the ensemble baselines.
+The best auxiliary task configuration only uses the \textit{Offence} auxiliary task and obtains a precision score of $0.8445$, $0.0563$ lower than the SVM baseline, while the worst performing auxiliary task setting only uses the \textit{Argument Basis} with a score of $0.7604$ or $0.1404$ lower than the SVM baseline.
+Here again is an indication that using the F1-score as the only metric by which the auxiliary tasks are chosen is suboptimal as the \textit{Hate Expert} auxiliary task outperforms the \textit{Argument Basis} auxiliary task for all metrics asides from the recall score.
+Although the performance in terms of precision is lower than the SVM baseline, all auxiliary task configurations outperform the MLP baseline with the worst performing task setting outperforming the MLP baseline by $0.0625$ and a $0.1466$ improvement over the baseline for the best-performing task setting.
+For the recall score, the best performing baseline model is the ensemble baseline, closely followed by the MLP baseline.
+Neither of these baselines are outperformed by the MTL models though all experimental models improve on the SVM baseline.
+The best performing model here uses three different auxiliary tasks, namely the \textit{Sarcasm} task, the \textit{Moral Sentiment} task, and the \textit{Offence} task and only underperforms by $0.0124$ in comparison to the MLP baseline.
+Finally, focusing on the F1-score.
+Although no auxiliary task setting outperforms the best performing baseline, the SVM baseline, task configurations strongly outperform the MLP baseline.
+The best performing auxiliary task setting uses the \textit{Hate Speech} and the \textit{Offence} auxiliary tasks, that is all of the abusive language detection tasks under consideration and it outperforms the MLP baseline by $0.0905$.
+The worst performing auxiliary task setting outscores the MLP baseline by $0.0438$ and uses the \textit{Sarcasm} and the \textit{hate Speech} auxiliary tasks.
+
+\paragraph{Auxiliary Task Patterns}
 
 This pattern holds true across the different main tasks, showing that in spite of differences in annotation and dataset goals there are inductive biases that can be encoded through multi-task learning for an increase in the predictive capabilities of machine learning models for abuse.
 
