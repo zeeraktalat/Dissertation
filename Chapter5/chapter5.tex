@@ -832,7 +832,7 @@ However, all task configurations outperform the SVM in terms of recall and are c
 On the other hand, the best performing model in terms of accuracy has a score that is $0.0044$ lower than the SVM baseline and $0.0141$ higher than the MLP baseline.
 For precision, similarly none of the experimental settings outperform the SVM or the ensemble baselines.
 The best auxiliary task configuration only uses the \textit{Offence} auxiliary task and obtains a precision score of $0.8445$, $0.0563$ lower than the SVM baseline, while the worst performing auxiliary task setting only uses the \textit{Argument Basis} with a score of $0.7604$ or $0.1404$ lower than the SVM baseline.
-Here again is an indication that using the F1-score as the only metric by which the auxiliary tasks are chosen is suboptimal as the \textit{Hate Expert} auxiliary task outperforms the \textit{Argument Basis} auxiliary task for all metrics asides from the recall score.
+Here is an indication that using the F1-score as the only metric by which the auxiliary tasks are chosen is suboptimal as the \textit{Hate Expert} auxiliary task outperforms the \textit{Argument Basis} auxiliary task for all metrics asides from the recall score.
 Although the performance in terms of precision is lower than the SVM baseline, all auxiliary task configurations outperform the MLP baseline with the worst performing task setting outperforming the MLP baseline by $0.0625$ and a $0.1466$ improvement over the baseline for the best-performing task setting.
 For the recall score, the best performing baseline model is the ensemble baseline, closely followed by the MLP baseline.
 Neither of these baselines are outperformed by the MTL models though all experimental models improve on the SVM baseline.
