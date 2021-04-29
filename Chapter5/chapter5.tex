@@ -744,9 +744,9 @@ This further evidences that abusive tasks from the same data source provide for 
 When combining multiple auxiliary tasks however, the \textit{Toxicity} data provides for more stable improvements across different auxiliary task combinations.
 This further lends credibility to the observation that a similarity of dataset goals is useful in a multi-task setting.
 
-Focusing on the non-abusive auxiliary tasks, only the \textit{Sarcasm} auxiliary task is selected for further experimentation given the results on the validation data.
+Focusing on the non-abusive auxiliary tasks, the \textit{Sarcasm} and \textit{Argument Basis} auxiliary tasks are selected for further experimentation given the results on the validation data.
 The \textit{Sarcasm} auxiliary task, when used in isolation from other auxiliary tasks, offers competitive results with the abusive language detection auxiliary tasks used in isolation, and outperforms the closely related \textit{Toxicity} auxiliary task in terms of accuracy.
-However, the \textit{Argument Basis} auxiliary tasks outperforms the \textit{Sarcasm} on the validation data in terms of accuracy and recall, suggesting that it may be beneficial to look beyond the F1-score for ranking and selecting auxiliary tasks.
+The \textit{Argument Basis} auxiliary task affords performance improvements along accuracy, precision, and F1-score and only when this task is used in conjunction with other auxiliary tasks, specifically the \textit{Sarcasm} and \textit{Hate Speech} auxiliary tasks, do the models outperform the best baseline model in terms of precision.
 
 The experimental models optimised for the \textit{Offence} detection task post a poorer recall than the best performing baseline model, thus the increased performances in F1-score are driven by improvements in precision score.
 The best performing baseline model, in terms of recall, obtains a score of $0.91$ but only obtains $0.57$ in terms of precision.
@@ -757,17 +757,24 @@ Comparing the MTL models to the SVM baseline, all auxiliary task settings models
   \centering
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|cccc}
-                                      & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
-    Hate Speech                       & 0.8970 ($\sigma$ 0.0028)          & 0.6952 ($\sigma$ 0.0240)          & 0.7685 ($\sigma$ 0.0339)          & \textbf{0.7119} ($\sigma$ 0.0138) \\
-    Toxicity                          & 0.8916 ($\sigma$ 0.0036)          & 0.6829 ($\sigma$ 0.0176)          & 0.7659 ($\sigma$ 0.0074)          & 0.7099 ($\sigma$ 0.0159)          \\
-    Hate Expert                       & 0.8871 ($\sigma$ 0.0048)          & 0.6794 ($\sigma$ 0.0274)          & 0.7552 ($\sigma$ 0.0110)          & 0.7028 ($\sigma$ 0.0193)          \\
-    Sarcasm                           & 0.8933 ($\sigma$ 0.0029)          & 0.6790 ($\sigma$ 0.0303)          & 0.7594 ($\sigma$ 0.0141)          & 0.6987 ($\sigma$ 0.0271)          \\
-    Argument Basis                    & 0.8973 ($\sigma$ 0.0045)          & 0.6740 ($\sigma$ 0.0238)          & 0.7775 ($\sigma$ 0.0202)          & 0.6847 ($\sigma$ 0.0207)          \\
-    Moral Sentiment                   & 0.8956 ($\sigma$ 0.0045)          & 0.6860 ($\sigma$ 0.0344)          & 0.7541 ($\sigma$ 0.0267)          & 0.6938 ($\sigma$ 0.0356)          \\
-    Hate Speech | Toxicity            & 0.8860 ($\sigma$ 0.0046)          & \textbf{0.6961} ($\sigma$ 0.0157) & 0.7294 ($\sigma$ 0.0211)          & 0.7033 ($\sigma$ 0.0135)          \\
-    Sarcasm | Hate Speech             & 0.8891 ($\sigma$ 0.0080)          & 0.6561 ($\sigma$ 0.0239)          & 0.7757 ($\sigma$ 0.0157)          & 0.6806 ($\sigma$ 0.0200)          \\
-    Sarcasm | Toxicity                & \textbf{0.8977} ($\sigma$ 0.0011) & 0.6723 ($\sigma$ 0.0126)          & \textbf{0.7899} ($\sigma$ 0.0063) & 0.6811 ($\sigma$ 0.0227)          \\
-    Sarcasm | Toxicity | Hate Speech  & 0.8923 ($\sigma$ 0.0028)          & 0.6877 ($\sigma$ 0.0213)          & 0.7601 ($\sigma$ 0.0079)          & 0.7091 ($\sigma$ 0.0151)
+                                                           & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
+    Hate Speech                                            & 0.8970 ($\sigma$ 0.0028)          & 0.6952 ($\sigma$ 0.0240)          & 0.7685 ($\sigma$ 0.0339)          & 0.7119 ($\sigma$ 0.0138)          \\
+    Toxicity                                               & 0.8916 ($\sigma$ 0.0036)          & 0.6829 ($\sigma$ 0.0176)          & 0.7659 ($\sigma$ 0.0074)          & 0.7099 ($\sigma$ 0.0159)          \\
+    Hate Expert                                            & 0.8871 ($\sigma$ 0.0048)          & 0.6794 ($\sigma$ 0.0274)          & 0.7552 ($\sigma$ 0.0110)          & 0.7028 ($\sigma$ 0.0193)          \\
+    Sarcasm                                                & 0.8933 ($\sigma$ 0.0029)          & 0.6790 ($\sigma$ 0.0303)          & 0.7594 ($\sigma$ 0.0141)          & 0.6987 ($\sigma$ 0.0271)          \\
+    Argument Basis                                         & 0.8973 ($\sigma$ 0.0045)          & 0.6740 ($\sigma$ 0.0238)          & 0.7775 ($\sigma$ 0.0202)          & 0.6847 ($\sigma$ 0.0207)          \\
+    Moral Sentiment                                        & 0.8956 ($\sigma$ 0.0045)          & 0.6860 ($\sigma$ 0.0344)          & 0.7541 ($\sigma$ 0.0267)          & 0.6938 ($\sigma$ 0.0356)          \\
+    Hate Speech | Toxicity                                 & 0.8860 ($\sigma$ 0.0046)          & 0.6961 ($\sigma$ 0.0157)          & 0.7294 ($\sigma$ 0.0211)          & 0.7033 ($\sigma$ 0.0135)          \\
+    Sarcasm | Hate Speech                                  & 0.8891 ($\sigma$ 0.0080)          & 0.6561 ($\sigma$ 0.0239)          & 0.7757 ($\sigma$ 0.0157)          & 0.6806 ($\sigma$ 0.0200)          \\
+    Sarcasm | Toxicity                                     & 0.8977 ($\sigma$ 0.0011)          & 0.6723 ($\sigma$ 0.0126)          & \textbf{0.7899} ($\sigma$ 0.0063) & 0.6811 ($\sigma$ 0.0227)          \\
+    Sarcasm | Toxicity | Hate Speech                       & 0.8923 ($\sigma$ 0.0028)          & 0.6877 ($\sigma$ 0.0213)          & 0.7601 ($\sigma$ 0.0079)          & 0.7091 ($\sigma$ 0.0151)          \\
+    Argument Basis | Hate Speech                           & 0.8864 ($\sigma$ 0.0036)          & 0.7043 ($\sigma$ 0.0320)          & 0.7386 ($\sigma$ 0.0173)          & 0.7155 ($\sigma$ 0.0139)          \\
+    Argument Basis | Toxicity                              & 0.8917 ($\sigma$ 0.0052)          & 0.6929 ($\sigma$ 0.0203)          & 0.7552 ($\sigma$ 0.0049)          & 0.7143 ($\sigma$ 0.0139)          \\
+    Argument Basis | Sarcasm                               & 0.9010 ($\sigma$ 0.0022)          & 0.6939 ($\sigma$ 0.0170)          & 0.7791 ($\sigma$ 0.0110)          & 0.7105 ($\sigma$ 0.0190)          \\
+    Argument Basis | Hate Speech | Toxicity                & 0.8972 ($\sigma$ 0.0036)          & 0.6861 ($\sigma$ 0.0089)          & 0.7723 ($\sigma$ 0.0085)          & 0.7064 ($\sigma$ 0.0083)          \\
+    Argument Basis | Hate Speech | Sarcasm                 & \textbf{0.9025 ($\sigma$ 0.0007)} & \textbf{0.7107 ($\sigma$ 0.0090)} & 0.7820 ($\sigma$ 0.0093)          & \textbf{0.7291 ($\sigma$ 0.0072)} \\
+    Argument Basis | Toxicity | Sarcasm                    & 0.8925 ($\sigma$ 0.0044)          & 0.6973 ($\sigma$ 0.0218)          & 0.7472 ($\sigma$ 0.0082)          & 0.7138 ($\sigma$ 0.0125)          \\
+    Argument Basis | Hate Speech | Toxicity | Sarcasm      & 0.8948 ($\sigma$ 0.0016)          & 0.6979 ($\sigma$ 0.0048)          & 0.7652 ($\sigma$ 0.0102)          & 0.7100 ($\sigma$ 0.0049)
   \end{tabular}%
   }
   \caption{Experimental model evaluation scores on the \textit{Offence} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
