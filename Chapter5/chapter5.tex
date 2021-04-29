@@ -842,15 +842,27 @@ Although no auxiliary task setting outperforms the best performing baseline, the
 The best performing auxiliary task setting uses the \textit{Hate Speech} and the \textit{Offence} auxiliary tasks, that is all of the abusive language detection tasks under consideration and it outperforms the MLP baseline by $0.0905$.
 The worst performing auxiliary task setting outscores the MLP baseline by $0.0438$ and uses the \textit{Sarcasm} and the \textit{hate Speech} auxiliary tasks.
 
+\zw{Add note on the best performing MTL model vs. the best performing model from the LIWC chapter}
+
 \paragraph{Auxiliary Task Patterns}
+When considering the performances of each main task in isolation, the larger patterns across the different main tasks are obscured by the details of the model performances.
+Here I take a birds-eye view on all three main tasks and the patterns that emerge from across the different main tasks and their auxiliary task settings.
 
-This pattern holds true across the different main tasks, showing that in spite of differences in annotation and dataset goals there are inductive biases that can be encoded through multi-task learning for an increase in the predictive capabilities of machine learning models for abuse.
+In the performances of all three main tasks, auxiliary task configurations that include abusive language detection tasks tend to post the high performances.
+This may be because forms and phrasings in abusive, and non-abusive, text that are infrequently occurring in the main task can be aided by the data provided in the abusive auxiliary tasks.
+This is particularly evidenced through the improvements along the precision score, meaning that using abusive language detection auxiliary tasks can minimise the number of false negatives that the model predicts.
+These increases in the precision scores also positively affect the F1-scores, although these are often hampered by a lower recall score.
+While there appears to be a lesser impact of dataset size, likely because the number of epochs is fixed, so the larger datasets are not afforded the ability to contribute more by virtue of their size, the data source and dataset goals appear to influence the performances.
+This is apparent in all three main task settings but is particularly visible when the main task is \textit{Offence} detection.
+Here, \textit{Hate Speech} shares the same data source but has different annotation goals whereas \textit{Toxicity} shares in the dataset goals but the data has a different source.
+In the setting where only one auxiliary task is used, both post comparative performances.
+When two auxiliary tasks are used and these auxiliary tasks are used together, they produce results that are lower across all metrics asides from recall than when only one of the tasks are used.
+When both auxiliary abuse detection tasks are used, then adding a at least one more auxiliary task that is not abuse detection has a slightly beneficial impact on the model performance.
 
-% TODO For once the test results are also added. Add more to this.
-Considering the auxiliary tasks that are beneficial to each main task, very few surprises appear. Some similar patterns occur here in this chapter as they do in \cref{chap:liwc}.
-For instance, the \textit{Hate Expert} data when used as an auxiliary task for the \textit{Hate Speech} dataset affords increased performances.
-
-\zw{Argument basis generally not helpful}
+The non-abusive auxiliary tasks may at first seem to contribute less towards improved model performances than the abuse detection auxiliary tasks, however for two out of three different main tasks, the best F1-scores are obtained by the combination of abuse detection tasks and auxiliary tasks that are not addressing the question of abuse.
+The non-abuse related auxiliary tasks, when used in conjunction with abuse detection tasks offer modelling improvements across all metrics.
+However, some non-abusive tasks appear to be more applicable in general, specifically the \textit{Sarcasm} auxiliary task appears across all three main tasks while the \textit{Argument Basis} and \textit{Moral Sentiment} auxiliary tasks appear for two different main task settings.
+Moreover, all three auxiliary tasks appear in the best performing auxiliary task configurations and in the setting where only one auxiliary task is used, they achieve competitive performances with the models that use an abuse detection auxiliary task.
 
 \section{Conclusions}
 
