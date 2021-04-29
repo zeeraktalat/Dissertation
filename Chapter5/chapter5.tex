@@ -684,6 +684,19 @@ Thus, all auxiliary tasks, asides from the \textit{Hate Expert} task, are select
 
 Turning to the performance on the test sets, the results presented in \cref{tab:mtl_test_wh,tab:mtl_test_davidson,tab:mtl_test_wulczyn} are the means of five runs with different random seeds and the standard deviation for each metric.
 
+Considering first the results in \cref{tab:mtl_test_wh} for the MTL models optimised for the \textit{Hate Speech} task.
+All but one dataset configurations yield an improved accuracy over the MLP baseline, though none outperform the SVM baseline.
+The best auxiliary task configuration for accuracy is one that uses the \textit{Hate Expert} and the \textit{Sarcasm} auxiliary tasks.
+Similarly to the results on the validation set, most MTL MLP models yield an improvement in terms of recall over all baselines, while only one shows a strong decrease in performance.
+The best auxiliary task configuration in terms of recall only uses the \textit{Toxicity} dataset for an auxiliary task.
+In terms of precision, all task configurations provide an improvement over the MLP baseline, though similarly to the case with the accuracy score, none outperform the best-performing baseline in terms of precision, the linear SVM.
+Although all task configurations yield an improvement over the MLP baseline, an interesting issue occurs where the use of all auxiliary tasks has a detrimental effect, resulting in the worst performance of the MTL models in terms of precision.
+For the F1-score, no models outperform the SVM baseline, though all models outperform the MLP baseline.
+The strongest performance here is obtained by an auxiliary task combination where two out of three auxiliary tasks are non-abusive in nature.
+This performance gain is obtained through an increase in the experimental model's ability in precision at the cost of a slightly lower recall score.
+Although, on their own, none of the non-abusive tasks obtain the highest performances out of all auxiliary task configurations, they frequently post highly competitive scores with the all other configurations.
+This suggests that some of the improvements obtained when using multiple auxiliary tasks is obtained through the information of non-abusive information encoded into the shared layer of the model.
+
 \begin{table}[]
   \centering
   \resizebox{\textwidth}{!}{%
