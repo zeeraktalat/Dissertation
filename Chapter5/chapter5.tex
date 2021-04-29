@@ -811,15 +811,18 @@ The best performing model in terms F1 scores are models that have at least one a
   \label{tab:mtl_test_wulczyn}
 \end{table}
 
+This pattern holds true across the different main tasks, showing that in spite of differences in annotation and dataset goals there are inductive biases that can be encoded through multi-task learning for an increase in the predictive capabilities of machine learning models for abuse.
+
 % TODO For once the test results are also added. Add more to this.
 Considering the auxiliary tasks that are beneficial to each main task, very few surprises appear. Some similar patterns occur here in this chapter as they do in \cref{chap:liwc}.
 For instance, the \textit{Hate Expert} data when used as an auxiliary task for the \textit{Hate Speech} dataset affords increased performances.
 
-\zw{Add results and start by rough analysis of just numbers}
-\zw{Add plots}
-\zw{Look at predictions in detail, try to identify where they still fail}
+\zw{Argument basis generally not helpful}
 
 \section{Conclusions}
+
+\zw{Benefit from using non-abusive tasks in conjunction with abusive tasks}
+\zw{Benefit from using abusive tasks that have the same dataset source}
 
 Future work:
 \zw{Finer values of regularisation strength for linear regularisers}
