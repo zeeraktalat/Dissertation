@@ -11,25 +11,65 @@
 \fi
 
 \chapter{Introduction}\label{chap:intro} \zw{Rought contents here, needs updating to fit with narrative of the thesis and polishing of text}
-As people consume, interact with, and create media online at an ever growing rate, it becomes necessary to consider the content with which they interact and the cultures that are formed in online spaces. As social media platforms have been subject to a growing amount of governmental attention for the abusive content on their platforms \citep{HomeOffice:2016,EUCommission:2016}, they must find scalable methods for dealing with online abuse which can deal with the large volume of new documents added daily \citep{Kuchera:2014,Bates:2013,Sood:profanity:2012}.
-By considering how these cultures are formed, which methods for regulation and self-regulation are effective, and the linguistics markers we may gain insight into the distinct forms of culture and speech which is deemed acceptable by a given platform. With this knowledge it is possible to develop methods to encourage healthy conversations and mitigate negative societal constructs \citep{Bolukbasi:2016,Hannon:2016}.\vspace{5mm}
 
-Recently, there has been an increase in the amount of research on abusive language and hate speech in the Natural Language Processing (NLP) community. In spite of this increase in research attention, many questions remain unanswered, the methods for detection are not generalizable beyond the individual data sets, and there has been little consideration of how models learn social biases that discriminate against different groups. In addition, while this increase of interest in disparate and abusive treatment of people is quite new in NLP, it has been the subject of long and sustained interest in many other fields such as gender studies \citep{McIntosh:1988,Butler:1990,Beauvoir:1953}, law \citep{Han:2015,Crenshaw:1989}, media studies \citep{Shah:2015,Shah-FirstMonday:2015}, sociology \citep{Zaleski:2016}, and critical race theory \citep{Crenshaw:1989,Lawrence:1992} to name a few. In spite of a rich body of work on abuse and discrimination, work in NLP often neglects this history relying solely the community guidelines or terms and conditions documents put forth by social media companies \citep{Nobata:2016,Ross:2016}. This lack of consideration of work previous work has the consequence of creating blind spots in annotation guidelines and inconsistent judgments on acceptable language.\vspace{5mm}
+Structure:
+Introduction to the field in general
+Narrow down to the issues from the different chapters
+- Tie together how different chapters highlight different shades of the same problem
+- Add research questions to all chapters that don't have explicit research questions stated.
+- - Chapter arguments:
+- - - Chap 4 (Dirt): Abuse detection is broken because it operates with trying to classify uncertain boundaries
+- - - Chap 5 (LIWC): If the boundary is porous then maybe we're looking at the wrong problem, maybe the right problem is what people mean
+- - - Chap 6 (MTL): If we must look at dirt, then maybe we need to look more broadly to understand how people are trying to communicate
+- - - Chap 7 (Disembodied): But maybe this is all wrong if what we want to do is protect people but we're actually harming them.
+- - - Chap 8 (Conclusion): Well, maybe we need to rethink this all, but some components of rethinking it are in thinking about the things around the abuse, not the abuse itself.
+Add text about WOAH and WiNLP
+Provide structure of thesis
 
-As abusive language may be expressed along several axis, we focus on abusive language that is directed and either explicit in its potential to be abusive or seeks to use implicit signals to notify abuse \citep{Waseem:2017}. We limit ourselves to these forms of abuse (please see Table \ref{tab:examples} for examples) to provide a reasonable scope of the project, and because currently the majority of data sets released deal with directed abuse. Further, due as the relationship between and identities of speaker and listener are important (e.g. black person using the n-word colloquially with another black person is not necessarily problematic\citep{Rahman:2012}, whereas a non-black person using the n-word directed at a black person is most likely problematic, as they speak to different histories), we will consider directed abuse as it has a clearly identifiable speaker and listener.\vspace{5mm}
 
-\begin{table}[ht]
-  \centering
-  \scriptsize
-  \begin{tabular}{p{0.30\textwidth}|p{0.30\textwidth}|p{0.30\textwidth}}
-    {\bf Input} & {\bf System} & {\bf Output}\\\hline
-  ``Go kill yourself'' & Abusive Language Detection Model & Abusive\\\hline
-    ``(((@User))) and what is your job? Writing cuck articles and slurping Google balls? \#Dumbgoogles'' & Procedural System & $0.80-0.85$ likelihood to be abusive\\\hline
-    ``@User shut yo b**n*r ass up sp*c and hop your f****t ass back across the border little n***a'' & Counter Speech Generation System & ``Why do you think they should leave the country? This is their country too.''\\
-  \end{tabular}
-  \caption{Examples of abusive comments and the outputs of our systems.}
-  \label{tab:examples}
-\end{table}
+As people consume, interact with, and create media online at an ever growing rate, it becomes necessary to consider the content with which they interact, how this influences and impacts audiences, and the cultures that are formed in online spaces.
+A small, in terms of absolute numbers of content created, but prominent portion of online communications is online abuse in various forms, including cyber-bullying, hate speech, harassment, aggressive speech, and offensive speech \citep{Turing:2019}.
+Such content can lead to users disengaging with online spaces \citep{Users leaving}, psychological harms on the targets of abuse and other people who are exposed to it \citep{Paper on negative effects of witnessing abuse}, and an increase in hate crimes \citep{Muller:2020}.
+As a result, social media platforms have long been subject to pressure from users and regulators to moderate and remove such content.
+This issue of content moderation has traditionally been a human effort \citep{Roberts:2019} but has increasingly become reliant on computational methods for detecting and adjudicating online abuse \citep{Facebookreports}.
+These automated content moderation systems developed by commercial platforms span several different modalities, including images, text, and videos.
+Along with this increase in automated content moderation systems developed by commercial entities, there has been an increased in attention to the challenge of developing automated systems for detecting text-based abuse in the Natural Language Processing (NLP) community.
+Beyond the NLP community, there has been sustained academic attention to the challenges faced by content moderation systems, both human and automated.
+This body of work has spanned across a wide variety of disciplines including, but not limited to, media studies \citep{Gillespie:2020,Gerrard:2020}, archival research \citep{Thylstrup:2019,Agostinho:2019}, and legal studies \citep{Cobbe:2020,Llanso:2020}.
+While the content that is moderated spans several modalities and is often multi-modal, in this dissertation I focus on text-based content moderation systems, that is NLP systems for the detection of online abuse.
+
+In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified including the lack of model ability to generalise onto new contexts \citep{Waseem:2016,Fortuna:2020}, how machine learning models discriminate against marginalised communities \citep{Davidson:2019,Dias:2020}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2020}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data \citep{Wiegand:2019,Vidgen:directions:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen:directions:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021}.
+Although each of these challenges are of equal importance and each requiring urgent attention, I focus my efforts in this thesis on five different topics.
+First, I address questions around how abuse is defined and the consequences of such definitions on the content that is subject to such systems.
+Second, I address the issue of speaker intentions and third, examine how this affects model generalisability.
+Fourth, I examine the impacts of representing different contexts into machine learning models.
+And finally, fifth, I discuss how machine learning modelling choices drive marginalisation and how the designers of machine learning systems embed their subjectivities into the model.
+
+
+% As social media platforms have been subject to a growing amount of governmental attention for the abusive content on their platforms \citep{HomeOffice:2016,EUCommission:2016}, they must find scalable methods for dealing with online abuse which can deal with the large volume of new documents added daily \citep{Kuchera:2014,Bates:2013,Sood:profanity:2012}.
+% By considering how these cultures are formed, which methods for regulation and self-regulation are effective, and the linguistics markers we may gain insight into the distinct forms of culture and speech which is deemed acceptable by a given platform.
+% With this knowledge it is possible to develop methods to encourage healthy conversations and mitigate negative societal constructs \citep{Bolukbasi:2016,Hannon:2016}.\vspace{5mm}
+
+% Recently, there has been an increase in the amount of research on abusive language and hate speech in the Natural Language Processing (NLP) community.
+% In spite of this increase in research attention, many questions remain unanswered, the methods for detection are not generalizable beyond the individual data sets, and there has been little consideration of how models learn social biases that discriminate against different groups.
+% In addition, while this increase of interest in disparate and abusive treatment of people is quite new in NLP, it has been the subject of long and sustained interest in many other fields such as gender studies \citep{McIntosh:1988,Butler:1990,Beauvoir:1953}, law \citep{Han:2015,Crenshaw:1989}, media studies \citep{Shah:2015,Shah-FirstMonday:2015}, sociology \citep{Zaleski:2016}, and critical race theory \citep{Crenshaw:1989,Lawrence:1992} to name a few.
+% In spite of a rich body of work on abuse and discrimination, work in NLP often neglects this history relying solely the community guidelines or terms and conditions documents put forth by social media companies \citep{Nobata:2016,Ross:2016}.
+% This lack of consideration of work previous work has the consequence of creating blind spots in annotation guidelines and inconsistent judgments on acceptable language.\vspace{5mm}
+%
+% As abusive language may be expressed along several axis, we focus on abusive language that is directed and either explicit in its potential to be abusive or seeks to use implicit signals to notify abuse \citep{Waseem:2017}. We limit ourselves to these forms of abuse (please see Table \ref{tab:examples} for examples) to provide a reasonable scope of the project, and because currently the majority of data sets released deal with directed abuse. Further, due as the relationship between and identities of speaker and listener are important (e.g. black person using the n-word colloquially with another black person is not necessarily problematic\citep{Rahman:2012}, whereas a non-black person using the n-word directed at a black person is most likely problematic, as they speak to different histories), we will consider directed abuse as it has a clearly identifiable speaker and listener.\vspace{5mm}
+%
+% \begin{table}[ht]
+%   \centering
+%   \scriptsize
+%   \begin{tabular}{p{0.30\textwidth}|p{0.30\textwidth}|p{0.30\textwidth}}
+%     {\bf Input} & {\bf System} & {\bf Output}\\\hline
+%   ``Go kill yourself'' & Abusive Language Detection Model & Abusive\\\hline
+%     ``(((@User))) and what is your job? Writing cuck articles and slurping Google balls? \#Dumbgoogles'' & Procedural System & $0.80-0.85$ likelihood to be abusive\\\hline
+%     ``@User shut yo b**n*r ass up sp*c and hop your f****t ass back across the border little n***a'' & Counter Speech Generation System & ``Why do you think they should leave the country? This is their country too.''\\
+%   \end{tabular}
+%   \caption{Examples of abusive comments and the outputs of our systems.}
+%   \label{tab:examples}
+% \end{table}
 
 Beyond a consideration of speaker and listener, it is necessary to consider of predictive impact. That is whether a given model's performance treats all investigated demographics equally, given a definition of equality.\footnote{Several competing definitions of equality exist which influence the evaluation of whether a model is discriminatory or not.} Specifically for issues in which the labels are highly contextual, such as hate speech or offensive language, social biases on acceptable language may influence annotations and thus models which are learned on the data.
 
