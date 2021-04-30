@@ -891,18 +891,15 @@ Similarly, when the main task is the \textit{Offence} task, the \textit{Moral Se
 
 For the third question pertaining to how the abusive and non-abusive auxiliary tasks interact when used in conjunction with each other, the results obtained in this chapter are clear.
 I find that there are clear benefits to the main task from using a combination of abusive and non-abusive auxiliary tasks with several task configurations that include abusive and non-abusive auxiliary tasks posting highly competitive scores with other top performing models, if not outperforming all other task configurations outright.
+By identifying abusive and non-abusive auxiliary tasks that perform well in the case where there is only one auxiliary task, it is possible for a model that uses them can benefit from the selected task to post performances that improve on the scores achieved in the single-auxiliary task setting.
 
+\subsection{Future Work}
+The findings in this chapter have implications in the way automated abuse detection has been performed to date.
+Beyond the limited number of auxiliary tasks that have been investigated in this chapter, there is space for further experimentation on different kinds of auxiliary tasks.
+For instance, two natural extensions of this work in terms of auxiliary task selection are apparent: 1) the investigation of how optimising for core NLP tasks can yield a potential benefit as these can aid MTL models in representing language construction in different data sources and 2) following on the work of \citet{Davidson:2019} and \citet{Dias:2021}, using datasets that specifically incorporate varieties of English spoken by groups that are often subject to high false positive errors can allow designers to encode in the model how different groups are affected and should be affected by machine learning models for content moderations.
+Building on my findings of how similarity in data sources impact the main task, there is space for investigating how non-abusive tasks that are collected from the same data source can impact the modelling performance.
 
-% \zw{Benefit from using non-abusive tasks in conjunction with abusive tasks}
-% \zw{Benefit from using abusive tasks that have the same dataset source}
-% \zw{Benefit from using abusive tasks that have the same dataset goal}
-% \zw{Best suited to use a combination if a combination is available}
-% \zw{Otherwise, best suited to match task and data source to the main task}
-
-Future work:
-\zw{Finer values of regularisation strength for linear regularisers}
-\zw{Larger batch sizes}
-\zw{Explore weighting of each task}
-\zw{Treat Weighting of tasks as an optimisable entity}
-\zw{Use pre-trained embeddings}
-\zw{More datasets from the same data source for different things}
+Beyond a consideration of different auxiliary tasks there are also several modelling questions that could be further explored.
+First, from my experiments I find that the models tend to prefer the largest batch size that I experiment with, thus an investigation on the impacts of larger batch sizes is warranted.
+The question of how to weight the different auxiliary tasks and the frequency with which batches are selected from each also warrants further investigation as all auxiliary tasks are unlikely to contribute equally, thus identifying dynamic methods for weighting each task or setting the frequency with which batches are chosen from each task may also provide an avenue for improved performances.
+Finally, in my experimental models I do not use pre-trained embedding layers in my models, however the use of these have been shown to achieve high classification performances in single-task neural networks, thus the use of pre-trained embedding layers may allow for further improvements of the classification scores achieved.
