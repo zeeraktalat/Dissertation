@@ -40,11 +40,14 @@ While the content that is moderated spans several modalities and is often multi-
 
 In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified including the lack of model ability to generalise onto new contexts \citep{Waseem:2016,Fortuna:2020}, how machine learning models discriminate against marginalised communities \citep{Davidson:2019,Dias:2020}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2020}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data \citep{Wiegand:2019,Vidgen:directions:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen:directions:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021}.
 Although each of these challenges are of equal importance and each requiring urgent attention, I focus my efforts in this thesis on five different topics.
+
 First, I address questions around how abuse is defined and the consequences of such definitions on the content that is subject to such systems.
 Second, I address the issue of speaker intentions and third, examine how this affects model generalisability.
-Fourth, I examine the impacts of representing different contexts into machine learning models.
+Fourth, I examine the impacts of representing different contexts into machine learning models in terms of improvements on classification metrics.
 And finally, fifth, I discuss how machine learning modelling choices drive marginalisation and how the designers of machine learning systems embed their subjectivities into the model.
 I choose these specific foci to examine the larger question of how the automated content moderation pipeline affects different stakeholders, starting with how the operationalisation of annotation guidelines and modelling approaches impact users, through how different machine learning modelling architectures impact classification performances, and finalising with how the designers of such models and their beliefs and experiences are embedded within the automated content moderation systems that they develop.
+To accomplish this larger goal, it is necessary to consider the question of content moderation from a variety of disciplines, for this reason, I address the questions posed in each chapter from the disciplinary basis that they require.
+For the chapters where the questions are not directly linked to the development of computational resources, I take a basis in the disciplines most closely related, i.e. discard studies and science and technology studies and consider these in conjunction with the computational modelling practices in NLP and machine learning.
 
 
 
@@ -73,13 +76,13 @@ I choose these specific foci to examine the larger question of how the automated
 %   \label{tab:examples}
 % \end{table}
 
-Beyond a consideration of speaker and listener, it is necessary to consider of predictive impact. That is whether a given model's performance treats all investigated demographics equally, given a definition of equality.\footnote{Several competing definitions of equality exist which influence the evaluation of whether a model is discriminatory or not.} Specifically for issues in which the labels are highly contextual, such as hate speech or offensive language, social biases on acceptable language may influence annotations and thus models which are learned on the data.
+% Beyond a consideration of speaker and listener, it is necessary to consider of predictive impact. That is whether a given model's performance treats all investigated demographics equally, given a definition of equality.\footnote{Several competing definitions of equality exist which influence the evaluation of whether a model is discriminatory or not.} Specifically for issues in which the labels are highly contextual, such as hate speech or offensive language, social biases on acceptable language may influence annotations and thus models which are learned on the data.
 
-In this Ph.D. we will seek to marry the findings and knowledge obtained in fields outside of NLP on the nature of abuse and notions of equal and fair treatment.
+% In this Ph.D. we will seek to marry the findings and knowledge obtained in fields outside of NLP on the nature of abuse and notions of equal and fair treatment.
 
-As machine learning methods rely on the data sets and labels upon which they are trained \citep{Mitchell:2018,Waseem:2016}, we will aim to identify and address issues of bias in datasets and propose methods to address such issues. We will address the issue of bias by considering a number of datasets and variables which may give cause for discrimination.
+% As machine learning methods rely on the data sets and labels upon which they are trained \citep{Mitchell:2018,Waseem:2016}, we will aim to identify and address issues of bias in datasets and propose methods to address such issues. We will address the issue of bias by considering a number of datasets and variables which may give cause for discrimination.
 
-Online abuse is heavily situational and influenced by external forces such as social events, disasters, violence, elections, and political movements \citep{Marsh:2018,Burret:2017,Dearden:2019}. For this reason, we will consider a longitudinal investigation of online abuse as it occurs in targeting British members of parliament.
+% Online abuse is heavily situational and influenced by external forces such as social events, disasters, violence, elections, and political movements \citep{Marsh:2018,Burret:2017,Dearden:2019}. For this reason, we will consider a longitudinal investigation of online abuse as it occurs in targeting British members of parliament.
 
 
 %Finally, we will aim to improve the generalizability of machine learning models for hate speech detection.
