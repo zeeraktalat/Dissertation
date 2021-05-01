@@ -72,7 +72,7 @@ Thus, the research questions asked that afford such analysis of content moderati
 \end{center}
 
 The chapter is written on the basis of a collaborative research project with Nanna Bonde Thylstrup (Copenhagen Business School) and a paper is currently under review in a special issue of the journal First Monday.
-In this chapter, I expand on the considerations of the research project in every section and particularly further develop \cref{sec:filter_models,sec:filter_conclusion}.
+In this chapter, I expand on the considerations of the research project in every section and particularly further develop \cref{sec:filter_models,sec:filter_conclusion}.\vspace{5mm}
 
 In \cref{chap:liwc} I turn to the development of new content moderation systems for abusive text.
 Here, I address the issue of model generalisability and efficiency by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories invoked by the texts in the documents.
@@ -99,6 +99,17 @@ The research questions addressed in \cref{chap:liwc} are thus:
 \end{minipage}
 \end{center}
 
+In \cref{chap:mtl} I proceed further into an inquiry of the impact of context on model performance for abusive language detection tasks.
+In this chapter, I use Multi-Task Learning (MTL) to examine how jointly learning different representations for abuse detection tasks and related tasks can impact classification performance.
+Using MTL, I explore hypotheses of which related tasks are related in such a way that machine learning models can take advantage of them.
+The abuse detection auxiliary tasks that I explore are hate speech detection, offensive language detection, and toxicity detection.
+Moreover, I explore sarcasm detection, the prediction of the basis of an argument, and predicting the moral sentiments.
+Through the use of these auxiliary tasks, I optimise machine learning models that also learn representations of the auxiliary tasks.
+Selecting auxiliary tasks can be a difficult endeavour, for this reason I explore how each of the auxiliary tasks impact the performance on the primary tasks.
+Additionally, I conduct experiments identifying how different task combinations influence performances on the primary task.
+Through this method, I identify which auxiliary task combinations contribute most positively to the classification of the primary task through learning representations for the different auxiliary tasks.
+
+Thus, the research questions explored in this chapter are:
 
 \begin{center}
 \begin{minipage}{0.9\textwidth}
