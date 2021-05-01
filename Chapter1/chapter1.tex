@@ -74,6 +74,27 @@ Thus, the research questions asked that afford such analysis of content moderati
 The chapter is written on the basis of a collaborative research project with Nanna Bonde Thylstrup (Copenhagen Business School) and a paper is currently under review in a special issue of the journal First Monday.
 In this chapter, I expand on the considerations of the research project in every section and particularly further develop \cref{sec:filter_models,sec:filter_conclusion}.
 
+In \cref{chap:liwc} I turn to the development of new content moderation systems for abusive text.
+Here, I address the questions of how speaker intentionality and mental state can be represented through the use of the Linguistic Inquiry and Word Count (LIWC) categories and examine what the influence of LIWC is on model generalisability.
+By experimenting with three different neural network architectures: a Multi-Layered Perceptron (MLP), a Long-Short Term Memory (LSTM) network and a Convolutional Neural Network (CNN) and subjecting them to different representations of input data, I examine how each data representation influences model performances for each architecture and each input type.
+The three data data representations that I choose to represent documents through are 1) the input word tokens, 2) sub-words as tokens, and 3) LIWC categories as tokens.
+I choose the latter two representation forms because using sub-words can minimise the number of out-of-vocabulary tokens and LIWC because the LIWC software and dictionary are developed for the purposes of gaining insight into the mental and emotional state of speakers.
+One impact of using the LIWC dictionary is that the possible size of the vocabularies in the datasets used shrink from several thousands of unique tokens to much smaller sets of approximately $1000$ unique tokens, resulting in a maximal decrease of $99.8\%$ in the vocabulary sizes.
+Given this reduction in vocabulary size, I hypothesise that there will be some impacts on model training time and therefore examine the temporal impacts of pre-processing documents into their LIWC categories on neural network models.
+Finally, I investigate the implications of using documents transformed into their LIWC categories as input to neural network models as the LIWC categories map to a much smaller vocabulary space.
+
+The research questions addressed in \cref{chap:liwc} are thus:
+
+\begin{minipage}{0.9\textwidth}
+\vspace{5mm}
+    \begin{enumerate}[start=3, label={\textbf{RQ \arabic*}}]
+        \item{\textit{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}}
+        \item{\textit{What are the implications of using LIWC as input on model development in terms of training time?}}
+        \item{\textit{What are the implications on generalisability of LIWC-based models?}}
+    \end{enumerate}
+\end{minipage}
+
+
 % As social media platforms have been subject to a growing amount of governmental attention for the abusive content on their platforms \citep{HomeOffice:2016,EUCommission:2016}, they must find scalable methods for dealing with online abuse which can deal with the large volume of new documents added daily \citep{Kuchera:2014,Bates:2013,Sood:profanity:2012}.
 % By considering how these cultures are formed, which methods for regulation and self-regulation are effective, and the linguistics markers we may gain insight into the distinct forms of culture and speech which is deemed acceptable by a given platform.
 % With this knowledge it is possible to develop methods to encourage healthy conversations and mitigate negative societal constructs \citep{Bolukbasi:2016,Hannon:2016}.\vspace{5mm}
