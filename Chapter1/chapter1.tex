@@ -75,13 +75,16 @@ The chapter is written on the basis of a collaborative research project with Nan
 In this chapter, I expand on the considerations of the research project in every section and particularly further develop \cref{sec:filter_models,sec:filter_conclusion}.
 
 In \cref{chap:liwc} I turn to the development of new content moderation systems for abusive text.
-Here, I address the questions of how speaker intentionality and mental state can be represented through the use of the Linguistic Inquiry and Word Count (LIWC) categories and examine what the influence of LIWC is on model generalisability.
-By experimenting with three different neural network architectures: a Multi-Layered Perceptron (MLP), a Long-Short Term Memory (LSTM) network and a Convolutional Neural Network (CNN) and subjecting them to different representations of input data, I examine how each data representation influences model performances for each architecture and each input type.
-The three data data representations that I choose to represent documents through are 1) the input word tokens, 2) sub-words as tokens, and 3) LIWC categories as tokens.
-I choose the latter two representation forms because using sub-words can minimise the number of out-of-vocabulary tokens and LIWC because the LIWC software and dictionary are developed for the purposes of gaining insight into the mental and emotional state of speakers.
-One impact of using the LIWC dictionary is that the possible size of the vocabularies in the datasets used shrink from several thousands of unique tokens to much smaller sets of approximately $1000$ unique tokens, resulting in a maximal decrease of $99.8\%$ in the vocabulary sizes.
-Given this reduction in vocabulary size, I hypothesise that there will be some impacts on model training time and therefore examine the temporal impacts of pre-processing documents into their LIWC categories on neural network models.
-Finally, I investigate the implications of using documents transformed into their LIWC categories as input to neural network models as the LIWC categories map to a much smaller vocabulary space.
+Here, I address the issue of model generalisability and efficiency by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories invoked by the texts in the documents.
+LIWC is a software, and an associated dictionary, that maps a set of words to their ``psychology relevant'' categories, that can allow users to analyse the mental states of speakers computationally.
+Thus, by representing documents through the LIWC categories each word invokes it is possible to gain insight into the mental and emotional state of the speaker.
+Consequently, models that are optimised on LIWC representations of documents are optimised on proxies for the mental and emotional states of the speaker.
+The use of LIWC categories to represent documents thus allows for a closer modelling of the context a given speaker is in at the time of writing.
+Additionally, the set of words that are included in the LIWC dictionary figure in much lower numbers than the raw token vocabularies or sub-words computed on the vocabulary.
+Using LIWC to represent documents thus entails a reduction in the vocabulary sizes for the models, which has implications for out-of-vocabulary tokens as well as the likelihood of over-fitting to particular tokens, and on the time it takes to complete the optimisation processes for neural network models.
+Because using LIWC document representations drastically reduce the vocabulary sizes, I conduct experiments to examine the viability of using LIWC as data representation for neural networks.
+Moreover, the reduction in vocabulary sizes and the fact that LIWC categories act as proxies to the mental and emotional states of speakers, I experiment with the out-of-domain generalisability of models optimised on documents represented through their LIWC categories.
+Finally, I analyse the temporal impacts on using LIWC-based documents representation for modelling.
 
 The research questions addressed in \cref{chap:liwc} are thus:
 
