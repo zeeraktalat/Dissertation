@@ -171,7 +171,6 @@ Once models have been optimised, they are each evaluated on the validation data 
 For non-linear models, the performance on the validation data guides the decision on which parameter configurations are chosen for analysis while for linear models, cross-validation is applied during the grid-search which aids in determining which parameter configuration performs best.
 
 \subsection{Baseline Models}\label{sub:mtl_baselines}
-% TODO Move all parameter tables to result section
 I develop three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
 I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to optimise.
 The non-linear neural network baseline is chosen as a counter-point to the linear baseline, using a MLP to more directly be able to consider the influence of the multi-task architecture for the experimental models.
@@ -581,8 +580,6 @@ Similarly to the pattern observed for the baseline models optimised for the \tex
 } %
 
 Although none of the auxiliary task datasets outperform all baselines, they all outperform the MLP baseline thus providing early indication that learning a representation that all auxiliary tasks that I consider provide some beneficial information to the main task of detecting abuse.
-
-% TODO You are here. Do dev set and test set evaluation analysis here
 
 \begin{table}[h]
   \centering
