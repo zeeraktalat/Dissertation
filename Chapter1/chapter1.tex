@@ -28,7 +28,7 @@
 
 
 As people consume, interact with, and create media online at an ever growing rate, it becomes necessary to consider the content with which they interact, how this influences and impacts audiences, and the cultures that are formed in online spaces.
-A small, in terms of absolute numbers of content created, but prominent portion of online communications is online abuse in various forms, including cyber-bullying, hate speech, harassment, aggressive speech, and offensive speech \citep{Turing:2019}.
+A small, in terms of absolute amount of content created, but prominent portion of online communications is online abuse in various forms, including cyber-bullying, hate speech, harassment, aggressive speech, and offensive speech \citep{Turing:2019}.
 Such content can lead to users disengaging with online spaces \citep{Users leaving}, psychological harms on the targets of abuse and other people who are exposed to it \citep{Paper on negative effects of witnessing abuse}, and an increase in hate crimes \citep{Muller:2020}.
 As a result, social media platforms have long been subject to pressure from users and regulators to moderate and remove such content.
 This issue of content moderation has traditionally been a human effort \citep{Roberts:2019} but has increasingly become reliant on computational methods for detecting and adjudicating online abuse \citep{Facebookreports}.
@@ -36,21 +36,23 @@ These automated content moderation systems developed by commercial platforms spa
 Along with this increase in automated content moderation systems developed by commercial entities, there has been an increased in attention to the challenge of developing automated systems for detecting text-based abuse in the Natural Language Processing (NLP) community.
 Beyond the NLP community, there has been sustained academic attention to the challenges faced by content moderation systems, both human and automated.
 This body of work has spanned across a wide variety of disciplines including, but not limited to, media studies \citep{Gillespie:2020,Gerrard:2020}, archival research \citep{Thylstrup:2019,Agostinho:2019}, and legal studies \citep{Cobbe:2020,Llanso:2020}.
-While the content that is moderated spans several modalities and is often multi-modal, in this dissertation I focus on text-based content moderation systems, that is NLP systems for the detection of online abuse.
+While the content that is moderated spans several modalities and is often multi-modal, in this dissertation I focus on text-based content moderation systems for online abuse, in specific NLP systems.
 
-In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified including the lack of model ability to generalise onto new data and contexts \citep{Waseem:2016,Fortuna:2020}, how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2020}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2020}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data \citep{Wiegand:2019,Vidgen:directions:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen:directions:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021}.
+In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified, including the lack of model ability to generalise onto new data and contexts \citep{Waseem:2016,Fortuna:2020}, how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2020}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2020}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data \citep{Wiegand:2019,Vidgen:directions:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen:directions:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021}.
 Although each of these challenges are of equal importance and each requiring urgent attention, I focus my efforts in this thesis on four different topics.
 
 First, I address questions around how abuse is defined and the consequences of such definitions on the content that is subject to such systems.
-Second, I address model generalisability.
+Second, I address model generalisability onto out-of-domain data.
 Third, I examine the impacts of representing different contexts into machine learning models in terms of improvements on classification metrics.
 And finally, fourth, I discuss how machine learning modelling choices drive marginalisation and how the designers of machine learning systems embed their subjectivities into the model.
-I choose these specific foci to examine the larger question of how the automated content moderation pipeline affects different stakeholders, starting with how the operationalisation of annotation guidelines and modelling approaches impact users, through how different machine learning modelling architectures impact classification performances, and finalising with how the designers of such models and their beliefs and experiences are embedded within the automated content moderation systems that they develop.
-To accomplish this larger goal, it is necessary to consider the question of content moderation from a variety of disciplines, for this reason I address the questions posed in each chapter from the disciplinary basis that they require.
-For the chapters where the questions are not directly linked to the development of computational resources, I ground myself in the disciplines most closely related, i.e. discard studies and science and technology studies and consider these in conjunction with the computational modelling practices in NLP and machine learning.
+
+I choose these specific foci to examine the over-arching questions of how the human fits into abusive language detection technologies and machine learning models for content moderation can come to more closely respect and represent their humanity.
+To gain insights into these questions, I start by examining how the operationalisation of annotation guidelines and modelling approaches impact users, through how different machine learning modelling architectures impact classification performances, and finalising with how the designers of such models and their beliefs and experiences are embedded within the automated content moderation systems that they develop.
+To accomplish this larger goal, it is necessary to consider the question of content moderation from a variety of disciplines, for this reason, I address the questions posed in each chapter from the disciplinary basis that they require.
+For the chapters where the questions are not directly linked to the development of computational resources, I ground myself in the disciplines most closely related, i.e. discard studies and science and technology studies, and consider these in conjunction with the computational modelling practices in NLP and machine learning.
 
 In \cref{chap:filter}, I consider the nature of the task of detecting abusive content from the perspective of discard studies.
-Here, I consider what the aims of computational processes are and how they are attempted to be achieved.
+Here, I consider what the aims of computational processes are and how researchers have attempted to achieve these.
 In this chapter, I critically examine how the notion of ``toxicity'' has been operationalised in computational boundary work and the implications such operationalisation has on the political economies of the content moderation infrastructures that co-constitute themselves with such operationalisation.
 Building on work in cultural anthropology on classification and purification, and work in discard studies that suggest that content moderation is a practice in digital sanitisation, I argue that content moderation should move beyond the question of content removal towards a productive ``re-ordering of [...] environment[s]'' that can allow communities to constitute their own identities.
 Moreover, I argue that current practices and operationalisations of ``toxicity'' for content moderation systems are rooted in patriarchal and white supremacist imaginaries of acceptability.
@@ -66,19 +68,19 @@ Thus, the research questions asked that afford such analysis of content moderati
 \vspace{5mm}
     \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
         \item{\textit{How are notions of ``toxicity'' operationalised in content moderation infrastructures and what are the socio-political implications of such operationalisations?}}
-        \item{\textit{How do the modelling choices impact how computational models for content moderation learn and represent hegemonic notions of respectability?}}
+        \item{\textit{How do modelling choices impact how computational models for content moderation learn and represent hegemonic notions of respectability?}}
     \end{enumerate}
     \vspace{5mm}
 \end{minipage}
 \end{center}
 
-The chapter is written on the basis of a collaborative research project with Nanna Bonde Thylstrup (Copenhagen Business School) and a paper is currently under review in a special issue of the journal First Monday.
+Chapter \ref{chap:filter} is written on the basis of a collaborative research project with Nanna Bonde Thylstrup (Copenhagen Business School) and a paper is currently under review in a special issue of the journal First Monday.
 In this chapter, I expand on the considerations of the research project in every section and particularly further develop \cref{sec:filter_models,sec:filter_conclusion}.
 
-In \cref{chap:liwc} I turn to the development of new content moderation systems for abusive text.
+In \cref{chap:liwc}, I turn to the development of new content moderation systems for abusive text.
 Here, I address the issue of model generalisability and efficiency by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories invoked by the texts in the documents.
 LIWC is a software, and an associated dictionary, that maps a set of words to their ``psychology relevant'' categories, that can allow users to analyse the mental states of speakers computationally.
-Thus, by representing documents through the LIWC categories each word invokes it is possible to gain insight into the mental and emotional state of the speaker.
+Thus, by representing documents through the LIWC categories each word invokes, it is possible to gain insight into the mental and emotional state of the speaker.
 Consequently, models that are optimised on LIWC representations of documents are optimised on proxies for the mental and emotional states of the speaker.
 The use of LIWC categories to represent documents thus allows for a closer modelling of the context a given speaker is in at the time of writing.
 Additionally, the set of words that are included in the LIWC dictionary figure in much lower numbers than the raw token vocabularies or sub-words computed on the vocabulary.
@@ -101,11 +103,11 @@ The research questions addressed in \cref{chap:liwc} are thus:
 \end{minipage}
 \end{center}
 
-In \cref{chap:mtl} I proceed further into an inquiry of the impact of context on model performance for abusive language detection tasks.
-In this chapter, I use Multi-Task Learning (MTL) to examine how jointly learning different representations for abuse detection tasks and related tasks can impact classification performance.
-Using MTL, I explore hypotheses of which related tasks are related in such a way that machine learning models can take advantage of them.
+In \cref{chap:mtl}, I proceed further into an inquiry of the impact of context on model performance for abusive language detection tasks.
+I use Multi-Task Learning (MTL) to examine how jointly learning different representations for abuse detection tasks and related tasks can impact classification performance.
+With MTL, I explore hypotheses of which tasks are related in such a way that machine learning models can take advantage of them.
 The abuse detection auxiliary tasks that I explore are hate speech detection, offensive language detection, and toxicity detection.
-Moreover, I explore sarcasm detection, the prediction of the basis of an argument, and predicting the moral sentiments.
+Moreover, I explore sarcasm detection, predicting of the basis of an argument, and predicting moral sentiments.
 Through the use of these auxiliary tasks, I optimise machine learning models that also learn representations of the auxiliary tasks.
 Selecting auxiliary tasks can be a difficult endeavour, for this reason I explore how each of the auxiliary tasks impact the performance on the primary tasks.
 Additionally, I conduct experiments identifying how different task combinations influence performances on the primary task.
@@ -125,15 +127,15 @@ Thus, the research questions explored in this chapter are:
 \end{minipage}
 \end{center}
 
-The work in this chapter is the result of an ongoing collaboration with Joachim Bingel (Hero I/S).
+The work in \cref{chap:mtl} is the result of an ongoing collaboration with Joachim Bingel (Hero I/S).
 All of the content produced in the chapter is new and developed specifically for the purposes of this dissertation.
 
 In the final content chapter, \cref{chap:disembodied}, I turn a critical lens to the proposed objectivity of machine learning models.
 Drawing on work on subjectivity from Science and Technology Studies, I examine how subjectivities are embodied in the machine learning pipeline.
-That is, I examine how social and cultural meaning that are embedded in the human experience are also embedded in the derivatives of it, i.e. in the data that are created by humans and subsequently the machine learning pipelines that are created on the basis of these.
+That is, I examine how social and cultural meanings that are embedded in the human experience are also embedded in the derivatives of it, i.e. in the data that are created by humans and subsequently the machine learning pipelines that are created on the basis of these.
 I argue that this illusion of objectivity disembodies machine learning pipelines from the people they are designed for and the people whose data they are developed on.
-I further argue, that such imaginaries of objectivity provides a barrier to the goal of achieving equitable machine learning models and that these imaginaries are a key reason that discriminatory models are produced as they embody white supremacist imaginaries of the world.
-By extension, I argue that machine learning models for social predictions, e.g. abusive language detection are currently rooted in such discriminatory imaginaries and thus, produce discriminatory outcomes.
+I further argue, that such imaginaries of objectivity provides a barrier to the goal of achieving equitable machine learning models, and that these imaginaries are a key reason that discriminatory models are produced as they embody white supremacist imaginaries of the world.
+By extension, I argue that machine learning models for social predictions, e.g. abusive language detection, are currently rooted in such discriminatory imaginaries and thus, produce discriminatory outcomes.
 I further argue that for machine learning models to be equitable and not disadvantage marginalised communities, it is necessary to centre the subjectivities of the people whose data make the basis of the machine learning models and the people that the models are developed for.
 A step to achieving this goal is to analyse how the subjective embodiments of the designers are embedded in the machine learning process, such that decisions can be made which are aligned with the subjectivities of the people using the models.
 The implication of these arguments is that ``bias'' is not a quantifiable entity that can be subject to optimisation, rather biases, or subjective embodiments, permeate the machine learning pipeline and as such the goal of ``debiased'' machine learning models and the work dedicated to this end, serve to obscure situatedness and subjective embodiments of machine learning models.
@@ -154,11 +156,10 @@ The research questions that I explore in this chapter are thus:
 \end{minipage}
 \end{center}
 
-
-The work in this chapter extends on a collaboration with Smarika Lulz (Humboldt University), Joachim Bingel (Hero I/S), and Isabelle Augenstein (University of Copenhagen). Subsections of the chapter are currently in review at the journal Computational Linguistics.
+The work in \cref{chap:disembodied} extends on a collaboration with Smarika Lulz (Humboldt University), Joachim Bingel (Hero I/S), and Isabelle Augenstein (University of Copenhagen). Subsections of the chapter are currently in review at the journal Computational Linguistics.
 The work presented here expands on the collaborative work across all sections and the sections examining the machine learning models developed in this dissertation are entirely new.
 
-Through the work in these chapters, I examine different aspects of the machine learning pipeline for abusive language detection to gain an understanding on a) what the implications of task definitions and modelling approaches are, b) how distinct data representations of generalisability, c) how related tasks can influence in-domain performance, and finally d) how subjective embodiments are expressed throughout the machine learning pipeline and what the implications are for developing equitable machine learning models.
+Through the work in these chapters, I examine different aspects of the machine learning pipeline for abusive language detection to gain an understanding on a) what the implications of task definitions and modelling approaches are, b) how do distinct data representations influence model generalisability and efficiency in optimisation, c) how related tasks can influence in-domain performance, and finally d) how subjective embodiments are expressed throughout the machine learning pipeline and what the implications are for developing equitable machine learning models.
 By examining the machine learning pipeline for abuse detection from conceptualisation, through model development, to mapping limitations of current practices, I provide detailed insights into the different facets of developing machine learning models for abusive language detection and identify specific avenues for future research while also highlighting the specific limitations of current practices.
 
 %********************************** % Report Structure  *************************************
@@ -167,7 +168,7 @@ By examining the machine learning pipeline for abuse detection from conceptualis
 In this chapter, I have introduced the different research questions that I will be examining throughout this dissertation. Here I provide a brief overview the structure of the dissertation.
 
 in \cref{chap:socialscience}, I introduce some of the foundational concepts and theories that I rely on that have been developed in primarily non-computational fields.\\
-In \cref{chap:nlp}, I turn to lay the computational foundation for the work conducted, introducing the various modelling aspects that I rely on.|\
+In \cref{chap:nlp}, I turn to lay the computational foundation for the work conducted, introducing the various modelling aspects that I rely on.\\
 In \cref{chap:filter}, I examine how notions of ``toxic'' and ``healthy'' are operationalised and the implications these have on machine learning models and their outcomes.\\
 In \cref{chap:liwc}, I focus on questions of model generalisability and the impacts of data representations.\\
 In \cref{chap:mtl}, I examine how abuse detection tasks and other tasks related to abusive language detection can be used in a Multi-Task Learning setting to improve in-domain classification performances.\\
