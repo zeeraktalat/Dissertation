@@ -28,4 +28,26 @@ I choose this structure to remain faithful to the machine learning pipeline for 
 Finally, I take a step back and reflect on the machine learning pipeline from start to an end.
 
 % TODO You are here, describe what you do and what you find in the chapters!
-I begin the theoretical considerations in \cref{chap:filter}, where I
+I begin with \cref{chap:filter}, where I consider how the concept of sanitisation is invoked and operationalised in content moderation settings through terminology such as ``healthy conversations'' \citep{Twitter:Health:2018} and ``toxic'' content \citep{Wulczyn:2017,Perspective:Github}.
+Drawing on Mary Douglas' \citeyearpar{Douglas:1966} theories of social pollution and Josh Lepawsky's \citeyearpar{Lepawsky:2019} on dirt an toxicity, I argue that content moderation infrastructures can be understood as practices of meaning making and community building.
+Moreover, I reposition the role of content moderation from negative removal to positive re-ordering of environments.
+Such positive re-ordering seeks to maintain communities and their cultural values, e.g. the sanitisation of online platforms to constitute a child-friendly environment.
+Such sanitisation of online spaces carries with it social and cultural codes of ``dirty'' and ``sanitised'', the ``toxic'' and the ``healthy''.
+Precisely as \citet{Douglas:1966} reminds us ``no single item is dirty apart from a particular system of classification in which it does not fit’'' \citep[pp. vii]{Douglas}, which in terms of content moderation systems means that they are situated in specific cultural understandings of ``toxicy'' and ``healthy''.
+For the moderation of language, these cultural codes are often applied to speech produced by marginalised communities.
+For instance, as \citet{Davidson:2019} show, automated content moderation systems disproportionately identify African American English as being abusive while \citet{Dias:2020} show that commercial systems find white supremacist speech to be more acceptable than the speech of queer drag queens.
+Thus content moderation systems engage in toxic slippage, where they on one hand fail to protect marginalised communities and on the other hand disproportionately police those communities.
+
+Through an analysis of two different publicly available content moderation systems, I argue that the marginalising effect of content moderation systems are embodied in the modelling pipeline in three distinct processes each of which are often made opaque.
+First, in the operationalisation of ``toxic'' or ``abusive'' as these definitions and understandings are derived from cultural understandings of toxicity.
+Second, they are embodied in the choice of annotators and the frequent use of majority voting on each document for annotation, encoding a hegemonic perspective on acceptability.
+Third, beyond the annotation procedures, dominant discourse perspectives on respectability are embedded into the modelling e.g. in the use of pre-trained embeddings that are trained on texts available on the web.
+Through these three means, content moderation systems are constituted by social hegemonies while simultaneously constituting these hegemonies by the replication of them.
+Thus, content moderation systems partake in culture wars on what ``acceptability'' is to constitute.
+When content moderation systems engage in such conflicts in power dynamics, they must also address the ongoing reconfigurations of dirt as the cultural contexts surrounding these change.
+
+Using Mary Douglas' framework on social pollution and dirty, I conclude that the notion of a ``sanitised'' space also raises the question of whom it is sanitised for.
+Until content moderation infrastructures are centred around the experiences of marginalised communities, they will continue to systematically disenfranchise such communities from the full ability to create boundaries that can constitute their subjective experiences.
+
+
+
