@@ -889,6 +889,9 @@ Similarly, when the main task is the \textit{Offence} task, the \textit{Moral Se
 For the third question pertaining to how the abusive and non-abusive auxiliary tasks interact when used in conjunction with each other, the results obtained in this chapter are clear.
 I find that there are clear benefits to the main task from using a combination of abusive and non-abusive auxiliary tasks with several task configurations that include abusive and non-abusive auxiliary tasks posting highly competitive scores with other top performing models, if not outperforming all other task configurations outright.
 By identifying abusive and non-abusive auxiliary tasks that perform well in the case where there is only one auxiliary task, it is possible for a model that uses them can benefit from the selected task to post performances that improve on the scores achieved in the single-auxiliary task setting.
+Moreover, as multiple auxiliary tasks are used, MTL-based models also learn representations of each task, thus they come to closer reflect how people speak.
+This is particularly clear when the auxiliary task is \textit{Sarcasm} detection, where models learn representations of what constitutes abuse in addition to how sarcasm is expressed in the auxiliary task data.
+Thus, MTL models hold the potential for more closely representing different facets of speech, and subsequently different facets of speakers.
 
 \subsection{Future Work}
 The findings in this chapter have implications in the way automated abuse detection has been performed to date.
