@@ -114,17 +114,17 @@ For the LIWC-based models and the word-based models, I pre-process documents usi
 
 \zw{Once models are re-run update \cref{tab:vocab_sizes}}
 \begin{table}[]
-\centering
-\begin{tabular}{llll}
-Dataset     & Word Vocabulary & BPE Vocabulary & LIWC Vocabulary \\\hline
-Offence     & $16,768$        & $16,663$       & $857$           \\
-Toxicity    & $134,946$       & $95,712$       & $1,022$         \\
-Hate Expert & $9,110$         & $9,181$        & $739$           \\
-Hate Speech & $14,730$        & $14,834$       & $837$           \\
-StormFront  & $5,566$         & $5,510$        & $622$
-\end{tabular}
-\caption{Vocabulary sizes for each input type and the training set for each dataset.}
-\label{tab:vocab_sizes}
+  \centering
+  \begin{tabular}{llll}
+    Dataset     & Word Vocabulary & BPE Vocabulary & LIWC Vocabulary \\\hline
+    Offence     & $16,768$        & $16,664$       & $857$           \\
+    Toxicity    & $134,946$       & $95,705$       & $1,024$         \\
+    Hate Expert & $8,343$         & $9,084$        & $744$           \\
+    Hate Speech & $13,813$        & $14,722$       & $849$           \\
+    StormFront  & $5,210$         & $5,519$        & $622$
+  \end{tabular}
+  \caption{Vocabulary sizes for each input type and the training set for each dataset.}
+  \label{tab:vocab_sizes}
 \end{table}
 
 For the LIWC experiments on the other hand, I take another step after the initial tokenisation to compute the LIWC categories invoked by each word. Each token obtained is passed through a function which identifies all LIWC categories that the token invokes and combines them into a single token, where each LIWC category is separated by an underscore. All tokens that are not recognised by LIWC are replaced with a general token for \textit{<UNK>} token (see \cref{tab:liwc_tok} for examples on the result of the pre-processing of documents).
