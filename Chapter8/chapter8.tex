@@ -49,7 +49,16 @@ When content moderation systems engage in such conflicts in power dynamics, they
 Using Mary Douglas' framework on social pollution and dirty, I conclude that the notion of a ``sanitised'' space also raises the question of whom it is sanitised for.
 Until content moderation infrastructures are centred around the experiences of marginalised communities, they will continue to systematically disenfranchise such communities from the full ability to create boundaries that can constitute their subjective experiences.
 
+% TODO Finish the findings here once the results
+\zw{Not done}
+Addressing the issues raised in \cref{chap:filter} requires a reconfiguration of the entire pipeline for automated content moderation.
+In \cref{chap:liwc}, I start to examine one method for such reconfiguration: vocabulary reduction and document representations.
+Here, I experiment with three different document representations: a representation where the documents undergo a word-based tokenisation process, a representation where I use sub-words to minimise out-of-vocabulary items, and finally a representation where I represent each word in a sentence as its corresponding categories in the Linguistic Inquiry and Word Count \citep[LIWC,]{Pennebaker:2001} dictionary, which allows for an approximation into the mental and emotional states of the speaker.
 
+I find two primary implications of using LIWC represented documents for modelling, the performance of the models notwithstanding.
+First, the LIWC dictionary is a dictionary with a small vocabulary resulting in large reductions in the vocabulary sizes for the models.
+\zw{Double check these results and add them to the chapter}
+Second, as a consequence of the smaller vocabulary sizes, models trained on this representation diverge from the word-token models in the time it takes to train them, in general requiring to epochs for LIWC-based models to converge, though model processes these iterations faster, yielding faster model training in general.
 
 
 
