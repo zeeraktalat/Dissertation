@@ -57,7 +57,27 @@ Until content moderation infrastructures are centred around the experiences of m
 
 
 
-In \cref{chap:mtl}, I further investigated how optimising a model for multiple tasks simultaneously can influence model performances on specific forms of abuse.
-Using Multi-Task Learning \citep{Caruana:1993}, I developed models that are optimised for different forms of abuse and investigated the impact of different auxiliary tasks for each type of abuse.
-I narrowed down on the number of abusive tasks from \cref{chap:liwc}, which considered five different abusive language detection tasks to three tasks in \cref{chap:mtl}.
+
+
+In \cref{chap:mtl}, I further investigate how optimising a model for multiple tasks simultaneously can influence model performances on specific forms of abuse.
+Using hard parameter sharing Multi-Task Learning \citep{Caruana:1993}, I develop Multi-Layered Perceptron models that are optimised for different forms of abuse and investigated the impact of different auxiliary tasks for each type of abuse.
+I narrowed down on the number of abusive tasks from \cref{chap:liwc}, which considered five different abusive language detection tasks to three tasks in \cref{chap:mtl} that I treat as main tasks.
+Moreover, in \cref{chap:mtl}, I do not collapse the classes into binary classification, as I do in \cref{chap:liwc}.
+The three tasks that I consider are: Disambiguating offensive content from hateful content and non-offensive content, disambiguating between toxic and non-toxic content, and classifying racism, sexism, and the absence of these.
+For auxiliary tasks, I explore two different kinds of auxiliary task.
+First, I explore four auxiliary tasks for abuse detection: hate speech detection, expert annotated hate speech detection, toxicity detection, and offensive language detection.
+Three of these also serve as main tasks and a dataset is not used as an auxiliary task when it is also the main task selected for optimisation.
+For the auxiliary tasks that are not abusive in nature, I explore the impact of sarcasm detection, detecting moral sentiment, and detecting whether an argument is based in facts or feelings on the main task.
+I compare these MLP models with three different baselines, a linear SVM, a single-task MLP, and an ensemble classifier.
+I find that although not all MTL MLP models outperform all baseline models, they consistently outperform the single-task MLP when given a single auxiliary task, regardless of whether the auxiliary task is abusive in nature or not.
+Moreover, I find that not all auxiliary tasks are equally suitable, for instance, I find that the \textit{Hate Expert} auxiliary task is only useful when the main task is the \textit{Hate Speech} task. 
+These two datasets are annotated from the same data sample and follow the same annotation guidelines.
+More generally, I find that there are benefits in main task classification performance when the auxiliary task is abuse detection and at least one of two conditions are met:
+1) the main task and auxiliary task datasets are sampled from the same, or 2) the main task and auxiliary tasks share annotation goals.
+The first condition arises from observing the patterns in auxiliary task impact across all three main tasks as the \textit{Offence} auxiliary task yields improvements when the main task is either the \textit{Hate Speech} task or the \textit{Toxicity} task, where data source and dataset goals match, respectively.
+When the auxiliary is not abusive in nature, \textit{Sarcasm} and \textit{Moral Sentiment} auxiliary tasks stably increases performance across the different main tasks.
+The \textit{Argument Basis} auxiliary task on the other hand does not provide improvements across all datasets. 
+When considering combinations of auxiliary tasks, I find that using exclusively abusive tasks, or exclusively non-abusive tasks tend to obtain good scores, though these tend to be outperformed when the auxiliary task setting uses a combination of abusive and non-abusive tasks.
+In such settings where abusive and non-abusive tasks are combined, the best performing settings tend to be where one abusive auxiliary task is used and two or more non-abusive tasks.
+Additionally, \textit{Sarcasm} frequents in all of the best performing configurations.
 
