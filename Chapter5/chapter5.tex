@@ -815,7 +815,9 @@ Although no auxiliary task setting outperforms the best performing baseline, the
 The best performing auxiliary task setting uses the \textit{Hate Speech} and the \textit{Offence} auxiliary tasks, that is all of the abusive language detection tasks under consideration and it outperforms the MLP baseline by $0.0905$.
 The worst performing auxiliary task setting outscores the MLP baseline by $0.0438$ and uses the \textit{Sarcasm} and the \textit{hate Speech} auxiliary tasks.
 
-\zw{Add note on the best performing MTL model vs. the best performing model from the LIWC chapter}
+In relation to the classification scores achieved by the best model for the \textit{Toxicity} dataset in \cref{chap:liwc}, the best performing model selected by highest F1-score is a LSTM model that uses word tokens as its input, score, obtains $0.9510$ in accuracy, $0.8047$ in precision, $0.9058$ in recall, and $0.8357$ in F1-score.\footnote{The scores here are the mean score over five different configurations of the random seeds.}
+Thus, the model from \cref{chap:liwc} is outperformed, in terms of accuracy, precision and F1-score, as the best performing auxiliary task settings, ranked by F1-score.
+This further demonstrating the space for MTL models to improve performance on single-task models.
 
 \paragraph{Auxiliary Task Patterns}
 When considering the performances of each main task in isolation, the larger patterns across the different main tasks are obscured by the details of the model performances.
