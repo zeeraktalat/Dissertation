@@ -112,16 +112,15 @@ Prior to providing any model data, it is necessary to pre-process the data to ma
 
 For the LIWC-based models and the word-based models, I pre-process documents using the python library Ekphrasis \citep{baziotis:2017} which was developed specifically to handle the particularities of social media texts. For instance, elongated words are mapped to their unelongated form, e.g. `heyyyy' is mapped to `hey' (see \cref{bpe_tok} and \cref{tab:liwc_tok} for examples of tokenisation). No further processing is done for experiments using word tokens as input.
 
-\zw{Once models are re-run update \cref{tab:vocab_sizes}}
 \begin{table}[]
   \centering
   \begin{tabular}{llll}
     Dataset     & Word Vocabulary & BPE Vocabulary & LIWC Vocabulary \\\hline
-    Offence     & $16,768$        & $16,664$       & $857$           \\
-    Toxicity    & $134,946$       & $95,705$       & $1,024$         \\
-    Hate Expert & $8,343$         & $9,084$        & $744$           \\
-    Hate Speech & $13,813$        & $14,722$       & $849$           \\
-    StormFront  & $5,210$         & $5,519$        & $622$
+    Offence     & $16,768$        & $16,663$       & $857$           \\
+    Toxicity    & $95,710$        & $95,712$       & $1,024$         \\
+    Hate Expert & $9,110$         & $9,181$        & $744$           \\
+    Hate Speech & $14,730$        & $14,834$       & $849$           \\
+    StormFront  & $5,566$         & $5,510$        & $622$
   \end{tabular}
   \caption{Vocabulary sizes for each input type and the training set for each dataset.}
   \label{tab:vocab_sizes}
@@ -145,7 +144,7 @@ For the BPE-based models on the other hand, I pre-process documents by computing
   \label{tab:bpe_tok}
 \end{table}
 
-In reviewing \cref{tab:vocab_sizes}, it is clear that computing LIWC representations result in smaller vocabularies while BPE representations of the documents results in similar sized vocabularies for all datasets with the exception of the BPE representation of the \textit{Toxicity} dataset where the size of the BPE vocabulary sees a drop of almost $40,000$ tokens and the \textit{Hate Expert, Hate Speech}, and \textit{StormFront} dataset where the vocabulary size increase slightly. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised tokens are computed using the Byte-Pair Encoding. More surprising is the drop in BPE vocabulary size for the \textit{Toxicity} data. This drop suggests that there are words that are unrecognised in their full form by the pre-trained Byte-Pair Embeddings.
+In reviewing \cref{tab:vocab_sizes}, it is clear that computing LIWC representations result in smaller vocabularies while BPE representations of the documents results in similar sized vocabularies for all datasets with the exception of the BPE representation of the \textit{Toxicity} dataset where the size of the BPE vocabulary sees a small drop in tokens and the \textit{Hate Expert, Hate Speech}, and \textit{StormFront} dataset where the vocabulary size increase slightly. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised tokens are computed using the Byte-Pair Encoding. More surprising is the drop in BPE vocabulary size for the \textit{Toxicity} data. This drop suggests that there are words that are unrecognised in their full form by the pre-trained Byte-Pair Embeddings.
 
 \begin{table}[]
 \centering
@@ -160,7 +159,6 @@ Bruv I fking hate animals  & UNK PPRON\_FUNCTION\_I\_PRONOUN UNK AFFECT\_NEGEMO\
 \label{tab:liwc_tok}
 \end{table}
 
-\zw{Double check these numbers after retraining}
 For the documents represented through the LIWC categories that they invoke, I observe a sharp decline in the sizes of the vocabularies, with the smallest decrease in vocabulary being an $88.6\%$ decrease while the largest decrease is $99.7\%$. This is expected as the LIWC dictionary only encompasses a small number of words as many words used in informal conversations on online platforms are likely to fall outside of those considered when developing the dictionary. Moreover, it is also not surprising that a drop would occur as many of the datasets are created and published after the creation of the LIWC dictionary and examine domains that are unlikely to be well represented within the LIWC dictionary. Consequently will be subject to some language drift in addition to domain shifts.
 
 \begin{table}[h]
@@ -221,9 +219,9 @@ Similarly to n-gram character-based modelling, a smaller set of unique tokens is
 
 \subsection{Linear Baseline Models}\label{sec:baseline_models}
 
-For the linear baseline models, I train several different linear models (i.e. Logistic Regression models and SVMs) that function as baselines using the \citet{Pedregosa:2015}. 
-For each algorithm, I train three different models: a) surface-token based model that uses sentences tokenised into words, b) models on the Byte-Pair encoded representation, and c) models that use the LIWC-based representation as their input data. 
-For all baseline models, I only use token unigrams as features, as these provide competitive baselines for many of the datasets (see \autoref{tab:liwc_baseline_linear_scores}). 
+For the linear baseline models, I train several different linear models (i.e. Logistic Regression models and SVMs) that function as baselines using the \citet{Pedregosa:2015}.
+For each algorithm, I train three different models: a) surface-token based model that uses sentences tokenised into words, b) models on the Byte-Pair encoded representation, and c) models that use the LIWC-based representation as their input data.
+For all baseline models, I only use token unigrams as features, as these provide competitive baselines for many of the datasets (see \autoref{tab:liwc_baseline_linear_scores}).
 To ensure that the baseline models use the most appropriate, I perform a cross-validated grid-search (as implemented by \citet{Pedregosa:2015}) over all possible settings of the model parameters for each model.
 For both SVM and Logistic Regression models, I explore values of $C\in [0.1, 0.2, 0.3, \ldots, 0.9]$ to examine the strength of regularisation, and I explore with $L1$ and $L2$ regularisers. 
 For Logistic Regression, I also set the parameter search to consider \textit{Elasticnet} as a third regulariser option.
@@ -235,7 +233,7 @@ In the training procedure for the linear models, I first fit a count vectoriser 
 \centering
 \resizebox{0.5\textwidth}{!}{%
 \begin{tabular}{llccc}
-                                                &                       & Model & C   & Evaluation F1-score \\\hline
+                                                &                       & Model & C   & F1-score \\\hline
   \multirow{6}{*}{\rotatebox{90}{Offence}}      & \multirow{2}{*}{Word} & SVM   & 0.1 & \textbf{0.9222}     \\
                                                 &                       & LR    & 0.9 & 0.9093              \\
                                                 & \multirow{2}{*}{BPE}  & SVM   & 0.1 & 0.9216              \\
@@ -317,16 +315,16 @@ The values for the learning rate are sampled from a uniform distribution while t
 \centering
 \resizebox{0.75\paperheight}{!}{%
 \begin{tabular}{llcccccccccc}
-                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 100                 & 200              & N/A         & N/A     & 64         & 0.005804      & 0.3976  & tanh                & 200      & 0.9616              \\
-                                                & CNN   & 300                 & N/A              & 1, 2, 3     & 128     & 32         & 0.6387        & N/A     & tanh                & 200      & 0.4841              \\
-                                                & LSTM  & 64                  & 300              & N/A         & N/A     & 64         & 0.001574      & 0.09701 & tanh                & 50       & 0.9742              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 100                 & 300              & N/A         & N/A     & 64         & 0.004817      & 0.2367  & relu                & 200      & 0.9698              \\
-                                                & CNN   & 64                  & N/A              & 1, 2, 3     & 128     & 16         & 0.007243      & N/A     & tanh                & 50       & 0.9664              \\
-                                                & LSTM  & 200                 & 200              & N/A         & N/A     & 16         & 0.002144      & 0.05892 & tanh                & 50       & \bf{0.9783}         \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}  & MLP   & 300                 & 300              & N/A         & N/A     & 64         & 0.002731      & 0.4415  & relu                & 100      & 0.8827              \\
-                                                & CNN   & 64                  & N/A              & 3, 4, 5     & 256     & 64         & 0.002429      & N/A     & relu                & 200      & 0.9625              \\
-                                                & LSTM  & 200                 & 64               & N/A         & N/A     & 64         & 0.0009199     & 0.06586 & tanh                & 100      & 0.9644
+                                                 & Model & Embedding Dim & Hidden Dim & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}   & MLP   & 200           & 100        & N/A         & N/A     & 32         & 0.8581        & 0.2434  & ReLU                & 200       & 0.9616              \\
+                                                 & CNN   & 100           & N/A        & 1, 2, 3     & 256     & 32         & 0.0.1653      & N/A     & ReLU \\
+                                                 & LSTM  & 64            & 200        & N/A         & N/A     & 64         & 0.0174        & 0.08569 & Tanh                & 50        & 0.9742              \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}    & MLP   & 100           & 300        & N/A         & N/A     & 64         & 0.004817      & 0.2367  & ReLU                & 200       & 0.9698              \\
+                                                 & CNN   & 64            & N/A        & 1, 2, 3     & 128     & 16         & 0.007243      & N/A     & Tanh                & 50        & 0.9664              \\
+                                                 & LSTM  & 200           & 200        & N/A         & N/A     & 16         & 0.002144      & 0.05892 & Tanh                & 50        & \bf{0.9783}         \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}   & MLP   & 300           & 300        & N/A         & N/A     & 64         & 0.009468      & 0.2091  & ReLU                & 100       & 0.8827              \\
+                                                 & CNN   & 200           & N/A        & 3, 4, 5     & 256     & 64         & 0.1044        & N/A     & Tanh                & 200       & 0.9625              \\
+                                                 & LSTM  & 200           & 200        & N/A         & N/A     & 16         & 0.08958       & 0.4237  & Tanh                & 100       & 0.9644
 \end{tabular}%
 }
 \caption{Best hyper-parameters for models trained on the \textit{Offence} dataset.}
