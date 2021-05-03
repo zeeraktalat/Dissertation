@@ -31,22 +31,7 @@ Moreover, as I use a hard-parameter sharing design for my MTL models, an additio
 Through the use of of MTL models, I find that non-abusive tasks as auxiliary can be beneficial to detecting all forms of abuse examined.
 In line with the results in \cref{chap:liwc}, there is a difference in how helpful different abusive language datasets are for each other.
 However, in spite of benefits from using MTL over some single-task baselines, some baseline models still out-perform some of the MTL models.
-% TODO Add here about how dataset combinations contribute.
-
-% WH - benefits from all aux tasks, abusive and non-abusive
-% Wulczyn - benefits from all non-abusive tasks; benefits from WH, Davidson, but not Waseem
-% Davidson - Benefits from all non-abusive and abusive tasks;
-
-Thus, in this chapter I ask the following research questions to gain a deeper understanding on how different tasks that may share relations to abuse impact model performance:
-
-\begin{minipage}{0.9\textwidth}
-\vspace{5mm}
-    \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
-        \item{\textit{What is the impact of using auxiliary tasks that are non-abusive in nature for detecting specific forms of abuse?}}
-        \item{\textit{Does using different forms of abusive language detection tasks as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}
-        \item{\textit{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}
-    \end{enumerate}
-\end{minipage}
+Moreover, I find that the combinations of auxiliary tasks for abuse detection with auxiliary task of related tasks occupy the space for the models that show most improvements over the baselines.
 
 \section{Previous work}
 
