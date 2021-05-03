@@ -76,7 +76,7 @@ More generally, I find that there are benefits in main task classification perfo
 1) the main task and auxiliary task datasets are sampled from the same, or 2) the main task and auxiliary tasks share annotation goals.
 The first condition arises from observing the patterns in auxiliary task impact across all three main tasks as the \textit{Offence} auxiliary task yields improvements when the main task is either the \textit{Hate Speech} task or the \textit{Toxicity} task, where data source and dataset goals match, respectively.
 When the auxiliary is not abusive in nature, \textit{Sarcasm} and \textit{Moral Sentiment} auxiliary tasks stably increases performance across the different main tasks.
-The \textit{Argument Basis} auxiliary task on the other hand does not provide improvements across all datasets. 
+The \textit{Argument Basis} auxiliary task on the other hand does not provide improvements across all datasets.
 When considering combinations of auxiliary tasks, I find that using exclusively abusive tasks, or exclusively non-abusive tasks tend to obtain good scores, though these tend to be outperformed when the auxiliary task setting uses a combination of abusive and non-abusive tasks.
 In such settings where abusive and non-abusive tasks are combined, the best performing settings tend to be where one abusive auxiliary task is used and two or more non-abusive tasks.
 Additionally, \textit{Sarcasm} frequents in most of the best performing configurations, along the different metrics.
@@ -92,5 +92,16 @@ To ascertain the degree to which a model takes into account the subjective exper
 This spectrum ranges from fully ``localised'' models, that is models that seek to be situated within the context of the datum it is derived from to ``globalised'' models, that is models that do not seek to be grounded within such context.
 As modelling processes for NLP tasks, and abuse, increasingly rely on technologies such as pre-trained embeddings, pre-trained language models, and multi-task learning, the field is moving towards models that are increasingly localised in nature, most models are unlikely to be at the extreme ends of the modelling spectrum.
 Past work in abuse detection that has relied on linear models, and as is the case in for most single-task models in this dissertation, however are situated as fully globalised models.
+Particularly when developing models for social prediction, such as abuse detection, it becomes vital to develop models that take into account the positionality of users.
+A lack of active recognition in the modelling pipeline leads to privileging hegemonic perspectives over those of marginalised people, that is privileging those who stand to be least harms of models that fit poorly to their subjective experiences over those who stand to experience the most harm from such poor fits.
 I conclude the chapter by calling for an increased recognition of the people behind the machine, that is the designers of the pipelines, the human adjudicators on the data, and the data subjects whose data is being used to train models.
 Only by recognising the subjective embodiments of the participating people is it possible to describe, interrogate, and address how meaning is made in each step of the modelling process and answer whether the model that has been produced truly serves the people it has been produced for.
+Until such steps are taken, machine learning modelling will continue to reproduce hegemonic views, which for content moderation and abuse detection, among many other tasks, comes to mean white supremacist imaginaries on acceptability.
+
+
+\vspace{5mm}
+ow does the humanfit into abusive language technologies and how can machine learning models for contentmoderation come to more closely respect and represent their humanity?
+
+Returning to the guiding question of how the human fits into abusive language technologies, the findings in this dissertation suggest that at the current stage, people are not well represented by the models that the field have produced or is on track to produce.
+There are however,
+
