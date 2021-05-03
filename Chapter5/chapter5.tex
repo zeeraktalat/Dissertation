@@ -182,20 +182,13 @@ This risk however is mitigated by the use of sub-words obtained by pre-processin
 
 \subsection{Experimental Models}
 For the experimental models, I follow \citet{Waseem:2018} in using a Multi-Layered Perceptron model.
-The Multi-task MLP architecture that I design (see \cref{fig:mlp_mtl} for a depiction of the model architecture) consists of an input embedding layer which is unique to each task, a shared linear hidden layer, followed by another linear hidden layer that is specific to each task, a linear output layer for each task, and finally the \texttt{softmax} is computed on the model representation.
+The Multi-task MLP architecture that I design consists of an input embedding layer which is unique to each task, a shared linear hidden layer, followed by another linear hidden layer that is specific to each task, a linear output layer for each task, and finally the \texttt{softmax} is computed on the model representation.
 I also include a dropout layer and a non-linear activation function, where I treat the decision of activation function as an hyper-parameter optimising between the choice of \texttt{ReLU} and \texttt{Tanh} activation functions.
 
 My architecture of the Multi-task MLP deviates from the architecture proposed by \citet{Waseem:2018} in two ways: the choice of input layer and the choice of activation function.
 Where I use an embedding layer as the input layer for each task, \citet{Waseem:2018} use a onehot encoded input layer and they use a \texttt{Tanh} activation function for all of their experiments.
 Following the experimental approach in \cref{chap:liwc}, I keep the embedding layer randomly initialised rather than using a pre-trained embedding layer.
 The motivation for training the embedding layer, even with sparse data, is that pre-trained embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{mlp_mtl_embedding.jpg}
-  \caption{Multi-task Learning MLP.}
-  \label{fig:mlp_mtl}
-\end{figure}
 
 The optimisation procedure for the Multi-task MLP deviates significantly from the optimisation procedures associated with the baseline models.
 For the Multi-task MLP, I optimise my models by giving all tasks an equal weight but distinguish between the main task and the auxiliary tasks by the probability with which a batch from task is chosen.

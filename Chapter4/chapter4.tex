@@ -502,15 +502,8 @@ Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_
 
 \subsubsection{Multi-Layered Perceptron}
 
-The first neural architecture that I implement is a Multi-Layered Perceptron. I choose this model as it is the simplest form of a neural network and thus well suited for an initial investigation into the feasibility of neural network approaches for the LIWC-based representations. The MLP architecture that I use also lays the basis for the architectures for all other neural network based models in this chapter. The network consists of an embedding input layer, a hidden layer, an output layer, and a softmax layer which produces the probabilities for each class (please refer to \cref{fig:liwc_mlp} for a depiction of the model). I subject the model's representation to a dropout layer and a non-linear activation function between the input layer and hidden layer, and the hidden and output layer.
-\afterpage{
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{mlp.jpg}
-  \caption{Multi-Layered Perceptron model architecture.}
-  \label{fig:liwc_mlp}
-\end{figure}
-}
+The first neural architecture that I implement is a Multi-Layered Perceptron. I choose this model as it is the simplest form of a neural network and thus well suited for an initial investigation into the feasibility of neural network approaches for the LIWC-based representations. The MLP architecture that I use also lays the basis for the architectures for all other neural network based models in this chapter. The network consists of an embedding input layer, a hidden layer, an output layer, and a softmax layer which produces the probabilities for each class. I subject the model's representation to a dropout layer and a non-linear activation function between the input layer and hidden layer, and the hidden and output layer.
+
 I perform a hyper-parameter search over shared the hyper-parameters detailed in \cref{sub:liwc_hyperparam} in addition to the following hyper-parameter values, that are specific to the MLP:
 
 \begin{itemize}
@@ -523,14 +516,7 @@ I perform a hyper-parameter search over shared the hyper-parameters detailed in 
 
 The second model I choose to implement is a LSTM model. This model was chosen as its recurrent nature allows for experiments that can offer insights into the efficacy of the model recalling long and short-range interactions between tokens in the data. I choose the LSTM variant of an RNN over a vanilla RNN as LIWC encoded documents are likely to have several out-of-vocabulary tokens between each known token and thus retaining all information about such unknown tokens may not be conducive to identifying salient patterns in LIWC token representation.
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{lstm.jpg}
-  \caption{Long-Short Term Memory Network model architecture.}
-  \label{fig:liwc_lstm}
-\end{figure}
-
-I implement a simple architecture for the LSTM model to retain focus on the input types and to avoid the influence of confounding factors such as attention. The LSTM consists of an input embedding layer, a uni-directional LSTM layer, a linear output layer, and a softmax to produce the class probabilities (see \autoref{fig:liwc_lstm} for a depiction of the LSTM model).
+I implement a simple architecture for the LSTM model to retain focus on the input types and to avoid the influence of confounding factors such as attention. The LSTM consists of an input embedding layer, a uni-directional LSTM layer, a linear output layer, and a softmax to produce the class probabilities.
 I apply a dropout to the output of the input layer and the output of the LSTM layer in efforts to prevent the model from over-fitting on any particular pattern. I use the PyTorch implementation of an LSTM which uses a Tanh activation function \citep{Paszke:2019}, for which reason I do not apply other non-linearities to the model.
 
 Thus, for the LSTM our hyper-parameter tuning considers the following parameters and values:
@@ -543,14 +529,7 @@ Thus, for the LSTM our hyper-parameter tuning considers the following parameters
 
 \subsubsection{Convolutional Neural Network}
 
-For the final neural network architecture, I use a Convolutional Neural Network due to its dominance in the literature (see \cref{sec:liwc_nn}) and its use in commercial tools (e.g. the Perspective API). Similarly to the MLP and LSTM, the input layer is an embedding layer, followed by three two-dimensional convolutional layers, each of which are subject to a non-linear activation function, a one dimensional max-pooling layer, and a output layer. The representation obtained through the output layer is subjected to a softmax function that computes the probability distribution for the classes (see \cref{fig:liwc_cnn} for a depiction of the network).
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.75]{cnn.jpg}
-  \caption{Convolutional Neural Network model architecture.}
-  \label{fig:liwc_cnn}
-\end{figure}
+For the final neural network architecture, I use a Convolutional Neural Network due to its dominance in the literature (see \cref{sec:liwc_nn}) and its use in commercial tools (e.g. the Perspective API). Similarly to the MLP and LSTM, the input layer is an embedding layer, followed by three two-dimensional convolutional layers, each of which are subject to a non-linear activation function, a one dimensional max-pooling layer, and a output layer. The representation obtained through the output layer is subjected to a softmax function that computes the probability distribution for the classes.
 
 Unlike the MLP and LSTM models, the CNN models are not subject to a dropout. However as the CNN requires window sizes to be set, for the sliding window and the number of filters the convolutional layer is to apply, these are added as hyper-parameters to tune. The hyper-parameters tuned by the model are thus:
 

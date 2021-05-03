@@ -440,27 +440,6 @@ Hard parameter sharing models are trained by having (some) hidden layers that ar
 When training each task, the model updates all layers of that task, including the shared hidden layers.
 
 On the other hand, models that are trained using soft parameter sharing do not share any layers, instead the parameters of each task are regularised to be similar \citep{Duong:2015}.
-In \autoref{fig:mtl_types} we see the two different types of models.
-As seen in \autoref{fig:mtl_hard}, while each task have individual input and output layers, they all share a hidden layer.
-In \autoref{fig:mtl_soft}, we see that each task has its own model that would be unrelated to one another if not for the fact that the parameters of each layer are regularised to be similar to each other.
-
-\begin{figure}
- \centering
- \begin{minipage}{0.5\linewidth}
-   \centering
-   \includegraphics[scale=0.75]{Figs/multitask_hard.jpg}
-   \caption{Depiction of Multi-task learning framework using hard parameter sharing.}
-   \label{fig:mtl_hard}
- \end{minipage}
- \begin{minipage}{0.5\linewidth}
-   \centering
-    \includegraphics[scale=0.75]{Figs/multitask_soft.jpg}
-   \caption{Depiction of Multi-task learning framework using soft parameter sharing.}
-   \label{fig:mtl_soft}
- \end{minipage}
- \caption{Parameter sharing strategies for Multi-task learning.}
- \label{fig:mtl_types}
-\end{figure}
 
 While the idea of inductive biases from related tasks provides a compelling argument for examining MTL for abuse and hate speech detection, there are some interesting attributes to the framework.
 First, as MTL is compatible with neural networks, researchers can forego feature selection similar to other neural network approaches. This automated feature selection process carries some benefits and risks.
