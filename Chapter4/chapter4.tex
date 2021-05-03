@@ -145,7 +145,7 @@ For the BPE-based models on the other hand, I pre-process documents by computing
   \label{tab:bpe_tok}
 \end{table}
 
-In reviewing \cref{tab:vocab_sizes}, it is clear that computing LIWC representations result in smaller vocabularies while BPE representations of the documents results in similar sized vocabularies for all datasets with the exception of the BPE representation of the \textit{StormFront} dataset and the \textit{Offence} dataset where the vocabulary sizes decrease slightly. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised tokens are computed using the Byte-Pair Encoding. More surprising is the small drop in BPE vocabulary sizes. These drops suggest that a set of the words that are unrecognised by the pre-trained Byte-Pair Embeddings as complete words share a relatively small set of subwords.
+In reviewing \cref{tab:vocab_sizes}, it is clear that computing LIWC representations result in smaller vocabularies while BPE representations of the documents results in similar sized vocabularies for all datasets with the exception of the BPE representation of the \textit{Toxicity} dataset where the size of the BPE vocabulary sees a drop of almost $40,000$ tokens and the \textit{Hate Expert, Hate Speech}, and \textit{StormFront} dataset where the vocabulary size increase slightly. It is unsurprising that the vocabulary size would grow using BPE as subwords for all unrecognised tokens are computed using the Byte-Pair Encoding. More surprising is the drop in BPE vocabulary size for the \textit{Toxicity} data. This drop suggests that there are words that are unrecognised in their full form by the pre-trained Byte-Pair Embeddings.
 
 \begin{table}[]
 \centering
