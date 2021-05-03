@@ -287,14 +287,14 @@ I use a single training procedure for all models to control the influence of con
 The models are given data, which they iterate over in a pre-defined number of epochs, shuffling the dataset between each epoch. Within each epoch, batches of the data through are passed through the model for prediction during training.
 The loss following the model performance is then back-propagated through model, updating the internal representation in the process.
 This process is repeated for the assigned maximum number of epochs, or the model triggers the early stopping \citep{Early-stopping paper here} criteria, which is that the computed loss on the validation set has been strictly increasing for at least $15$ epochs.
-Once a model has finished training, performance in terms of macro F1-score, precision, recall and accuracy are computed on the validation set and evaluation sets. 
+Once a model has finished training, performance in terms of macro \texttt{F1-score}, \texttt{precision}, \texttt{recall} and \texttt{accuracy} are computed on the validation set and evaluation sets.
 To be able to speak to the training time, I start a timer when the model training procedure is initiated and stop the timer when the model has fully completed it's training, but prior to any inference made using the model.
-I repeat this process for at least $200$ unique trials for each model and dataset combination and use the F1-score on the validation set to identify the best configuration of hyper-parameters.
+I repeat this process for at least $200$ unique trials for each model and dataset combination and use the \texttt{F1-score} on the validation set to identify the best configuration of hyper-parameters.
 Once the best hyper-parameters are selected, I rerun the models with $5$ different random seeds and obtain these models' performance on all evaluation sets, including the in-domain test for the dataset the models are trained on and the out-of-domain evaluation sets from the remaining datasets.
 
 \subsection{Hyper-Parameter Search}\label{sub:liwc_hyperparam}
 
-In efforts to identify the best hyper-parameters without performing a grid-search of all possible combinations, I turn towards Bayesian Hyper-Parameter Tuning \citep{Neal:1996}. Briefly, Bayesian Optimisation allows for estimating the best hyper-parameters for a model through a series of trials with different hyper-parameter settings. I use the implementation of Bayesian Hyper-Parameter Optimisation offered through \citet{Wandb} and set the objective of the hyper-parameter optimisation to maximise the macro F1-score on the development data (please refer to \cref{sub:bho} for more detail).
+In efforts to identify the best hyper-parameters without performing a grid-search of all possible combinations, I turn towards Bayesian Hyper-Parameter Tuning \citep{Neal:1996}. Briefly, Bayesian Optimisation allows for estimating the best hyper-parameters for a model through a series of trials with different hyper-parameter settings. I use the implementation of Bayesian Hyper-Parameter Optimisation offered through \citet{Wandb} and set the objective of the hyper-parameter optimisation to maximise the macro \texttt{F1-score} on the development data (please refer to \cref{sub:bho} for more detail).
 
 The parameters that I perform the optimisation for varies across the different model types as they require different hyper-parameters to be defined. A set of hyper-parameters are constant across models: the size of mini-batches provided to the model for training, the learning rate, the number of epochs, and the embedding size. For each dataset and model type, I perform at last $200$ trials with different parameter settings, leading to choosing a final set of hyper-parameters that I run with five different random seeds.
 The values for the learning rate are sampled from a uniform distribution while the batch size and number of training epochs are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate are sampled from a categorical distribution.
@@ -420,23 +420,23 @@ The values for the learning rate are sampled from a uniform distribution while t
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{davidson_dev_f1.pdf}
-    \caption{In-domain macro F1-score on validation set for models trained on the \textit{Offence} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Offence} dataset.}
     \label{fig:davidson_dev_f1}
 \end{figure}
-As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro F1-score performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
+As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro \texttt{F1-score} performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
 
-Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1 scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are trained.
+Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1-scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are trained.
 Note, that in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1} the standard deviations is depicted through shading whereas in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} the shading represents the standard error.\footnote{I display the standard error here, rather than the standard deviation, as displaying the standard deviation on a log scale results in unreadable graphs due to outliers. Ignoring outliers in producing the graph has the natural consequence that parts of the graph exist outside of the displayed area.}
 Moreover, as loss values most frequently are small, I display the losses on a  logarithmic scale to allow for more readable figures.\vspace{5mm}
 
-In observing the F1-scores on the validation sets in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1}, a general pattern emerges in which most models, regardless of input type, display similar learning curves.
+In observing the \texttt{F1-score}s on the validation sets in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1}, a general pattern emerges in which most models, regardless of input type, display similar learning curves.
 A notable exceptions to these are the models trained on the \textit{StormFront} dataset (see \cref{fig:garcia_dev_f1}), in which two general patterns emerge: the first which has large variability in the models' performance from epoch to epoch and tends to trigger the early stopping criteria earlier, and the second which has a more stable learning curve with smaller performance drops and improvements between each epoch and trains for more epochs.
 Another exception can be observed in the models trained on \textit{Toxicity} dataset (see \cref{fig:wulczyn_dev_f1}). Here three salient trends occur.
-In the first, models start with a high F1-score and show little improvement as over the epochs and trigger early stopping. 
-In the second, models start with a lower F1-score and show steady improvements until early stopping is triggered,
+In the first, models start with a high \texttt{F1-score} and show little improvement as over the epochs and trigger early stopping.
+In the second, models start with a lower \texttt{F1-score} and show steady improvements until early stopping is triggered,
 % TODO Move this down to when I specifically look at the Wulczyn graphs?
 with the exception of the LIWC CNN models which starts with relatively stable performance before having a large variability in performance from epoch to epoch, finally stabilising briefly before early stopping is triggered.
-The third trend, starts with a relatively low model performance (below $0.4$ in F1-score) and only trigger early stopping late in the process (if ever). As these models train, there is an early sharp increase in the model performances followed by reaching a plateau and only post minor improvements in the later epochs.
+The third trend, starts with a relatively low model performance (below $0.4$ in \texttt{F1-score}) and only trigger early stopping late in the process (if ever). As these models train, there is an early sharp increase in the model performances followed by reaching a plateau and only post minor improvements in the later epochs.
 
 Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} there are three unique patterns: first, the loss rises throughout the training process; second, the loss remains almost entirely unchanged throughout the entire training process, and finally the third pattern; the loss is volatile throughout the process, rising or dropping from epoch to epoch.
 
@@ -451,7 +451,7 @@ Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{wulczyn_dev_f1.pdf}
-    \caption{In-domain macro F1-score on validation set for models trained on the \textit{Toxicity} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Toxicity} dataset.}
     \label{fig:wulczyn_dev_f1}
 \end{figure}
 \begin{figure}
@@ -464,7 +464,7 @@ Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{waseem_dev_f1.pdf}
-    \caption{In-domain macro F1-score on validation set for models trained on the \textit{Hate Expert} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Hate Expert} dataset.}
     \label{fig:waseem_dev_f1}
 \end{figure}
 \begin{figure}
@@ -477,7 +477,7 @@ Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{waseem_hovy_dev_f1.pdf}
-    \caption{In-domain macro F1-score on validation set for models trained on the \textit{Hate Speech} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Hate Speech} dataset.}
     \label{fig:waseem_hovy_dev_f1}
 \end{figure}
 \begin{figure}
@@ -490,7 +490,7 @@ Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{garcia_dev_f1.pdf}
-    \caption{In-domain macro F1-score on validation set for models trained on the \textit{StormFront} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{StormFront} dataset.}
     \label{fig:garcia_dev_f1}
 \end{figure}
 \begin{figure}
@@ -570,7 +570,7 @@ To answer these questions, I develop three different neural network types and tr
 
 \subsection{Baseline Models}
 In \cref{tab:linear_offence_baselines,tab:linear_toxicity_baselines,tab:linear_hateExp_baselines,tab:linear_hatespeech_baselines,tab:linear_stormfront_baselines}, though only baselines, there are a number of interesting patterns that emerge.
-First, the baselines validate the hypothesis that LIWC-based representation can serve as a viable input to machine learning models, as the LIWC-based models often achieve competing scores, and in some instances outperform models with other data representations, e.g. in recall on the in-domain prediction on the \textit{Offence} test data (see \cref{tab:linear_offence_baselines}) and the F1-score achieved on the out-of-domain datasets, for instance for the models trained on the \textit{Toxicity} dataset (see \cref{tab:linear_toxicity_baselines}).
+First, the baselines validate the hypothesis that LIWC-based representation can serve as a viable input to machine learning models, as the LIWC-based models often achieve competing scores, and in some instances outperform models with other data representations, e.g. in \texttt{recall} on the in-domain prediction on the \textit{Offence} test data (see \cref{tab:linear_offence_baselines}) and the \texttt{F1-score} achieved on the out-of-domain datasets, for instance for the models trained on the \textit{Toxicity} dataset (see \cref{tab:linear_toxicity_baselines}).
 
 
 % The validation scores described in \cref{tab:linear_offence_baselines,tab:linear_toxicity_baselines,tab:linear_hateExp_baselines,tab:linear_hatespeech_baselines,tab:linear_stormfront_baselines} are not as strong as the state-of-the-art in-domain models \cite{Fortuna:2018}, in fact scores for the they are comparable to the scores reported on the evaluation set of the in the original paper \cite{Davidson:2017} which provided initial baseline scores.\footnote{We do not report these baseline scores as their work does not identify which weighting of their F1-score was used.}. While several previous work augment the textual data with syntactic knowledge \cite{Davidson:2017} or advanced token representations \cite{Salminen:2020} to boost classification performance, we only use the byte-pair encoded documents and the LIWC encoded documents, to ensure comparability with our experimental models. Moreover, as our primary concern is learning classifiers whose performance generalise to other datasets, unlike much prior work which concerns itself with learning classifiers that perform well within the dataset, we do not take further steps towards boosting our baseline classifiers in-domain performances.
@@ -740,13 +740,13 @@ Fourth, an interesting trend of the models trained on the \textit{Offence} and t
     \label{tab:linear_stormfront_baselines}
 \end{table}
 
-Finally, although these baseline models do obtain surprisingly good scores for many of the models, there are several instances of noteworthy performance drops between the word-token and BPE-token models and their LIWC counterpart, notably the LIWC-based models often perform well on some metrics, but fall short on others. For instance in \cref{tab:linear_stormfront_baselines,tab:linear_hatespeech_baselines}, the LIWC-based models perform well on recall and perform poorly on F1-score. Thus, within the space of these strong results there is room for improvement for more stable performances on other metrics.
-As most of the datasets are imbalanced, I focus my attention on the macro F1-score performance due to its particular ability to handle imbalanced data well and its use in the previous literature \citep{Macro F1 papers}.
+Finally, although these baseline models do obtain surprisingly good scores for many of the models, there are several instances of noteworthy performance drops between the word-token and BPE-token models and their LIWC counterpart, notably the LIWC-based models often perform well on some metrics, but fall short on others. For instance in \cref{tab:linear_stormfront_baselines,tab:linear_hatespeech_baselines}, the LIWC-based models perform well on \texttt{recall} and perform poorly on \texttt{F1-score}. Thus, within the space of these strong results there is room for improvement for more stable performances on other metrics.
+As most of the datasets are imbalanced, I focus my attention on the macro \texttt{F1-score} performance due to its particular ability to handle imbalanced data well and its use in the previous literature \citep{Macro F1 papers}.
 
 \subsection{Neural models}
 
 In \cref{fig:davidson_mlp_test,fig:wulczyn_mlp_test,fig:waseem_mlp_test,fig:waseem_mlp_test,fig:garcia_mlp_test,fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_lstm_test,fig:garcia_lstm_test, fig:davidson_cnn_test,fig:wulczyn_cnn_test,fig:waseem_cnn_test,fig:waseem_cnn_test,fig:garcia_cnn_test}
-, I show the in-domain and out-of-domain results of using the neural network architectures described in \cref{sec:liwc_modelling} for modelling abuse using the three different document representations. The bars in each figure represent the scores of each models on the test set in question, e.g. in \cref{fig:davidson_mlp_test} I show the macro F1-scores achieved by all models on the test set for the \textit{Offence} dataset.
+, I show the in-domain and out-of-domain results of using the neural network architectures described in \cref{sec:liwc_modelling} for modelling abuse using the three different document representations. The bars in each figure represent the scores of each models on the test set in question, e.g. in \cref{fig:davidson_mlp_test} I show the macro \texttt{F1-score}s achieved by all models on the test set for the \textit{Offence} dataset.
 Considering figures collectively, it's clear that in-domain models in most cases, predictably, out-perform models trained on out-of-domain datasets. Interestingly, it's also clear that while LIWC-based models in many cases are comparable to models using full surface-form vocabulary. Moreover, this similarity in performance largely also holds for out-of-domain performance.
 Out-of-domain performance too is worthy of note in comparison with in-domain models and other out-of-domain models and with the linear baselines. Curiously, in spite of improved performance on in-domain evaluation sets, there is a general trend of slightly decreased performance on out-of-domain data.
 
@@ -762,15 +762,15 @@ The \textit{StormFront} dataset on the other hand is annotated to identify delib
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=\textwidth]{all_mlp_davidson_test.pdf}
-    \caption{Macro F1 scores for all MLP models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
     \label{fig:davidson_mlp_test}
   \vfill
     \includegraphics[width=\textwidth]{all_mlp_wulczyn_test.pdf}
-    \caption{Macro F1 scores for all MLP models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
     \label{fig:wulczyn_mlp_test}
   \vfill
     \includegraphics[width=\textwidth]{all_mlp_waseem_test.pdf}
-    \caption{Macro F1 scores for all MLP models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
     \label{fig:waseem_mlp_test}
 \end{minipage}
 \end{figure}
@@ -784,15 +784,15 @@ On the evaluation sets however, a slightly different patterns plays out. For mos
 \begin{minipage}{\textwidth}
 \centering
   \includegraphics[width=\textwidth]{all_mlp_waseem_hovy_test.pdf}
-  \caption{Macro F1 scores for all MLP models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
+  \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
   \label{fig:waseem_hovy_mlp_test}
 \vfill
   \includegraphics[width=\textwidth]{all_mlp_garcia_test.pdf}
-  \caption{Macro F1 scores for all MLP models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
+  \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
   \label{fig:garcia_mlp_test}
   \vfill
     \includegraphics[width=\textwidth]{all_lstm_davidson_test.pdf}
-    \caption{Macro F1 scores for all LSTM models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-score}s for all LSTM models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
     \label{fig:davidson_lstm_test}
   \end{minipage}
 \end{figure}
@@ -807,15 +807,15 @@ Considering the LIWC-based \textit{Toxicity} and \textit{Hate Speech} models, th
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=\textwidth]{all_lstm_wulczyn_test.pdf}
-    \caption{Macro F1 scores for all LSTM models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-score}s for all LSTM models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
     \label{fig:wulczyn_lstm_test}
   \vfill
     \includegraphics[width=\textwidth]{all_lstm_waseem_test.pdf}
-    \caption{Macro F1 scores for all LSTM models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-score}s for all LSTM models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
     \label{fig:waseem_lstm_test}
     \vfill
     \includegraphics[width=\textwidth]{all_lstm_waseem_hovy_test.pdf}
-    \caption{Macro F1 scores for all LSTM models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-score}s for all LSTM models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
   \label{fig:waseem_hovy_lstm_test}  
 \end{minipage}
 \end{figure}
@@ -825,29 +825,29 @@ As I can establish that neural network methods are appropriate for modelling usi
 In examining the test scores on the LSTM models (see \cref{fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_hovy_lstm_test,fig:garcia_lstm_test}), it is immediately clear that for most cases, the MLPs outperform the LSTMs for in-domain prediction. The exception to this rule are the models trained on the \textit{Toxicity} dataset, where the LSTM models outperform all MLP models.
 To the point of this chapter, the LSTM model trained with a LIWC representation of the \textit{Offence} dataset also outperforms all in-domain MLP models on the \textit{Toxicity} evaluation set.
 
-Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latter consistently outperform the former across all training datasets datasets and for most in-domain evaluations and all out-of-domain evaluations. Although it is slightly surprising that recurrence seems to have a small negative effect on the in-domain and out-of-domain generalisibility of the models, in many cases the drops are small. For instance, for the LIWC-based models trained on the \textit{Offence} dataset, the MLP obtains a macro F1-score of $0.8987$ while the LSTM achieves a score of $0.8748$. Taken in concert with the fact that the in-domain LIWC-based LSTM model that outperforms its corresponding MLP model can suggest that the size of the dataset may have an influence on the performance of LIWC-based models.
+Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latter consistently outperform the former across all training datasets datasets and for most in-domain evaluations and all out-of-domain evaluations. Although it is slightly surprising that recurrence seems to have a small negative effect on the in-domain and out-of-domain generalisibility of the models, in many cases the drops are small. For instance, for the LIWC-based models trained on the \textit{Offence} dataset, the MLP obtains a macro \texttt{F1-score} of $0.8987$ while the LSTM achieves a score of $0.8748$. Taken in concert with the fact that the in-domain LIWC-based LSTM model that outperforms its corresponding MLP model can suggest that the size of the dataset may have an influence on the performance of LIWC-based models.
 
 \begin{figure}
 \begin{minipage}{\textwidth}
 \centering
   \includegraphics[width=\textwidth]{all_lstm_garcia_test.pdf}
-  \caption{Macro F1 scores for all LSTM models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
+  \caption{Macro \texttt{F1-scores} for all LSTM models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
   \label{fig:garcia_lstm_test}
   \vfill
     \includegraphics[width=\textwidth]{all_cnn_davidson_test.pdf}
-    \caption{Macro F1 scores for all CNN models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
     \label{fig:davidson_cnn_test}
     \vfill
     \includegraphics[width=\textwidth]{all_cnn_wulczyn_test.pdf}
-    \caption{Macro F1 scores for all CNN models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
     \label{fig:wulczyn_cnn_test}
   \end{minipage}
 \end{figure}
 
-For the LIWC-based CNN models it appears that the opposite effect is true, for small and medium sized datasets the LIWC-based CNN models improve on the in-domain evaluations. 
+For the LIWC-based CNN models it appears that the opposite effect is true, for small and medium sized datasets the LIWC-based CNN models improve on the in-domain evaluations.
 The exception to this pattern is the \textit{StormFront} dataset where the LIWC-based MLP outperforms all other LIWC-based models.
-For the largest dataset, the \textit{Toxicity} dataset, the LIWC-based CNN model slightly improves on the LIWC-based MLP ($0.6722$ for the MLP and $0.6803$ for the CNN) but falls short in comparison the the LSTM model ($0.7870$).
-Curiously, the LIWC-based CNN outperforms all other LIWC-based models on the in-domain evaluation of the \textit{Offence} dataset. 
+For the largest dataset, the \textit{Toxicity} dataset, the LIWC-based CNN model slightly improves on the LIWC-based MLP ($0.6722$ for the MLP and $0.6803$ for the CNN) but falls short in comparison the LSTM model ($0.7870$).
+Curiously, the LIWC-based CNN outperforms all other LIWC-based models on the in-domain evaluation of the \textit{Offence} dataset.
 
 In comparison to the surface-form based CNN models, the LIWC-based models underperform achieving lower scores in almost all cases. On the other hand, the surface-form based CNNs outperform their LSTM and MLP counterparts. Once again, such under-performance appears to be correlated with size, as the drop in LIWC-based CNN performance minimises as the datasets grow in size.
 Considering how CNNs identify feature maps, this intuitively makes sense, as the larger the dataset, the more variety and stability there will be in the patterns of LIWC tokens that are encountered.
@@ -856,14 +856,14 @@ Considering how CNNs identify feature maps, this intuitively makes sense, as the
 \begin{minipage}{\textwidth}
 \centering
     \includegraphics[width=\textwidth]{all_cnn_waseem_test.pdf}
-    \caption{Macro F1 scores for all CNN models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
+    \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
     \label{fig:waseem_cnn_test}
     \vfill
     \includegraphics[width=\textwidth]{all_cnn_waseem_hovy_test.pdf}
-    \caption{Macro F1 scores for all CNN models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
-  \label{fig:waseem_hovy_cnn_test}  
+    \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
+  \label{fig:waseem_hovy_cnn_test}
     \includegraphics[width=\textwidth]{all_cnn_garcia_test.pdf}
-  \caption{Macro F1 scores for all CNN models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
+  \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
   \label{fig:garcia_cnn_test}
 \end{minipage}
 \end{figure}
