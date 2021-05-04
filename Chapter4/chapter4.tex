@@ -914,37 +914,37 @@ Considering the influence of document representation on training time, the resul
   \label{fig:garcia_train_time}
 \end{figure}
 
-In the medium sized datasets however, the relation between training time and vocabulary minimisation is less clear as is apparent from \cref{fig:davidson_train_time,fig:waseem_train_time,fig:waseem_hovy_train_time}. For each of these datasets, some LIWC-based models train quicker while others are slower. In part, this appears to be connected to model complexity, where the more complex the underlying model is, the slower the training time also is. For instance, in  \cref{fig:waseem_train_time} the LIWC-based MLP is the quickest MLP to be trained while the LIWC-based CNN and LSTM models are slower than all other CNN and LSTM models, respectively.
-
-\zw{Talk about training time vs. model performance}
+In the medium sized datasets however, the relation between training time and vocabulary minimisation clear as the LIWC-based models tend to take less time to train than counter-part as is apparent from \cref{fig:davidson_train_time,fig:waseem_train_time,fig:waseem_hovy_train_time}. For each of these datasets, some LIWC-based models train quicker while others are slower. In part, this appears to be connected to model complexity, where the more complex the underlying model is, the slower the training time also is. For instance, in  \cref{fig:waseem_train_time} the LIWC-based MLP is the quickest MLP to be trained while the LIWC-based CNN and LSTM models are slower than all other CNN and LSTM models, respectively.
 
 Reflecting on the feasibility of using LIWC-based document representations for training neural networks, I turn to the two largest datasets, the \textit{Offence} and \textit{Toxicity} datasets, and the performance of LIWC-based models while bearing in mind their training time (see \cref{tab:time_spent_davidson_wulczyn}). Beyond being the two largest datasets, I choose these to compare as their operationalisations of abuse share large similarities. Thus, one can consider each dataset a domain shifted dataset to the other, providing a more reasonable point of comparison than using a dataset which is annotated with a fundamentally different goal.
 
-In \cref{tab:time_spent_davidson_wulczyn}, it immediately stands out that some LIWC-based models take longer to train than their surface token-based counter-parts. Moreover, It is clear that many of the surface token-based models that perform very well on the in-domain evaluation set do not see the performance transfer to other datasets. Conversely, many of the LIWC-based models see a lesser drop in performance on external data. This suggests that LIWC-based modelling may capture more general patterns of abuse that models are otherwise prone to overfit away from in pursuit of improved in-domain performance. 
+In \cref{tab:time_spent_davidson_wulczyn}, it immediately stands out that some LIWC-based models take longer to train than their surface token-based counter-parts.
+Moreover, It is clear that many of the surface token-based models that perform very well on the in-domain evaluation set do not see the performance transfer to other datasets.
+Conversely, many of the LIWC-based models in some cases see a lesser drop in performance on external data.
+This suggests that LIWC-based modelling may capture more general patterns of abuse that models are otherwise prone to overfit away from in pursuit of improved in-domain performance.
 
-\zw{Revisit after models have been retrained}
 \begin{table}[h]
 \centering
 \begin{tabular}{c|llll}
-Dataset                                    & Model     & \textit{Offence} & \textit{Toxicity} & Training time \\\hline
-\multirow{9}{*}{\rot{\textit{Offence}}}    & Word MLP  & 0.9544           & 0.091             & 1m 12s        \\
-                                           & BPE MLP   & 0.9726           & 0.4872            & 2m 48s        \\
-                                           & LIWC MLP  & 0.8914           & 0.7383            & 3m 30s        \\
-                                           & Word LSTM & 0.8734           & 0.2662            & 2m 0s         \\
-                                           & BPE LSTM  & 0.8664           & 0.5996            & 15m 12s       \\
-                                           & LIWC LSTM & 0.8747           & 0.6833            & 4m 6s         \\
-                                           & Word CNN  & 0.3495           & 0.3478            & 4m 30s        \\
-                                           & BPE CNN   & 0.9736           & 0.5512            & 10m 18s       \\
-                                           & LIWC CNN  & 0.9565           & 0.6803            & 10m 24s       \\\hline
-\multirow{9}{*}{\rot{\textit{Toxicity}}}   & Word MLP  & 0.6312           & 0.5787            & 40m 18s       \\
-                                           & BPE MLP   & 0.6012           & 0.5404            & 28m 12s       \\
-                                           & LIWC MLP  & 0.8269           & 0.6722            & 12m 54s       \\
-                                           & Word LSTM & 0.5901           & 0.8281            & 4h 22m 30s    \\
-                                           & BPE LSTM  & 0.6343           & 0.8612            & 5h 40m 42s    \\
-                                           & LIWC LSTM & 0.6592           & 0.6833            & 3h 25m 48s    \\
-                                           & Word CNN  & 0.6905           & 0.8414            & 33m 6s        \\
-                                           & BPE CNN   & 0.5867           & 0.8616            & 1h 9m 24s     \\
-                                           & LIWC CNN  & 0.5164           & 0.6803            & 29m 30s      
+Dataset                                     & Model     & \textit{Offence} & \textit{Toxicity} & Training time \\\hline
+\multirow{9}{*}{\rot{\textit{Offence}}}     & Word MLP  & 0.4541           & 0.0873            & 2.443   \\
+                                            & BPE MLP   & 0.9729           & 0.5963            & 2.062   \\
+                                            & LIWC MLP  & 0.8997           & 0.5244            & 1.154   \\
+                                            & Word LSTM & 0.794            & 0.4701            & 1.966   \\
+                                            & BPE LSTM  & 0.8128           & 0.517             & 9.563   \\
+                                            & LIWC LSTM & 0.4463           & 0.412             & 5.545   \\
+                                            & Word CNN  & 0.9698           & 0.6298            & 2.201   \\
+                                            & BPE CNN   & 0.9699           & 0.4783            & 3.533   \\
+                                            & LIWC CNN  & 0.4971           & 0.3492            & 2.299   \\\hline
+\multirow{9}{*}{\rot{\textit{Toxicity}}}    & Word MLP  & 0.7145           & 0.7816            & 18.252  \\
+                                            & BPE MLP   & 0.6005           & 0.5222            & 27.077  \\
+                                            & LIWC MLP  & 0.8284           & 0.6547            & 17.806  \\
+                                            & Word LSTM & 0.6285           & 0.8714            & 158.18  \\
+                                            & BPE LSTM  & 0.6262           & 0.8643            & 146.05  \\
+                                            & LIWC LSTM & 0.6954           & 0.8275            & 174.412 \\
+                                            & Word CNN  & 0.647            & 0.8542            & 20.834  \\
+                                            & BPE CNN   & 0.5846           & 0.8622            & 60.67   \\
+                                            & LIWC CNN  & 0.8064           & 0.8139            & 45.421
 \end{tabular}%
 \caption{Time to train models on the \textit{Offence} and \textit{Toxicity} datasets with their in-domain and cross-domain macro F1-Scores.}
 \label{tab:time_spent_davidson_wulczyn}
