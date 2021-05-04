@@ -21,16 +21,18 @@ First, is it best to create multiple annotations, either through re-annotating p
 Second, how much data from each task is necessary to annotate, in the case of creating multiple annotations for each document; or, if the task is approached in terms of developing modelling architectures, how much of the data from each task should be used in optimising the model, or alternatively, how should the data from each task be weighted to gain the largest modelling improvements?
 
 In this chapter, I approach the question of overlapping data through a question of developing a modelling approach that aims to use potential overlaps between each task.
-As each task may be related only in terms of the abstraction required to understand the meaning of a given text, creating mappings between different classes is a complex task that in some cases is not possible.
+Specifically, I explore the use of four tasks labelled for different forms of abuse and four non-abusive auxiliary tasks.
+The auxiliary tasks that are not labelled for abuse are: sarcasm detection \citep{Oraby_sarcasm:2016}, predicting moral sentiments \citep{Hoover:2019}, and predicting whether an argument is primarily based in facts or feelings \citep{Oraby_factfeel:2015}.
+As each task may be related only in terms of the abstraction required to understand the meaning of a given text, creating mappings between different classes from different tasks, e.g. sarcastic and abusive, is a complex task that in some cases may not be possible, as one class may not conveniently fit others, e.g. mapping moral sentiments to abuse and vice versa.
 Moreover, data for each task may be collected from different sources, at different times, from different populations that use different vocabularies resulting in models that may learn spurious patterns in the data that are not trivial to identify and address.
-Thus modelling can be approached in two distinct manners. Either all documents are collapsed into a single dataset without creating maps between the different classes or each task remains a distinct task and model architectures such as Multi-Task Learning (MTL) and Ensemble methods are explored.
-Here I take the latter approach, developing a MTL model that considers each task simultaneously in tandem and distinctly from all other tasks (see \cref{sub:mtl} for more details on how MTL functions).
+Thus modelling abuse using distinct tasks can be approached in two distinct manners. Either all documents are collapsed into a single dataset without creating maps between the different classes or each task remains a distinct task and model architectures such as Multi-Task Learning (MTL) and Ensemble methods are explored.
+Here I take the latter approach, developing a MTL model that considers each task simultaneously and distinctly from all other tasks (see \cref{sub:mtl} for more details on how MTL functions).
 I select a MTL modelling approach over an ensemble approach as optimising an ensemble requires optimising $n$ entirely distinct models, one for each task, and a final model that considers the outputs of each model, MTL models on the other hand can be optimised such that a models is optimised to perform on its primary task, treating all auxiliary tasks as secondary.
 Moreover, as I use a hard-parameter sharing design for my MTL models, an additional benefit is that all auxiliary tasks act as regularisers, even if they are not directly beneficial to the primary task.
 
 Through the use of of MTL models, I find that non-abusive tasks as auxiliary can be beneficial to detecting all forms of abuse examined.
 In line with the results in \cref{chap:liwc}, there is a difference in how helpful different abusive language datasets are for each other.
-However, in spite of benefits from using MTL over some single-task baselines, some baseline models still out-perform some of the MTL models.
+However, in spite of benefits from using MTL over some single-task baselines, some baseline models still out-perform some of the MTL models, suggesting that while there are measurable effects of using MTL, there is still room for improvements.
 Moreover, I find that the combinations of auxiliary tasks for abuse detection with auxiliary task of related tasks occupy the space for the models that show most improvements over the baselines.
 
 \section{Previous work}
