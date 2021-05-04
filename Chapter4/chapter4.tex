@@ -828,10 +828,15 @@ Considering the LIWC-based \textit{Toxicity} and \textit{Hate Speech} models, th
 \end{figure}
 As I can establish that neural network methods are appropriate for modelling using LIWC representation, I turn to ask what the influence of recurrence is on the performance of models when prediction on in-domain and out-of-domain datasets through the use of LSTM models.
 
-In examining the test scores on the LSTM models (see \cref{fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_hovy_lstm_test,fig:garcia_lstm_test}), it is immediately clear that for most cases, the MLPs outperform the LSTMs for in-domain prediction. The exception to this rule are the models trained on the \textit{Toxicity} dataset, where the LSTM models outperform all MLP models.
-To the point of this chapter, the LSTM model trained with a LIWC representation of the \textit{Offence} dataset also outperforms all in-domain MLP models on the \textit{Toxicity} evaluation set.
+In examining the test scores on the LSTM models (see \cref{fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_hovy_lstm_test,fig:garcia_lstm_test}), the performance of MLPs and LSTMs in general are competitive with one another as it is dependend on the dataset, which model architecture will work best.
+To the point of this chapter, while there is some variability in the performance of LIWC-based models in some isntances they achieve high performances. 
+This for instance is the case with the LIWC-based model optimised on the \textit{Toxicity} dataset, which consistently achieves a high F1-score on the \textit{Offence} dataset.
+% To the point of this chapter, the LSTM model trained with a LIWC representation of the \textit{Offence} dataset also outperforms all in-domain MLP models on the \textit{Toxicity} evaluation set.
 
-Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latter consistently outperform the former across all training datasets datasets and for most in-domain evaluations and all out-of-domain evaluations. Although it is slightly surprising that recurrence seems to have a small negative effect on the in-domain and out-of-domain generalisibility of the models, in many cases the drops are small. For instance, for the LIWC-based models trained on the \textit{Offence} dataset, the MLP obtains a macro \texttt{F1-score} of $0.8987$ while the LSTM achieves a score of $0.8748$. Taken in concert with the fact that the in-domain LIWC-based LSTM model that outperforms its corresponding MLP model can suggest that the size of the dataset may have an influence on the performance of LIWC-based models.
+Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latter consistently outperform the former across all training datasets datasets and for most in-domain evaluations and all out-of-domain evaluations.
+Although it is slightly surprising that recurrence seems to have a small negative effect on the in-domain and out-of-domain generalisibility of the models, in many cases the drops are small.
+For instance, for the LIWC-based models trained on the \textit{Offence} dataset, the MLP obtains a macro \texttt{F1-score} of $0.7755$ while the LSTM achieves a score of $0.6844$.
+Taken in concert with the fact that the in-domain LIWC-based LSTM model that outperforms its corresponding MLP model can suggest that the size of the dataset may have an influence on the performance of LIWC-based models.
 
 \begin{figure}
 \begin{minipage}{\textwidth}
