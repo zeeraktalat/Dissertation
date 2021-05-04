@@ -418,6 +418,8 @@ The values for the learning rate are sampled from a uniform distribution while t
     \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Offence} dataset.}
     \label{fig:davidson_dev_f1}
 \end{figure}
+
+\zw{Update this as it talks about hyper-parameter performances.}
 As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro \texttt{F1-score} performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
 
 Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1-scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are trained.
