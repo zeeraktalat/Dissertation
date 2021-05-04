@@ -765,13 +765,21 @@ The \textit{StormFront} dataset on the other hand is annotated to identify delib
     \includegraphics[width=\textwidth]{all_mlp_wulczyn_test.pdf}
     \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
     \label{fig:wulczyn_mlp_test}
-  \vfill
-    \includegraphics[width=\textwidth]{all_mlp_waseem_test.pdf}
-    \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
-    \label{fig:waseem_mlp_test}
 \end{minipage}
 \end{figure}
 
+\begin{figure}
+\begin{minipage}{\textwidth}
+\centering
+    \includegraphics[width=\textwidth]{all_mlp_waseem_test.pdf}
+    \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
+    \label{fig:waseem_mlp_test}
+    \vfill
+      \includegraphics[width=\textwidth]{all_mlp_waseem_hovy_test.pdf}
+  \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
+  \label{fig:waseem_hovy_mlp_test}
+\end{minipage}
+\end{figure}
 Attending to the questions surrounding the use of LIWC to represent documents for modelling abuse, I turn to the baseline and experimental model performances on the validation and evaluation sets of the LIWC-based models. In the validation sets for the linear baselines (see \cref{tab:liwc_baseline_linear_params}), the LIWC-based methods do not outperform any other model type, for some datasets, a highly competitive score is obtained (e.g. $0.9207$ for LIWC-based SVM model against $0.9222$ for a word-token based SVM). For other datasets however, the score obtained by LIWC-based models is much lower, suggesting that LIWC-based modelling may be an appropriate means of modelling abuse under some conditions.
 For the neural network based models a similar story presents itself, although the LIWC-based models perform reasonably well in comparison to models that use a larger vocabulary (e.g. $0.9644$ for the LIWC-based model in \cref{tab:redux_embedding_offence_params} and $0.9783$ for the BPE-based model).
 
@@ -780,10 +788,6 @@ On the evaluation sets however, a slightly different patterns plays out. For mos
 \begin{figure}
 \begin{minipage}{\textwidth}
 \centering
-  \includegraphics[width=\textwidth]{all_mlp_waseem_hovy_test.pdf}
-  \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
-  \label{fig:waseem_hovy_mlp_test}
-\vfill
   \includegraphics[width=\textwidth]{all_mlp_garcia_test.pdf}
   \caption{Macro \texttt{F1-score}s for all MLP models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
   \label{fig:garcia_mlp_test}
@@ -810,13 +814,21 @@ Considering the LIWC-based \textit{Toxicity} and \textit{Hate Speech} models, th
     \includegraphics[width=\textwidth]{all_lstm_waseem_test.pdf}
     \caption{Macro \texttt{F1-score}s for all LSTM models on the \textit{Hate Expert} evaluation set with the standard deviation represented in error bars.}
     \label{fig:waseem_lstm_test}
-    \vfill
-    \includegraphics[width=\textwidth]{all_lstm_waseem_hovy_test.pdf}
-    \caption{Macro \texttt{F1-score}s for all LSTM models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
-  \label{fig:waseem_hovy_lstm_test}  
 \end{minipage}
 \end{figure}
 
+\begin{figure}
+\begin{minipage}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{all_lstm_waseem_hovy_test.pdf}
+    \caption{Macro \texttt{F1-score}s for all LSTM models on the \textit{Hate Speech} evaluation set with the standard deviation represented in error bars.}
+  \label{fig:waseem_hovy_lstm_test}  
+  \vfill
+    \includegraphics[width=\textwidth]{all_lstm_garcia_test.pdf}
+  \caption{Macro \texttt{F1-scores} for all LSTM models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
+  \label{fig:garcia_lstm_test}
+\end{minipage}
+\end{figure}
 As I can establish that neural network methods are appropriate for modelling using LIWC representation, I turn to ask what the influence of recurrence is on the performance of models when prediction on in-domain and out-of-domain datasets through the use of LSTM models.
 
 In examining the test scores on the LSTM models (see \cref{fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_hovy_lstm_test,fig:garcia_lstm_test}), it is immediately clear that for most cases, the MLPs outperform the LSTMs for in-domain prediction. The exception to this rule are the models trained on the \textit{Toxicity} dataset, where the LSTM models outperform all MLP models.
@@ -827,10 +839,6 @@ Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latt
 \begin{figure}
 \begin{minipage}{\textwidth}
 \centering
-  \includegraphics[width=\textwidth]{all_lstm_garcia_test.pdf}
-  \caption{Macro \texttt{F1-scores} for all LSTM models on the \textit{StormFront} evaluation set with the standard deviation represented in error bars.}
-  \label{fig:garcia_lstm_test}
-  \vfill
     \includegraphics[width=\textwidth]{all_cnn_davidson_test.pdf}
     \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
     \label{fig:davidson_cnn_test}
