@@ -377,7 +377,7 @@ The values for the learning rate are sampled from a uniform distribution while t
 \begin{table}[]
 \centering
 \resizebox{0.75\paperheight}{!}{%
-\begin{tabular}{llcccccccccc}
+\begin{tabular}{llccccccccc}
                                                   & Model & Embedding Dim & Hidden Dim & Window Size & Filters & Batch Size & Learning Rate & Dropout & Non-linearity & \# Epochs \\\hline
 \multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}    & MLP   & 300           & 200        & N/A         & N/A     & 64         & 0.5251        & 0.2284  & Tanh          & 200       \\
                                                   & CNN   & 200           & N/A        & 1, 2, 3     & 64      & 16         & 0.01644       & N/A     & Tanh          & 50        \\
@@ -397,17 +397,17 @@ The values for the learning rate are sampled from a uniform distribution while t
 \begin{table}[]
 \centering
 \resizebox{0.75\paperheight}{!}{%
-\begin{tabular}{llllllllllll}
-                                                & Model & Embedding Dimension & Hidden Dimension & Window Size & Filters & Batch Size & Learning Rate & Dropout & Activation Function & \# Epochs & Validation F1-score \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}  & MLP   & 64                  & 200              & N/A         & N/A     & 32         & 0.4665        & 0.4862  & tanh                & 200      & 0.7395              \\
-                                                & CNN   & 200                 & N/A              & 1, 2, 3     & 64      & 32         & 0.07107       & N/A     & tanh                & 100      & 0.7198              \\
-                                                & LSTM  & 200                 & 64               & N/A         & N/A     & 32         & 0.8046        & 0.2547  & tanh                & 200      & 0.7297              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}   & MLP   & 64                  & 100              & N/A         & N/A     & 32         & 0.000325      & 0.1971  & relu                & 200      & 0.7538              \\
-                                                & CNN   & 200                 & N/A              & 3, 4, 5     & 256     & 64         & 0.009577      & N/A     & relu                & 100      & 0.7356              \\
-                                                & LSTM  & 100                 & 300              & N/A         & N/A     & 16         & 0.5939        & 0.4588  & tanh                & 200      & 0.7503              \\\hline
-\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}  & MLP   & 64                  & 100              & N/A         & N/A     & 64         & 0.01948       & 0.3201  & tanh                & 50       & 0.7118              \\
-                                                & CNN   & 64                  & N/A              & 2, 3, 4     & 128     & 64         & 0.01204       & N/A     & tanh                & 100      & 0.5873              \\
-                                                & LSTM  & 64                  & 200              & N/A         & N/A     & 16         & 0.3154        & 0.4174  & tanh                & 200      & 0.7272
+\begin{tabular}{llccccccccc}
+                                                  & Model & Embedding Dim & Hidden Dim & Window Size & Filters & Batch Size & Learning Rate & Dropout & Non-linearity & \# Epochs \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{WORD}}}    & MLP   & 64            & 200        & N/A         & N/A     & 32         & 0.3926        & 0.438   & tanh          & 200       \\
+                                                  & CNN   & 200           & N/A        & 1, 2, 3     & 64      & 16         & 0.1614        & N/A     & ReLU          & 200       \\
+                                                  & LSTM  & 200           & 100        & N/A         & N/A     & 32         & 0.8455        & 0.3605  & tanh          & 100       \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{BPE}}}     & MLP   & 64            & 100        & N/A         & N/A     & 32         & 0.000325      & 0.1971  & relu          & 200       \\
+                                                  & CNN   & 200           & N/A        & 3, 4, 5     & 256     & 64         & 0.009577      & N/A     & relu          & 100       \\
+                                                  & LSTM  & 100           & 300        & N/A         & N/A     & 16         & 0.5939        & 0.4588  & tanh          & 200       \\\hline
+\multirow{3}{*}{\rotatebox{90}{\textit{LIWC}}}    & MLP   & 100           & 100        & N/A         & N/A     & 64         & 0.03136       & 0.2871  & tanh          & 200       \\
+                                                  & CNN   & 200           & N/A        & 3, 4, 5     & 128     & 16         & 0.001456      & N/A     & tanh          & 200       \\
+                                                  & LSTM  & 100           & 300        & N/A         & N/A     & 32         & 0.05931       & 0.1301  & tanh          & 200      
 \end{tabular}%
 }
 \caption{Best hyper-parameters for models train on the \textit{StormFront} dataset.}
