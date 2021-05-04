@@ -38,11 +38,11 @@ Beyond the NLP community, there has been sustained academic attention to the cha
 This body of work has spanned across a wide variety of disciplines including, but not limited to, media studies \citep{Gillespie:2020,Gerrard:2020}, archival research \citep{Thylstrup:2019,Agostinho:2019}, and legal studies \citep{Cobbe:2020,Llanso:2020}.
 While the content that is moderated spans several modalities and is often multi-modal, in this dissertation I focus on text-based content moderation systems for online abuse, in specific NLP systems.
 
-In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified, including the lack of model ability to generalise onto new data and contexts \citep{Waseem:2016,Fortuna:2020}, how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2020}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2020}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data \citep{Wiegand:2019,Vidgen:directions:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen:directions:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021}.
+In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified, including the lack of model ability to generalise onto new data and contexts \citep{Waseem:2016,Fortuna:2020}, how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2020}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2020}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data for abuse \citep{Wiegand:2019,Vidgen:directions:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen:directions:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021,Dinan:2019}.
 Although each of these challenges are of equal importance and each requiring urgent attention, I focus my efforts in this thesis on four different topics.
 
 First, I address questions around how abuse is defined and the consequences of such definitions on the content that is subject to such systems.
-Second, I address model generalisability onto out-of-domain data.
+Second, I address model generalisability onto out-of-domain data labelled for abuse.
 Third, I examine the impacts of representing different contexts into machine learning models in terms of improvements on classification metrics.
 And finally, fourth, I discuss how machine learning modelling choices drive marginalisation and how the designers of machine learning systems embed their subjectivities into the model.
 
@@ -54,7 +54,7 @@ For the chapters where the questions are not directly linked to the development 
 In \cref{chap:filter}, I consider the nature of the task of detecting abusive content from the perspective of discard studies.
 Here, I consider what the aims of computational processes are and how researchers have attempted to achieve these.
 In this chapter, I critically examine how the notion of ``toxicity'' has been operationalised in computational boundary work and the implications such operationalisation has on the political economies of the content moderation infrastructures that co-constitute themselves with such operationalisation.
-Building on work in cultural anthropology on classification and purification, and work in discard studies that suggest that content moderation is a practice in digital sanitisation, I argue that content moderation should move beyond the question of content removal towards a productive ``re-ordering of [...] environment[s]'' that can allow communities to constitute their own identities.
+Building on work in cultural anthropology on classification and purification \citep{Douglas:1966}, and work in discard studies that suggest that content moderation is a practice in digital sanitisation \citep{Lepawsky:2019} , I argue that content moderation should move beyond the question of content removal towards a productive ``re-ordering of [...] environment[s]'' \citep{Douglas:1966} that can allow communities to constitute their own identities.
 Moreover, I argue that current practices and operationalisations of ``toxicity'' for content moderation systems are rooted in patriarchal and white supremacist imaginaries of acceptability.
 Through an analysis of two content moderation systems, I examine how power differentials and respectability politics to determine the boundaries between ``the healthy'' and ``the toxic'' are embedded into content moderation infrastructures and expressed through them.
 % \zw{Q for Adina: is the below sentence on conclusions better suited for the conclusion of the diss?}
@@ -80,7 +80,7 @@ In this chapter, I expand on the considerations of the research project in every
 In \cref{chap:liwc}, I turn to the development of new content moderation systems for abusive text.
 Here, I address the issue of model generalisability and efficiency by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories invoked by the texts in the documents.
 LIWC is a software, and an associated dictionary, that maps a set of words to their ``psychology relevant'' categories, that can allow users to analyse the mental states of speakers computationally.
-Thus, by representing documents through the LIWC categories each word invokes, it is possible to gain insight into the mental and emotional state of the speaker.
+Thus, by representing documents through the LIWC categories each word invokes, it is possible to gain insight into the mental and emotional state of the speaker \citep{Pennebaker:2001}.
 Consequently, models that are optimised on LIWC representations of documents are optimised on proxies for the mental and emotional states of the speaker.
 The use of LIWC categories to represent documents thus allows for a closer modelling of the context a given speaker is in at the time of writing.
 Additionally, the set of words that are included in the LIWC dictionary figure in much lower numbers than the raw token vocabularies or sub-words computed on the vocabulary.
@@ -130,10 +130,10 @@ Thus, the research questions explored in this chapter are:
 The work in \cref{chap:mtl} is the result of an ongoing collaboration with Joachim Bingel (Hero I/S).
 All of the content produced in the chapter is new and developed specifically for the purposes of this dissertation.
 
-In the final content chapter, \cref{chap:disembodied}, I turn a critical lens to the proposed objectivity of machine learning models.
+In the final content chapter, \cref{chap:disembodied}, I turn a critical lens to the proposed objectivity of machine learning models and the influence of this imaginary on abuse detection.
 Drawing on work on subjectivity from Science and Technology Studies, I examine how subjectivities are embodied in the machine learning pipeline.
 That is, I examine how social and cultural meanings that are embedded in the human experience are also embedded in the derivatives of it, i.e. in the data that are created by humans and subsequently the machine learning pipelines that are created on the basis of these.
-I argue that this illusion of objectivity disembodies machine learning pipelines from the people they are designed for and the people whose data they are developed on.
+I argue that this illusion of objectivity \citep{Haraway:1988} disembodies machine learning pipelines from the people they are designed for and the people whose data they are developed on.
 I further argue, that such imaginaries of objectivity provides a barrier to the goal of achieving equitable machine learning models, and that these imaginaries are a key reason that discriminatory models are produced as they embody white supremacist imaginaries of the world.
 By extension, I argue that machine learning models for social predictions, e.g. abusive language detection, are currently rooted in such discriminatory imaginaries and thus, produce discriminatory outcomes.
 I further argue that for machine learning models to be equitable and not disadvantage marginalised communities, it is necessary to centre the subjectivities of the people whose data make the basis of the machine learning models and the people that the models are developed for.
@@ -167,7 +167,7 @@ By examining the machine learning pipeline for abuse detection from conceptualis
 
 In this chapter, I have introduced the different research questions that I will be examining throughout this dissertation. Here I provide a brief overview the structure of the dissertation.
 
-in \cref{chap:socialscience}, I introduce some of the foundational concepts and theories that I rely on that have been developed in primarily non-computational fields.\\
+In \cref{chap:socialscience}, I introduce some of the foundational concepts and theories that I rely on that have been developed in primarily non-computational fields.\\
 In \cref{chap:nlp}, I turn to lay the computational foundation for the work conducted, introducing the various modelling aspects that I rely on.\\
 In \cref{chap:filter}, I examine how notions of ``toxic'' and ``healthy'' are operationalised and the implications these have on machine learning models and their outcomes.\\
 In \cref{chap:liwc}, I focus on questions of model generalisability and the impacts of data representations.\\
