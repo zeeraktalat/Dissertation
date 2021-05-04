@@ -853,7 +853,7 @@ Taken in concert with the fact that the in-domain LIWC-based LSTM model that out
 
 For the LIWC-based CNN models it appears that the opposite effect is true, for small and medium sized datasets the LIWC-based CNN models improve on the in-domain evaluations.
 The exception to this pattern is the \textit{StormFront} dataset where the LIWC-based MLP outperforms all other LIWC-based models.
-For the largest dataset, the \textit{Toxicity} dataset, the LIWC-based CNN model slightly improves on the LIWC-based MLP ($0.6722$ for the MLP and $0.6803$ for the CNN) but falls short in comparison the LSTM model ($0.7870$).
+For the largest dataset, the \textit{Toxicity} dataset, the LIWC-based CNN model improves on the LIWC-based MLP ($0.6547$ for the MLP and $0.8139$ for the CNN) but falls slightly short in comparison the LSTM model ($0.8275$).
 Curiously, the LIWC-based CNN outperforms all other LIWC-based models on the in-domain evaluation of the \textit{Offence} dataset.
 
 In comparison to the surface-form based CNN models, the LIWC-based models underperform achieving lower scores in almost all cases. On the other hand, the surface-form based CNNs outperform their LSTM and MLP counterparts. Once again, such under-performance appears to be correlated with size, as the drop in LIWC-based CNN performance minimises as the datasets grow in size.
@@ -884,28 +884,30 @@ First, there is a predictable correlation with the complexity of the machine lea
 Considering the influence of document representation on training time, the results point in multiple directions. Using LIWC-based representations results in faster training times for some models while slower training times for others. Unsurprisingly, the improvements in training time are negatively correlated with the size of the surface-token vocabularies: As the size of the surface token vocabulary increase, the training time for LIWC-based models decrease.
 
 \begin{figure}[h]
-  \begin{minipage}{0.49\textwidth}
     \centering
     \includegraphics[width=\textwidth]{davidson_train_time.pdf}
     \caption{Training time for each model type on the \textit{Offence} dataset.}
     \label{fig:davidson_train_time}
-    \vfill
+\end{figure}
+\begin{figure}[h]
+    \centering
     \includegraphics[width=\textwidth]{wulczyn_train_time.pdf}
     \caption{Training time for each model type on the \textit{Toxicity} dataset.}
     \label{fig:wulczyn_train_time}
-  \end{minipage}%
-  \hfill
-  \begin{minipage}{0.49\textwidth}
+\end{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{waseem_train_time.pdf}
     \caption{Training time for each model type on the \textit{Hate Expert} dataset.}
     \label{fig:waseem_train_time}
-    \vfill
+\end{figure}
+\begin{figure}[h]
+    \centering
     \includegraphics[width=\textwidth]{waseem_hovy_train_time.pdf}
     \caption{Training time for each model type on the \textit{Hate Speech} dataset.}
     \label{fig:waseem_hovy_train_time}
-  \end{minipage}
-  \vfill
+\end{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.50\textwidth]{garcia_train_time.pdf}
   \caption{Training time for each model type on the \textit{StormFront} dataset.}
