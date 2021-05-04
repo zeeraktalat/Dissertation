@@ -9,9 +9,9 @@ As abuse and automated decision making systems for detecting abuse can dispropor
 To fully speak to these issues, it is necessary to have a solid understanding of power and processes of marginalisation.
 This chapter introduces the core concepts from social science and science, technology studies (STS), and Critical Race Theory (CRT) that can provide such a foundation. 
 Beyond this, this chapter reviews the previous literature that the latter chapters of this dissertation relies on. 
-As I work with data that is potentially sensitive, I also provide a brief consideration of ethical concerns around using social media data for research.
-Speaking directly towards online abuse, I discuss work on conceptualising online abuse and hate speech. 
-Finally, I briefly introduce the legal landscape surrounding online abuse and content moderation.
+Speaking directly towards online abuse, I discuss work on conceptualising online abuse and hate speech.
+I briefly introduce the legal landscape surrounding online abuse and content moderation.
+Finally, as I work with data that is potentially sensitive, I provide a brief consideration of ethical concerns around using social media data for research.
 
 % In this chapter, we introduce core concepts from social science that we use in this thesis. These concepts will serve as foundational knowledge for how we understand and contextualise abuse and automated systems for detecting abuse.
 % This will serve as foundational knowledge for what we interpret as abusive language and hate speech. Subsequently, a consideration of multiple of these may be necessary to determine if speech is derogatory and will inform our recommended solution for handling such speech. Additionally, we seek to introduce how we will use these concepts in the thesis.
@@ -65,7 +65,7 @@ They thus propose an algorithm to identify an optimal number of sub-groups to co
 In recognition of \citet{Kearns:2018} and inspired by \citet{Crenshaw:1989}, \citet{Foulds:2019} propose a new measure of the fairness of machine learning systems that takes into account an intersectional nature of marginalisation.
 
 However, the work of \citet{Kearns:2018,Foulds:2019} both operate within the confines of the machine. As \citet{Blodgett:2020} reminds us, the question of what bias and fairness mean is an inherently normative question, for which reason it is imperative that we define our notion of bias.
-\citet{Blodgett:2020} recommend that considerations of bias take into account the social hierarchies that exist outside of the realm of modelling, arguing that `work analysing ``bias'' in NLP systems will paint a much fuller picture if it engages with the relevant literature outside of NLP that explores the relationships between language and social hierarchies`. 
+\citet{Blodgett:2020} recommend that considerations of bias take into account the social hierarchies that exist outside of the realm of modelling, arguing that `work analysing ``bias'' in NLP systems will paint a much fuller picture if it engages with the relevant literature outside of NLP that explores the relationships between language and social hierarchies`.
 Thus, computational work cannot be divorced from the social systems that they exist in.
 
 In another line of recent work on how technology can marginalise, \citet{Sweeney:2013} identified how search results from Google were racially biased against names that are frequently used by African Americans.
@@ -180,19 +180,6 @@ As the question of `toxic'/'non-toxic', `abuse'/`non-abuse', and `hate'/`not-hat
 As camp provides a mode of queering the understanding of waste from the discarded to the celebrated, it can be read as a ``queer way of knowing, one that emphasises reader relations over any inherent meaning of a cultural object'.
 A camp reading of content moderation systems and the decisions produced by them, would then centralise the experiences of the marginalised individual faced with consequences of toxic slippage how dirt must apply to them, fortifying the centrality of the subjective positionality of the individual in relation to the subjective positionalities of the content moderation system.
 
-\section{Ethics of social media data use}
-
-As this dissertation deals with data that is published by individuals who very often are private citizen, it is necessary to consider different aspects of the ethical use of social media data use.
-As I only make use of previously published data, informed consent cannot be obtained directly, as I do not have access to the necessary contact details.
-Moreover, several of datasets do not provide the user information to even consider access.
-Finally, as many of the datasets are several years old any contact information that could be gleaned from the data sets have, in many cases, decayed.
-
-As informed consent is not sought for the data, the need for a consideration of anonymity and privacy is only heightened, to ensure that private citizens are not exposed additional harms.
-All experimental parts of this dissertation have undergone ethics review for risks and harms and been approved for study.
-In this dissertation, I exclusively make use of previously published datasets. Some data in these datasets are entirely anonymised, others are entirely de-anonymised, and the remainder exist in this spectrum.
-For my experimental work, I exclusively make use of previously published, and currently publicly available, data.
-Taking an additional step to prevent harms to the data subjects, I anonymise all data where appropriate.
-
 % \subsection{Pseudonymity and Anonymity in Social Media}\label{sec:pseudonymity}
 %
 % Previous research on anonymity has considered anonymity as a spectrum \citep{Qian:2007,Donath:1999}, going from the completely anonymous to fully named.
@@ -246,7 +233,8 @@ Taking an additional step to prevent harms to the data subjects, I anonymise all
 
 \section{The Legality of Abuse}
 
-As the detection of abuse may be closely linked to the content moderation and the removal of content, any consideration of tools with the purpose of identifying abuse must also consider the legal context context in which they may operate. Here, I consider two forms of legal contexts: 1) platform policies and 2) regulatory frameworks and their influences on using automated methods for detecting abusive language.
+As the detection of abuse may be closely linked to the content moderation and the removal of content, any consideration of tools with the purpose of identifying abuse must also consider the legal context context in which they may operate, to situate the work in computational content moderation within the social and political realities that it exists in.
+Here, I consider two forms of legal contexts: 1) platform policies and 2) regulatory frameworks and their influences on using automated methods for detecting abusive language.
 
 \subsection{Moderation Practices}
 To understand how content moderation can work, it is necessary to consider the communicative power of frameworks for reporting inappropriate content.
@@ -268,7 +256,7 @@ Following this controversy, Facebook reversed their decision to remove the image
 
 \subsection{Platform Policies}
 
-dMany large social media companies lay out their policies for acceptable behaviour on their platforms, often detailed in their user guidelines. Many of these have similar phrasing on the acceptance of abusive language,\footnote{For the full policies see \url{https://en-gb.facebook.com/communitystandards/hate_speech} for Facebook's policy on hate speech, \url{https://help.twitter.com/en/rules-and-policies/hateful-conduct-policy} for Twitter's policy on hate speech, and \url{https://www.redditinc.com/policies/content-policy} for Reddit's policy on prohibited content.} in \autoref{fig:policies} we show excerpts of the policies on hate speech and prohibited content of three social media platforms.
+Many large social media companies lay out their policies for acceptable behaviour on their platforms, often detailed in their user guidelines. Many of these have similar phrasing on the acceptance of abusive language,\footnote{For the full policies see \url{https://en-gb.facebook.com/communitystandards/hate_speech} for Facebook's policy on hate speech, \url{https://help.twitter.com/en/rules-and-policies/hateful-conduct-policy} for Twitter's policy on hate speech, and \url{https://www.redditinc.com/policies/content-policy} for Reddit's policy on prohibited content.} in \autoref{fig:policies} I show excerpts of the policies on hate speech and prohibited content of three social media platforms.
 
 In all three excerpts of the policies, we see a prohibition of content which attacks others, Reddit's policy on encouraging and inciting violence they further outline that users should not post content that\footnote{for the full policy see \url{https://www.reddithelp.com/en/categories/rules-reporting/account-and-community-restrictions/do-not-post-violent-content}}
 
@@ -302,11 +290,17 @@ While Facebook report high numbers of removals, the performance of their (human 
 Considering how such policies are described, understood, and enacted by commercial content moderators, content moderation algorithms, and users, \citet{Kirtz:2021} perform an analysis of how different platforms describe their community guidelines and their downstream implications for content moderation technologies and user experiences. They argue that the platform policies fail `at the level of policy by mis-communicating , obscuring or sometimes even misleading the public' \citep[p. 5]{Kirtz:2021}. Moreover, due to such failures of policy, \citet{Kirtz:2021} argue that the platforms fault lines are particularly apparent for marginalised communities that are the subject of disproportionate abuse. Subsequently, the data generated user reports which is used to train automated content moderation systems mimic such failures providing little protection along gendered and racialised lines \citep{Kirtz:2021,Waseem:2018}. However, while data provides one source of such errors, modelling techniques also give rise to such failures. For instance, \citet{Kirtz:2021} also identify the use of pre-trained word embeddings as source of propagating such biases, as word embeddings frequently contain biases against marginalised communities \citep{Speer:2017}. \citet{Kirtz:2021} argue that such embedded biases compound any potential biases that policies and content flagging mechanisms introduce.
 
 \subsection{Regulation}
-In recent years several different governments have sought to address the issue of online abuse, for instance the British Home Office \citep{HomeOffice:2016} and the European Commission \citep{EUCommission:2016} gave guidelines and a call to action to social media networks. In a different approach, the German government passed the Network Enforcement Act (NetzDG) \citep{NetzDG:2017} in an aim to provide regulation to curb online abuse and misinformation. The regulation states that online platforms will face fines if they systematically fail to remove hate speech within $24$ hours.
+In recent years several different governments have sought to address the issue of online abuse, for instance the British Home Office \citep{HomeOffice:2016} and the European Commission \citep{EUCommission:2016} gave guidelines and a call to action to social media networks.
+In a different approach, the German government passed the Network Enforcement Act (NetzDG) \citep{NetzDG:2017} in an aim to provide regulation to curb online abuse and misinformation.
+The regulation states that online platforms will face fines if they systematically fail to remove hate speech within $24$ hours.
 
-Building on this, the European Union is currently considering regulation on disseminating terrorist content which may have implications on hate speech and how social media platforms deal with issues such as hate speech \citep{EUCommission:2018} through the difficulty in distinguishing between content which promotes terrorism and content which is simply hateful - a consideration which is highlighted in the response from the European Union Agency for Fundamental Rights (FRA). In their opinion, the FRA suggest that the proposed regulation should provide a clear definition of terrorist content which limits it to inciting or promoting terrorist activities or providing instructions on the making or use of weapons \citep{FRA:2019}. A key point of the regulation states that the platforms must remove content within $1$ hour of receiving notice from a trusted authority.
+Building on this, the European Union is currently considering regulation on disseminating terrorist content which may have implications on hate speech and how social media platforms deal with issues such as hate speech \citep{EUCommission:2018} through the difficulty in distinguishing between content which promotes terrorism and content which is simply hateful - a consideration which is highlighted in the response from the European Union Agency for Fundamental Rights (FRA).
+In their opinion, the FRA suggest that the proposed regulation should provide a clear definition of terrorist content which limits it to inciting or promoting terrorist activities or providing instructions on the making or use of weapons \citep{FRA:2019}.
+A key point of the regulation states that the platforms must remove content within $1$ hour of receiving notice from a trusted authority.
 
-More severely, two bills on sex trafficking were passed in the United States of America, namely the Stop Enabling Sex Traffickers Act (SESTA) and the Fight Online Sex Trafficking Act (FOSTA). These two bills aim to prevent sex trafficking by removing sexual solicitation online. While the critiques of the bills are numerous for flaws in their conceptualisations \citep{Romano:2018}, impact on criminal investigative work \citep{Q:2018} and the consequences for sex workers - including missing persons and deaths of sex workers \citep{Blue:2018,Simon:2018}, the implications of the bills are far greater in three aspects:
+More severely, two bills on sex trafficking were passed in the United States of America, namely the Stop Enabling Sex Traffickers Act (SESTA) and the Fight Online Sex Trafficking Act (FOSTA).
+These two bills aim to prevent sex trafficking by removing sexual solicitation online.
+While the critiques of the bills are numerous for flaws in their conceptualisations \citep{Romano:2018}, impact on criminal investigative work \citep{Q:2018} and the consequences for sex workers - including missing persons and deaths of sex workers \citep{Blue:2018,Simon:2018}, the implications of the bills are far greater in three aspects:
 
 \begin{enumerate}
   \item{The bills weaken \citep{Romano:2018,Stryker:2018} in Section 230 of the Communications Decency Act (CDA) - which holds that computer service providers are not publishers and thus not liable for content on the platform \citep{EFF:230},}
@@ -314,7 +308,23 @@ More severely, two bills on sex trafficking were passed in the United States of 
   \item{the bills do not require a request to remove content prior to potential consequences for not upholding the laws.}
 \end{enumerate}
 
-While the weakening of Section 230 of the CDA falls in line with the European and German regulations by holding social media companies accountable for the content on their platforms,\footnote{We note here that the CDA only applies to the legal territories of the United States of America. Thus, the European regulations have no bearing on the development of the Section 230 of the CDA.} the European and German initiatives are designed such that social media platforms respond to flagging and requests for content removal from authorities. Furthermore they are not in effect retroactively. These differences strongly encourage the use of machine learning to be applied without regard to the precision of the systems.
+While the weakening of Section 230 of the CDA falls in line with the European and German regulations by holding social media companies accountable for the content on their platforms,\footnote{We note here that the CDA only applies to the legal territories of the United States of America.
+Thus, the European regulations have no bearing on the development of the Section 230 of the CDA.} the European and German initiatives are designed such that social media platforms respond to flagging and requests for content removal from authorities.
+Furthermore they are not in effect retroactively.
+These differences strongly encourage the use of machine learning to be applied without regard to the precision of the systems.
+
+\section{Ethical Considerations}
+
+As this dissertation deals with data that is published by individuals who very often are private citizen, it is necessary to consider different aspects of the ethical use of social media data use.
+As I only make use of previously published data, informed consent cannot be obtained directly, as I do not have access to the necessary contact details.
+Moreover, several of datasets do not provide the user information to even consider access.
+Finally, as many of the datasets are several years old any contact information that could be gleaned from the data sets have, in many cases, decayed.
+
+As informed consent is not sought for the data, the need for a consideration of anonymity and privacy is only heightened, to ensure that private citizens are not exposed additional harms.
+All experimental parts of this dissertation have undergone ethics review for risks and harms and been approved for study.
+In this dissertation, I exclusively make use of previously published datasets. Some data in these datasets are entirely anonymised, others are entirely de-anonymised, and the remainder exist in this spectrum.
+For my experimental work, I exclusively make use of previously published, and currently publicly available, data.
+Taking an additional step to prevent harms to the data subjects, I anonymise all data where appropriate.
 
 
 \section{Summary}
