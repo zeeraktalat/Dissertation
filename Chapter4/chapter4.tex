@@ -419,7 +419,6 @@ The values for the learning rate are sampled from a uniform distribution while t
     \label{fig:davidson_dev_f1}
 \end{figure}
 
-\zw{Update this as it talks about hyper-parameter performances.}
 As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. Although only the model with the highest macro \texttt{F1-score} performance on the validation set is chosen, I make note of the top $5$ models, should one of the best performing models result in inconsistent results across different values of the random seed. The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
 
 Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1-scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are trained.
@@ -427,12 +426,10 @@ Note, that in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig
 Moreover, as loss values most frequently are small, I display the losses on a  logarithmic scale to allow for more readable figures.\vspace{5mm}
 
 In observing the \texttt{F1-score}s on the validation sets in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1}, a general pattern emerges in which most models, regardless of input type, display similar learning curves.
-A notable exceptions to these are the models trained on the \textit{StormFront} dataset (see \cref{fig:garcia_dev_f1}), in which two general patterns emerge: the first which has large variability in the models' performance from epoch to epoch and tends to trigger the early stopping criteria earlier, and the second which has a more stable learning curve with smaller performance drops and improvements between each epoch and trains for more epochs.
+A notable exceptions to these are the models trained on the \textit{StormFront} dataset (see \cref{fig:garcia_dev_f1}), in which two general patterns emerge: the first which has large variability in the models' performance from epoch to epoch and tends to trigger the early stopping criteria earlier, and the second which has a more stable learning curve with smaller performance drops and improvements between each epoch and optimises for more epochs.
 Another exception can be observed in the models trained on \textit{Toxicity} dataset (see \cref{fig:wulczyn_dev_f1}). Here three salient trends occur.
 In the first, models start with a high \texttt{F1-score} and show little improvement as over the epochs and trigger early stopping.
-In the second, models start with a lower \texttt{F1-score} and show steady improvements until early stopping is triggered,
-% TODO Move this down to when I specifically look at the Wulczyn graphs?
-with the exception of the LIWC CNN models which starts with relatively stable performance before having a large variability in performance from epoch to epoch, finally stabilising briefly before early stopping is triggered.
+In the second, models start with a lower \texttt{F1-score} and show steady improvements until early stopping is triggered.
 The third trend, starts with a relatively low model performance (below $0.4$ in \texttt{F1-score}) and only trigger early stopping late in the process (if ever). As these models train, there is an early sharp increase in the model performances followed by reaching a plateau and only post minor improvements in the later epochs.
 
 Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} there are three unique patterns: first, the loss rises throughout the training process; second, the loss remains almost entirely unchanged throughout the entire training process, and finally the third pattern; the loss is volatile throughout the process, rising or dropping from epoch to epoch.
@@ -635,7 +632,7 @@ First, the baselines validate the hypothesis that LIWC-based representation can 
     \end{minipage}
 \end{table}
 
-Second, though the baselines often produce substandard classification performances on out-of-domain data, ranging from random performance to worse than a majority baseline, they sometimes do yield surprisingly good results along individual metrics. E.g. in \cref{tab:linear_hateExp_baselines} a word-token model achieves a high performance on the \textit{Toxicity} dataset while a LIWC-based model posts surprisingly high scores on the \textit{Offence} dataset.
+Second, though the baselines often produce sub par classification performances on out-of-domain data, ranging from random performance to worse than a majority baseline, they sometimes do yield surprisingly good results along individual metrics. E.g. in \cref{tab:linear_hateExp_baselines} a word-token model achieves a high performance on the \textit{Toxicity} dataset while a LIWC-based model posts surprisingly high scores on the \textit{Offence} dataset.
 
 \begin{table}[]
     \centering
