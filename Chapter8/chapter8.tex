@@ -66,6 +66,30 @@ Second, through the use of pre-trained embeddings that take a distributional per
 Lastly, I argue that the models themselves are likely to exacerbate hegemonic positions, given that machine learning models have been shown to amplify social biases that exist in datasets \citep{Zhao:2017}.
 
 In \cref{chap:liwc}, I turn towards research questions $3$-$5$.
+Starting with RQ 3, I train three different neural network models and two baselines for five different datasets, each experimenting with 3 different data representations: Word tokens, sub-words, and LIWC encoded documents.
+I find that using LIWC encoded documents to optimise machine learning models can obtain competitive results with linear models and neural networks optimised on word token and sub-word representations alike.
+Specifically, I find that for linear models, LIWC-based models can obtain classification performances that are as good or better than models optimised on the other two representations, though for some dataset and model combinations there is a significant drop in performance.
+For neural network models, I similarly find that LIWC models can provide for in-domain classification improvements in some cases, and in most cases provide with a competitive performance.
+I find that all three neural model types are well suited for the use of LIWC, with the best performances achieved by the CNN models.
+Thus, I conclude that while there is space for the improvements in model performances, LIWC based modelling can provide for an alternative to using word-token or sub-word document representations.
+
+To address RQ 4, I monitor the models for how long they require for the optimisation procedure.
+I find that in many cases, LIWC-based modelling for neural networks show a reduction in the time it takes for a model to finish the optimisation procedure.
+I also observer that in some cases, the LIWC-based models take as long, or longer, than models trained on other document representations.
+In particular, I find that there is a relationship between the complexity of the model and the model optimisation time, where the more complex a model is, the longer it takes to train.
+That is, I find that all but one LIWC MLPs take less time to complete the optimisation procedure than their word-token and sub-word counterparts.
+For CNNs, LIWC models tend to finish optimising close to as close as word-token models, and faster than sub-word based models, with a single exception where the LIWC model takes almost twice as long as its closest competitor.
+Finally, for LSTM models, I similarly find that in most configurations of datasets, LIWC-based models tend to finish optimising quicker than the other models.
+Here too there is a single outlier in which the LIWC LSTM model takes longer to finish optimising than all other models.
+Thus, I find that in terms of speed in training models, LIWC-based modelling in most cases provides for as fast or faster model optimisation procedures.
+
+I address RQ 5 by applying all optimised models on all datasets, including those that the model has not been optimised on.
+Using this method, I find that LIWC-based models often provide for out-of-domain performances that out-perform all other out-of-domain models.
+Particularly LIWC-based models optimised on the \textit{Toxicity} dataset performs well on out-of-domain data.
+Finally, I observe that all models tend to perform better on out-of-domain datasets where the goal of the dataset resembles the goal of the dataset the model is optimised on.
+
+Turning questions of context, I address research questions $6$-$9$ in \cref{chap:mtl}.
+
 
 
 % I begin with \cref{chap:filter}, where I consider how the concept of sanitisation is invoked and operationalised in content moderation settings through terminology such as ``healthy conversations'' \citep{Twitter:Health:2018} and ``toxic'' content \citep{Wulczyn:2017,Perspective:Github}.
