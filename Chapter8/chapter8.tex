@@ -64,6 +64,8 @@ Thus, a model is likely to learn identity terms have a greater association to ``
 Moreover, I argue that even when several datasets with competing definitions of abuse are used, models will come to better represent the overlaps in the datasets and labels than the data which is separate.
 Second, through the use of pre-trained embeddings that take a distributional perspective on language production and are known to harbour harmful social biases against minoritised groups \citep{Speer:2017}.
 Lastly, I argue that the models themselves are likely to exacerbate hegemonic positions, given that machine learning models have been shown to amplify social biases that exist in datasets \citep{Zhao:2017}.
+These findings have an impact on future work for computational modellers as they provide theoretical scaffolding for why and how marginalised communities come to suffer under abuse classification models.
+Thus, the contributions here begin to forge a path towards abuse detection models that are centred around the experiences of those who are most likely to suffer harms from misclassifications.
 
 In \cref{chap:liwc}, I turn towards research questions $3$-$5$.
 Starting with RQ 3, I train three different neural network models and two baselines for five different datasets, each experimenting with 3 different data representations: Word tokens, sub-words, and LIWC encoded documents.
@@ -88,9 +90,62 @@ Using this method, I find that LIWC-based models often provide for out-of-domain
 Particularly LIWC-based models optimised on the \textit{Toxicity} dataset performs well on out-of-domain data.
 Finally, I observe that all models tend to perform better on out-of-domain datasets where the goal of the dataset resembles the goal of the dataset the model is optimised on.
 
-Turning questions of context, I address research questions $6$-$9$ in \cref{chap:mtl}.
+As the results of my experiments show, there is space for improving in-domain and out-of-domain classification performances by thinking carefully about how data is represented.
+Research questions 3-5 invite researchers to think carefully about data representations.
+Moreover, in specific next steps, there is space to investigate what the impact on modelling is when combining LIWC and word-tokens or sub-word tokens.
+Such combinations would also allow for using models that have pre-trained embedding layers for the word and sub-word parts of the data representations.
+The use of which is likely to provide for additional improvements on both in-domain and out-of-domain performances.
+
+Turning questions of context, I address research questions $6$-$8$ in \cref{chap:mtl}.
+In this chapter, I experiment with Multi-Task Learning with three main tasks for distinct forms of abuse, the \textit{Offence} detection task, the \textit{Hate Speech} detection task, and the \textit{Toxicity} detection task.
+Each of these is also used as an auxiliary task when it is not the also the primary task.
+For auxiliary tasks I use the three main task datasets in turn, and the \textit{Hate Expert} dataset, as my abusive auxiliary tasks.
+For my non-abusive auxiliary tasks I use the \textit{Sarcasm} detection task, the \textit{Moral Sentiment} prediction task, and the \textit{Argument Basis} task.
+Addressing RQ 6 and 7 collectively, I find that there is a positive impact on model performances, in terms of improvements over a single task MLP baseline when using almost any dataset as an auxiliary task.
+Specifically to RQ 6, I observe that the three main task models that I use all benefit from using sarcasm detection as an auxiliary task.
+Moreover, two out of three auxiliary tasks also benefit from using the remaining two non-abusive auxiliary tasks.
+Using combinations of only non-abusive tasks also improves modelling performances, though none of these combinations achieve the best-performing auxiliary task combination.
+
+Turning to RQ 7, I find that using abusive tasks as auxiliary tasks has a positive impact on the model performances.
+Unlike the non-abusive tasks there is one auxiliary task setting for one dataset where the highest performance is achieved by a combination of only abusive auxiliary tasks.
+The use of abusive tasks in particular has a beneficial impact on performances in terms of precision score.
+In the abusive tasks however, I also find that not all tasks are equally suited.
+In particular, I observe a relationship between abusive datasets that share similarities in either data source or in annotation goals.
+For instance, the \textit{Hate Expert} dataset only performs well enough as an auxiliary tasks to be selected as for further when the main task is the \textit{Hate Speech} task which was sampled from the same collection of data and annotated using the same guidelines.
+Moreover, I find that the \textit{Offence} auxiliary task is useful for both main tasks, where it shares the dataset source with the \textit{Hate Speech} task and shares annotation goal with the \textit{Toxicity} task.
+
+As I address RQ 8, I find that combining abusive and non-abusive auxiliary tasks provides for some of the best model improvements.
+Specifically, I find that using the \textit{Sarcasm} task in conjunction with one or more abusive tasks provides for high performing models.
+This suggests that encoding representations for sarcasm detection in combination with an auxiliary abuse dataset can have benefits on the main task performance.
+It is worth noting that all three non-abusive auxiliary tasks appear in the best-performing auxiliary task configurations, showing the best performances are obtained when abusive and non-abusive auxiliary tasks are used together.
+
+The findings in this chapter, provides several paths for future work.
+For instance, one avenue of future work is to explore more non-abusive auxiliary tasks such as sentiment analysis.
+Additionally, future research can address improvements in modelling e.g. by using more complex modelling architectures or by optimising the weight each auxiliary task is given.
+
+Finally, in \cref{chap:disembodied}, I address the final three research questions: RQ 9-11.
+In this chapter, I critically analyse the entire machine learning pipeline for NLP and apply my insights to models developed in this thesis for abuse detection.
+
+Through my critical analysis, I find that subjectivity is embedded into machine learning in all processes in which humans with their subjective experiences are involved.
+The subjective experiences of people involved in the modelling pipeline express their subjective experiences through the data collection, annotation, and model building processes.
+Thus, I argue that to address issues of bias, fairness, and representing the users of models, it is necessary for awareness of the subjective experiences that modellers want to represent and develop processes which foster the human and computational expression of these.
+Moreover, to develop which are fair an equitable, it is necessary to start with the development process of machine learning models with those whose experiences are not embodied in machine learning.
+Thus, rather than attempting to force models that have learned to reproduce oppressive structures, this research calls for modelling to be centred around the subjective, lived experiences of people and their needs.
+
+In future work, there is more space for practitioners and researchers to engage in identifying how their own subjective experiences influence their design decisions.
+Moreover, an implication of this work is that models that embody desired subjective experiences can be developed, given that the resources are developed.
 
 
+Returning to the guiding questions of how the human fits into abusive language technologies and how machine learning models for moderating online abuse expressed through text, the findings in this dissertation suggest that at the current stage, people are not well represented by the models that the field have produced and is on track to produce.
+Moreover, content moderation technologies for online abuse expressed through text at present have largely not sought to model to closely represent the subjective experiences of users.
+Particularly, they have failed to represent the perspectives and experiences of those who stand to be harmed most by content moderation technologies, instead focusing on goals such as having models that take a global perspective on abuse.
+These issues are the result of a computing culture that seeks to abstract away subjectivity in search of, if not ``objective truths'', global consensus on inherently subjective questions.
+However, as I show in this dissertation, there is vast, and largely unexplored, space for developing models that more closely seeks to represent the people and thus better make space for peoples subjective experiences.
+For instance, in \cref{chap:liwc}, we see how using modelling that seeks to encode the mental and emotional state of the author yields ... % TODO Finish sentence
+Moreover, as observed in \cref{chap:mtl} the use of Multi-Task Learning can allow for models to learn representations of related auxiliary tasks, such as whether a comment is sarcastic or the expressed moral sentiments, can allow for deeper engagements with the intentions of the speaker, thus moving modelling to more closely represent the speakers and their intentions.
+
+In this dissertation, I have sought to identify challenges and opportunities for developing models for the content moderation of online abuse. This is scaffolding for a hopeful path forward - one that centres the subjective experiences and humanity of those impacted by content moderation technologies,  and that brings back considerations of the social hierarchies that make them most vulnerable to abuse.
+I hope to bring the experiences of these people back into the heart of the task.
 
 % I begin with \cref{chap:filter}, where I consider how the concept of sanitisation is invoked and operationalised in content moderation settings through terminology such as ``healthy conversations'' \citep{Twitter:Health:2018} and ``toxic'' content \citep{Wulczyn:2017,Perspective:Github}.
 %
@@ -115,65 +170,59 @@ Turning questions of context, I address research questions $6$-$9$ in \cref{chap
 % Until content moderation infrastructures are centred around the experiences of marginalised communities, they will continue to systematically disenfranchise such communities from the full ability to create boundaries that can constitute their subjective experiences.
 
 % TODO Finish the findings here once the results
-\zw{Not done}
-Addressing the issues raised in \cref{chap:filter} requires a reconfiguration of the entire pipeline for automated content moderation.
-In \cref{chap:liwc}, I start to examine one method for such reconfiguration: vocabulary reduction and document representations.
-Here, I experiment with three different document representations: a representation where the documents undergo a word-based tokenisation process, a representation where I use sub-words to minimise out-of-vocabulary items, and finally a representation where I represent each word in a sentence as its corresponding categories in the Linguistic Inquiry and Word Count \citep[LIWC,]{Pennebaker:2001} dictionary, which allows for an approximation into the mental and emotional states of the speaker.
-
-I find two primary implications of using LIWC represented documents for modelling, the performance of the models notwithstanding.
-First, the LIWC dictionary is a dictionary with a small vocabulary resulting in large reductions in the vocabulary sizes for the models.
-\zw{Double check these results and add them to the chapter}
-Second, as a consequence of the smaller vocabulary sizes, models trained on this representation diverge from the word-token models in the time it takes to train them, in general requiring to epochs for LIWC-based models to converge, though model processes these iterations faster, yielding faster model training in general.
-
-
-
-
-
-
-
-
-
-In \cref{chap:mtl}, I further investigate how optimising a model for multiple tasks simultaneously can influence model performances on specific forms of abuse.
-Using hard parameter sharing Multi-Task Learning \citep{Caruana:1993}, I develop Multi-Layered Perceptron models that are optimised for different forms of abuse and investigated the impact of different auxiliary tasks for each type of abuse.
-I narrowed down on the number of abusive tasks from \cref{chap:liwc}, which considered five different abusive language detection tasks to three tasks in \cref{chap:mtl} that I treat as main tasks.
-Moreover, in \cref{chap:mtl}, I do not collapse the classes into binary classification, as I do in \cref{chap:liwc}.
-The three tasks that I consider are: Disambiguating offensive content from hateful content and non-offensive content, disambiguating between toxic and non-toxic content, and classifying racism, sexism, and the absence of these.
-For auxiliary tasks, I explore two different kinds of auxiliary task.
-First, I explore four auxiliary tasks for abuse detection: hate speech detection, expert annotated hate speech detection, toxicity detection, and offensive language detection.
-Three of these also serve as main tasks and a dataset is not used as an auxiliary task when it is also the main task selected for optimisation.
-For the auxiliary tasks that are not abusive in nature, I explore the impact of sarcasm detection, detecting moral sentiment, and detecting whether an argument is based in facts or feelings on the main task.
-I compare these MLP models with three different baselines, a linear SVM, a single-task MLP, and an ensemble classifier.
-I find that although not all MTL MLP models outperform all baseline models, they consistently outperform the single-task MLP when given a single auxiliary task, regardless of whether the auxiliary task is abusive in nature or not.
-Moreover, I find that not all auxiliary tasks are equally suitable, for instance, I find that the \textit{Hate Expert} auxiliary task is only useful when the main task is the \textit{Hate Speech} task. 
-These two datasets are annotated from the same data sample and follow the same annotation guidelines.
-More generally, I find that there are benefits in main task classification performance when the auxiliary task is abuse detection and at least one of two conditions are met:
-1) the main task and auxiliary task datasets are sampled from the same, or 2) the main task and auxiliary tasks share annotation goals.
-The first condition arises from observing the patterns in auxiliary task impact across all three main tasks as the \textit{Offence} auxiliary task yields improvements when the main task is either the \textit{Hate Speech} task or the \textit{Toxicity} task, where data source and dataset goals match, respectively.
-When the auxiliary is not abusive in nature, \textit{Sarcasm} and \textit{Moral Sentiment} auxiliary tasks stably increases performance across the different main tasks.
-The \textit{Argument Basis} auxiliary task on the other hand does not provide improvements across all datasets.
-When considering combinations of auxiliary tasks, I find that using exclusively abusive tasks, or exclusively non-abusive tasks tend to obtain good scores, though these tend to be outperformed when the auxiliary task setting uses a combination of abusive and non-abusive tasks.
-In such settings where abusive and non-abusive tasks are combined, the best performing settings tend to be where one abusive auxiliary task is used and two or more non-abusive tasks.
-Additionally, \textit{Sarcasm} frequents in most of the best performing configurations, along the different metrics.
-Through multi-task learning, it is thus possible to represent different facets of how speakers act in different situations allowing for models that more closely come to embody the context of the speaker.
-
-In \cref{chap:disembodied}, I take a step back from the experimental modelling, observing how different subjectivities are embedded into the machine learning pipeline.
-I argue here that through processes of disembodiment, machine learning as a practice hides and obscures its own positionality and the subjective decisions that are embedded in the systems.
-I consider four different aspects of the modelling pipeline through which subjective experiences are embedded: in the data as it is removed from the subjective bodies that create them, in the adjudication of data for supervised classification tasks by annotators who often do not exist in the data, in the person(s) designing the experiment and modelling pipeline, and in the model trained on the disembodied data.
-Extending the argument put forth by \citet{Haraway:1988} to machine learning, disembodied machine learning offers a veil of ``objectivity'' behind which a hegemonic and oppressive subjective experience is given space to be constituted in and through machine learning models.
-Subsequently, other experiences, often marginalised and are left as residual experiences that must either conform to or accept the experience embodied by the modelling processes and models.
-Thus, the goal of ``bias-free'' machine learning becomes a fantasy that at best performs some harm reduction and at worst obscures how machine learning models and designers of such models are complicit in perpetuating harms of oppressive structures.
-To ascertain the degree to which a model takes into account the subjective experiences of the people it is developed for, I propose a spectrum to consider models through.
-This spectrum ranges from fully ``localised'' models, that is models that seek to be situated within the context of the datum it is derived from to ``globalised'' models, that is models that do not seek to be grounded within such context.
-As modelling processes for NLP tasks, and abuse, increasingly rely on technologies such as pre-trained embeddings, pre-trained language models, and multi-task learning, the field is moving towards models that are increasingly localised in nature, most models are unlikely to be at the extreme ends of the modelling spectrum.
-Past work in abuse detection that has relied on linear models, and as is the case in for most single-task models in this dissertation, however are situated as fully globalised models.
-Particularly when developing models for social prediction, such as abuse detection, it becomes vital to develop models that take into account the positionality of users.
-A lack of active recognition in the modelling pipeline leads to privileging hegemonic perspectives over those of marginalised people, that is privileging those who stand to be least harms of models that fit poorly to their subjective experiences over those who stand to experience the most harm from such poor fits.
-I conclude the chapter by calling for an increased recognition of the people behind the machine, that is the designers of the pipelines, the human adjudicators on the data, and the data subjects whose data is being used to train models.
-Only by recognising the subjective embodiments of the participating people is it possible to describe, interrogate, and address how meaning is made in each step of the modelling process and answer whether the model that has been produced truly serves the people it has been produced for.
-Until such steps are taken, machine learning modelling will continue to reproduce hegemonic views, which for content moderation and abuse detection, among many other tasks, comes to mean white supremacist imaginaries on acceptability.
-
-
-\vspace{5mm}
+% \zw{Not done}
+% Addressing the issues raised in \cref{chap:filter} requires a reconfiguration of the entire pipeline for automated content moderation.
+% In \cref{chap:liwc}, I start to examine one method for such reconfiguration: vocabulary reduction and document representations.
+% Here, I experiment with three different document representations: a representation where the documents undergo a word-based tokenisation process, a representation where I use sub-words to minimise out-of-vocabulary items, and finally a representation where I represent each word in a sentence as its corresponding categories in the Linguistic Inquiry and Word Count \citep[LIWC,]{Pennebaker:2001} dictionary, which allows for an approximation into the mental and emotional states of the speaker.
+%
+% I find two primary implications of using LIWC represented documents for modelling, the performance of the models notwithstanding.
+% First, the LIWC dictionary is a dictionary with a small vocabulary resulting in large reductions in the vocabulary sizes for the models.
+% \zw{Double check these results and add them to the chapter}
+% Second, as a consequence of the smaller vocabulary sizes, models trained on this representation diverge from the word-token models in the time it takes to train them, in general requiring to epochs for LIWC-based models to converge, though model processes these iterations faster, yielding faster model training in general.
+%
+%
+%
+%
+% In \cref{chap:mtl}, I further investigate how optimising a model for multiple tasks simultaneously can influence model performances on specific forms of abuse.
+% Using hard parameter sharing Multi-Task Learning \citep{Caruana:1993}, I develop Multi-Layered Perceptron models that are optimised for different forms of abuse and investigated the impact of different auxiliary tasks for each type of abuse.
+% I narrowed down on the number of abusive tasks from \cref{chap:liwc}, which considered five different abusive language detection tasks to three tasks in \cref{chap:mtl} that I treat as main tasks.
+% Moreover, in \cref{chap:mtl}, I do not collapse the classes into binary classification, as I do in \cref{chap:liwc}.
+% The three tasks that I consider are: Disambiguating offensive content from hateful content and non-offensive content, disambiguating between toxic and non-toxic content, and classifying racism, sexism, and the absence of these.
+% For auxiliary tasks, I explore two different kinds of auxiliary task.
+% First, I explore four auxiliary tasks for abuse detection: hate speech detection, expert annotated hate speech detection, toxicity detection, and offensive language detection.
+% Three of these also serve as main tasks and a dataset is not used as an auxiliary task when it is also the main task selected for optimisation.
+% For the auxiliary tasks that are not abusive in nature, I explore the impact of sarcasm detection, detecting moral sentiment, and detecting whether an argument is based in facts or feelings on the main task.
+% I compare these MLP models with three different baselines, a linear SVM, a single-task MLP, and an ensemble classifier.
+% I find that although not all MTL MLP models outperform all baseline models, they consistently outperform the single-task MLP when given a single auxiliary task, regardless of whether the auxiliary task is abusive in nature or not.
+% Moreover, I find that not all auxiliary tasks are equally suitable, for instance, I find that the \textit{Hate Expert} auxiliary task is only useful when the main task is the \textit{Hate Speech} task. 
+% These two datasets are annotated from the same data sample and follow the same annotation guidelines.
+% More generally, I find that there are benefits in main task classification performance when the auxiliary task is abuse detection and at least one of two conditions are met:
+% 1) the main task and auxiliary task datasets are sampled from the same, or 2) the main task and auxiliary tasks share annotation goals.
+% The first condition arises from observing the patterns in auxiliary task impact across all three main tasks as the \textit{Offence} auxiliary task yields improvements when the main task is either the \textit{Hate Speech} task or the \textit{Toxicity} task, where data source and dataset goals match, respectively.
+% When the auxiliary is not abusive in nature, \textit{Sarcasm} and \textit{Moral Sentiment} auxiliary tasks stably increases performance across the different main tasks.
+% The \textit{Argument Basis} auxiliary task on the other hand does not provide improvements across all datasets.
+% When considering combinations of auxiliary tasks, I find that using exclusively abusive tasks, or exclusively non-abusive tasks tend to obtain good scores, though these tend to be outperformed when the auxiliary task setting uses a combination of abusive and non-abusive tasks.
+% In such settings where abusive and non-abusive tasks are combined, the best performing settings tend to be where one abusive auxiliary task is used and two or more non-abusive tasks.
+% Additionally, \textit{Sarcasm} frequents in most of the best performing configurations, along the different metrics.
+% Through multi-task learning, it is thus possible to represent different facets of how speakers act in different situations allowing for models that more closely come to embody the context of the speaker.
+%
+% In \cref{chap:disembodied}, I take a step back from the experimental modelling, observing how different subjectivities are embedded into the machine learning pipeline.
+% I argue here that through processes of disembodiment, machine learning as a practice hides and obscures its own positionality and the subjective decisions that are embedded in the systems.
+% I consider four different aspects of the modelling pipeline through which subjective experiences are embedded: in the data as it is removed from the subjective bodies that create them, in the adjudication of data for supervised classification tasks by annotators who often do not exist in the data, in the person(s) designing the experiment and modelling pipeline, and in the model trained on the disembodied data.
+% Extending the argument put forth by \citet{Haraway:1988} to machine learning, disembodied machine learning offers a veil of ``objectivity'' behind which a hegemonic and oppressive subjective experience is given space to be constituted in and through machine learning models.
+% Subsequently, other experiences, often marginalised and are left as residual experiences that must either conform to or accept the experience embodied by the modelling processes and models.
+% Thus, the goal of ``bias-free'' machine learning becomes a fantasy that at best performs some harm reduction and at worst obscures how machine learning models and designers of such models are complicit in perpetuating harms of oppressive structures.
+% To ascertain the degree to which a model takes into account the subjective experiences of the people it is developed for, I propose a spectrum to consider models through.
+% This spectrum ranges from fully ``localised'' models, that is models that seek to be situated within the context of the datum it is derived from to ``globalised'' models, that is models that do not seek to be grounded within such context.
+% As modelling processes for NLP tasks, and abuse, increasingly rely on technologies such as pre-trained embeddings, pre-trained language models, and multi-task learning, the field is moving towards models that are increasingly localised in nature, most models are unlikely to be at the extreme ends of the modelling spectrum.
+% Past work in abuse detection that has relied on linear models, and as is the case in for most single-task models in this dissertation, however are situated as fully globalised models.
+% Particularly when developing models for social prediction, such as abuse detection, it becomes vital to develop models that take into account the positionality of users.
+% A lack of active recognition in the modelling pipeline leads to privileging hegemonic perspectives over those of marginalised people, that is privileging those who stand to be least harms of models that fit poorly to their subjective experiences over those who stand to experience the most harm from such poor fits.
+% I conclude the chapter by calling for an increased recognition of the people behind the machine, that is the designers of the pipelines, the human adjudicators on the data, and the data subjects whose data is being used to train models.
+% Only by recognising the subjective embodiments of the participating people is it possible to describe, interrogate, and address how meaning is made in each step of the modelling process and answer whether the model that has been produced truly serves the people it has been produced for.
+% Until such steps are taken, machine learning modelling will continue to reproduce hegemonic views, which for content moderation and abuse detection, among many other tasks, comes to mean white supremacist imaginaries on acceptability.
+%
+% \vspace{5mm}
 Returning to the guiding questions of how the human fits into abusive language technologies and how machine learning models for moderating online abuse expressed through text, the findings in this dissertation suggest that at the current stage, people are not well represented by the models that the field have produced and is on track to produce.
 Moreover, content moderation technologies for online abuse expressed through text at present have largely not sought to model to closely represent the subjective experiences of users.
 Particularly, they have failed to represent the perspectives and experiences of those who stand to be harmed most by content moderation technologies, instead focusing on goals such as having models that take a global perspective on abuse.
