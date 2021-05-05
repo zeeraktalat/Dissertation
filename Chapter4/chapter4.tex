@@ -507,7 +507,7 @@ Second, though the baselines often produce sub par classification performances o
 \end{table}
 
 Third, many of the LIWC-based models post strong performances on in-domain data, suggesting that simple linear models may be highly appropriate for the LIWC-based input.
-Moreover, these strong in-domain performances also provide a weak suggestion that neural network architectures may be suited as most of the of the datasets that are under consideration are, in neural network terms, small datasets consisting of thousands, rather than several hundred thousand documents.
+Moreover, these strong in-domain performances also provide a weak suggestion that neural network architectures may be suited for the task as most of the of the datasets that are under consideration are small datasets.
 Fourth, an interesting trend of the models trained on the \textit{Offence} and the \textit{Toxicity} datasets obtain surprisingly good scores on each other. Two potential reasons for this trend are, 1) the two datasets are the largest in datasets so more general patterns may be learned, 2) as the notion of ``offensive'' as constructed by \citet{Davidson:2017} bears strong similarities with the notion of ``toxicity'' constructed by \citet{Wulczyn:2017}, yielding in subsets of the datasets that strongly share similarities with each other.
 
 \begin{table}
@@ -828,8 +828,6 @@ In particular, \cref{fig:wulczyn_mlp_test}, the in-domain LIWC-based model out-p
   \end{minipage}
 \end{figure}
 
-On the evaluation sets however, a slightly different pattern plays out. For most evaluation datasets, at least one of the LIWC-based models out-perform some of the surface token based models, and in some cases out-perform all other models. 
-In particular, \cref{fig:wulczyn_mlp_test}, the in-domain LIWC-based model out-performs all other model types, though curiously achieves a lower score than the out-of-domain LIWC-based \textit{Offence} model.
 Overall, the patterns displayed by the MLPs (see \cref{fig:garcia_mlp_test,fig:waseem_mlp_test,fig:waseem_hovy_mlp_test,fig:wulczyn_mlp_test,fig:davidson_mlp_test}) indicate that LIWC-based document representations are appropriate for the development of neural networks for abuse detection, in spite of the large reduction in vocabulary size.
 
 In fact, the model performances also weakly indicate that there are benefits to be found in using LIWC-based representations for medium sized and large datasets.\footnote{Medium and large are relative here to to the sizes of hate speech and abuse data, often ranging between $5,000$ to $100,000$ samples, rather than large scale datasets for computing that contain millions of samples.} 
