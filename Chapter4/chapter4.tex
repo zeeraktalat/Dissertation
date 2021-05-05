@@ -865,9 +865,11 @@ In examining the test scores on the LSTM models (see \cref{fig:davidson_lstm_tes
 To the point of this chapter, while there is some variability in the performance of LIWC-based models in some instances, they achieve high in-domain and out-of-domain performances. 
 This for instance is the case with the LIWC-based model optimised on the \textit{Toxicity} dataset, which consistently achieves a high F1-score on the \textit{Offence} dataset.
 
-Moreover, comparing only the LIWC-based LSTMs with the LIWC-based MLPs, the latter either out-performs or is competitive with the former across all training datasets datasets and for most in-domain evaluations and all out-of-domain evaluations.
-Although it is slightly surprising that recurrence seems to have only have a small positive effect on the in-domain and out-of-domain generalisibility of the models, in the cases of the MLPs out-performing the LSTMs, the performance drops in the LSTMs tend to be small.
-%For instance, for the LIWC-based models trained on the \textit{Offence} dataset, the MLP obtains a macro \texttt{F1-score} of $0.7755$ while the LSTM achieves a score of $0.6844$.
+Comparing only the LIWC based models with each other, I find that in general, MLPs are out-performed by LSTM models on in-domain data.
+The LSTM models, in turn tend to achieve lower performances than the CNN models.
+In most cases, all models obtain high performances and are competitive with one another.
+Although it is slightly surprising that recurrence seems to have only have a small positive effect on the in-domain performances of the LSTM models, this follows the prior work in abuse detection where CNN models long had a dominance over other models due to their ability to outperform most other models.
+
 Taking into consideration the generally high performance of the LIWC-based models optimised for the \textit{Toxicity} dataset, there appears to be an effect between the size of the dataset and the in-domain and out-of-domain performances.
 These models frequently out-perform the other models optimised on the \textit{Toxicity} dataset when evaluated on out-of-domain datasets.
 These results suggest that LIWC-based modelling may provide for improved out-of-domain performances when they are optimised on large datasets or they are being applied to data with which there are share attributes in terms of annotation goal.
@@ -885,10 +887,12 @@ These results suggest that LIWC-based modelling may provide for improved out-of-
   \end{minipage}
 \end{figure}
 
-For the LIWC-based CNN models it appears that the opposite effect is true, for small and medium sized datasets the LIWC-based CNN models improve on the in-domain evaluations.
-The exception to this pattern is the \textit{StormFront} dataset where the LIWC-based MLP out-performs all other LIWC-based models.
-For the largest dataset, the \textit{Toxicity} dataset, the LIWC-based CNN model improves on the LIWC-based MLP but falls slightly short in comparison the LSTM model.
-Moreover, the LIWC-based CNN out-performs all other LIWC-based models on the in-domain evaluation of the \textit{Offence} dataset.
+Comparing the LIWC-based models on out-of-domain performance, I note that for LIWC-based models similarities in dataset goals seems to have a positive effect.
+Additionally, the models optimised on the \textit{Offence} tend to perform well across the different datasets.
+%Comparing the LIWC-based CNN models with the LIWC-based MLP models, I find that the CNNs out-perform the MLP in terms of in-domain results in most cases, the only exception being models optimised on the \textit{Offence} dataset.
+%The exception to this pattern is the \textit{StormFront} dataset where the LIWC-based MLP out-performs all other LIWC-based models.
+%For the largest dataset, the \textit{Toxicity} dataset, the LIWC-based CNN model improves on the LIWC-based MLP but falls slightly short in comparison the LSTM model.
+%Moreover, the LIWC-based CNN out-performs all other LIWC-based models on the in-domain evaluation of the \textit{Offence} dataset.
 
 %In comparison to the surface-form based CNN models, the LIWC-based models underperform achieving lower scores in almost all cases. 
 %On the other hand, the surface-form based CNNs out-perform their LSTM and MLP counterparts. 
