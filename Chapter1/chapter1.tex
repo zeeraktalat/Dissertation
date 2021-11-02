@@ -10,7 +10,8 @@
     \graphicspath{{Chapter1/Figs/Vector/}{Chapter1/Figs/}}
 \fi
 
-\chapter{Introduction}\label{chap:intro} \zw{Rought contents here, needs updating to fit with narrative of the thesis and polishing of text}
+\chapter{Introduction}\label{chap:intro} 
+%zw{Rought contents here, needs updating to fit with narrative of the thesis and polishing of text}
 
 %Structure:
 %Introduction to the field in general
@@ -26,19 +27,18 @@
 %Add text about WOAH and WiNLP
 %Provide structure of thesis
 
-
 As people consume, interact with, and create media online at an ever growing rate, it becomes necessary to consider the content with which they interact, how this influences and impacts audiences, and the cultures that are formed in online spaces.
-A small, in terms of absolute amount of content created, but prominent portion of online communications is online abuse in various forms, including cyber-bullying, hate speech, harassment, aggressive speech, and offensive speech \citep{Turing:2019}.
-Such content can lead to users disengaging with online spaces \citep{Users leaving}, psychological harms on the targets of abuse and other people who are exposed to it \citep{Paper on negative effects of witnessing abuse}, and an increase in hate crimes \citep{Muller:2020}.
+A small, in terms of absolute amount of content created, but prominent portion of online communications is online abuse in various forms, including cyber-bullying, hate speech, harassment, aggressive speech, and offensive speech \citep{Vidgen:2019}.
+Such content can lead to users disengaging with online spaces \citep{Leslie_jones}, psychological harms on the targets of abuse and other people who are exposed to it \citep{Gelber_McNamara_2016}, and an increase in hate crimes \citep{Muller:2020}.
 As a result, social media platforms have long been subject to pressure from users and regulators to moderate and remove such content.
-This issue of content moderation has traditionally been a human effort \citep{Roberts:2019} but has increasingly become reliant on computational methods for detecting and adjudicating online abuse \citep{Facebookreports}.
+This issue of content moderation has traditionally been a human effort \citep{Roberts:2019} but has increasingly become reliant on computational methods for detecting and adjudicating online abuse \citep{FacebookReporting}.
 These automated content moderation systems developed by commercial platforms span several different modalities, including images, text, and videos.
 Along with this increase in automated content moderation systems developed by commercial entities, there has been an increased in attention to the challenge of developing automated systems for detecting text-based abuse in the Natural Language Processing (NLP) community.
 Beyond the NLP community, there has been sustained academic attention to the challenges faced by content moderation systems, both human and automated.
 This body of work has spanned across a wide variety of disciplines including, but not limited to, media studies \citep{Gillespie:2020,Gerrard:2020}, archival research \citep{Thylstrup:2019,Agostinho:2019}, and legal studies \citep{Cobbe:2020,Llanso:2020}.
 While the content that is moderated spans several modalities and is often multi-modal, in this dissertation I focus on text-based content moderation systems for online abuse, in specific NLP systems.
 
-In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified, including the lack of model ability to generalise onto new data and contexts \citep{Waseem:2016,Fortuna:2020}, how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2020}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2020}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data for abuse \citep{Wiegand:2019,Vidgen:directions:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen:directions:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021,Dinan:2019}.
+In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified, including the lack of model ability to generalise onto new data and contexts \citep{Waseem:2016,Fortuna:2021}, how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2021}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2021}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data for abuse \citep{Wiegand:2019,Vidgen-Derczynski:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen-Derczynski:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021,Dinan:2020}.
 Although each of these challenges are of equal importance and each requiring urgent attention, I focus my efforts in this thesis on four different topics.
 
 First, I address questions around how abuse is defined and the consequences of such definitions on the content that is subject to such systems.
@@ -96,7 +96,7 @@ The research questions addressed in \cref{chap:liwc} are thus:
 \vspace{5mm}
     \begin{enumerate}[start=3, label={\textbf{RQ \arabic*}}]
         \item{\textit{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}}
-        \item{\textit{What are the implications of using LIWC as input on model development in terms of training time?}}
+        \item{\textit{What are the implications of using LIWC as input on model development in terms of optimisation time?}}
         \item{\textit{What are the implications on generalisability of LIWC-based models?}}
     \end{enumerate}
     \vspace{5mm}
