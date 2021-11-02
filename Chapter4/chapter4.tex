@@ -10,22 +10,22 @@
 
 One of the key issues in machine learning for content moderation is that such systems both in deployed settings (see \cref{chap:filter}) and in research (see \cref{chap:intro} and \cref{chap:nlp}) over-fit to individual tokens that see over-representation in the positive and negative classes respectively. 
 Similarly, efforts in NLP have identified that content moderation systems are likely to over-fit to identitiy markers such as the mentions of gender and race \citep{Dixon:2018}.
-While research efforts have been made to address such issues, the problem of over-fitting to words and identity markers remain an open question for the field. Although some such approaches have addressed this problem by replacing certain words and phrases to balance identity distributions \cite{Dixon:2018}. In this chapter, I propose a different approach which serves to address the issue of models over-fitting to tokens by 1) minimising the size of the vocabulary in order to avoid over-fitting to distributional skews of low-frequency tokens across classes; 2) representing documents in terms of how they serve as a proxy for thoughts, feelings, and personality; and 3) through such vocabulary minimisation highlight the importance of the mental and emotionlalstates communicated, rather than the surface form of tokens while retaining model performance. An additional benefit of such vocabulary reduction is a reduction in model size and training time for complex models such as neural networks, resulting in models that have a smaller environmental impact \citep{Strubell:2019}.
+While research efforts have been made to address such issues, the problem of over-fitting to words and identity markers remain an open question for the field. Although some such approaches have addressed this problem by replacing certain words and phrases to balance identity distributions \cite{Dixon:2018}. In this chapter, I propose a different approach which serves to address the issue of models over-fitting to tokens by 1) minimising the size of the vocabulary in order to avoid over-fitting to distributional skews of low-frequency tokens across classes; 2) representing documents in terms of how they serve as a proxy for thoughts, feelings, and personality; and 3) through such vocabulary minimisation highlight the importance of the mental and emotionlalstates communicated, rather than the surface form of tokens while retaining model performance. An additional benefit of such vocabulary reduction is a reduction in model size and optimisation time for complex models such as neural networks, resulting in models that have a smaller environmental impact \citep{Strubell:2019}.
 
-Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite{LIWC:2015,Pennebaker:2001}, I pre-process documents from large vocabularies, that are riddled with obfuscations and intentionally and unintentionally misspelled words into a smaller vocabulary set representing instead psycholinguistic properties of words. Through a reduction of thousands, or in some cases hundreds of thousands, of unique tokens to hundreds of LIWC categories, I aim for models to gain deeper insight into language patterns of abuse than simply selecting the most frequently used tokens. Moreover, I show that such a reduction is accompanied by a negligible reduction in intra- and inter-dataset performance in comparison to models using the full surface-token vocabularies.
+Through the use of the Linguistic Inquiry and Word Count (LIWC) dictionary \cite{Pennebaker:2015,Pennebaker:2001}, I pre-process documents from large vocabularies, that are riddled with obfuscations and intentionally and unintentionally misspelled words into a smaller vocabulary set representing instead psycholinguistic properties of words. Through a reduction of thousands, or in some cases hundreds of thousands, of unique tokens to hundreds of LIWC categories, I aim for models to gain deeper insight into language patterns of abuse than simply selecting the most frequently used tokens. Moreover, I show that such a reduction is accompanied by a negligible reduction in intra- and inter-dataset performance in comparison to models using the full surface-token vocabularies.
 
 Through the use of simple deep neural networks and `shallow' linear models, I show that by reducing the vocabulary sizes by up to $98.0\%$ and the number of model parameters by up to $98\%$, while increasing the depth of the information in the remaining vocabulary, it is possible to achieve comparable performances within datasets and, in some cases, improvements on out-of-domain datasets. This holds two strong implications for future research on computational hate speech detection: first that current approaches through an over-reliance on surface forms are computationally inefficient, and second that the exclusive use of surface forms of tokens can lead models to overly attend to the occurrence of certain tokens and variations (e.g. prominent misspellings) \citep{Rottger:2021}. Finally, as datasets for hate speech detection frequently contain biases along racialised and dialectal lines \citep{Waseem:2018,Davidson:2019}, the use of LIWC can serve as small, but conflicted aid in avoiding such biases as dialectal spellings of words are likely to not appear in the dictionary, thus being relegated to unknown tokens (see \cref{tab:liwc_tok} for synthetic examples of LIWC representations).
 
 \section{Previous work}
 
-In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \cref{sec:nlp} for a broad overview on the topic). Here, I focus on three different strands of research. First, I briefly introduce the LIWC dictionary. Second, I consider manual development of features for machine learning models, as it is necessary to form hypotheses for what might serve as indicators of abuse, on the basis of the dataset and problem in question. Third, I examine neural network approaches for abusive language detection. Finally, I consider the growing body of research devoted to examining the generalisability of computational models for abusive language detection. I restrict my attention to studies in conducted on abuse in English as it is most pertinent to this work.
+In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \cref{chap:nlp} for a broad overview on the topic). Here, I focus on three different strands of research. First, I briefly introduce the LIWC dictionary. Second, I consider manual development of features for machine learning models, as it is necessary to form hypotheses for what might serve as indicators of abuse, on the basis of the dataset and problem in question. Third, I examine neural network approaches for abusive language detection. Finally, I consider the growing body of research devoted to examining the generalisability of computational models for abusive language detection. I restrict my attention to studies in conducted on abuse in English as it is most pertinent to this work.
 
 \subsection{Linguistic Inquiry and Word Count}
 
 The Linguistic Inquiry and Word Count dictionary and software was initially developed by \citet{Pennebaker:2001} in an effort to address the issue of high disagreement and negative effects on well-being of judges, as they reviewed essays written on people's experiences of emotional upheaval. In order to minimise such costs, \citet{Pennebaker:2001} turned to computationally counting words that were in $80$ ``psychology-relevant categories'' in order to gain an understanding of the emotional states and cognition of the authors at the time of writing. By passing over a large body of text within a single document, e.g. personal essays, \citet{Pennebaker:2001} compute the percentage occurrence of each invoked category. While there are some examples that appear clear cut, e.g. the categorisation of articles such as `a' and `the',
-other word classes, such as ``emotion word categories'' are more clearly subjective and require deeper human consideration \citep{Tauscik:2010}.
+other word classes, such as ``emotion word categories'' are more clearly subjective and require deeper human consideration \citep{Tausczik:2010}.
 Though LIWC was initially developed using long form texts, the version of the dictionary that I use in this dissertation is an expanded version that also used Twitter and ``blogs'' in the development of the dictionary \citep{Pennebaker:2015}. As such, though not originally intended for the use on short-form messages, LIWC has evolved with the rise of new forms of communication in efforts for the dictionary to accurately reflect language use in short-form documents.
-As LIWC was originally developed using long-form documents in the United States of America, the language that is reflected in the dictionary is predominately white American English and thus it excludes other languages and many dialects within American English. By such exclusion, the dictionary does not accommodate for different forms of communicating, in particular it is likely to only insufficiently cover the language use of a variety of marginalised communities. Such a lack of recognition however has a benefit. By not learning language patterns of e.g. African American English speakers who are disproportionately represented in the positive classes of several datasets for abuse \citep{Waseem:2018,Davidson:2019}, it is possible that models trained on this representation are less likely to be biased against those groups. Although such lack of recognition can have positive effects, such as lower false positive rate, the politics of not being recognised, as argued by \citet{Benjamin:2019} are not straightforward and the lack of recognition does not provide a guarantee that systemic harm will not occur. For instance, if systems developed to detect abuse did not recognise Multi-cultural London English due to vocabulary reductions, any abuse that was written in that dialect would not be recognised, leaving those users in harms way. Given that LIWC was developed using ``dictionaries, thesauruses, questionnaires, and lists made by research assistants'' \citep{Tauscik:2010} in a North American context, it is highly unlikely that word forms that differ from mainstream usage were included. For instance, the commonly used `brotha' and `bruva' in North American and British contexts, respectively, are absent from the dictionary.
+As LIWC was originally developed using long-form documents in the United States of America, the language that is reflected in the dictionary is predominately white American English and thus it excludes other languages and many dialects within American English. By such exclusion, the dictionary does not accommodate for different forms of communicating, in particular it is likely to only insufficiently cover the language use of a variety of marginalised communities. Such a lack of recognition however has a benefit. By not learning language patterns of e.g. African American English speakers who are disproportionately represented in the positive classes of several datasets for abuse \citep{Waseem:2018,Davidson:2019}, it is possible that models optimised on this representation are less likely to be biased against those groups. Although such lack of recognition can have positive effects, such as lower false positive rate, the politics of not being recognised, as argued by \citet{Benjamin:2019} are not straightforward and the lack of recognition does not provide a guarantee that systemic harm will not occur. For instance, if systems developed to detect abuse did not recognise Multi-cultural London English due to vocabulary reductions, any abuse that was written in that dialect would not be recognised, leaving those users in harms way. Given that LIWC was developed using ``dictionaries, thesauruses, questionnaires, and lists made by research assistants'' \citep{Tausczik:2010} in a North American context, it is highly unlikely that word forms that differ from mainstream usage were included. For instance, the commonly used `brotha' and `bruva' in North American and British contexts, respectively, are absent from the dictionary.
 \vspace{5mm}
 
 In this thesis, I utilise LIWC to provide the word categories that each word invokes, and rather than compute the overall word classes exhibited in a document, I use the LIWC categories of each word in a document as an alternative representation of the document from which percentages of word categories invoked can be recovered. Thus, my approach diverges slightly in the goals of using LIWC, however it does not diverge in the method for obtaining information about the psychological state of the author.
@@ -33,7 +33,7 @@ In this thesis, I utilise LIWC to provide the word categories that each word inv
 \subsection{Modelling}
 \subsubsection{Manually Selected Features}
 
-A large body of work has sought to use manually developed features for online abuse detection \citep{Davidson:2017,Waseem:2017,Ibrohim:2019,Vega:2019,Wiegand:2018,Tian:2020,Kumar:2019,Fortuna:2018}, showing performance boosts from using manually developed features such as the predicted author gender \citep{Waseem-Hovy:2016} or Part-of-Speech (POS) tags \citep{Davidson:2017}. The primary reasons for using manually crafted features is two-fold: First, by using manually crafted features it is necessary to have some understanding of the data at hand and some intuition about which features may distinguish the classes in the data from one another. Second, as manual features are frequently used with models that don't use neural architecture, they allow for interpretable models, in the sense that one can often identify how each token contributed towards a final prediction. Moreover, as features are often computationally fast to compute, the use of features along with their expressive interpretability, allow for quickly testing hypothesis surrounding online abuse and its nature.
+A large body of work has sought to use manually developed features for online abuse detection \citep[e.g.]{Davidson:2017,Waseem:2017,Wiegand:2019,Fortuna:2018}, showing performance boosts from using manually developed features such as the predicted author gender \citep{Waseem-Hovy:2016} or Part-of-Speech (POS) tags \citep{Davidson:2017}. The primary reasons for using manually crafted features is two-fold: First, by using manually crafted features it is necessary to have some understanding of the data at hand and some intuition about which features may distinguish the classes in the data from one another. Second, as manual features are frequently used with models that don't use neural architecture, they allow for interpretable models, in the sense that one can often identify how each token contributed towards a final prediction. Moreover, as features are often computationally fast to compute, the use of features along with their expressive interpretability, allow for quickly testing hypothesis surrounding online abuse and its nature.
 In a consideration of a handful of systems that employ some of the most frequently used features for the development of automated systems for detecting various forms of online abuse, distinct modelling choices, features and rationales for their use become prominent. Here I provide a brief overview of prominent features; how they are used, including which models and feature weighting schemes they are used with; and the explicit and implicit rationales for the use of each feature.
 
 First, the most common feature used, and rarely used on its own, is a Bag-of-Words (BoW) \citep{Fortuna:2018,Davidson:2017}, where each token in a document is treated as independent from the remainder of the document. The use of this feature frequently relies on the use of stop-word lists to remove tokens that are bound to occur frequently across a majority of documents, such as determiners, to avoid models from learning spurious correlations with such words and an individual class due to fluctuations in the data. The understanding of abuse that underlies this feature, is that the occurrence of some tokens are likely to disproportionately occur in abusive contexts, and that those tokens, in isolation, will indicate abuse. Several works have complicated this notion \citep[e.g.]{Waseem:2018,Davidson:2019}, arguing that tokens, in isolation, do not provide the necessary context to determine whether a text is abusive. 
@@ -45,9 +45,9 @@ POS tags have also seen frequent use in abusive language detection tasks \citep{
 
 Another frequently used feature is sentiment analysis \citep{Fortuna:2018} with the underlying assumption that abuse and negative sentiment are correlated, and can thus aid in detecting some forms of abuse. Similarly to BoW and n-grams, this is a feature that is most frequently used in combination with other features as sentiment alone is not presumed to be a good predictor of abuse \citep{Fortuna:2018}. Sentiment as a feature, like the use of LIWC proposed in this dissertation, assumes that some more abstract reasoning about the data can be helpful to automatically detecting abuse. Specifically, its use suggests that there the concepts of negativity and hostility towards entities will be relevant to detecting abuse in texts. Some previous work that uses sentiment as a feature for abuse detection \citep{Davidson:2017} relies on off-the-shelf systems for detecting sentiment and may therefore not be attuned to how sentiment and abuse interact. An implication of using off-the-shelf systems for computing sentiment, rather than assuming that sentiment can be extrapolated only from a mapping of the occurrence of abuse to sentiment, is that sentiment and abuse, while correlated are not equated and thus that the task of detecting sentiment, while related is a distinct task from detecting abuse. As such, sentiment and abuse detection are tasks that in some cases co-constitute each other while there may be no correlation in other cases.
 
-Finally, LIWC has previously been proposed as a feature for the classification of abuse in a small number of studies \citep{Nina-Alcocer:2019,Joksimovic:2019}. In these studies, LIWC has been used in conjunction with other features such as lexical features (e.g. word n-grams) and syntactic features (e.g. POS tags) \citep{Joksimovic:2019}. This use of LIWC, similar to the motivations for its use in this chapter, relies on an assumption that the mental states of the speaker and the interpretations of readers will relay information on the intention of the speaker to cause offence. For instance, \citet{Nina-Alcocer:2019} compute the percentages of emotions that are expressed in abusive documents in efforts to identify correlations between impassioned speech and abuse, asserting an intuition that abusive speech is likely to occur in individual moments dominated by emotion rather than rationality. A position that \citep{Waseem:2016} argue is likely as they find that considering the top $100$ most frequently occurring tokens, ranked using Term Frequency - Inverse Document Frequency (TF-IDF), does not aid in the prediction of hate speech, suggesting that in many cases it may be a question of moments of abuse rather than consistently abusive people.
+Finally, LIWC has previously been proposed as a feature for the classification of abuse in a small number of studies \citep{Nina:2018,Joksimovic:2019}. In these studies, LIWC has been used in conjunction with other features such as lexical features (e.g. word n-grams) and syntactic features (e.g. POS tags) \citep{Joksimovic:2019}. This use of LIWC, similar to the motivations for its use in this chapter, relies on an assumption that the mental states of the speaker and the interpretations of readers will relay information on the intention of the speaker to cause offence. For instance, \citet{Nina:2018} compute the percentages of emotions that are expressed in abusive documents in efforts to identify correlations between impassioned speech and abuse, asserting an intuition that abusive speech is likely to occur in individual moments dominated by emotion rather than rationality. A position that \citep{Waseem:2016} argue is likely as they find that considering the top $100$ most frequently occurring tokens, ranked using Term Frequency - Inverse Document Frequency (TF-IDF), does not aid in the prediction of hate speech, suggesting that in many cases it may be a question of moments of abuse rather than consistently abusive people.
 
-All features must be weighted, either through raw counts or their relative frequency. One such frequently used weighting scheme is TF-IDF which weights features by their relative frequency in the corpus \citep{Fortuna:2018}, assigning higher weight to the features that are rare corpus-wide and lower weights to those that common. As such, TF-IDF can be a useful measure to address the dominance of high-frequency tokens. At the same time, TF-IDF also increases the capacity for models to over-fit to the corpus and generalise poorly, as tokens that are unique to a corpus may not exist in other data or even be common to other data. The use of n-grams as features provides a similar double-edged benefit, where models learn sequences of words. In abuse detection the most common n-grams are unigrams, bi-grams, and trigrams. Such word-sequences can be helpful for models in uncovering patterns of language use in the corpus but are also vulnerable to vocabulary changes that occur across datasets. For instance \citet{Waseem-Hovy:2016} train a logistic regression classifier and identify that character n-grams of innocuous words such as `Islam' and `Muslim' rank as some of the most predictive features due to the disproportionate occurrences of such terms in the hateful classes.
+All features must be weighted, either through raw counts or their relative frequency. One such frequently used weighting scheme is TF-IDF which weights features by their relative frequency in the corpus \citep{Fortuna:2018}, assigning higher weight to the features that are rare corpus-wide and lower weights to those that common. As such, TF-IDF can be a useful measure to address the dominance of high-frequency tokens. At the same time, TF-IDF also increases the capacity for models to over-fit to the corpus and generalise poorly, as tokens that are unique to a corpus may not exist in other data or even be common to other data. The use of n-grams as features provides a similar double-edged benefit, where models learn sequences of words. In abuse detection the most common n-grams are unigrams, bi-grams, and trigrams. Such word-sequences can be helpful for models in uncovering patterns of language use in the corpus but are also vulnerable to vocabulary changes that occur across datasets. For instance \citet{Waseem-Hovy:2016} optimise a logistic regression classifier and identify that character n-grams of innocuous words such as `Islam' and `Muslim' rank as some of the most predictive features due to the disproportionate occurrences of such terms in the hateful classes.
 
 Many of the previously mentioned works use similar machine learning models, with a particular dominance of Logistic Regression and Support Vector Machines (SVMs) (please see \cref{chap:nlp} for more detail). One notable exception to this is the work of \citet{Gorrell:2018}. In this work, the authors use a ``set of NLP tools, combining them into a semantic pipeline'' \citep[pp. 601]{Gorrell:2018}. Rather than using supervised classification techniques, a rule-based systems was developed to detect abuse that they argue allows for a interpretable and easy to modify method to address weaknesses of the approach without the need for additional large quantities of data.\footnote{This detail on the rule-based nature of the classification systems was provided by Genevieve Gorrell in personal communications.} However, this approach is a laborious one as it requires the researchers to manually identify patterns of abuse and construct rules that can address such patterns along with any exceptions to the patterns that are not abusive.
 \vspace{5mm}
@@ -57,39 +57,39 @@ In this chapter, we take inspiration from the use of manually crafted features a
 \subsubsection{Neural Networks}\label{sec:liwc_nn}
 Though the earliest models for the tasks were predominately linear models that used manually generated features \citep{Waseem-Hovy:2016,Davidson:2017,Warner:2012} more recent work has been dominated by the development of neural network based models for automated abuse detection, posting ever-evolving State-of-the-Art models and classification performances \citep[e.g.]{Park:2017,Badjatiya:2017,Zimmerman:2018,Stoop:2019,Isaksen:2020}. Here I consider a handful of neural network methods for detecting abuse, focusing on the distinct implications following the modelling choices and the logics that underpin them. As all neural network based methods that I examine receive only the text as input, the primary differences between the models is in their use and organisation of different types of layers and the loss function selected for the respective models.
 
-The most commonly used architecture for neural networks that in the surveyed literature is a CNN \citep{Park:2017,Gamback:2017,Wulczyn:2017,Kolhatkar:2021,Zimmerman:2018,Wang:2020}. As CNNs have been the subject of particularly interest, a number of distinct modelling approaches have been proposed. First, relying on a simple neural network architecture, \citet{Kolhatkar:2021} use GloVe embeddings as the first layer, followed by three convolutional layers (that have window sizes $3, 4,$ and $5$, respectively) with global maximum pooling layers. Prior to passing to an output layer, dropout is applied to the output of the convolutional layers which is then passed to a dense layer. All layers prior to the output layer use a ReLU (see \cref{chap:nlp} for more detail) activation function. The output layer applies the sigmoid function to provide a prediction from the model. This model most closely resembles the CNN architecture used in this chapter. As this model uses a pre-trained word-embedding layer as its input layer, the input the model receives are documents that have been subject to tokenisation processes.
+The most commonly used architecture for neural networks that in the surveyed literature is a CNN \citep{Park:2017,Gamback:2017,Wulczyn:2017,Kolhatkar:2020,Zimmerman:2018,Wang:2020}. As CNNs have been the subject of particularly interest, a number of distinct modelling approaches have been proposed. First, relying on a simple neural network architecture, \citet{Kolhatkar:2020} use GloVe embeddings as the first layer, followed by three convolutional layers (that have window sizes $3, 4,$ and $5$, respectively) with global maximum pooling layers. Prior to passing to an output layer, dropout is applied to the output of the convolutional layers which is then passed to a dense layer. All layers prior to the output layer use a ReLU (see \cref{chap:nlp} for more detail) activation function. The output layer applies the sigmoid function to provide a prediction from the model. This model most closely resembles the CNN architecture used in this chapter. As this model uses a pre-trained word-embedding layer as its input layer, the input the model receives are documents that have been subject to tokenisation processes.
 
-A different architecture is proposed by \citet{Park:2017}. In their work they compare a single classifier, what they dub a `one-step classifier', that predicts the final classes directly with a stacked architecture of two models, or a `two-step classifier' in their vernacular, that first predicts whether content is abusive and second predicts which type of abuse the documents predicted as abusive are. There are two primary distinctions between the two-step architecture proposed by \citet{Park:2017} and the architecture proposed by \citet{Kolhatkar:2021}. First, \citet{Kolhatkar:2021} acts as a one-step classifier whereas the architecture proposed by \citet{Park:2017} acts in two steps. Second, \citet{Kolhatkar:2021} only acts on documents tokenised into words and punctuation whereas \citet{Park:2017} propose a CNN that takes documents tokenised into words and punctuation in addition to documents tokenised into characters. \citet{Park:2017} show that through the use of a one-step CNN trained on word and character input, they achieve a performance boost obtaining a F1-score of $0.827$ on the datasets proposed by \citet{Waseem-Hovy:2016} and \citet{Waseem:2016}, though the performance boost is lost once a two-step hybrid CNN is used.
+A different architecture is proposed by \citet{Park:2017}. In their work they compare a single classifier, what they dub a `one-step classifier', that predicts the final classes directly with a stacked architecture of two models, or a `two-step classifier' in their vernacular, that first predicts whether content is abusive and second predicts which type of abuse the documents predicted as abusive are. There are two primary distinctions between the two-step architecture proposed by \citet{Park:2017} and the architecture proposed by \citet{Kolhatkar:2020}. First, \citet{Kolhatkar:2020} acts as a one-step classifier whereas the architecture proposed by \citet{Park:2017} acts in two steps. Second, \citet{Kolhatkar:2020} only acts on documents tokenised into words and punctuation whereas \citet{Park:2017} propose a CNN that takes documents tokenised into words and punctuation in addition to documents tokenised into characters. \citet{Park:2017} show that through the use of a one-step CNN optimised on word and character input, they achieve a performance boost obtaining a F1-score of $0.827$ on the datasets proposed by \citet{Waseem-Hovy:2016} and \citet{Waseem:2016}, though the performance boost is lost once a two-step hybrid CNN is used.
 
 As CNNs build feature mappings by passing over the data using filters, they come with certain assumptions built into them. As researchers define the number of filters and the stride size, they also define the range, in terms of token order, within which the is given leave to identify token interactions. The implication of this is then that there will likely be some, potentially overlapping, ranges that the models learn patterns from. Depending on how researchers define these, the models will develop feature mappings corresponding to the ranges provided.
 
-Another frequently used architecture is LSTMs \citep{Badjatiya:2017,Kolhatkar:2021,Meyer:2019}. For instance,, \citet{Kolhatkar:2021} propose using a bi-directional LSTM that, like their CNN, has a pre-trained embedding layer, a recurrent layer, a dropout layer, and a fully connected output layer with a sigmoid activation to predict the output classes. \citet{Meyer:2019} on the other hand take develop on the idea of a hybrid CNN, developing a LSTM architecture that takes documents tokenised into words and characters as input. The word representation is obtained through tokenisation passed through an embedding layer and the character representation is obtained by processing the documents with a CNN.
-Using these approaches, \citet{Kolhatkar:2021} show comparable performances between the CNN and bi-directional LSTM on their dataset. \citet{Meyer:2019} on the other hand show that a baseline model only using character level information performs comparably with other more complex approaches, obtaining a macro F1-score of $0.7923$ for the baseline and $0.7924$ for the final system on the dataset proposed by \citet{Waseem-Hovy:2016}, and notably out-performs several other previously proposed methods.
+Another frequently used architecture is LSTMs \citep{Badjatiya:2017,Kolhatkar:2020,Meyer:2019}. For instance,, \citet{Kolhatkar:2020} propose using a bi-directional LSTM that, like their CNN, has a pre-trained embedding layer, a recurrent layer, a dropout layer, and a fully connected output layer with a sigmoid activation to predict the output classes. \citet{Meyer:2019} on the other hand take develop on the idea of a hybrid CNN, developing a LSTM architecture that takes documents tokenised into words and characters as input. The word representation is obtained through tokenisation passed through an embedding layer and the character representation is obtained by processing the documents with a CNN.
+Using these approaches, \citet{Kolhatkar:2020} show comparable performances between the CNN and bi-directional LSTM on their dataset. \citet{Meyer:2019} on the other hand show that a baseline model only using character level information performs comparably with other more complex approaches, obtaining a macro F1-score of $0.7923$ for the baseline and $0.7924$ for the final system on the dataset proposed by \citet{Waseem-Hovy:2016}, and notably out-performs several other previously proposed methods.
 
 The use of LSTMs, that rely on recurrence, break with the independence assumption of the manual feature-based models. By recurring over a document, each new token is considered in conjunction with the previous tokens that have not been forgotten. In this way, an assumption is built into the models that through processing enough token sequences, it will be possible to identify patterns in the sequences of tokens that connote abuse. Such a reliance on the text alone does not consider the positionality of abuse; \citet{Waseem:2018} argue only through understanding the context within which the speaker and audience exist in, is it possible to deem something as abusive. For instance, it is only through an understanding of the speaker that one can deem whether the \textit{n-word} is weaponised as abuse or is reclaimed to connote complex social identity.\vspace{5mm}
 
-All methods described that rely on documents tokenised into sentences rely on pre-trained embedding layers (most frequently GloVe \citet{Pennington:2014}) that come with their own benefits and costs. For instance, word embeddings that are trained on web-text are likely to harbour social biases \citep{Bolukbasi:2016} that have been proven hard to address \citep{Gonen:2019}. On the other hand, they also allow for better representations of related concepts and will be less susceptible to creating different representations for closely related concepts as a result of dataset biases. For instance, the concepts `Television' and `T.V.' might only be distantly related, if at all, in a small dataset due to few co-occurrences within the dataset. In a larger dataset, spanning millions of documents, these two concepts are likely to appear as closely related as a robust language representation will likely have been achieved for such commonly occurring tokens.
+All methods described that rely on documents tokenised into sentences rely on pre-trained embedding layers (most frequently GloVe \citet{Pennington:2014}) that come with their own benefits and costs. For instance, word embeddings that are optimised on web-text are likely to harbour social biases \citep{Bolukbasi:2016} that have been proven hard to address \citep{Gonen:2019}. On the other hand, they also allow for better representations of related concepts and will be less susceptible to creating different representations for closely related concepts as a result of dataset biases. For instance, the concepts `Television' and `T.V.' might only be distantly related, if at all, in a small dataset due to few co-occurrences within the dataset. In a larger dataset, spanning millions of documents, these two concepts are likely to appear as closely related as a robust language representation will likely have been achieved for such commonly occurring tokens.
 The methods that rely on character embeddings are also subject to similar distributional concerns, however this can be a benefit when used in conjunction with word embeddings. 
-This benefit comes through as the set of possible characters is much smaller than the set of possible unique words, less data is needed to train robust embedding layers, though the trained character embeddings will be particularly attuned to the dataset at hand. On the other hand, due to such particularity of the character embeddings, they are less likely to map well onto other domains even if they show good performance on the dataset that they are derived from.\vspace{5mm}
+This benefit comes through as the set of possible characters is much smaller than the set of possible unique words, less data is needed to optimise robust embedding layers, though the optimised character embeddings will be particularly attuned to the dataset at hand. On the other hand, due to such particularity of the character embeddings, they are less likely to map well onto other domains even if they show good performance on the dataset that they are derived from.\vspace{5mm}
 
-For the work in this chapter, the use of pre-trained embeddings is not appropriate for some models. Specifically the models that use LIWC-represented documents as LIWC embeddings are not publicly available or have been developed, to the best of my knowledge. Moreover, documents represented through LIWC categories are poorly suited for training general embeddings as only a small set of tokens are defined and they are not necessarily distributed in a fashion suitable for developing such generalised  embeddings. Second, I don't use pre-trained embeddings in the architectures for all other models to ensure that any comparisons with the LIWC-based models are a direct comparison of the influence of using LIWC as input tokens and avoiding potentially confounding factors.
+For the work in this chapter, the use of pre-trained embeddings is not appropriate for some models. Specifically the models that use LIWC-represented documents as LIWC embeddings are not publicly available or have been developed, to the best of my knowledge. Moreover, documents represented through LIWC categories are poorly suited for optimising general embeddings as only a small set of tokens are defined and they are not necessarily distributed in a fashion suitable for developing such generalised  embeddings. Second, I don't use pre-trained embeddings in the architectures for all other models to ensure that any comparisons with the LIWC-based models are a direct comparison of the influence of using LIWC as input tokens and avoiding potentially confounding factors.
 
 \subsection{Datasets}\label{sub:liwc_datasets}
-In order to understand and validate my approach, I train a model on multiple datasets. Moreover, I take each model that is learned on a given dataset and apply it to all other datasets. To accommodate prediction on a model trained on one dataset to others, I reduced all classification tasks to a binary task of abusive and not-abusive. This has downstream implications for the construction of the datasets and for the validity of the prediction task on the auxiliary datasets.
+In order to understand and validate my approach, I optimise a model on multiple datasets. Moreover, I take each model that is learned on a given dataset and apply it to all other datasets. To accommodate prediction on a model optimised on one dataset to others, I reduced all classification tasks to a binary task of abusive and not-abusive. This has downstream implications for the construction of the datasets and for the validity of the prediction task on the auxiliary datasets.
 First, the dataset distributions are modified as tasks with more than two classes see their data collapsed. For some datasets, this means that the class imbalances are improved, as the majority class is non-abusive. The exception to this is the dataset proposed by \citet{Davidson:2017} where the largest class is the `offensive' class, which I combine with `hateful', further minimising the relative size of the negative class.
 Second, as each dataset has been collected with different rationales and annotated with distinct purposes (please see \cref{sub:abuse_data} for more detail), direct comparisons, and subsequently model predictions on each dataset, can be at odds with the goals of the datasets. For this reason, high scores on prediction metrics on external datasets should be viewed as a weak indication of the ability to identify general patterns while low scores can indicate a number of factors including, but not limited to, highly distinct data sources, annotation strategies, and lastly the questions each dataset is developed to ask.
 
-With these concerns in mind, I decide to use datasets with distinct sources that are developed for different purposes. Rather than resist or seek to minimise the modelling concerns, I choose to lean into them to allow space for understanding how LIWC-based modelling may influence the training and model performance on each dataset. 
+With these concerns in mind, I decide to use datasets with distinct sources that are developed for different purposes. Rather than resist or seek to minimise the modelling concerns, I choose to lean into them to allow space for understanding how LIWC-based modelling may influence the optimisation and model performance on each dataset. 
 Moreover, I seek to gain an understanding along which axes model generalisation may be afforded using LIWC-based modelling (see \cref{tab:vocab_sizes} for the vocabulary sizes for each dataset and input type).
 
 In this chapter I use the \textit{StormFront} dataset~\citep{Garcia:2019}, the \textit{Offence} dataset \citep{Davidson:2017}, the \textit{Hate Speech} dataset~\citep{Waseem-Hovy:2016}, the \textit{Expert Hate} dataset~\citep{Waseem:2016}, and finally the \textit{Toxicity} dataset~\citep{Wulczyn:2017} (please see \cref{sub:abuse_data} for a detailed overview of each dataset).
 
 \subsubsection{StormFront}
-First, I use the \textit{StormFront} dataset which was collected from the white supremacist web forum of the same name by \citet{Garcia:2019}. The data consists of $2,392$ documents, split into $1,531$ training documents, $383$ documents for validation, and $478$ test documents. While the full dataset published consists of $10,000$ documents annotated as `hate' and `not-hate', with a large class imbalance towards non-hateful comments, I choose to use a balanced subset of the data provided by the authors to test how LIWC-based models perform when trained on a) small data and b) a balanced data distribution.
+First, I use the \textit{StormFront} dataset which was collected from the white supremacist web forum of the same name by \citet{Garcia:2019}. The data consists of $2,392$ documents, split into $1,531$ training documents, $383$ documents for validation, and $478$ test documents. While the full dataset published consists of $10,000$ documents annotated as `hate' and `not-hate', with a large class imbalance towards non-hateful comments, I choose to use a balanced subset of the data provided by the authors to test how LIWC-based models perform when optimised on a) small data and b) a balanced data distribution.
 The dataset is initially split into a training and a evaluation set, I created a validation set by extracting a stratified sample from the training data, retaining the class balance from the balanced subset.
 
 \subsubsection{Offence}
-The second dataset used to train and evaluate my models is the \textit{Offence} dataset collected from Twitter by \citet{Davidson:2017}. This dataset was collected to disambiguate offensive tweets from hateful ones. This dataset is distinguished from all other datasets in that the positive classes, i.e. `offensive' and `hateful' accounting for $1,430$ documents and $19,190$ documents, respectively. This leaves only $4,163$ documents in the negative class. Once binarised, the dataset consists of $4,163$ documents in the negative class and $20,620$ documents in the positive class. The dataset is provided by the authors as a single file containing all documents, so I create stratified splits of the data into a training set ($80\%$ or $19,826$ documents), a validation set ($10\%$ or $2,478$ documents), and a evaluation set ($10\%$ or $2,479$ documents), retaining the class distribution in each split. Using this dataset further allows for an investigation into how sensitive LIWC-based modelling is to dataset skews.
+The second dataset used to optimise and evaluate my models is the \textit{Offence} dataset collected from Twitter by \citet{Davidson:2017}. This dataset was collected to disambiguate offensive tweets from hateful ones. This dataset is distinguished from all other datasets in that the positive classes, i.e. `offensive' and `hateful' accounting for $1,430$ documents and $19,190$ documents, respectively. This leaves only $4,163$ documents in the negative class. Once binarised, the dataset consists of $4,163$ documents in the negative class and $20,620$ documents in the positive class. The dataset is provided by the authors as a single file containing all documents, so I create stratified splits of the data into a training set ($80\%$ or $19,826$ documents), a validation set ($10\%$ or $2,478$ documents), and a evaluation set ($10\%$ or $2,479$ documents), retaining the class distribution in each split. Using this dataset further allows for an investigation into how sensitive LIWC-based modelling is to dataset skews.
 
 \subsubsection{Hate Speech}
 I also use the \textit{Hate Speech} dataset, which is collected from Twitter by \citet{Waseem-Hovy:2016}. This dataset contains $16,914$ documents that follow a more traditional class distribution for abusive language data. In this dataset the  `racism' and `sexism' classes are collapsed into a single positive class, `abuse', consisting of $5,355$ documents and the negative class occupying the remaining $11,559$ documents. The primary function this dataset serves in this chapter is to allow some insight into whether the LIWC-based models would function under a distinct annotation criteria that is motivated by academic work in Gender Studies and Critical Race Theory on marginalisation, rather than social media guidelines for acceptable behaviour.
@@ -98,11 +98,11 @@ I also use the \textit{Hate Speech} dataset, which is collected from Twitter by 
 The \textit{Expert Hate} dataset proposed by \citet{Waseem:2016} contains $6,909$ documents and is also collected from Twitter and is also designed as a multi-class classification task. In this dataset the positive classes consist of `sexism' ($13\%$ or $898$ documents), `racism' ($1.41\%$ or $97$ documents) and `both' ($0.70\%$ or $48$ documents) while the negative class consists of $84.19\%$ of the dataset. I reduce this down to a binary classification task and split the dataset into a training set ($80\%$ or $5,527$ documents), a validation set ($10\%$ or $690$ documents), and a evaluation set ($10\%$ or $692$ documents) ensuring that binary the class distribution is retained. This dataset is annotated following the annotation guidelines proposed by \citet{Waseem-Hovy:2016}, however it is annotated using intersectional feminist activists as crowd-workers. This dataset then allows for testing the influence of LIWC-based models on data annotated by experts.
 
 \subsubsection{Toxicity}
-Finally, I use the \textit{Toxicity} dataset published by \citet{Wulczyn:2017}. This dataset was collected from Wikipedia editor discussion pages and annotated as `toxic' and `not-toxic' and it is the largest dataset with $159,686$ documents. These documents are provided split into a training set consisting of $95,692$ documents, a validation set with $32,128$ documents and a evaluation set containing $31,866$ documents. Similarly to the \textit{Hate Speech} and \textit{Expert Hate} datasets, this dataset is highly imbalanced with the positive class accounting for $~16\%$ of the entire dataset. I use this dataset to gain an understanding of how large scale datasets can influences the performance, size, and training time of LIWC-based models.
+Finally, I use the \textit{Toxicity} dataset published by \citet{Wulczyn:2017}. This dataset was collected from Wikipedia editor discussion pages and annotated as `toxic' and `not-toxic' and it is the largest dataset with $159,686$ documents. These documents are provided split into a training set consisting of $95,692$ documents, a validation set with $32,128$ documents and a evaluation set containing $31,866$ documents. Similarly to the \textit{Hate Speech} and \textit{Expert Hate} datasets, this dataset is highly imbalanced with the positive class accounting for $~16\%$ of the entire dataset. I use this dataset to gain an understanding of how large scale datasets can influences the performance, size, and optimisation time of LIWC-based models.
 
 \section{Modelling}\label{sec:liwc_modelling}
 
-In order to understand the impact of LIWC-based modelling, I design feature-based and neural network models. I optimise a Logistic Regression and a SVM model with a linear kernel for each type of input data (Word unigrams, BPE unigrams, and LIWC unigrams) to allow for feature-based analysis of what patterns are identified. To investigate how neural network models operate on the input data, I develop three types of neural networks for each input type: First, I train a MLP to provide an initial insight into whether neural network approaches might be appropriate, second I develop a LSTM model to investigate whether there are any benefits from its recurrent nature and finally, I develop a CNN model due to their widespread use in previous work.
+In order to understand the impact of LIWC-based modelling, I design feature-based and neural network models. I optimise a Logistic Regression and a SVM model with a linear kernel for each type of input data (Word unigrams, BPE unigrams, and LIWC unigrams) to allow for feature-based analysis of what patterns are identified. To investigate how neural network models operate on the input data, I develop three types of neural networks for each input type: First, I optimise a MLP to provide an initial insight into whether neural network approaches might be appropriate, second I develop a LSTM model to investigate whether there are any benefits from its recurrent nature and finally, I develop a CNN model due to their widespread use in previous work.
 
 I specify two different optimisation procedures, one for the linear baseline models and one for the neural networks.
 For the linear baseline models, I tokenise and pre-process the data and perform a grid-search over the parameter space that optimises for the highest F1-score performance.
@@ -112,7 +112,7 @@ For neural network models, I similarly tokenise and pre-process the data and per
 
 Prior to providing any model data, it is necessary to pre-process the data to make it suitable for the experiment conducted. In my experiments I examine how modifying the vocabulary that a model relies on might influence model design. To this effect, it is necessary to have some distinct pre-processing steps for the datasets depending on the experiment while others are shared. For the shared pre-processing steps, I lower-case all documents, replace all usernames, that follow the Twitter standard of an `@' followed by a string, with a generic \textit{<USER>} token, replace all website URLs with a generic \textit{<URL>} token, and finally, replace all hashtags with a generic \textit{<HASHTAG>} token. The resulting vocabulary sizes for each dataset and data type can be seen in \cref{tab:vocab_sizes}.
 
-For the LIWC-based models and the word-based models, I pre-process documents using the python library Ekphrasis \citep{baziotis:2017} which was developed specifically to handle the particularities of social media texts. For instance, elongated words are mapped to their unelongated form, e.g. `heyyyy' is mapped to `hey' (see \cref{bpe_tok} and \cref{tab:liwc_tok} for examples of tokenisation). No further processing is done for experiments using word tokens as input.
+For the LIWC-based models and the word-based models, I pre-process documents using the python library Ekphrasis \citep{baziotis:2017} which was developed specifically to handle the particularities of social media texts. For instance, elongated words are mapped to their unelongated form, e.g. `heyyyy' is mapped to `hey' (see \cref{tab:bpe_tok} and \cref{tab:liwc_tok} for examples of tokenisation). No further processing is done for experiments using word tokens as input.
 
 \begin{table}[]
   \centering
@@ -215,51 +215,51 @@ For the documents represented through the LIWC categories that they invoke, I ob
 
 Considering \cref{tab:liwc_vocab_overlaps,tab:word_vocab_overlaps,tab:bpe_vocab_overlaps} that display the numbers of tokens that are unique to each class and the numbers that are shared for each dataset, there are some clear implications for my research questions.
 First, only minor distributional shifts between word-based vocabularies (see \cref{tab:word_vocab_overlaps}) and BPE-based vocabularies (see \cref{tab:bpe_vocab_overlaps}). As processing and representing documents as their byte-pair represented counter-parts results in the computation of sub-words, such small distributional discrepancies are to be expected.
-Second, observing the differences between LIWC vocabulary distributions (see \cref{tab:liwc_vocab_overlaps}) and the word vocabulary distributions, it is clear that the distributional changes are large and that the LIWC-based representation has large ramifications on the datasets and subsequently models trained for the task.
-For instance, as the vast majority of tokens are shared between both classes, there are fewer potential signals for models to over-fit to, e.g. where a word-based model trained on the \textit{Toxicity} dataset may have at least $72,979$ unique tokens across the classes, that is $76.3\%$ of all unique tokens in the dataset that the model can potentially learn spurious correlations on.
+Second, observing the differences between LIWC vocabulary distributions (see \cref{tab:liwc_vocab_overlaps}) and the word vocabulary distributions, it is clear that the distributional changes are large and that the LIWC-based representation has large ramifications on the datasets and subsequently on the models optimised for the task.
+For instance, as the vast majority of tokens are shared between both classes, there are fewer potential signals for models to over-fit to, e.g. where a word-based model optimised on the \textit{Toxicity} dataset may have at least $72,979$ unique tokens across the classes, that is $76.3\%$ of all unique tokens in the dataset that the model can potentially learn spurious correlations on.
 Conversely, a LIWC-based model is only provided with $136$ unique tokens across the classes, or $13.3\%$ of all unique tokens, that it is likely to over-fit to.\footnote{In both instances disregarding the possibility of over-fitting to the patterns of occurrences between different tokens.}
 Similarly to n-gram character-based modelling, a smaller set of unique tokens is likely to result in a matrix that is, in places, more dense, allowing for a model to identify patterns based on the interaction of tokens rather than individual tokens. This particular case is likely for LIWC-based models as the vast majority (between $64\%$ and $86\%$) of tokens are shared between both classes.
 
 \subsection{Linear Baseline Models}\label{sec:baseline_models}
 
 For the linear baseline models, I optimise several different linear models (i.e. Logistic Regression models and SVMs) that function as baselines using the scikit-learn python library \citet{Pedregosa:2011}.
-For each algorithm, I train three different models: a) surface-token based model that uses sentences tokenised into words, b) models on the Byte-Pair encoded representation, and c) models that use the LIWC-based representation as their input data.
-For all baseline models, I only use token unigrams as features, as these provide competitive baselines for many of the datasets (see \autoref{tab:liwc_baseline_linear_scores}).
-To ensure that the baseline models use the most appropriate, I perform a cross-validated grid-search (as implemented by \citet{Pedregosa:2015}) over the possible settings of the model parameters for each model.
+For each algorithm, I develop three different models: a) surface-token based model that uses sentences tokenised into words, b) models on the Byte-Pair encoded representation, and c) models that use the LIWC-based representation as their input data.
+For all baseline models, I only use token unigrams as features, as these provide competitive baselines for many of the datasets.
+To ensure that the baseline models use the most appropriate, I perform a cross-validated grid-search (as implemented by \citet{Pedregosa:2011}) over the possible settings of the model parameters for each model.
 For both SVM and Logistic Regression models, I explore values of the strength of the regularisation ($[0.1, 0.2, 0.3, \ldots, 0.9]$) to examine the strength of regularisation and the regulariser ($\{L1, L2\}$). For Logistic Regression, I also set the parameter search to consider \textit{Elasticnet} as a third regulariser option.
 
-In the training procedure for the linear models, I first fit a count vectoriser on the training data and then optimise a model on the vectorised training data. 
+In the optimisation procedure for the linear models, I first fit a count vectoriser on the training data and then optimise a model on the vectorised training data. 
 For prediction on other datasets, all datasets are passed through vectoriser fitted to the training data. 
 This ensures that all datasets are processed and indexed in accordance to the vocabulary of the training dataset and the model. 
-A notable difference between the training of linear models and their neural network counterparts is that linear models are only provided with the dataset once for each cross-validation set and the order of the documents in the dataset is not randomised whereas the neural network models iterate multiple times over the training dataset where the order of the documents in the dataset is shuffled between each iteration.
+A notable difference between the optimisation of linear models and their neural network counterparts is that linear models are only provided with the dataset once for each cross-validation set and the order of the documents in the dataset is not randomised whereas the neural network models iterate multiple times over the training dataset where the order of the documents in the dataset is shuffled between each iteration.
 
 \subsection{Neural Models}\label{sec:redux_neural}
 
 I implement three different neural network model types using PyTorch~\citep{Paszke:2019} and perform a hyper-parameter search on each model type for every dataset and input type. Specifically, I implement a Multi-Layered Perceptron model, a Long-Short Term Memory network, and a Convolutional Neural Network.
 I choose to implement an MLP as it is the simplest form of neural networks and it can provide insights into the applicability of neural network based architectures.
-As the LIWC tokens are distributed such that the vast majority of tokens are shared by both classes, I also train a LSTM network to take long-range dependencies into account. 
+As the LIWC tokens are distributed such that the vast majority of tokens are shared by both classes, I also develop a LSTM network to take long-range dependencies into account. 
 I choose a LSTM over a basic RNN model as unknown tokens are likely to occur frequently in the LIWC-based data due to the small size of the dictionary and resulting vocabularies, and it may be desirable for any recurrent model trained on the data to be afforded the ability to forget sequences of unknown tokens.
-Finally, I train a CNN model as this model type has been frequently applied in the previous work.
+Finally, I develop a CNN model as this model type has been frequently applied in the previous work.
 
-In order to focus on the utility of the different document representations, I train models with simple architectures. 
+In order to focus on the utility of the different document representations, I optimise models that have simple architectures. 
 To this end, I also don't use pre-trained embeddings as embedding layers within the model as I am not aware of any general purpose pre-trained LIWC-embeddings and, as is apparent from \cref{tab:liwc_tok}, the LIWC tokens generated for each token would most likely be out-of-vocabulary for most pre-trained word embeddings. 
-Instead I opt to train the embedding layer along with all other layers.
-To address the issue of the model over-fitting the data, either by identifying spurious correlations in the data or by over-training the model, I subject each model to dropout and early stopping (see \cref{sec:dropoutearly} for more detail on dropout and early stopping). 
-To address the issues of exploding and vanishing gradients, I employ gradient clipping \citep{Bengio:1994}, to normalise the value of the gradients in the training procedures.
+Instead I opt to optimise the embedding layer along with all other layers.
+To address the issue of the model over-fitting the data, either by identifying spurious correlations in the data or by continuing the optimisation of the model for too long, I subject each model to dropout and early stopping (see \cref{sec:model_background} for more detail on dropout and early stopping). 
+To address the issues of exploding and vanishing gradients, I employ gradient clipping \citep{Bengio:1994}, to normalise the value of the gradients in the optimisation procedures.
 
-I use a single training procedure for all models to control the influence of confounding factors in the training process.
-The models are given data, which they iterate over in a pre-defined number of epochs, shuffling the dataset between each epoch. Within each epoch, batches of the data through are passed through the model for prediction during training.
+I use a single optimisation procedure for all models to control the influence of confounding factors in the optimisation process.
+The models are given data, which they iterate over in a pre-defined number of epochs, shuffling the dataset between each epoch. Within each epoch, batches of the data through are passed through the model for prediction during optimisation.
 The loss following the model performance is then back-propagated through model, updating the internal representation in the process.
 This process is repeated for the assigned maximum number of epochs, or the model triggers the early stopping \citep{Prechelt:1998} criteria, which is that the computed loss on the validation set has been strictly increasing for at least $15$ epochs.
-Once a model has finished training, performance in terms of macro \texttt{F1-score}, \texttt{precision}, \texttt{recall} and \texttt{accuracy} are computed on the validation set and evaluation sets.
-To be able to speak to the training time, I start a timer when the model training procedure is initiated and stop the timer when the model has fully completed it's training, but prior to any inference made using the model.
+Once a model has finished optimising, performance in terms of macro \texttt{F1-score}, \texttt{precision}, \texttt{recall} and \texttt{accuracy} are computed on the validation set and evaluation sets.
+To be able to speak to the optimisation time, I start a timer when the model optimisation procedure is initiated and stop the timer when the model has fully completed its optimisation, but prior to any inference made using the model.
 I repeat this process for at least $200$ unique trials for each model and dataset combination and use the \texttt{F1-score} on the validation set to identify the best configuration of hyper-parameters.
 Once the best hyper-parameters are selected, I rerun the models with $5$ different random seeds and obtain these models' performance on all evaluation sets, that is the in-domain test for the dataset the models are trained on and the out-of-domain evaluation sets from the remaining datasets.
 
 In efforts to identify the best hyper-parameters without performing a grid-search of all possible combinations, I turn towards Bayesian Hyper-Parameter Tuning \citep{Neal:1996}. Briefly, Bayesian Optimisation allows for estimating the best hyper-parameters for a model through a series of trials with different hyper-parameter settings. I use the implementation of Bayesian Hyper-Parameter Optimisation offered through \citet{Wandb} and set the objective of the hyper-parameter optimisation to maximise the macro \texttt{F1-score} on the development data (please refer to \cref{sub:bho} for more detail).
 
-The parameters that I perform the optimisation for varies across the different model types as they require different hyper-parameters to be defined. A set of hyper-parameters are constant across models: the size of mini-batches provided to the model for training, the learning rate, the number of epochs, and the embedding size. For each dataset and model type, I perform at last $200$ trials with different parameter settings, leading to choosing a final set of hyper-parameters that I run with five different random seeds.
-The values for the learning rate are sampled from a uniform distribution while the batch size and number of training epochs are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate are sampled from a categorical distribution.
+The parameters that I perform the optimisation for varies across the different model types as they require different hyper-parameters to be defined. A set of hyper-parameters are constant across models: the size of mini-batches provided to the model for optimisation, the learning rate, the number of epochs, and the embedding size. For each dataset and model type, I perform at last $200$ trials with different parameter settings, leading to choosing a final set of hyper-parameters that I run with five different random seeds.
+The values for the learning rate are sampled from a uniform distribution while the batch size and number of epochs to optimise for are sampled from a categorical distribution. More generally, the values for all hyper-parameters, asides from dropout and the learning rate are sampled from a categorical distribution.
 
 \begin{itemize}
   \item Maximum epoch count: $\{50, 100, 200\}$,
@@ -279,7 +279,7 @@ The first neural architecture that I implement is a Multi-Layered Perceptron. I 
 %   \label{fig:liwc_mlp}
 % \end{figure}
 % }
-I perform a hyper-parameter search over shared the hyper-parameters detailed in \cref{sub:liwc_hyperparam} in addition to the following hyper-parameter values, that are specific to the MLP:
+I perform a hyper-parameter search over the following hyper-parameter values, that are specific to the MLP:
 
 \begin{itemize}
   \item dropout probability: $[0.0, 0.5]$,
@@ -323,10 +323,10 @@ However as the CNN requires window sizes and number of filters to be set, these 
 \section{Results}
 
 To answer the research questions set forth, I examine three different aspects of my models: First, I examine the model performances on a held out evaluation set from dataset they are optimised on in an effort to answer how appropriate LIWC representations are for automated abuse detection. 
-Second, I compare the model performances on the evaluation sets of datasets that they are not trained on. 
-Finally, I observe the time it takes for models to be trained using the different representations.
-To answer these questions, I develop three different neural network types and optimise these on three different data representations for each of the five datasets introduced in \cref{sub:liwc_datasets}, resulting in $45$ different model architectures trained. 
-These $45$ model architectures are then subject to at least $200$ hyper-parameter selection trials, resulting in over $9,000$ models trained in the process of identifying the best hyper-parameters. Once the hyper-parameters are determined, I perform an additional $5$ runs for each model architecture, examining the influence of the random seed.
+Second, I compare the model performances on the evaluation sets of datasets that they are not optimised on. 
+Finally, I observe the time it takes for models to be optimised using the different representations.
+To answer these questions, I develop three different neural network types and optimise these on three different data representations for each of the five datasets introduced in \cref{sub:liwc_datasets}, resulting in $45$ different model architectures optimised. 
+These $45$ model architectures are then subject to at least $200$ hyper-parameter selection trials, resulting in over $9,000$ models developed in the process of identifying the best hyper-parameters. Once the hyper-parameters are determined, I perform an additional $5$ runs for each model architecture, examining the influence of the random seed.
 
 \subsection{Baseline Models}
 
@@ -376,7 +376,7 @@ All linear baseline models prefer an L2 regularisation. Considering \cref{tab:li
 
 \subsubsection{Evaluation Set Performances}
 In \cref{tab:linear_offence_baselines,tab:linear_toxicity_baselines,tab:linear_hateExp_baselines,tab:linear_hatespeech_baselines,tab:linear_stormfront_baselines}, though only baselines, there are a number of interesting patterns that emerge.
-First, the baselines validate the hypothesis that LIWC-based representation can serve as a viable input to machine learning models, as the LIWC-based models often achieve competing scores, and in some instances out-perform models with other data representations, e.g. in \texttt{recall} on the in-domain prediction on the \textit{Offence} test data (see \cref{tab:linear_offence_baselines}) and the \texttt{F1-score} achieved on the out-of-domain datasets, for instance for the models trained on the \textit{Toxicity} dataset (see \cref{tab:linear_toxicity_baselines}).
+First, the baselines validate the hypothesis that LIWC-based representation can serve as a viable input to machine learning models, as the LIWC-based models often achieve competing scores, and in some instances out-perform models with other data representations, e.g. in \texttt{recall} on the in-domain prediction on the \textit{Offence} test data (see \cref{tab:linear_offence_baselines}) and the \texttt{F1-score} achieved on the out-of-domain datasets, for instance for the models optimised on the \textit{Toxicity} dataset (see \cref{tab:linear_toxicity_baselines}).
 \begin{table}[]
 \centering
 \begin{minipage}{0.42\paperheight}
@@ -406,7 +406,7 @@ First, the baselines validate the hypothesis that LIWC-based representation can 
                                         & F1-score  & 0.5869      & 0.5893       & 0.5791 & \bf{0.6164}     & 0.4226      & 0.4559
     \end{tabular}%
     }
-    \caption{Scores on the evaluation sets for linear models trained on the \textit{Offence} dataset.}
+    \caption{Scores on the evaluation sets for linear models optimised on the \textit{Offence} dataset.}
     \label{tab:linear_offence_baselines}
     \vfill
     \resizebox{0.42\paperheight}{!}{%
@@ -435,7 +435,7 @@ First, the baselines validate the hypothesis that LIWC-based representation can 
                                         & F1-score  & 0.4632 & \bf{0.4872}       & 0.4811      & 0.4817      & 0.3800 & 0.3901
     \end{tabular}%
     }
-    \caption{Scores on the evaluation sets for linear models trained on the \textit{Toxicity} dataset.}
+    \caption{Scores on the evaluation sets for linear models optimised on the \textit{Toxicity} dataset.}
     \label{tab:linear_toxicity_baselines}
     \end{minipage}
 \end{table}
@@ -471,7 +471,7 @@ Second, though the baselines often produce sub par classification performances o
                                        & F1-score  & 0.3507      & 0.3541       & 0.3370      & 0.3324     & 0.4458      & \bf{0.4720}
     \end{tabular}%
     }    
-    \caption{Scores on the evaluation sets for  linear models trained on the \textit{Hate Expert} dataset.}
+    \caption{Scores on the evaluation sets for  linear models optimised on the \textit{Hate Expert} dataset.}
     \label{tab:linear_hateExp_baselines}
     \vfill
     
@@ -501,14 +501,14 @@ Second, though the baselines often produce sub par classification performances o
                                            & F1-score  & 0.4587       & \bf{0.5069}      & 0.3370      & 0.4712        & 0.4974      & 0.5037
     \end{tabular}%
     }
-    \caption{Scores on the evaluation sets for linear models trained on the \textit{Hate Speech} dataset.}
+    \caption{Scores on the evaluation sets for linear models optimised on the \textit{Hate Speech} dataset.}
     \label{tab:linear_hatespeech_baselines}
 \end{minipage}
 \end{table}
 
 Third, many of the LIWC-based models post strong performances on in-domain data, suggesting that simple linear models may be highly appropriate for the LIWC-based input.
 Moreover, these strong in-domain performances also provide a weak suggestion that neural network architectures may be suited for the task as most of the of the datasets that are under consideration are small datasets.
-Fourth, an interesting trend of the models trained on the \textit{Offence} and the \textit{Toxicity} datasets obtain surprisingly good scores on each other. Two potential reasons for this trend are, 1) the two datasets are the largest in datasets so more general patterns may be learned, 2) as the notion of ``offensive'' as constructed by \citet{Davidson:2017} bears strong similarities with the notion of ``toxicity'' constructed by \citet{Wulczyn:2017}, yielding in subsets of the datasets that strongly share similarities with each other.
+Fourth, an interesting trend of the models optimised on the \textit{Offence} and the \textit{Toxicity} datasets obtain surprisingly good scores on each other. Two potential reasons for this trend are, 1) the two datasets are the largest in datasets so more general patterns may be learned, 2) as the notion of ``offensive'' as constructed by \citet{Davidson:2017} bears strong similarities with the notion of ``toxicity'' constructed by \citet{Wulczyn:2017}, yielding in subsets of the datasets that strongly share similarities with each other.
 
 \begin{table}
     \centering
@@ -543,9 +543,9 @@ Fourth, an interesting trend of the models trained on the \textit{Offence} and t
 \end{table}
 
 Finally, although these baseline models do obtain surprisingly good scores for many of the models, there are several instances of noteworthy performance drops between the word-token and BPE-token models and their LIWC counterpart, notably the LIWC-based models often perform well on some metrics, but fall short on others. 
-For instance in \cref{tab:linear_stormfront_baselines,tab:linear_hatespeech_baselines}, the LIWC-based models perform well on \texttt{recall} and \texttt{precision}, though they are frequently out-performed by models trained with different data representations. 
+For instance in \cref{tab:linear_stormfront_baselines,tab:linear_hatespeech_baselines}, the LIWC-based models perform well on \texttt{recall} and \texttt{precision}, though they are frequently out-performed by models optimised with different data representations. 
 Thus, within the space of these strong results there is still room for improvement of the metrics.
-As most of the datasets are imbalanced, I focus my attention on the macro \texttt{F1-score} performance due to its particular ability to handle imbalanced data well and its use in the previous literature \citep{Macro F1 papers}.
+As most of the datasets are imbalanced, I focus my attention on the macro \texttt{F1-score} performance due to its particular ability to handle imbalanced data well and its use in the previous literature \citep{Fortuna:2021}.
 
 \subsection{Neural models}
 \subsection{Model Hyper-Parameters and Validation Set Performances}
@@ -553,7 +553,7 @@ As most of the datasets are imbalanced, I focus my attention on the macro \textt
 As a result of the $200$ trials, several parameter settings compete to be the best performing model, with little difference in their scores on the validation set. 
 The hyper-parameters for the best and most stably performing model are presented in \cref{tab:redux_embedding_offence_params,tab:redux_embedding_toxicity_params,tab:redux_embedding_hate_expert_params,tab:redux_embedding_hatespeech_params,tab:redux_embedding_stormfront_params}.
 
-Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1-scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are trained.
+Taking the best performing hyper-parameters, I re-run each model and dataset combination with five different random seeds ($22$, $32$, $42$, $310$, and $922$) and display the macro F1-scores and the loss on the in-domain validation sets in \cref{fig:davidson_dev_f1,fig:davidson_dev_loss,fig:wulczyn_dev_f1,fig:wulczyn_dev_loss,fig:waseem_dev_f1,fig:waseem_dev_loss,fig:waseem_hovy_dev_f1,fig:waseem_hovy_dev_loss,fig:garcia_dev_f1,fig:garcia_dev_loss} as the models are optimised.
 Note, that in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1} the standard deviations is depicted through shading whereas in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} the shading represents the standard error.\footnote{I display the standard error here, rather than the standard deviation, as displaying the standard deviation on a log scale results in unreadable graphs due to outliers. Ignoring outliers in producing the graph has the natural consequence that parts of the graph exist outside of the displayed area.}
 Moreover, as loss values most frequently are small, I display the losses on a  logarithmic scale to allow for more readable figures.
 
@@ -575,7 +575,7 @@ Moreover, as loss values most frequently are small, I display the losses on a  l
                                                  & LSTM  & 200           & 200        & N/A         & N/A     & 16         & 0.08958       & 0.4237  & Tanh                & 50
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models trained on the \textit{Offence} dataset.}
+\caption{Best hyper-parameters for models optimised on the \textit{Offence} dataset.}
 \label{tab:redux_embedding_offence_params}
 \end{table}
 
@@ -595,7 +595,7 @@ Moreover, as loss values most frequently are small, I display the losses on a  l
                                                  & LSTM  & 300           & 200        & N/A         & N/A     & 16         & 0.05504       & 0.224   & Tanh                & 50
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models trained on the \textit{Toxicity} dataset.}
+\caption{Best hyper-parameters for models optimised on the \textit{Toxicity} dataset.}
 \label{tab:redux_embedding_toxicity_params}
 \end{table}
 
@@ -615,7 +615,7 @@ Moreover, as loss values most frequently are small, I display the losses on a  l
                                                   & LSTM  & 200           & 300        & N/A         & N/A     & 32         & 0.7015        & 0.2012    & tanh                & 100
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models trained on the \textit{Hate Expert} dataset.}
+\caption{Best hyper-parameters for models optimised on the \textit{Hate Expert} dataset.}
 \label{tab:redux_embedding_hate_expert_params}
 \end{table}
 \end{landscape}
@@ -638,7 +638,7 @@ Moreover, as loss values most frequently are small, I display the losses on a  l
                                                   & LSTM  & 200           & 64         & N/A         & N/A     & 32         & 0.04429       & 0.305   & Tanh          & 200
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models trained on the \textit{Hate Speech} dataset.}
+\caption{Best hyper-parameters for models optimised on the \textit{Hate Speech} dataset.}
 \label{tab:redux_embedding_hatespeech_params}
 \end{table}
 
@@ -658,7 +658,7 @@ Moreover, as loss values most frequently are small, I display the losses on a  l
                                                   & LSTM  & 100           & 300        & N/A         & N/A     & 32         & 0.05931       & 0.1301  & Tanh          & 200
 \end{tabular}%
 }
-\caption{Best hyper-parameters for models train on the \textit{StormFront} dataset.}
+\caption{Best hyper-parameters for models optimised on the \textit{StormFront} dataset.}
 \label{tab:redux_embedding_stormfront_params}
 \end{table}
 \end{landscape}
@@ -666,14 +666,14 @@ Moreover, as loss values most frequently are small, I display the losses on a  l
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{davidson_dev_f1.pdf}
-    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Offence} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models optimised on the \textit{Offence} dataset.}
     \label{fig:davidson_dev_f1}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{davidson_dev_loss_stderr_logscale.pdf}
-    \caption{Validation losses for models trained on the \textit{Offence} dataset.}
+    \caption{Validation losses for models optimised on the \textit{Offence} dataset.}
     \label{fig:davidson_dev_loss}
 \end{figure}
 
@@ -683,68 +683,68 @@ One such exception can be observed in \cref{fig:davidson_dev_f1}, where the LIWC
 Another exception can be observed in \cref{fig:waseem_dev_f1}, where the BPE based MLP model starts with a low performance, but increasingly improves until the final few epochs, where the model predictions become very volatile and ultimately triggers early stopping with a large drop in performance.
 In addition to these two exceptions, the models that are optimised for the \textit{StormFront} dataset (see \cref{fig:garcia_dev_f1})  in which three patterns emerge: first, there are some models that show a large variability in their performances from epoch to epoch, these models tend to trigger early stopping at an early stage; second, there are models that show a smaller degree of variability in classification performance as the model is optimised, but as they pass through the epochs, the model performance steadily increases and the variability in performances decreases; and third, there are models that obtain a high score early in the optimisation procedure and trigger early stopping at an early stage.
 
-Another exception can be observed in the models trained on \textit{Toxicity} dataset (see \cref{fig:wulczyn_dev_f1}). Here three salient trends occur.
+Another exception can be observed in the models optimised on \textit{Toxicity} dataset (see \cref{fig:wulczyn_dev_f1}). Here three salient trends occur.
 In the first, models start with a high \texttt{F1-score} and show little improvement as over the epochs and trigger early stopping.
 In the second, models start with a lower \texttt{F1-score} and show steady improvements until early stopping is triggered.
 The third trend starts with a relatively low model performance (below $0.4$ in \texttt{F1-score}), seeing steady improvements, before reaching a plateau and continuing until early stopping is triggered or the set number of epochs is reached.
-As these models train, there is an early sharp increase in the model performances followed by reaching a plateau and only post minor improvements in the later epochs.
+As these models are being optimised, there is an early sharp increase in the model performances followed by reaching a plateau and only post minor improvements in the later epochs.
 
-Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} there are three unique patterns: first, the loss rises throughout the training process; second, the loss remains almost entirely unchanged throughout the entire training process, and finally the third pattern; the loss is volatile throughout the process, rising or dropping from epoch to epoch.
+Turning to the loss developments in \cref{fig:davidson_dev_loss,fig:wulczyn_dev_loss,fig:waseem_dev_loss,fig:waseem_hovy_dev_loss,fig:garcia_dev_loss} there are three unique patterns: first, the loss rises throughout the optimisation process; second, the loss remains almost entirely unchanged throughout the entire optimisation process, and finally the third pattern; the loss is volatile throughout the process, rising or dropping from epoch to epoch.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{wulczyn_dev_f1.pdf}
-    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Toxicity} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models optimised on the \textit{Toxicity} dataset.}
     \label{fig:wulczyn_dev_f1}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{wulczyn_dev_loss_stderr_logscale.pdf}
-    \caption{Validation losses for models trained on the \textit{Toxicity} dataset.}
+    \caption{Validation losses for models optimised on the \textit{Toxicity} dataset.}
     \label{fig:wulczyn_dev_loss}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{waseem_dev_f1.pdf}
-    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Hate Expert} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models optimised on the \textit{Hate Expert} dataset.}
     \label{fig:waseem_dev_f1}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{waseem_dev_loss_stderr_logscale.pdf}
-    \caption{Validation losses for models trained on the \textit{Hate Expert} dataset.}
+    \caption{Validation losses for models optimised on the \textit{Hate Expert} dataset.}
     \label{fig:waseem_dev_loss}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{waseem_hovy_dev_f1.pdf}
-    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{Hate Speech} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models optimised on the \textit{Hate Speech} dataset.}
     \label{fig:waseem_hovy_dev_f1}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{waseem_hovy_dev_loss_stderr_logscale.pdf}
-    \caption{Validation losses for models trained on the \textit{Hate Speech} dataset.}
+    \caption{Validation losses for models optimised on the \textit{Hate Speech} dataset.}
     \label{fig:waseem_hovy_dev_loss}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{garcia_dev_f1.pdf}
-    \caption{In-domain macro \texttt{F1-score} on validation set for models trained on the \textit{StormFront} dataset.}
+    \caption{In-domain macro \texttt{F1-score} on validation set for models optimised on the \textit{StormFront} dataset.}
     \label{fig:garcia_dev_f1}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{garcia_dev_loss_stderr_logscale.pdf}
-    \caption{Validation losses for models trained on the \textit{StormFront} dataset.}
+    \caption{Validation losses for models optimised on the \textit{StormFront} dataset.}
     \label{fig:garcia_dev_loss}
 \end{figure}
 
 \subsubsection{Evaluation Set Performances}
-In \cref{fig:davidson_mlp_test,fig:wulczyn_mlp_test,fig:waseem_mlp_test,fig:waseem_mlp_test,fig:garcia_mlp_test,fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_lstm_test,fig:garcia_lstm_test, fig:davidson_cnn_test,fig:wulczyn_cnn_test,fig:waseem_cnn_test,fig:waseem_cnn_test,fig:garcia_cnn_test}
+In \cref{fig:davidson_mlp_test,fig:wulczyn_mlp_test,fig:waseem_mlp_test,fig:waseem_mlp_test,fig:garcia_mlp_test,fig:davidson_lstm_test,fig:wulczyn_lstm_test,fig:waseem_lstm_test,fig:waseem_lstm_test,fig:garcia_lstm_test,fig:davidson_cnn_test,fig:wulczyn_cnn_test,fig:waseem_cnn_test,fig:waseem_cnn_test,fig:garcia_cnn_test}
 , I show the in-domain and out-of-domain results of using the neural network architectures described in \cref{sec:liwc_modelling} for modelling abuse using the three different document representations. 
 The bars in each figure represent the scores of each models on the test set in question, e.g. in \cref{fig:davidson_mlp_test} I show the macro \texttt{F1-score}s achieved by all models on the test set for the \textit{Offence} dataset, and the error bars are the standard deviation over the $5$ parameter seed runs.
 
@@ -758,20 +758,20 @@ One dataset however, is notable in its in-domain and all out-of-domain predictio
 For this dataset, linear models perform at par, or better than all configurations of neural models. 
 The most likely explanation for this can be found in the small dataset size of less than $3,000$ documents. 
 One way to address such a short-coming of this dataset is to increase the dataset size. 
-Although the experiments I conduct with the dataset keep the number of documents lower than the total annotated set in order to maintain a balanced dataset, the dataset does in some cases out-perform models trained on larger dataset for out-of-domain prediction, i.e. in the MLP models evaluated on the \textit{Offence} data (see \cref{fig:davidson_mlp_test}, where the StormFront LIWC based model  out-performs several other models that are trained on larger datasets.
+Although the experiments I conduct with the dataset keep the number of documents lower than the total annotated set in order to maintain a balanced dataset, the dataset does in some cases out-perform models that are optimised on larger dataset for out-of-domain prediction, i.e. in the MLP models evaluated on the \textit{Offence} data (see \cref{fig:davidson_mlp_test}, where the StormFront LIWC based model  out-performs several other models that are optimised on larger datasets.
 %Specifically, models trained on the \textit{StormFront} dataset have comparable out-of-domain classification performance with the \textit{Offence} dataset on the evaluation sets for the \textit{Hate Expert} dataset (see \cref{fig:waseem_mlp_test,fig:waseem_lstm_test,fig:waseem_cnn_test,fig:waseem_hovy_mlp_test,fig:waseem_hovy_lstm_test,fig:waseem_hovy_cnn_test}).
 
 More generally, from the out-of-domain classification performances, there seems to be a correlation with the goals of the datasets and out-of-domain performance. 
-For instance, in \cref{fig:davidson_mlp_test,fig:davidson_lstm_test,fig:davidson_cnn_test,fig:wulczyn_mlp_test,fig:wulczyn_cnn_test}, I observe that models trained on the \textit{Offence} and \textit{Toxicity} datasets out-perform models trained on other datasets. 
+For instance, in \cref{fig:davidson_mlp_test,fig:davidson_lstm_test,fig:davidson_cnn_test,fig:wulczyn_mlp_test,fig:wulczyn_cnn_test}, I observe that models optimised on the \textit{Offence} and \textit{Toxicity} datasets out-perform models optimised on other datasets. 
 For both of these datasets, the governing understanding of abuse and hate speech are that not all speech that is offensive is necessarily also problematic.
 The motivation for the development of the \textit{Offence} dataset was specifically to disentangle hateful from offensive.
 Similarly, the \textit{Toxicity} dataset asked its annotators to identify comments that might make people exit conversations they were part of rather than ask annotators to label for all content that is offensive or hateful.
 Thus, for these two datasets, the governing question is not necessarily the protection of marginalised communities and identities but instead identifying a degree of acceptable abuse and hostility.
 
 In contrast, the \textit{Hate Expert} and \textit{Hate Speech} datasets seek to identify communications that are harmful to marginalised communities. 
-Thus, it's no surprise that the out-of-domain performances for models trained on these two datasets perform reasonably well with each other. 
+Thus, it's no surprise that the out-of-domain performances for models optimised on these two datasets perform reasonably well with each other. 
 However here it is also clear that there is an influence of dataset size. 
-Where the \textit{Hate Speech} dataset consists of $~16,000$ documents, the \textit{Hate Expert} dataset consists of $~7,000$ documents, which is also apparent from the fact that the models trained on the \textit{Hate Speech} dataset perform better on the \textit{Hate Expert} evaluation set than the models trained on the \textit{Hate Expert} dataset perform on the \textit{Hate Speech} dataset.
+Where the \textit{Hate Speech} dataset consists of $~16,000$ documents, the \textit{Hate Expert} dataset consists of $~7,000$ documents, which is also apparent from the fact that the models optimised on the \textit{Hate Speech} dataset perform better on the \textit{Hate Expert} evaluation set than the models optimised on the \textit{Hate Expert} dataset perform on the \textit{Hate Speech} dataset.
 
 The \textit{StormFront} dataset on the other hand is annotated to identify deliberate attacks against ``specific group[s] of people'' on the basis of their group membership or characteristics of group's identities \citep{Garcia:2019}. 
 This annotation criteria forms a subset of the annotation guidelines that are used for the \textit{Hate Speech} and \textit{Hate Expert} datasets. 
@@ -875,16 +875,17 @@ These models frequently out-perform the other models optimised on the \textit{To
 These results suggest that LIWC-based modelling may provide for improved out-of-domain performances when they are optimised on large datasets or they are being applied to data with which there are share attributes in terms of annotation goal.
 
 \begin{figure}
-\begin{minipage}{\textwidth}
 \centering
     \includegraphics[width=\textwidth]{all_cnn_davidson_test.pdf}
     \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{Offence} evaluation set with the standard deviation represented in error bars.}
     \label{fig:davidson_cnn_test}
-    \vfill
+\end{figure}
+
+\begin{figure}
+    \centering
     \includegraphics[width=\textwidth]{all_cnn_wulczyn_test.pdf}
     \caption{Macro \texttt{F1-scores} for all CNN models on the \textit{Toxicity} evaluation set with the standard deviation represented in error bars.}
     \label{fig:wulczyn_cnn_test}
-  \end{minipage}
 \end{figure}
 
 Comparing the LIWC-based models on out-of-domain performance, I note that for LIWC-based models similarities in dataset goals seems to have a positive effect.
@@ -921,60 +922,60 @@ Additionally, the models optimised on the \textit{Offence} tend to perform well 
 
 \subsubsection{Computational costs}
 
-The final motivation for using LIWC representations over surface forms is the hypothesis that with a smaller vocabulary, the models will train faster, thus reducing the environmental impact of developing machine learning models for abuse detection. 
-Figures \ref{fig:davidson_train_time} to \ref{fig:garcia_train_time} show the number of minutes taken for each model to train on each dataset with the error bars representing the standard deviation across $5$ runs.
+The final motivation for using LIWC representations over surface forms is the hypothesis that with a smaller vocabulary, the models will optimise faster, thus reducing the environmental impact of developing machine learning models for abuse detection. 
+Figures \ref{fig:davidson_train_time} to \ref{fig:garcia_train_time} show the number of minutes taken for each model to optimised on each dataset with the error bars representing the standard deviation across $5$ runs.
 
-First, there is a predictable correlation with the complexity of the machine learning model and the time required to train a model, with the MLP models being the quickest to train and the LSTM models taking the longest, with the exception of the CNN models trained on the \textit{Hate Expert} dataset, where the LIWC CNN requires roughly twice as long as the LIWC LSTM to optimise (see \cref{fig:waseem_train_time}).
+First, there is a predictable correlation with the complexity of the machine learning model and the time required to optimise a model, with the MLP models being the quickest to be optimised and the LSTM models taking the longest, with the exception of the CNN models optimised on the \textit{Hate Expert} dataset, where the LIWC CNN requires roughly twice as long as the LIWC LSTM to optimise (see \cref{fig:waseem_train_time}).
 
-Considering the influence of document representation on training time, the results point in multiple directions.
-First, \cref{fig:davidson_train_time,fig:wulczyn_train_time,fig:waseem_train_time,fig:waseem_hovy_train_time,garcia_train_time} show that LIWC-based representation for MLPs and CNNs, in most cases, yields faster training time than when using the surface forms.
+Considering the influence of document representation on optimisation time, the results point in multiple directions.
+First, \cref{fig:davidson_train_time,fig:wulczyn_train_time,fig:waseem_train_time,fig:waseem_hovy_train_time,fig:garcia_train_time} show that LIWC-based representation for MLPs and CNNs, in most cases, yields faster optimisation time than when using the surface forms.
 The figures also show that LSTMs that use LIWC tend to finish optimising faster than the LSTMs optimised on the surface forms.
-On the largest dataset, the \textit{Toxicity} dataset, the LIWC-based LSTM is slower to train than it's surface form counter parts.
+On the largest dataset, the \textit{Toxicity} dataset, the LIWC-based LSTM is slower to finish optimising than it's surface form counter parts.
 The LIWC-based CNN is slower to optimise than the word-token CNN but faster than the BPE CNN.
-Finally, the LIWC based MLP trains slightly faster than the models for word-token input and BPE input.
+Finally, the LIWC based MLP optimises slightly faster than the models for word-token input and BPE input.
 %Using LIWC-based representations results in faster training times for some models while slower training times for others. Unsurprisingly, the improvements in training time are negatively correlated with the size of the surface-token vocabularies: As the size of the surface token vocabulary increase, the training time for LIWC-based models decrease.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{davidson_train_time.pdf}
-    \caption{Training time in minutes for each model type on the \textit{Offence} dataset.}
+    \caption{Optimisation time in minutes for each model type on the \textit{Offence} dataset.}
     \label{fig:davidson_train_time}
 \end{figure}
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{wulczyn_train_time.pdf}
-    \caption{Training time in minutes for each model type on the \textit{Toxicity} dataset.}
+    \caption{Optimisation time in minutes for each model type on the \textit{Toxicity} dataset.}
     \label{fig:wulczyn_train_time}
 \end{figure}
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{waseem_train_time.pdf}
-    \caption{Training time in minutes for each model type on the \textit{Hate Expert} dataset.}
+    \caption{Optimisation time in minutes for each model type on the \textit{Hate Expert} dataset.}
     \label{fig:waseem_train_time}
 \end{figure}
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{waseem_hovy_train_time.pdf}
-    \caption{Training time in minutes for each model type on the \textit{Hate Speech} dataset.}
+    \caption{Optimisation time in minutes for each model type on the \textit{Hate Speech} dataset.}
     \label{fig:waseem_hovy_train_time}
 \end{figure}
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{garcia_train_time.pdf}
-  \caption{Training time in minutes for each model type on the \textit{StormFront} dataset.}
+  \caption{Optimisation time in minutes for each model type on the \textit{StormFront} dataset.}
   \label{fig:garcia_train_time}
 \end{figure}
 
-In the medium sized datasets however, the relation between training time and vocabulary minimisation clear as the LIWC-based models tend to take less time to train than counter-part as is apparent from some exceptions in \cref{fig:davidson_train_time,fig:waseem_train_time,fig:waseem_hovy_train_time}. 
-For each of these datasets, some LIWC-based models train quicker while others are slower. 
-In part, this appears to be connected to model complexity, where the more complex the underlying model is, the slower the training time also is. 
-For instance, in  \cref{fig:waseem_train_time} the LIWC-based MLP is the quickest MLP to be trained while the LIWC-based LSTM models is slower than all other LSTM models.
+In the medium sized datasets however, the relation between Optimisation time and vocabulary minimisation clear as the LIWC-based models tend to take less time to optimise than counter-part as is apparent from some exceptions in \cref{fig:davidson_train_time,fig:waseem_train_time,fig:waseem_hovy_train_time}. 
+For each of these datasets, some LIWC-based models are optimised quicker while others are slower. 
+In part, this appears to be connected to model complexity, where the more complex the underlying model is, the slower the optimisation time also is. 
+For instance, in  \cref{fig:waseem_train_time} the LIWC-based MLP is the quickest MLP to be optimised while the LIWC-based LSTM models is slower than all other LSTM models.
 
-Reflecting on the feasibility of using LIWC-based document representations for training neural networks, I turn to the two largest datasets, the \textit{Offence} and \textit{Toxicity} datasets, and the performance of LIWC-based models while bearing in mind their training time (see \cref{tab:time_spent_davidson_wulczyn}). 
+Reflecting on the feasibility of using LIWC-based document representations for optimisation neural networks, I turn to the two largest datasets, the \textit{Offence} and \textit{Toxicity} datasets, and the performance of LIWC-based models while bearing in mind their optimisation time (see \cref{tab:time_spent_davidson_wulczyn}). 
 Beyond being the two largest datasets, I choose these to compare as their operationalisations of abuse share large similarities. 
 Thus, one can consider each dataset a domain shifted dataset to the other, providing a more reasonable point of comparison than using a dataset which is annotated with a fundamentally different goal.
 
-In \cref{tab:time_spent_davidson_wulczyn}, it immediately stands out that some LIWC-based models take longer to train than their surface token-based counter-parts.
+In \cref{tab:time_spent_davidson_wulczyn}, it immediately stands out that some LIWC-based models take longer to optimise than their surface token-based counter-parts.
 Moreover, It is clear that many of the surface token-based models that perform very well on the in-domain evaluation set do not see the performance transfer to other datasets.
 Conversely, some LIWC-based models in some cases see a lesser drop in performance on external data, if not increased performances.
 This suggests that LIWC-based modelling may capture more general patterns of abuse that models are otherwise prone to over-fit away from in pursuit of improved in-domain performance.
@@ -982,7 +983,7 @@ This suggests that LIWC-based modelling may capture more general patterns of abu
 \begin{table}[h]
 \centering
 \begin{tabular}{c|llll}
-Dataset                                     & Model     & \textit{Offence} & \textit{Toxicity} & Training time \\\hline
+Dataset                                     & Model     & \textit{Offence} & \textit{Toxicity} & Optimisation time \\\hline
 \multirow{9}{*}{\rot{\textit{Offence}}}     & Word MLP  & 0.4541           & 0.0873            & 2.443   \\
                                             & BPE MLP   & 0.9729           & 0.5963            & 2.062   \\
                                             & LIWC MLP  & 0.8997           & 0.5244            & 1.154   \\
@@ -1002,7 +1003,7 @@ Dataset                                     & Model     & \textit{Offence} & \te
                                             & BPE CNN   & 0.5846           & 0.8622            & 60.67   \\
                                             & LIWC CNN  & 0.8064           & 0.8139            & 45.421
 \end{tabular}%
-\caption{Time to train models on the \textit{Offence} and \textit{Toxicity} datasets with their in-domain and cross-domain macro F1-Scores.}
+\caption{Time to optimise models on the \textit{Offence} and \textit{Toxicity} datasets with their in-domain and cross-domain macro F1-Scores.}
 \label{tab:time_spent_davidson_wulczyn}
 \end{table}
 
@@ -1011,13 +1012,13 @@ Dataset                                     & Model     & \textit{Offence} & \te
 \subsection{A Consideration through Dirt}\label{sub:liwc_model}
 
 I return here to the considerations in \cref{chap:filter} to understand how LIWC based representation comes to influence the challenges identified in \cref{chap:filter}.
-Similarly to the Perspective API, the LIWC-based model take a top-down approach to determining what constitutes `abuse'. For this reason, a great deal of the analysis provided in \autoref{sub:perspective} also holds here. Specifically, the use of similar neural network based models are based on similar foundations, where my models deviate is through the use of LIWC \cite{Pennebaker:2001} to transform the input data to the LIWC categories that are invoked, where the Perspective API uses surface level representations of tokens without substantial transformations or modifications. Further, the LIWC-based models, like the Perspective API, do not take into consideration the context within which documents exist, as such they are similarly disembodied from the context they purport to model. The LIWC-based model, that I have developed in this chapter further share a fixed data characteristic with Perspective. This characteristic keeps training data static, without the use of responses to data, or additional data to further train or correct the models. Thus, the key question and distinction between the LIWC-based model and the Perspective API lies in the transformation of data into LIWC tokens and the Perspective APIs use of pre-trained word embeddings. To ensure comparability of the LIWC-based model developed in this dissertation with the Perspective API, I use the model that is trained on the dataset published by \citet{Wulczyn:2017} with the highest macro F1-score performance on the test set from \citet{Wulczyn:2017}. I choose this configuration as this dataset is a part of the data that the Perspective API is trained on \citep{Perspective:Github}.
+Similarly to the Perspective API, the LIWC-based model take a top-down approach to determining what constitutes `abuse'. For this reason, a great deal of the analysis provided in \autoref{sub:perspective} also holds here. Specifically, the use of similar neural network based models are based on similar foundations, where my models deviate is through the use of LIWC \cite{Pennebaker:2001} to transform the input data to the LIWC categories that are invoked, where the Perspective API uses surface level representations of tokens without substantial transformations or modifications. Further, the LIWC-based models, like the Perspective API, do not take into consideration the context within which documents exist, as such they are similarly disembodied from the context they purport to model. The LIWC-based model, that I have developed in this chapter further share a fixed data characteristic with Perspective. This characteristic keeps training data static, without the use of responses to data, or additional data to further optimise or correct the models. Thus, the key question and distinction between the LIWC-based model and the Perspective API lies in the transformation of data into LIWC tokens and the Perspective APIs use of pre-trained word embeddings. To ensure comparability of the LIWC-based model developed in this dissertation with the Perspective API, I use the model that is trained on the dataset published by \citet{Wulczyn:2017} with the highest macro F1-score performance on the test set from \citet{Wulczyn:2017}. I choose this configuration as this dataset is a part of the data that the Perspective API is optimised on \citep{Perspective:Github}.
 
-In my use of LIWC to transform the input data into a smaller vocabulary that represents higher level cognition of abuse detection, resulting in tokens such as 'Reich' and `genderqueer' not being recognised. On the other hand, the model used in the Perspective API is unlikely to treat many such words as out-of-vocabulary instances as the Perspective API is trained on a) the full dataset and vocabulary and b) relies on pre-trained embeddings which further introduce social biases into the world of the model. Thus, the Perspective API seeks to broaden the world of the model to include richer information about tokens and their relations whereas my approach seeks to limit the world-understanding of the model to a smaller set of tokens that reveal information about higher level cognitive functions. My approach thus limits the notion of dirt while the Perspective API seeks to broaden it. Such a narrowing and broadening can be observed through the respective vocabulary sizes in the models on the basis of the same training data \citep{Wulczyn:2017}.\footnote{This data only represents a subset of the training data that the Perspective API is trained on. However, as training data sizes increase, so do the unique tokens encountered in the training data.} The dataset both models are trained on contains $95,710$ unique tokens after normalising for elongations. The LIWC vocabulary on the other hand contains $19,353$ unique tokens and only $1,024$ are encountered in the training data.\footnote{Some tokens in the LIWC dictionary are wild-card tokens that are used to capture all inflections of a stem, e.g. `abus*'.} Any token that is unrecognised by the LIWC dictionary will then be relegated to a placeholder for unknown tokens.
-\zw{Double check skew of UNK when doing analysis of LIWC influence on datasets}
+In my use of LIWC to transform the input data into a smaller vocabulary that represents higher level cognition of abuse detection, resulting in tokens such as 'Reich' and `genderqueer' not being recognised. On the other hand, the model used in the Perspective API is unlikely to treat many such words as out-of-vocabulary instances as the Perspective API is optimised on a) the full dataset and vocabulary and b) relies on pre-trained embeddings which further introduce social biases into the world of the model. Thus, the Perspective API seeks to broaden the world of the model to include richer information about tokens and their relations whereas my approach seeks to limit the world-understanding of the model to a smaller set of tokens that reveal information about higher level cognitive functions. My approach thus limits the notion of dirt while the Perspective API seeks to broaden it. Such a narrowing and broadening can be observed through the respective vocabulary sizes in the models on the basis of the same training data \citep{Wulczyn:2017}.\footnote{This data only represents a subset of the training data that the Perspective API is optimised on. However, as training data sizes increase, so do the unique tokens encountered in the training data.} The dataset both models are optimised on contains $95,710$ unique tokens after normalising for elongations. The LIWC vocabulary on the other hand contains $19,353$ unique tokens and only $1,024$ are encountered in the training data.\footnote{Some tokens in the LIWC dictionary are wild-card tokens that are used to capture all inflections of a stem, e.g. `abus*'.} Any token that is unrecognised by the LIWC dictionary will then be relegated to a placeholder for unknown tokens.
+%\zw{Double check skew of UNK when doing analysis of LIWC influence on datasets}
 Given the heavy imbalance of the dataset, with the vast majority of cases being non-toxic, the distribution of unknown tokens is similarly skewed and disproportionately occurs in the negative class. Models that rely on tokens transformed by the LIWC dictionary, are thus likely to learn a stronger association between the negative class and the placeholder for unknown tokens.
 
-Each approach comes with a set of opportunities and risks. For instance, as language use evolves, so can the embeddings that the Perspective API rely on be retrained. A LIWC-based approach on the other hand requires significant human effort, filtering, annotation, and reasoning to create a new set of words to include. Such a process is both slower and more limited in what will ultimately be included in the LIWC dictionary. On the other hand, pre-trained embeddings will also learn hegemonic social biases \citep{Bender:2021} whereas the LIWC-based approaches only learn a subset of the social biases that are present in the original dataset, due to the vast majority of tokens present in a large dataset, e.g. \citep{Wulczyn:2017}, not being known to the LIWC token. However, the social biases that are present in the dataset that rely on identity terms will remain in the model, should the identity terms also exist within the LIWC vocabulary, e.g. where identity terms are used as slurs or the use of an identity term is unevenly distributed in the classes.
+Each approach comes with a set of opportunities and risks. For instance, as language use evolves, so can the embeddings that the Perspective API rely on be re-optimised. A LIWC-based approach on the other hand requires significant human effort, filtering, annotation, and reasoning to create a new set of words to include. Such a process is both slower and more limited in what will ultimately be included in the LIWC dictionary. On the other hand, pre-trained embeddings will also learn hegemonic social biases \citep{Bender:2021} whereas the LIWC-based approaches only learn a subset of the social biases that are present in the original dataset, due to the vast majority of tokens present in a large dataset, e.g. \citep{Wulczyn:2017}, not being known to the LIWC token. However, the social biases that are present in the dataset that rely on identity terms will remain in the model, should the identity terms also exist within the LIWC vocabulary, e.g. where identity terms are used as slurs or the use of an identity term is unevenly distributed in the classes.
 
 \begin{table}[]
 \centering
@@ -1058,11 +1059,11 @@ Such misclassification also pose inherent risk to any communities that are not r
 
 \section{Conclusions and future work}
 
-One of the core concerns surrounding content moderation technologies is that machine learning models for the task of identifying abuse over-fit to spurious correlations and unique tokens in the datasets. In this chapter, I have sought to examine how alternative forms of document representations can alleviate such issues. In addition, I examine how a reduction in the vocabulary size can affect the time it takes to train machine learning models for detecting abuse.
+One of the core concerns surrounding content moderation technologies is that machine learning models for the task of identifying abuse over-fit to spurious correlations and unique tokens in the datasets. In this chapter, I have sought to examine how alternative forms of document representations can alleviate such issues. In addition, I examine how a reduction in the vocabulary size can affect the time it takes to optimise machine learning models for detecting abuse.
 Through the use of LIWC, I perform a vocabulary reduction of up to $98.9\%$ of the surface-form vocabulary and show that in spite of such a reduction, reasonable in-domain and out-of-domain model performances can be achieved. In particular, I find that out-of-domain model performances are contingent on similarities in the data sampling process or the goals of objectives of annotating data.
 For instance, the \textit{Toxicity} dataset and the \textit{Offence} dataset are sampled from two different sources, Wikipedia editor discussion pages and Twitter, respectively. However, the goal of the annotation tasks for both datasets share similarities in the operationalisation of ``toxic'' and ``offensive'' allowing for models to generalise onto the out-of-domain evaluation sets.
-By using simple neural network architectures, I show how LIWC-based models can learn similar levels of performance as surface token-based models. In this chapter, I do not make use of pre-trained embedding layers \citep{Park:2017,Kolhatkar:2021} in my model or language models (e.g. BERT \citep{Devlin:2019}) that are fine-tuned to a specific task that many contemporary models make use of \citep{Vidgen:2021,Isaksen:2020}. I avoid these as they are not compatible with the LIWC vocabulary and thus would not be applicable to the core questions in this chapter. 
+By using simple neural network architectures, I show how LIWC-based models can learn similar levels of performance as surface token-based models. In this chapter, I do not make use of pre-trained embedding layers \citep{Park:2017,Kolhatkar:2020} in my model or language models (e.g. BERT \citep{Devlin:2019}) that are fine-tuned to a specific task that many contemporary models make use of \citep{Vidgen_learning:2020,Isaksen:2020}. I avoid these as they are not compatible with the LIWC vocabulary and thus would not be applicable to the core questions in this chapter. 
 
-Addressing the second aim of this chapter, to investigate the implication of using LIWC to represent documents on the computational, and thus environmental costs of developing machine learning models, show that training time of neural network models has a relation to the size of the surface-token vocabulary size and that models that make use of LIWC can provide competitive in-domain results and, in some instances out-perform on out-of-domain evaluation sets. Moreover, I find that the question of whether the time consumed by LIWC-based modelling, whether it is less or more than surface token-based models, can be reframed as a question of in-domain validity or generalisability onto an unseen sample. As the goal for machine learning models is ultimately to generalise onto unseen data where the distributions of data may not mirror those that the models have been trained on, LIWC-based document representations may prove to be a valuable direction for future work, as it trains models to identify patterns in cognitive processes and the emotional state of the author and the output labels, while reducing the number of tokens that can act as confounding factors.
+Addressing the second aim of this chapter, to investigate the implication of using LIWC to represent documents on the computational, and thus environmental costs of developing machine learning models, show that optimisation time of neural network models has a relation to the size of the surface-token vocabulary size and that models that make use of LIWC can provide competitive in-domain results and, in some instances out-perform on out-of-domain evaluation sets. Moreover, I find that the question of whether the time consumed by LIWC-based modelling, whether it is less or more than surface token-based models, can be reframed as a question of in-domain validity or generalisability onto an unseen sample. As the goal for machine learning models is ultimately to generalise onto unseen data where the distributions of data may not mirror those that the models have been optimised on, LIWC-based document representations may prove to be a valuable direction for future work, as it optimises models to identify patterns in cognitive processes and the emotional state of the author and the output labels, while reducing the number of tokens that can act as confounding factors.
 
 The results in this chapter have several implications for research into detecting online abuse. First, the positive results using LIWC suggests that thinking carefully about document representation and vocabulary reduction can have beneficial outcomes, in particular for out-of-domain performance. Second, the generally strong performances of the LIWC-based linear baselines suggests that although the field has moved on to non-linear modelling, there is still room for improvement using classical machine learning models. Moreover, the results for the LIWC-based models leave open questions for future work about how the interaction with surface form tokens would influence the in-domain and out-of-domain generalisability of machine learning models. Therefore I plan to address these questions in future work by using pre-trained word embedding layers to examine the efficacy of combining LIWC with surface forms of tokens, to minimise the number of unknown tokens while retaining the depth of information provided by LIWC.

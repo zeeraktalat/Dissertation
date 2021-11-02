@@ -1,5 +1,18 @@
 % ************************** Thesis Abstract *****************************
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 \begin{abstract}
-This is where you write your abstract ...
+Online abusive language has been given increasing prominence as a societal problem over the past few years as people are increasingly communicating on online platforms.
+This increase in prominence has resulted in an increase in academic attention to the issue, particularly within the field of Natural Language Processing (NLP), which has proposed multiple datasets and machine learning methods for the detection of text-based abuse.
+Recently, the issue of disparate impacts of machine learning has been given attention, showing that marginalised groups in society are disproportionately negatively affected by automated content moderation systems.
+Moreover, a number of challenges have been identified for abusive language detection technologies, including poor model performance across datasets and a lack of ability of models to contextualise potentially abusive speech within the context of speaker intentions. This dissertation aims to ask how NLP models for online abuse detection can address issues of generalisation and context.
+
+Through critically examining the task of online abuse detection, I highlight how content moderation acts as protective filter that seeks to maintain a sanitised environment. 
+I find that when considering automated content moderation systems through this lens, it is made clear that such systems are centred around experiences of some bodies at the expense of others, often those who are already marginalised.
+
+In efforts to address this, I propose two different modelling processes that a) centre the the mental and emotional states of the speaker by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories that they invoke, and using Multi-Task Learning (MTL) to model abuse, such that the model takes aims to take account the intentions of the speaker.
+
+I find that through the use of LIWC for representing documents, machine learning models for online abuse detection can see improvements in classification scores on in-domain and out-of-domain datasets.
+Similarly, I show that through a use of MTL, machine learning models can gain improvements by using a variety of auxiliary tasks that combine data for content moderation systems and data for related tasks such as sarcasm detection.
+
+Finally, I critique the machine learning pipeline in an effort to identify paths forward that can bring into focus the people who are excluded and are likely to experience harms from machine learning models for content moderation.
 \end{abstract}

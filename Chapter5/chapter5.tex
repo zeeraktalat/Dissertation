@@ -9,7 +9,7 @@
 \footnotetext{This chapter contains elements of an ongoing collaboration with Joachim Bingel, Hero I/S. All contents of the chapter, are original work produced for this dissertation. The shared elements between the project and this chapter are the machine learning model designs.}
 
 \begin{quote}
-  ``So is hate speech detection kind of like sentiment analysis++'' -- ACL 2016 Conference Attendee\footnote{Check with AJ that I can attribute.}
+  ``So is hate speech detection kind of like sentiment analysis++'' -- ACL 2016 Conference Attendee\footnote{Check with anon that I can attribute.}
 \end{quote}
 
 One of the frequently made assumptions is that hate speech detection, and in general abusive language detection, shares many similarities to other tasks that also take on the challenge of identifying and predicting subjective human experiences such as sentiment analysis, sarcasm detection, and emotion detection.
@@ -38,10 +38,10 @@ Moreover, I find that the combinations of auxiliary tasks for abuse detection wi
 \section{Previous work}
 
 MTL has previously been applied for a number of tasks in NLP, including language specific tasks such as multi-word expression identification \cite{Bingel-Bjerva:2018}, machine translation \cite{Dong:2015}, and sequence labelling \cite{Rei:2017}.
-Further, MTL has also been used in tasks that produce social outcomes such as predicting mental health conditions \cite{Benton:2017}, hate speech detection \cite{Waseem:2018,Rajamanickam:2020,Farha:2020,Djandji:2019}, and rumour verification \cite{Kochkina:2018}.
+Further, MTL has also been used in tasks that produce social outcomes such as predicting mental health conditions \cite{Benton:2017}, hate speech detection \cite{Waseem:2018,Rajamanickam:2020,Farha:2020,Djandji:2020}, and rumour verification \cite{Kochkina:2018}.
 
 \subsection{Modelling}
-For hate speech detection, and abusive language detection in general, MTL has been applied to English \citep{Waseem:2018,Rajamanickam:2020} and Arabic \citep{Farha:2020,Djandji:2019}.
+For hate speech detection, and abusive language detection in general, MTL has been applied to English \citep{Waseem:2018,Rajamanickam:2020} and Arabic \citep{Farha:2020,Djandji:2020}.
 Considering that I use datasets that are entirely in English, I only consider the previous work for hate speech detection using MTL for English language data.
 
 \citet{Waseem:2018} show that the cultural gaps that exist between different datasets, as a result of their collection strategies and annotation procedures, could be addressed.
@@ -159,7 +159,7 @@ For non-linear models, the performance on the validation data guides the decisio
 
 \subsection{Baseline Models}\label{sub:mtl_baselines}
 I develop three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
-I choose to use a linear single-task model as a baseline as these often provide a strong baseline against neural network approaches for abuse detection \citep{Cite someone who says that here} while also being fast and efficient to optimise.
+I choose to use a linear single-task model as a baseline as these can provide a strong baseline against neural network approaches for abuse detection while also being fast and efficient to optimise.
 The non-linear neural network baseline is chosen as a counter-point to the linear baseline, using a MLP to more directly be able to consider the influence of the multi-task architecture for the experimental models.
 Finally, I choose to an ensemble classifier that is optimised on the outputs of linear single-task models for each of the auxiliary task models as an ensemble, similarly to a multi-task model, can take advantage of learned representations for each auxiliary task for producing a prediction for the main task.
 
@@ -174,7 +174,7 @@ I conduct at least $50$ independent trials of distinct hyper parameter settings 
 
 \paragraph{Ensemble Baseline}
 The ensemble baselines require a different optimisation scheme that relies on a classifier that is optimised for each auxiliary task and an ensemble classifier that relies on the outputs of the auxiliary task classifiers, by virtue of the nature of ensemble classifiers.
-For this reason, I first optimise a linear SVM for each auxiliary task and perform a grid search over the type of regulariser ({$L1$, $L2$}) and the strength of the regularisation (${0.1, 0.2,\ldots, 1.0}$) (see \cref{tab:aux_ensemble_params} for the parameter settings for each auxiliary task).
+For this reason, I first optimise a linear SVM for each auxiliary task and perform a grid search over the type of regulariser ({$L1$, $L2$}) and the strength of the regularisation (${0.1, 0.2,\ldots, 1.0}$) (see \cref{tab:ensemble_aux_params} for the parameter settings for each auxiliary task).
 Once all auxiliary task classifiers have been optimised, I optimise a Logistic Regression model on the outputs of the auxiliary task classifiers on the main task training data, similarly subject to a grid-search over the same parameter values as the auxiliary task models
 .
 During this optimisation procedure, the ensemble is provided with the training data for the main task, which is vectorised to the vocabulary of each auxiliary task and a prediction is obtained for each task.
@@ -190,7 +190,7 @@ I also include a dropout layer and a non-linear activation function, where I tre
 My architecture of the Multi-task MLP deviates from the architecture proposed by \citet{Waseem:2018} in two ways: the choice of input layer and the choice of activation function.
 Where I use an embedding layer as the input layer for each task, \citet{Waseem:2018} use a onehot encoded input layer and they use a \texttt{Tanh} activation function for all of their experiments.
 Following the experimental approach in \cref{chap:liwc}, I keep the embedding layer randomly initialised rather than using a pre-trained embedding layer.
-The motivation for training the embedding layer, even with sparse data, is that pre-trained embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
+The motivation for optimising the embedding layer, even with sparse data, is that pre-trained embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
 
 The optimisation procedure for the Multi-task MLP deviates significantly from the optimisation procedures associated with the baseline models.
 For the Multi-task MLP, I optimise my models by giving all tasks an equal weight but distinguish between the main task and the auxiliary tasks by the probability with which a batch from task is chosen.
@@ -206,7 +206,7 @@ These representations of the datasets afford the models the ability to jointly l
 
 For my hyper-parameter exploration, I explore the hyper-parameters listed above, that is the number of epochs ($\{50, 100, 200\}$) and the activation function ($\{Tanh, ReLU\}$).
 I also perform a hyper-parameter optimisation of the choice of optimisation algorithm ($\{Adam, AdamW,$\\$SGD,ASGD\}$); the dimensionality of the shared layer (${64, 128, 256}$); the learning rate ($[1^{-5}, 1.0]$); the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$); the dimensionality of the task-specific input layers ($\{64, 100, 200, 300\}$); the value of dropout $[0.0, 0.5]$; and lastly the batch size ($\{16, 32, 64\}$).
-Note, that the batch size can have an influence over how much of each dataset is exposed to the model at training time as the number of batches selected per epoch does not scale with the variation in the batch size.
+Note, that the batch size can have an influence over how much of each dataset is exposed to the model at optimisation time as the number of batches selected per epoch does not scale with the variation in the batch size.
 
 \subsection{Auxiliary Task Configurations}\label{sub:aux_task_selection}
 In order to select the auxiliary tasks and their combinations that contribute most towards the performances of the primary, I add auxiliary tasks as they prove useful to the main task in terms of performance boosts.

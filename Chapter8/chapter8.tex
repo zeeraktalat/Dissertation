@@ -36,7 +36,7 @@ The research questions I address in this dissertation are:
         \item{\textit{How are notions of ``toxicity'' operationalised in content moderation infrastructures and what are the socio-political implications of such operationalisations?}}
         \item{\textit{How do modelling choices impact how computational models for content moderation learn and represent hegemonic notions of respectability?}}
         \item{\textit{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}}
-        \item{\textit{What are the implications of using LIWC as input on model development in terms of training time?}}
+        \item{\textit{What are the implications of using LIWC as input on model development in terms of optimisation time?}}
         \item{\textit{What are the implications on generalisability of LIWC-based models?}}
         \item{\textit{What is the impact of using auxiliary tasks that are non-abusive in nature for detecting specific forms of abuse?}}
         \item{\textit{Does using different forms of abusive language detection tasks as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}
@@ -68,7 +68,7 @@ These findings have an impact on future work for computational modellers as they
 Thus, the contributions here begin to forge a path towards abuse detection models that are centred around the experiences of those who are most likely to suffer harms from misclassifications.
 
 In \cref{chap:liwc}, I turn towards research questions $3$-$5$.
-Starting with RQ 3, I train three different neural network models and two baselines for five different datasets, each experimenting with 3 different data representations: Word tokens, sub-words, and LIWC encoded documents.
+Starting with RQ 3, I optimise three different neural network models and two baselines for five different datasets, each experimenting with 3 different data representations: Word tokens, sub-words, and LIWC encoded documents.
 I find that using LIWC encoded documents to optimise machine learning models can obtain competitive results with linear models and neural networks optimised on word token and sub-word representations alike.
 Specifically, I find that for linear models, LIWC-based models can obtain classification performances that are as good or better than models optimised on the other two representations, though for some dataset and model combinations there is a significant drop in performance.
 For neural network models, I similarly find that LIWC models can provide for in-domain classification improvements in some cases, and in most cases provide with a competitive performance.
@@ -77,13 +77,13 @@ Thus, I conclude that while there is space for the improvements in model perform
 
 To address RQ 4, I monitor the models for how long they require for the optimisation procedure.
 I find that in many cases, LIWC-based modelling for neural networks show a reduction in the time it takes for a model to finish the optimisation procedure.
-I also observer that in some cases, the LIWC-based models take as long, or longer, than models trained on other document representations.
-In particular, I find that there is a relationship between the complexity of the model and the model optimisation time, where the more complex a model is, the longer it takes to train.
+I also observer that in some cases, the LIWC-based models take as long, or longer, than models optimised on other document representations.
+In particular, I find that there is a relationship between the complexity of the model and the model optimisation time, where the more complex a model is, the longer it takes to optimise.
 That is, I find that all but one LIWC MLPs take less time to complete the optimisation procedure than their word-token and sub-word counterparts.
 For CNNs, LIWC models tend to finish optimising close to as close as word-token models, and faster than sub-word based models, with a single exception where the LIWC model takes almost twice as long as its closest competitor.
 Finally, for LSTM models, I similarly find that in most configurations of datasets, LIWC-based models tend to finish optimising quicker than the other models.
 Here too there is a single outlier in which the LIWC LSTM model takes longer to finish optimising than all other models.
-Thus, I find that in terms of speed in training models, LIWC-based modelling in most cases provides for as fast or faster model optimisation procedures.
+Thus, I find that in terms of speed in optimising the models, LIWC-based modelling in most cases provides for as fast or faster model optimisation procedures.
 
 I address RQ 5 by applying all optimised models on all datasets, including those that the model has not been optimised on.
 Using this method, I find that LIWC-based models often provide for out-of-domain performances that out-perform all other out-of-domain models.
@@ -123,7 +123,7 @@ The findings in this chapter, provides several paths for future work.
 For instance, one avenue of future work is to explore more non-abusive auxiliary tasks such as sentiment analysis.
 Additionally, future research can address improvements in modelling e.g. by using more complex modelling architectures or by optimising the weight each auxiliary task is given.
 
-Finally, in \cref{chap:disembodied}, I address the final three research questions: RQ 9-11.
+Finally, in \cref{chap:disembodied}, I address the final three research questions: RQ 9-12.
 In this chapter, I critically analyse the entire machine learning pipeline for NLP and apply my insights to models developed in this thesis for abuse detection.
 
 Through my critical analysis, I find that subjectivity is embedded into machine learning in all processes in which humans with their subjective experiences are involved.
