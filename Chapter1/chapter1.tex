@@ -10,8 +10,8 @@
     \graphicspath{{Chapter1/Figs/Vector/}{Chapter1/Figs/}}
 \fi
 
-\chapter{Introduction}\label{chap:intro} 
-%zw{Rought contents here, needs updating to fit with narrative of the thesis and polishing of text}
+\chapter{Introduction}\label{chap:intro}
+%zw{Rough contents here, needs updating to fit with narrative of the thesis and polishing of text}
 
 %Structure:
 %Introduction to the field in general
@@ -27,26 +27,49 @@
 %Add text about WOAH and WiNLP
 %Provide structure of thesis
 
-As people consume, interact with, and create media online at an ever growing rate, it becomes necessary to consider the content with which they interact, how this influences and impacts audiences, and the cultures that are formed in online spaces.
-A small, in terms of absolute amount of content created, but prominent portion of online communications is online abuse in various forms, including cyber-bullying, hate speech, harassment, aggressive speech, and offensive speech \citep{Vidgen:2019}.
-Such content can lead to users disengaging with online spaces \citep{Leslie_jones}, psychological harms on the targets of abuse and other people who are exposed to it \citep{Gelber_McNamara_2016}, and an increase in hate crimes \citep{Muller:2020}.
-As a result, social media platforms have long been subject to pressure from users and regulators to moderate and remove such content.
-This issue of content moderation has traditionally been a human effort \citep{Roberts:2019} but has increasingly become reliant on computational methods for detecting and adjudicating online abuse \citep{FacebookReporting}.
-These automated content moderation systems developed by commercial platforms span several different modalities, including images, text, and videos.
+As people consume, interact with, and create \ZTdelete{media} online \ZTedit{media} at an ever growing rate, it becomes \ZTdelete{necessary to consider} \ZTedit{increasingly important to carefully} the content with which they interact, how this influences and impacts audiences and the cultures that are formed in online spaces.
+\ZTedit{Online abuse is a small but prominent portion of online communication, that is expressed through various forms}
+\ZTdelete{A small, in terms of absolute amount of content created, but prominent portion of online communications is online abuse in various forms}, including cyber-bullying, hate speech, harassment, aggressive speech, and offensive speech \citep{Vidgen:2019}.
+\ZTedit{Extended exposure to such content can have adverse effects for users engagement in online spaces \citep{Leslie_jones}, lead to psychological harms to the targets of abuse \citep{Gelber_McNamara_2016}, and be a factor in increases in hate crimes \citep{Muller:2020}.}\ZTdelete{Such content can lead to users disengaging with online spaces \citep{Leslie_jones}, psychological harms on the targets of abuse and other people who are exposed to it \citep{Gelber_McNamara_2016}, and an increase in hate crimes \citep{Muller:2020}.}
+As a result, social media platforms have long been subject to pressure \ZTdelete{from users and regulators} to moderate and remove such content \ZTedit{from users and regulators alike}.
+\ZTdelete{This issue of} \ZTedit{Moderating, removing, and adjudicating content in online spaces} \ZTdelete{content moderation} has traditionally been a human effort \citep{Roberts:2019} \ZTedit{however as computational methods such as machine learning have matured, social media platforms such as Facebook have increasingly come to rely on such automated methods \citep{FacebookReporting}.} \ZTdelete{but has increasingly become reliant on computational methods \ZTedit{, as these have matured and regulatory pressure has increased \citep{FacebookReporting}.}}\ZTdelete{for detecting and adjudicating online abuse \citep{FacebookReporting}}.
+These automated content moderation systems developed by commercial platforms operate across several different modalities, including images, text, and videos.
 Along with this increase in automated content moderation systems developed by commercial entities, there has been an increased in attention to the challenge of developing automated systems for detecting text-based abuse in the Natural Language Processing (NLP) community.
 Beyond the NLP community, there has been sustained academic attention to the challenges faced by content moderation systems, both human and automated.
 This body of work has spanned across a wide variety of disciplines including, but not limited to, media studies \citep{Gillespie:2020,Gerrard:2020}, archival research \citep{Thylstrup:2019,Agostinho:2019}, and legal studies \citep{Cobbe:2020,Llanso:2020}.
-While the content that is moderated spans several modalities and is often multi-modal, in this dissertation I focus on text-based content moderation systems for online abuse, in specific NLP systems.
+While \ZTedit{commercial content moderation systems that are developed by social media platforms often span across modalities, I specifically focus on text-based content moderation systems, i.e. NLP systems, for online abuse in this dissertation.}\ZTdelete{the content that is moderated spans several modalities and is often multi-modal, in this dissertation I focus on text-based content moderation systems for online abuse, in specific NLP systems.}
 
-In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified, including the lack of model ability to generalise onto new data and contexts \citep{Waseem:2016,Fortuna:2021}, how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2021}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2021}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}, challenges in collecting data for abuse \citep{Wiegand:2019,Vidgen-Derczynski:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen-Derczynski:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021,Dinan:2020}.
-Although each of these challenges are of equal importance and each requiring urgent attention, I focus my efforts in this thesis on four different topics.
+\ZTedit{The academic inquiry into content moderations from the NLP community has identified several challenges with machinic content moderation systems, including poor generalisation of optimised models}
+\ZTdelete{In the academic inquiry into content moderation systems conducted by the NLP community, several challenges have been identified in model performances, e.g. poor ability to generalise} onto new data and contexts \citep{Waseem:2016,Fortuna:2021}, \ZTedit{socially discriminatory model predictions against already-marginalised communities \citep{Davidson:2019,Dias:2021}, poor ability to understand in-group communicative norms \citep{Dias:2021}, annotation biases in the data creation process \citep{Waseem:2018,Davidson:2019}.
+\ZTdelete{how machine learning models for abuse detection discriminate against marginalised communities \citep{Davidson:2019,Dias:2021}, misclassifications that occur as a product of in-group communicative norms \citep{Dias:2021}, human annotator bias in the data creation process \citep{Waseem:2018,Davidson:2019}.}
+Beyond the challenges in model performance, several key concerns have been raised about the data creation process. For instance, \citet{Wiegand:2019} and \citet{Vidgen-Derczynski:2020} raise concerns about contemporary methods for collecting data, while \citet{Waseem:2017,Waseem:2018} point out that there is an incompatibility between widely used definitions, \citet{Vidgen-Derczynski:2020} further highlight how developing resources for English Language abuse detection has been over-emphasised by the NLP research community.
+Finally, applying both to modelling and data creation, the processes in the field are unable to situate speech within the context and communicative intents of the speakers \citep{Bender:2021,Dinan:2020}.}
+\ZTdelete{challenges in collecting data for abuse \citep{Wiegand:2019,Vidgen-Derczynski:2020}, how abuse is defined \citep{Waseem:2017}, the over-emphasis on English in research contributions \citep{Vidgen-Derczynski:2020}, and situating speech within the context and the communicative intents of speakers \citep{Bender:2021,Dinan:2020}.}
+Although each of these challenges are of equal importance and each require urgent attention, I focus my efforts \ZTdelete{in this thesis on four different topics.}\ZTedit{first, on considering the socio-political consequences of content moderation technologies and aim to explain which modelling decisions may influence discriminatory outcomes. 
+Second, I seek to connect the consequences of contemporaneous content moderation technologies and new techniques for modelling abuse.
+These twin objective are reflected in my over-arching research questions:
 
+\begin{center}
+\begin{minipage}{0.9\textwidth}
+\vspace{5mm}
+    \begin{enumerate}[start=I, label={\textbf{RQ \roman*}}]
+      \item What technical and social factors are present in the socially discriminatory predictions of content moderation systems?
+      \item In which ways can computational methods be used to address limitations that are influential in discriminatory outputs from computational modelling?
+    \end{enumerate}
+    \vspace{5mm}
+\end{minipage}
+\end{center}
+
+I examine these research questions by subdividing my thesis into four sections:
+}
 First, I address questions around how abuse is defined and the consequences of such definitions on the content that is subject to such systems.
-Second, I address model generalisability onto out-of-domain data labelled for abuse.
+Second, I address model generalisability onto out-of-domain data labelled for abuse\ZTedit{ using low-dimensional data representations}.
 Third, I examine the impacts of representing different contexts into machine learning models in terms of improvements on classification metrics.
-And finally, fourth, I discuss how machine learning modelling choices drive marginalisation and how the designers of machine learning systems embed their subjectivities into the model.
+And finally, fourth, I discuss how \ZTedit{marginalisation caused by machine learning systems is driven by modelling choices and the various ways in which designers of machine learning systems embed their own subjectivities into the models.} \ZTdelete{machine learning modelling choices \ZTdelete{drive marginalisation} and how the designers of machine learning systems embed their subjectivities into the model.}
 
-I choose these specific foci to examine the over-arching questions of how the human fits into abusive language detection technologies and machine learning models for content moderation can come to more closely respect and represent their humanity.
+I choose these specific foci \ZTedit{because my core interest is identifying how humans fit into the structure of content moderation systems, as they are currently being built.
+Through my interventions, I hope to identify theoretical and practical means for content moderation technologies to come to more closely respect and represent the humanity of the people who are subject to them.}
+\ZTdelete{to examine the over-arching questions of how the human fits into abusive language detection technologies and machine learning models for content moderation can come to more closely respect and represent their humanity.
 To gain insights into these questions, I start by examining how the operationalisation of annotation guidelines and modelling approaches impact users, through how different machine learning modelling architectures impact classification performances, and finalising with how the designers of such models and their beliefs and experiences are embedded within the automated content moderation systems that they develop.
 To accomplish this larger goal, it is necessary to consider the question of content moderation from a variety of disciplines, for this reason, I address the questions posed in each chapter from the disciplinary basis that they require.
 For the chapters where the questions are not directly linked to the development of computational resources, I ground myself in the disciplines most closely related, i.e. discard studies and science and technology studies, and consider these in conjunction with the computational modelling practices in NLP and machine learning.
