@@ -202,6 +202,25 @@ The work presented here expands on the collaborative work across all sections an
 Through the work in these chapters, I examine different aspects of the machine learning pipeline for abusive language detection to gain an understanding on a) what the implications of task definitions and modelling approaches are, b) how do distinct data representations influence model generalisability and efficiency in optimisation, c) how related tasks can influence in-domain performance, and finally d) how subjective embodiments are expressed throughout the machine learning pipeline and what the implications are for developing equitable machine learning models.
 By examining the machine learning pipeline for abuse detection from conceptualisation, through model development, to mapping limitations of current practices, I provide detailed insights into the different facets of developing machine learning models for abusive language detection and identify specific avenues for future research while also highlighting the specific limitations of current practices.
 
+\ZTedit{
+Finally, before I release the reader to the core content of my thesis, I provide disclaimers for the contents in this thesis.
+First, following \citet{Kulynych:2020} I refer to \textit{training} machine learning models as \citet{optimising}.
+I make this decision because machine learning models are a specific kind of optimisation technology rather than a sentient entity which can be trained.
+Moreover, this distinction between \textit{training} and \textit{optimisation} allows us to view optimised models more clearly as statistical artefacts rather than anthropomorphised machines that ``learn''.
+Casting aside the veneer of sentient capabilities provides space to critically examine the decisions and artefacts that influence machine learning models to produce the desired and undesired effects alike.
+
+Second, I do not make use of pre-trained embedding layers or fine-tuned language models in my work.
+Although both techniques have been shown to improve performances of machinic abuse detection \citep{Fortuna:2018}, they are not compatible with some experiments in \cref{chap:liwc} and thus influence comparability between the experiments conducted in the chapter.
+For the chapters in which their use would not limit direct comparability, these methods carry a range of social biases and norms that are beyond the scope of this thesis to examine.
+Thus I avoid using them as a way to ensure that the claims I make in this thesis are a result of the models and modelling decisions, rather than spurious correlations.
+
+\ZTcomment{Incomplete. Add references.}
+Third, as I argue in \cref{chap:disembodied}, there is a need for an active consieration of the lived subjectivitites practitioners' and researchers' in computational methods, I use first person singular pronouns throughout this thesis.
+In doing so, I follow a tradition in feminist \citep{...} and Black feminist \citep{...} scholarships and critiques of the veneer of objectivity in science.
+
+Lastly, I seek to avoid providing examples of abusive texts where possible.
+Although my thesis is centered around content moderation and therefore requires some examples, I believe that we, as researchers, should limit the amount of abusive content in our work, as frivellous inclusion of such texts can be limiting to the potential readership and institutionalise and archive the very harms that we seek to mitigate.
+}
 %********************************** % Report Structure  *************************************
 \section{Dissertation Structure}\label{sec:structure}
 
