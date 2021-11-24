@@ -154,25 +154,40 @@ The research questions addressed in \cref{chap:liwc} are thus:
 \end{minipage}
 \end{center}
 
-In \cref{chap:mtl}, I proceed further into an inquiry of the impact of context on model performance for abusive language detection tasks.
-I use Multi-Task Learning (MTL) to examine how jointly learning different representations for abuse detection tasks and related tasks can impact classification performance.
+\ZTedit{Then, i}\ZTdelete{I}n \cref{chap:mtl}, I proceed further into an inquiry of the impact of context on model performance for abusive language detection tasks.
+\ZTedit{Here,} I use Multi-Task Learning (MTL) to \ZTedit{
+  jointly learn representations of abuse classification tasks and a selection of relate tasks.
+  Specifically, I explore new and pre-existing hypothesis on the relationships between abuse classification tasks and related tasks, and how these relationships impact modelling performance.
+  The abuse classification tasks that I explore are hate speech detection \citep{Waseem:2016,Waseem-Hovy:2016}, offensive language detection \citep{Davidson:2017}, and toxicity detection \citep{Wulczyn:2017}.
+  For the non-abusive tasks explored are sarcasm detection \citep{Oraby_sarcasm:2016}, predicting of the basis of an argument \citep{Oraby_factfeel:2015}, and moral sentiment prediction \citep{Hoover:2020}.
+  Through these tasks, where each configuration sets one as the primary task and all other as auxiliary, the models are optimised to all included tasks with attention to the primary task.
+
+  Selecting the tasks to include however is a challenge in itself.
+  For this reason, I perform an ablation study investigating the influence of each task onto the primary tasks, individually and in combination with one another.
+}
+\ZTdelete{examine how jointly learning different representations for abuse detection tasks and related tasks can impact classification performance.
 With MTL, I explore hypotheses of which tasks are related in such a way that machine learning models can take advantage of them.
 The abuse detection auxiliary tasks that I explore are hate speech detection, offensive language detection, and toxicity detection.
 Moreover, I explore sarcasm detection, predicting of the basis of an argument, and predicting moral sentiments.
 Through the use of these auxiliary tasks, I optimise machine learning models that also learn representations of the auxiliary tasks.
 Selecting auxiliary tasks can be a difficult endeavour, for this reason I explore how each of the auxiliary tasks impact the performance on the primary tasks.
 Additionally, I conduct experiments identifying how different task combinations influence performances on the primary task.
-Through this method, I identify which auxiliary task combinations contribute most positively to the classification of the primary task through learning representations for the different auxiliary tasks.
+Through this method, I identify which auxiliary task combinations contribute most positively to the classification of the primary task through learning representations for the different auxiliary tasks.}
 
 Thus, the research questions explored in this chapter are:
 
 \begin{center}
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
-    \begin{enumerate}[start=6, label={\textbf{RQ \arabic*}}]
-        \item{\textit{What is the impact of using auxiliary tasks that are non-abusive in nature for detecting specific forms of abuse?}}
-        \item{\textit{Does using different forms of abusive language detection tasks as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}
+    \begin{enumerate}[start=3, label={\textbf{RQ \arabic*}}]
+      \ZTedit{}
+        \item{\textit{How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}}
+        }
+        \ZTdelete{
+        \item{\textit{What is the impact of using auxiliary tasks that are non-abusive or abuse classification tasks for detecting specific forms of abuse?}}
+        \item{\textit{Does using different forms of abusive language detection tasks abusive and non-abusive tasks, as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}
         \item{\textit{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}
+        }
     \end{enumerate}
     \vspace{5mm}
 \end{minipage}
