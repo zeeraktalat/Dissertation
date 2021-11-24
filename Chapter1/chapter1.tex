@@ -124,17 +124,21 @@ To address such issues, I suggest that content moderation should move beyond the
 Chapter \ref{chap:filter} is written on the basis of a collaborative research project with Nanna Bonde Thylstrup (Copenhagen Business School) and a paper has been accepted in a special issue of the journal First Monday.
 In this chapter, I expand on the considerations of the research project in each section and particularly further develop \cref{sec:filter_models,sec:filter_conclusion}.
 
-In \cref{chap:liwc}, I turn to the development of new content moderation systems for abusive text.
-Here, I address the issue of model generalisability and efficiency by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories invoked by the texts in the documents.
-LIWC is a software, and an associated dictionary, that maps a set of words to their ``psychology relevant'' categories, that can allow users to analyse the mental states of speakers computationally.
-Thus, by representing documents through the LIWC categories each word invokes, it is possible to gain insight into the mental and emotional state of the speaker \citep{Pennebaker:2001}.
+\ZTedit{Next,} in \cref{chap:liwc}, I turn to the technical development of new content moderation systems for abusive text.
+Here, I address the issue of model generalisability, over-fitting and efficiency by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories invoked by the contents of the documents.
+LIWC is a software, and an associated dictionary, that maps a set of words to their ``psychology relevant'' categories, that can allow its users to computationally analyse \ZTedit{proxies to} the mental states of speakers.
+Thus, by representing documents through the LIWC categories each word invokes, it is possible to gain \ZTedit{some} insight into the mental and emotional state of the speaker \citep{Pennebaker:2001}.
 Consequently, models that are optimised on LIWC representations of documents are optimised on proxies for the mental and emotional states of the speaker.
-The use of LIWC categories to represent documents thus allows for a closer modelling of the context a given speaker is in at the time of writing.
-Additionally, the set of words that are included in the LIWC dictionary figure in much lower numbers than the raw token vocabularies or sub-words computed on the vocabulary.
-Using LIWC to represent documents thus entails a reduction in the vocabulary sizes for the models, which has implications for out-of-vocabulary tokens as well as the likelihood of over-fitting to particular tokens, and on the time it takes to complete the optimisation processes for neural network models.
-Because using LIWC document representations drastically reduce the vocabulary sizes, I conduct experiments to examine the viability of using LIWC as data representation for neural networks.
+\ZTedit{Moreover, the set of words that are included in the LIWC dictionary figure in much lower numbers than the raw token vocabularies or sub-words computed on the vocabulary.}
+\ZTedit{Thus, using LIWC can afford a low-vocabulary modelling of the emotional context a speaker is in at the time of writing.}
+\ZTdelete{The use of LIWC categories to represent documents thus allows for a closer modelling of the context a given speaker is in at the time of writing.}
+
+\ZTedit{Reducing the vocabulary size throguh LIWC has a large implication for out-of-vocabulary tokens, the likelihood of over-fitting to particular tokens, and the time required for optimising the models.
+Using LIWC, the vocabulary sizes are minimise by up to $99\%$ which also introduces a question of whether this particular vocabulary reduction method is viable for the task.}
+\ZTdelete{Using LIWC to represent documents thus entails a reduction in the vocabulary sizes for the models, which has implications for out-of-vocabulary tokens as well as the likelihood of over-fitting to particular tokens, and on the time it takes to complete the optimisation processes for neural network models.}
+\ZTdelete{Because using LIWC document representations drastically reduce the vocabulary sizes, I conduct experiments to examine the viability of using LIWC as data representation for neural networks.}
 Moreover, the reduction in vocabulary sizes and the fact that LIWC categories act as proxies to the mental and emotional states of speakers, I experiment with the out-of-domain generalisability of models optimised on documents represented through their LIWC categories.
-Finally, I analyse the temporal impacts on using LIWC-based documents representation for modelling.
+\ZTdelete{Finally, I analyse the temporal impacts on using LIWC-based documents representation for modelling.}
 
 The research questions addressed in \cref{chap:liwc} are thus:
 
