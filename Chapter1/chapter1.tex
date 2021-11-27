@@ -50,19 +50,19 @@ Although each of these challenges are of equal importance and each require urgen
 Second, I seek to connect the consequences of contemporaneous methods for content moderation technologies and develop new techniques for modelling abuse that aim to address some of these concerns.
 These twin objectives thus collectively seek to highlight the ways in which content moderation technologies are built to intrinsically optimise for white respectability politics through the political economies that they are created within (and reinforce), and the technical means of optimisation that prioritise the frequent and hegemonic over the diverse.
 Moreover, by jointly considering and making explicit the connection between the technical and the social of such socio-technical systems, I am afforded the ability to examine ways in which inadequacies, stemming from optimisation technologies, can be addressed from within a framework of optimisation.
-The over-arching research questions below then seek to first make explicit how the technical and social are connected, and rethink modes of computation to address methods that are factors in the socially discriminatory patterns of content moderation technologies.
+The over-arching research questions below then seek to first make explicit how the technical and social are connected, and rethink modes of computation to address methods that are factors in the socially discriminatory patterns of content moderation technologies.}
 
 \begin{center}
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
-    \begin{enumerate}[start=I, label={\textbf{RQ \roman*}}]
-      \item\textit{What technical and social factors are present in the socially discriminatory predictions of content moderation systems?}
-      \item\textit{In which ways can computational methods be used to address limitations that are influential in discriminatory outputs from computational modelling?}
+    \begin{enumerate}[start=1, label={\textbf{RQ \roman*}}]
+      \item\textit{\ZTedit{What technical and social factors are present in the socially discriminatory predictions of content moderation systems?}}
+      \item\textit{\ZTedit{In which ways can computational methods be used to address limitations that are influential in discriminatory outputs from computational modelling?}}
     \end{enumerate}
     \vspace{5mm}
 \end{minipage}
 \end{center}
-
+\ZTedit{
 I examine these research questions by subdividing my thesis into four sections:
 }
 First, I address questions around how abuse is defined and the consequences of such definitions on the content that is subject to such systems.
@@ -99,7 +99,7 @@ In this chapter, I critically examine how the notion of ``toxicity'' has been op
 \ZTedit{In these analyses, I consider the aims of computational processes for abuse detection and the methods with which researchers have attempted to achieve these.
 Moreover, I critically examine how the notion of ``toxicity'' has been operationalised in computational boundary work and the implications that these operationalisations have on the political economies of the content moderation infrastructures.
 Building on theories of classification and purification \citep{Douglas:1966} and content moderation cast a digital sanitisation practice \citep{Lepawsky:2019}, I argue that processes and political economies of content moderation are co-constitutive of one another, thereby entrenching content moderation infrastructures within pre-existing systems of marginalisation.
-To address such issues, I suggest that content moderation should move beyond the question of content removal towards a productive ``re-ordering of [...] environment[s]'' \citep{Douglas:1966} to allow communities to constitute their own identities.
+To address such issues, I suggest that content moderation should move beyond the question of content removal towards a productive ``re-ordering of [...] environment[s]'' \citep{Douglas:1966} to allow communities to constitute their own identities.}
 \ZTdelete{Building on work in cultural anthropology on classification and purification \citep{Douglas:1966}, and work in discard studies that suggest that content moderation is a practice in digital sanitisation \citep{Lepawsky:2019} , I argue that content moderation should move beyond the question of content removal towards a productive ``re-ordering of [...] environment[s]'' \citep{Douglas:1966} that can allow communities to constitute their own identities.}
 \ZTdelete{Moreover}\ZTedit{Specifically}, I argue that current practices and operationalisations of ``toxicity'' for content moderation systems are rooted in patriarchal and white supremacist imaginaries of acceptability.
 \ZTdelete{Through an analysis of two content moderation systems, I examine how power differentials and respectability politics to determine the boundaries between ``the healthy'' and ``the toxic'' are embedded into content moderation infrastructures and expressed through them.}
@@ -181,7 +181,7 @@ Thus, the research questions explored in this chapter are:
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
     \begin{enumerate}[start=3, label={\textbf{RQ \arabic*}}]
-      \ZTedit{}
+      \ZTedit{
         \item{\textit{How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}}
         }
         \ZTdelete{
@@ -230,7 +230,7 @@ The research questions that I explore in this chapter are thus:
 \end{minipage}
 \end{center}
 
-The work in \cref{chap:disembodied} extends on a collaboration with Smarika Lulz (Humboldt University), Joachim Bingel (Hero I/S), and Isabelle Augenstein (University of Copenhagen). Subsections of the chapter are currently in review at the Conference on Fairness, Accountability, and Transparancy (FAcct), 2022..
+The work in \cref{chap:disembodied} extends on a collaboration with Smarika Lulz (Humboldt University), Joachim Bingel (Hero I/S), and Isabelle Augenstein (University of Copenhagen). Subsections of the chapter are currently in review at the Conference on Fairness, Accountability, and Transparancy (FAccT), 2022..
 The work presented here expands on the collaborative work across all sections and the sections examining the machine learning models developed in this dissertation are entirely new.
 
 Through the work in these chapters, I examine different aspects of the machine learning pipeline for abusive language detection to gain an understanding on a) what the implications of task definitions and modelling approaches are, b) how do distinct data representations influence model generalisability and efficiency in optimisation, c) how related tasks can influence in-domain performance, and finally d) how subjective embodiments are expressed throughout the machine learning pipeline and what the implications are for developing equitable machine learning models.
@@ -240,27 +240,33 @@ Through the work in these chapters, I examine different aspects of the machine l
   Crucially, I call for the technical research into content moderation technologies to re-orient itself around the lived realities of marginalised groups in society, i.e. those who are most at risk of harms when their content is over-moderated and content about them is inadequately moderated, such that the technologies that we develop come to serve those who are most in need of them.}
 
 \ZTedit{
-Finally, before I release the reader to the core content of my thesis, I provide disclaimers for the contents in this thesis.
+Finally, before I release the reader to the core content of my thesis, I wish to provide disclaimers for the contents in this thesis.
+}
+\ZTedit{
 First, following \citet{Kulynych:2020} I refer to \textit{training} machine learning models as \textit{optimising}.
 I make this decision because machine learning models are a specific kind of optimisation technology rather than a sentient entity which can be trained.
 Moreover, this distinction between \textit{training} and \textit{optimisation} allows us to view optimised models more clearly as statistical artefacts rather than anthropomorphised machines that ``learn''.
 Casting aside the veneer of sentient capabilities provides space to critically examine the decisions and artefacts that influence machine learning models to produce the desired and undesired effects alike.
 Similarly, I refer to content moderation technologies as \textit{machinic} \citep{Parisi} rather than \textit{automatic}.
 This distinction is made to highlight the inhuman nature of the underlying technologies, and consequently the judgements that are made by the technologies.
-
+}
+\ZTedit{
 Second, I do not make use of pre-trained embedding layers or fine-tuned language models in my work.
 Although both techniques have been shown to improve performances of machinic abuse detection \citep{Fortuna:2018}, they are not compatible with some experiments in \cref{chap:liwc} and thus influence comparability between the experiments conducted in the chapter.
 For the chapters in which their use would not limit direct comparability, these methods carry a range of social biases and norms that are beyond the scope of this thesis to examine.
 Thus I avoid using them as a way to ensure that the claims I make in this thesis are a result of the models and modelling decisions, rather than spurious correlations.
-
+}
 \ZTcomment{Incomplete. Add references.}
+\ZTedit{
 Third, as I argue in \cref{chap:disembodied}, there is a need for an active consideration of the lived subjectivities practitioners' and researchers' in computational methods.
 To remain consistent with my own recommendations, I use first person singular pronouns throughout this thesis.
 In doing so, I follow a tradition in feminist \citep{...} and Black feminist \citep{...} scholarships and critiques of the veneer of objectivity in science.
-
+}
+\ZTedit{
 Fourth, I seek to avoid providing examples of abusive texts where possible.
 Although my thesis is centered around content moderation and therefore requires some examples, I believe that we, as researchers, should limit the amount of abusive content in our work, as frivellous inclusion of such texts can be limiting to the potential readership and institutionalise and archive the very harms that we seek to mitigate.
-
+}
+\ZTedit{
 Lastly, beyond being a culmination of the research I have conducted, this thesis is also strongly influenced by the conversations I have had with activists and social scientific researchers, and the organisational work that I have done towards diversity and inclusion in the NLP field and organising the Workshop on Online Abuse and Harms, which I founded in 2017.
 Through my organisation I have come to have discussions with a variety of scholars and organisations that are addressing aspects of online abuse, including Seyi Akiwowo, Mikki Kendall, Maya Indira Ganesh, Alvin Grissom II, Kat Lo, Su Lin Blodgett, Joris van Hoboken, Seeta Pe{\~n}a Gangadharan, and many others.
 While I do not claim to speak for any of them or any particular community in this work, there is little doubt that the shape of my would be very different, and much poorer, without the discussions and conversations that we have shared.
