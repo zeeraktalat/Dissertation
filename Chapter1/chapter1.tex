@@ -196,16 +196,23 @@ Thus, the research questions explored in this chapter are:
 The work in \cref{chap:mtl} is the result of an ongoing collaboration with Joachim Bingel (Hero I/S).
 All of the content produced in the chapter is new and developed specifically for the purposes of this dissertation.
 
-In the final content chapter, \cref{chap:disembodied}, I turn a critical lens to the proposed objectivity of machine learning models and the influence of this imaginary on abuse detection.
-Drawing on work on subjectivity from Science and Technology Studies, I examine how subjectivities are embodied in the machine learning pipeline.
-That is, I examine how social and cultural meanings that are embedded in the human experience are also embedded in the derivatives of it, i.e. in the data that are created by humans and subsequently the machine learning pipelines that are created on the basis of these.
-I argue that this illusion of objectivity \citep{Haraway:1988} disembodies machine learning pipelines from the people they are designed for and the people whose data they are developed on.
-I further argue, that such imaginaries of objectivity provides a barrier to the goal of achieving equitable machine learning models, and that these imaginaries are a key reason that discriminatory models are produced as they embody white supremacist imaginaries of the world.
-By extension, I argue that machine learning models for social predictions, e.g. abusive language detection, are currently rooted in such discriminatory imaginaries and thus, produce discriminatory outcomes.
-I further argue that for machine learning models to be equitable and not disadvantage marginalised communities, it is necessary to centre the subjectivities of the people whose data make the basis of the machine learning models and the people that the models are developed for.
-A step to achieving this goal is to analyse how the subjective embodiments of the designers are embedded in the machine learning process, such that decisions can be made which are aligned with the subjectivities of the people using the models.
-The implication of these arguments is that ``bias'' is not a quantifiable entity that can be subject to optimisation, rather biases, or subjective embodiments, permeate the machine learning pipeline and as such the goal of ``debiased'' machine learning models and the work dedicated to this end, serve to obscure situatedness and subjective embodiments of machine learning models.
-For these reasons, I examine how my own subjectivities are embodied through the modelling choices that I make throughout this dissertation.
+In the final content chapter, \cref{chap:disembodied}, I turn a critical lens to the \ZTedit{proposition of}\ZTdelete{proposed} objectivity \ZTedit{in}\ZTdelete{of} machine learning models and \ZTedit{how this imaginary influences the machine learning-based classification of abuse.}
+\ZTdelete{the influence of this imaginary on abuse detection.}
+Drawing on work on subjectivity from \ZTedit{Feminist} Science and Technology Studies, I examine how \ZTedit{human} subjectivities are embodied \ZTedit{throughout}\ZTdelete{in} the machine learning pipeline.
+That is, I examine how \ZTedit{the} social and cultural meaning, that \ZTedit{is}\ZTdelete{are} embedded in the human experience, are also embedded in the derivatives of it, e.g. in the data that are created by humans and subsequently the machine learning pipelines that are created on the basis of these data.
+I argue \ZTedit{that there is an illusion of objectivity \citep{Haraway:1988} through which denies the embodiments of the people whose data the models rely on, the designers of machine learning pipelines, and the potential data annotators.
+  Consequently,
+}
+\ZTdelete{this illusion of objectivity \citep{Haraway:1988} disembodies machine learning pipelines from the people they are designed for and the people whose data they are developed on.
+I further argue, that} such delusions  of objectivity provides a barrier to \ZTdelete{the}\ZTedit{developing machine learning models that are developed and deployed in an equitable manner.
+Moreover, I argue that this veil of objectivity is a central cause for machine learning models embodying and reproducing xenophobic white supremacist and patriarchal logics.}
+\ZTdelete{achieving equitable machine learning models, and that these imaginaries are a key reason that discriminatory models are produced as they embody white supremacist imaginaries of the world.}
+\ZTdelete{By extension, I argue that}\ZTedit{Consequently, current} machine learning models for social predictions, e.g. abusive language detection, are rooted in such discriminatory imaginaries and thus, produce discriminatory outcomes.
+\ZTedit{To address this concern, I suggest that the development and deployment of machine learning models should centre}
+\ZTdelete{I further argue that for machine learning models to be equitable and not disadvantage marginalised communities, it is necessary to centre} the subjectivities of the people whose data make the basis of the machine learning models and the people that the models are developed for.
+A step to achieving this goal is to analyse how the subjective embodiments of the designers are embedded in the machine learning process, such that decisions can be made which are aligned with the subjectivities of the people using the models, \ZTedit{i.e. machine learning models should be trained on data from specific groups and designed for the use of those groups}.
+The implication of these arguments is that ``bias'' is not a quantifiable entity that can be subject to optimisation, rather biases, or subjective embodiments, permeate the machine learning pipeline and as such the goal \ZTedit{and work} of ``\ZTdelete{debiased}\ZTedit{debiasing}'' machine learning models serve to obscure \ZTedit{the} situatedness and subjective embodiments of machine learning models.
+For these reasons, I \ZTdelete{examine}\ZTedit{reflect on} how my own subjectivities are embodied through the modelling choices that I make throughout this dissertation.
 
 The research questions that I explore in this chapter are thus:
 
@@ -222,18 +229,23 @@ The research questions that I explore in this chapter are thus:
 \end{minipage}
 \end{center}
 
-The work in \cref{chap:disembodied} extends on a collaboration with Smarika Lulz (Humboldt University), Joachim Bingel (Hero I/S), and Isabelle Augenstein (University of Copenhagen). Subsections of the chapter are currently in review at the journal Computational Linguistics.
+The work in \cref{chap:disembodied} extends on a collaboration with Smarika Lulz (Humboldt University), Joachim Bingel (Hero I/S), and Isabelle Augenstein (University of Copenhagen). Subsections of the chapter are currently in review at the Conference on Fairness, Accountability, and Transparancy (FAcct), 2022..
 The work presented here expands on the collaborative work across all sections and the sections examining the machine learning models developed in this dissertation are entirely new.
 
 Through the work in these chapters, I examine different aspects of the machine learning pipeline for abusive language detection to gain an understanding on a) what the implications of task definitions and modelling approaches are, b) how do distinct data representations influence model generalisability and efficiency in optimisation, c) how related tasks can influence in-domain performance, and finally d) how subjective embodiments are expressed throughout the machine learning pipeline and what the implications are for developing equitable machine learning models.
-By examining the machine learning pipeline for abuse detection from conceptualisation, through model development, to mapping limitations of current practices, I provide detailed insights into the different facets of developing machine learning models for abusive language detection and identify specific avenues for future research while also highlighting the specific limitations of current practices.
+\ZTedit{By examining in detail the machine learning development pipeline for abuse detection, from conceptualisation to model development, I provide detailed insights into limitations that occur at each step of the development process.}
+\ZTdelete{By examining the machine learning pipeline for abuse detection from conceptualisation, through model development, to mapping limitations of current practices, I provide detailed insights into the different facets of developing machine learning models for abusive language detection and identify specific avenues for future research while also highlighting the specific limitations of current practices.}
+\ZTedit{The findings of my research, and the implications and considerations that derive from them, provide for a number of future directions for developing content moderation technologies.
+  Crucially, I call for the technical research into content moderation technologies to re-orient itself around the lived realities of marginalised groups in society, i.e. those who are most at risk of harms when their content is over-moderated and content about them is inadequately moderated, such that the technologies that we develop come to serve those who are most in need of them.}
 
 \ZTedit{
 Finally, before I release the reader to the core content of my thesis, I provide disclaimers for the contents in this thesis.
-First, following \citet{Kulynych:2020} I refer to \textit{training} machine learning models as \citet{optimising}.
+First, following \citet{Kulynych:2020} I refer to \textit{training} machine learning models as \textit{optimising}.
 I make this decision because machine learning models are a specific kind of optimisation technology rather than a sentient entity which can be trained.
 Moreover, this distinction between \textit{training} and \textit{optimisation} allows us to view optimised models more clearly as statistical artefacts rather than anthropomorphised machines that ``learn''.
 Casting aside the veneer of sentient capabilities provides space to critically examine the decisions and artefacts that influence machine learning models to produce the desired and undesired effects alike.
+Similarly, I refer to content moderation technologies as \textit{machinic} \citep{Parisi} rather than \textit{automatic}.
+This distinction is made to highlight the inhuman nature of the underlying technologies, and consequently the judgements that are made by the technologies.
 
 Second, I do not make use of pre-trained embedding layers or fine-tuned language models in my work.
 Although both techniques have been shown to improve performances of machinic abuse detection \citep{Fortuna:2018}, they are not compatible with some experiments in \cref{chap:liwc} and thus influence comparability between the experiments conducted in the chapter.
@@ -241,7 +253,8 @@ For the chapters in which their use would not limit direct comparability, these 
 Thus I avoid using them as a way to ensure that the claims I make in this thesis are a result of the models and modelling decisions, rather than spurious correlations.
 
 \ZTcomment{Incomplete. Add references.}
-Third, as I argue in \cref{chap:disembodied}, there is a need for an active consieration of the lived subjectivitites practitioners' and researchers' in computational methods, I use first person singular pronouns throughout this thesis.
+Third, as I argue in \cref{chap:disembodied}, there is a need for an active consideration of the lived subjectivities practitioners' and researchers' in computational methods.
+To remain consistent with my own recommendations, I use first person singular pronouns throughout this thesis.
 In doing so, I follow a tradition in feminist \citep{...} and Black feminist \citep{...} scholarships and critiques of the veneer of objectivity in science.
 
 Fourth, I seek to avoid providing examples of abusive texts where possible.
