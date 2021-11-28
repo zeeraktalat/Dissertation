@@ -119,9 +119,9 @@ To address such issues, I suggest that content moderation should move beyond the
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
     \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
-        \ZTedit{\item{\textit{How are notions of ``toxicity'' operationalised and modelled, and what are their socio-political implications for content moderation systems?}}}
-        \ZTdelete{\item{\textit{How are notions of ``toxicity'' operationalised in content moderation infrastructures and what are the socio-political implications of such operationalisations?}}}
-        \ZTdelete{\item{\textit{How do modelling choices impact how computational models for content moderation learn and represent hegemonic notions of respectability?}}}
+        \item{\textit{\ZTedit{How are notions of ``toxicity'' operationalised and modelled, and what are their socio-political implications for content moderation systems?}}}
+        \item{\textit{\ZTdelete{How are notions of ``toxicity'' operationalised in content moderation infrastructures and what are the socio-political implications of such operationalisations?}}}
+        \item{\textit{\ZTdelete{How do modelling choices impact how computational models for content moderation learn and represent hegemonic notions of respectability?}}}
     \end{enumerate}
     \vspace{5mm}
 \end{minipage}
@@ -152,9 +152,9 @@ The research questions addressed in \cref{chap:liwc} are thus:
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
     \begin{enumerate}[start=2, label={\textbf{RQ \arabic*}}]
-        \item{\textit{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}}
-        \ZTdelete{\item{\textit{What are the implications of using LIWC as input on model development in terms of optimisation time?}}}
-        \ZTdelete{\item{\textit{What are the implications on generalisability of LIWC-based models?}}}
+        \item{\textit{\ZTdelete{Can LIWC provide a meaningful} \ZTedit{What are the modelling implications of using LIWC to substitute} the use of words and sub-words \ZTdelete{tokens} as input tokens \ZTdelete{and how is model performance affected by such a substitution}?}
+        \item{\textit{\ZTdelete{What are the implications of using LIWC as input on model development in terms of optimisation time?}}}
+        \item{\textit{\ZTdelete{What are the implications on generalisability of LIWC-based models?}}}
     \end{enumerate}
     \vspace{5mm}
 \end{minipage}
@@ -186,14 +186,10 @@ Thus, the research questions explored in this chapter are:
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
     \begin{enumerate}[start=3, label={\textbf{RQ \arabic*}}]
-      \ZTedit{
-        \item{\textit{How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}}
-        }
-        \ZTdelete{
-        \item{\textit{What is the impact of using auxiliary tasks that are non-abusive or abuse classification tasks for detecting specific forms of abuse?}}
-        \item{\textit{Does using different forms of abusive language detection tasks abusive and non-abusive tasks, as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}
-        \item{\textit{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}
-        }
+        \item{\textit{\ZTedit{How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}}}
+        \item{\textit{\ZTdelete{What is the impact of using auxiliary tasks that are non-abusive or abuse classification tasks for detecting specific forms of abuse?}}}
+        \item{\textit{\ZTdelete{Does using different forms of abusive language detection tasks abusive and non-abusive tasks, as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}}
+        \item{\textit{\ZTdelete{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}}
     \end{enumerate}
     \vspace{5mm}
 \end{minipage}
@@ -225,7 +221,7 @@ The research questions that I explore in this chapter are thus:
 \begin{center}
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
-    \begin{enumerate}[start=10, label={\textbf{RQ \arabic*}}]
+    \begin{enumerate}[start=4, label={\textbf{RQ \arabic*}}]
         \item{\textit{How are the subjective embodiments embedded in the machine learning pipelines?}}
         \ZTdelete{\item{\textit{Which processes in the machine learning pipeline are influenced by the subjective embodiments of the designers and people they rely on and how are they expressed?}}}
         \item{\textit{What are the implications of such subjective embodiments with regard to developing machine learning models?}}
