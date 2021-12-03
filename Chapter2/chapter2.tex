@@ -369,6 +369,37 @@ These differences strongly encourage the use of machine learning to be applied w
 \ZTedit{
 \section{Ethical Considerations}
 
+When dealing with a subject like online abuse and content moderation, there are a number of ethical issues that are necessary to bear in mind, from the anonymisation of already-existing data to the methods of collecting new data.
+These issues are further complicated by the strength with which identity intersects with whether something is offensive, as some things are only visible as offensive, or non-offensive, when one has intimate knowledge and familiarity the target.
+What is the ground truth then becomes subject to the particular subjectivities of an individual who is involved in the communicative act.
+
+Considering first the issue of anonymisation, though it is important to perform some level of anonymisation for ethical as well as technical reasons, i.e. minimising tokens to overfit to, there is also a greater risk of performing anonymisation to a strong degree, i.e. make the author of a text entirely unrecoverable.
+One such risk of strong anonymisation, which would require that the text is reordered, is that the dialectal indicators of belonging to a demographic would be erased, thus directly contradicting the need to have intimate grounding in the subjectivities of a given speaker.
+Moreover, when releasing a new dataset, researchers need to address the issue of potential harms arising from data being publicly available.
+One alternative to such publication of data is for data of a sensitive nature, i.e. labelled or identifiable social media data, to never be released publicly.
+An imaginable configuration for this could be that data is never released, however researchers can submit models and code to train and evaluate on the dataset.
+Such a governance model however comes with several drawbacks: 1) it is not possible for researchers to analyse the kinds of mistakes that machine learning models make, 2) the governance model severely inhibits who has access to data, and 3) it renders invisible analysis and drawbacks of the datasets, something which is of vital importance as our understanding of abuse and hate speech continuously grows.
+
+Turning now to concerns around creating datasets.
+Creating a dataset for online abuse requires designating \textit{someone} to look at a large volume of data, in which abusive content will likely appear without warning.
+Being situated in such a context can have mental health concerns due to the exposure to vicarious trauma, i.e. trauma occurring from witnessing traumatic events.
+As \citet{Roberts:2019} notes, the human workers who deal with moderating content for large tech companies often experience severe mental health issues as a consequence to their job.
+This issue of subjecting workers to trauma is then further exacerbated when we consider the interaction between correctly identifying online abuse and identity.
+Specifically, people will be most attuned to the various ways in which hateful and offensive content is directed towards their own identities.
+Consider for a moment dog-whistles \citep{...}, the coded language that is used to target specific demographic groups, the specific group that is being targeted may be the only group that can correctly identify a speech act as abusive or hateful.
+Thus, it is of great importance that the workers that are recruited label data about their own identities, however this too comes with a great personal cost.
+Recruiting people to annotate abuse and hateful speech targeted towards their own identities also means exposing them to violence that specifically targets them, which may make the issue of vicarious trauma even more acute \citep{...}.
+
+Turning lastly to the use of modelling and predicting online abuse, there are risks of harms to people from model misclassification, in particular to people who are in communities that are already marginalised.
+As \citet{Waseem:2018} indicate and \citet{Davidson:2019} and \citet{Dias:2020} lay clear, there are significant racialised issues with classification of abuse, leading to African American English speakers and queer folks being censored through a disproportionate amount of false positives.
+One might turn to the question of whether computational modelling is at all appropriate for content moderation or whether it is best to return to entirely human content moderation pipelines.
+This question is complicated by the sheer scale of content being generated, with billions of new tweets, Facebook and Reddit posts, and YouTube videos and comments created each day.
+The scale is then far beyond what could be hoped to be reviewed by human content moderators alone - suggesting a need for some form of automation to aid the human workers in their task.
+But is it acceptable for anyone to have to be subjected to the violence of harmful and abusive content at scale?
+If it isn't acceptable, then it is imperative that we develop content moderation technologies quickly and robustly, to address the right to be free from persecution in online spaces.
+
+\subsection{Ethics Statement}
+}
 As this dissertation deals with data that is published by individuals who very often are private citizen, it is necessary to consider different aspects of the ethical use of social media data use.
 As I only make use of previously published data, informed consent cannot be obtained directly, as I do not have access to the necessary contact details.
 Moreover, several of datasets do not provide the user information to even consider access.
@@ -377,9 +408,8 @@ Finally, as many of the datasets are several years old any contact information t
 As informed consent is not sought for the data, the need for a consideration of anonymity and privacy is only heightened, to ensure that private citizens are not exposed additional harms.
 For this reason, all experimental parts of this dissertation have undergone ethics review for risks and harms and been approved for study.
 All experimental work presented exclusively makes use of previously published, and currently public datasets.
-Some data in these datasets are entirely anonymised while others are entirely de-anonymised.
+Some data in these datasets are provided entirely anonymised while others are entirely de-anonymised.
 In all experimental work, I anonymise all data where appropriate to avoid the undue risk of harms to data subjects.
-
 
 \section{Summary}
 In this chapter, I have introduced several key notions and concepts that will lay a theoretical and philosophical foundation of my work.
