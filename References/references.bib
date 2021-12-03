@@ -1126,7 +1126,7 @@ month       = {Dec},}
 }
 
 @InProceedings{Waseem:2017,
-  author    = {Waseem, Zeerak and Davidson, Thomas and Warmsley, Dana and Weber, Ingmar},
+  author    = {Talat, Zeerak and Davidson, Thomas and Warmsley, Dana and Weber, Ingmar},
   title     = {Understanding Abuse: A Typology of Abusive Language Detection Subtasks},
   booktitle = {Proceedings of the First Workshop on Abusive Language Online},
   month     = {August},
@@ -1810,7 +1810,7 @@ month       = {Dec},}
 	journal = {Adaptive Behavior}
 }
 @InProceedings{Waseem:2016,
-  author    = {Waseem, Zeerak},
+  author    = {Talat, Zeerak},
   title     = {Are You a Racist or Am I Seeing Things? Annotator Influence on Hate Speech Detection on Twitter},
   booktitle = {Proceedings of the First Workshop on NLP and Computational Social Science},
   month     = {November},
@@ -1822,7 +1822,7 @@ month       = {Dec},}
 }
 
 @InProceedings{Waseem-Hovy:2016,
-  author    = {Waseem, Zeerak  and  Hovy, Dirk},
+  author    = {Talat, Zeerak  and  Hovy, Dirk},
   title     = {Hateful Symbols or Hateful People? Predictive Features for Hate Speech Detection on Twitter},
   booktitle = {Proceedings of the NAACL Student Research Workshop},
   month     = {June},
@@ -3071,12 +3071,12 @@ month       = {Dec},}
 	isbn = {9783319785837},
 	shorttitle = {Bridging the {Gaps}},
 	url = {https://doi.org/10.1007/978-3-319-78583-7_3},
-	abstract = {Accurately detecting hate speech using supervised classification is dependent on data that is annotated by humans. Attaining high agreement amongst annotators though is difficult due to the subjective nature of the task, and different cultural, geographic and social backgrounds of the annotators. Furthermore, existing datasets capture only single types of hate speech such as sexism or racism; or single demographics such as people living in the United States, which negatively affects the recall when classifying data that are not captured in the training examples. End users of websites where hate speech may occur are exposed to risk of being exposed to explicit content due to the shortcomings in the training of automatic hate speech detection systems where unseen forms of hate speech or hate speech towards unseen groups are not captured. In this paper, we investigate methods for bridging differences in annotation and data collection of abusive language tweets such as different annotation schemes, labels, or geographic and cultural influences from data sampling. We consider three distinct sets of annotations, namely the annotations provided by Waseem (2016), Waseem and Hovy (2016), and Davidson et al. (2017). Specifically, we train a machine learning model using a multi-task learning (MTL) framework, where typically some auxiliary task is learned alongside a main task in order to gain better performance on the latter. Our approach distinguishes itself from most previous work in that we aim to train a model that is robust across data originating from different distributions and labeled under differing annotation guidelines, and that we understand these different datasets as different learning objectives in the way that classical work in multi-task learning does with different tasks. Here, we experiment with using fine-grained tags for annotation. Aided by the predictions in our models as well as the baseline models, we seek to show that it is possible to utilize distinct domains for classification as well as showing how cultural contexts influence classifier performance as the datasets we use are collected either exclusively from the U.S. Davidson et al. (2017) or collected globally with no geographic restriction (Waseem 2016; Waseem and Hovy 2016). Our choice for a multi-task learning set-up is motivated by a number of factors. Most importantly, MTL allows us to share knowledge between two or more objectives, such that we can leverage information encoded in one dataset to better fit another. As shown by Bingel and Søgaard (2017) and Martínez Alonso and Plank (2017), this is particularly promising when the auxiliary task has a more coarse-grained set of labels in comparison to the main task. Another benefit of MTL is that it lets us learn lower-level representations from greater amounts of data when compared to a single-task setup. This, in connection with MTL being known to work as a regularizer, is not only promising when it comes to fitting the training data, but also helps to prevent overfitting, especially when we have to deal with small datasets.},
+	abstract = {Accurately detecting hate speech using supervised classification is dependent on data that is annotated by humans. Attaining high agreement amongst annotators though is difficult due to the subjective nature of the task, and different cultural, geographic and social backgrounds of the annotators. Furthermore, existing datasets capture only single types of hate speech such as sexism or racism; or single demographics such as people living in the United States, which negatively affects the recall when classifying data that are not captured in the training examples. End users of websites where hate speech may occur are exposed to risk of being exposed to explicit content due to the shortcomings in the training of automatic hate speech detection systems where unseen forms of hate speech or hate speech towards unseen groups are not captured. In this paper, we investigate methods for bridging differences in annotation and data collection of abusive language tweets such as different annotation schemes, labels, or geographic and cultural influences from data sampling. We consider three distinct sets of annotations, namely the annotations provided by Talat (2016), Talat and Hovy (2016), and Davidson et al. (2017). Specifically, we train a machine learning model using a multi-task learning (MTL) framework, where typically some auxiliary task is learned alongside a main task in order to gain better performance on the latter. Our approach distinguishes itself from most previous work in that we aim to train a model that is robust across data originating from different distributions and labeled under differing annotation guidelines, and that we understand these different datasets as different learning objectives in the way that classical work in multi-task learning does with different tasks. Here, we experiment with using fine-grained tags for annotation. Aided by the predictions in our models as well as the baseline models, we seek to show that it is possible to utilize distinct domains for classification as well as showing how cultural contexts influence classifier performance as the datasets we use are collected either exclusively from the U.S. Davidson et al. (2017) or collected globally with no geographic restriction (Talat 2016; Talat and Hovy 2016). Our choice for a multi-task learning set-up is motivated by a number of factors. Most importantly, MTL allows us to share knowledge between two or more objectives, such that we can leverage information encoded in one dataset to better fit another. As shown by Bingel and Søgaard (2017) and Martínez Alonso and Plank (2017), this is particularly promising when the auxiliary task has a more coarse-grained set of labels in comparison to the main task. Another benefit of MTL is that it lets us learn lower-level representations from greater amounts of data when compared to a single-task setup. This, in connection with MTL being known to work as a regularizer, is not only promising when it comes to fitting the training data, but also helps to prevent overfitting, especially when we have to deal with small datasets.},
 	language = {en},
 	urldate = {2021-01-30},
 	booktitle = {Online {Harassment}},
 	publisher = {Springer International Publishing},
-	author = {Waseem, Zeerak and Thorne, James and Bingel, Joachim},
+	author = {Talat, Zeerak and Thorne, James and Bingel, Joachim},
 	editor = {Golbeck, Jennifer},
 	year = {2018},
 	doi = {10.1007/978-3-319-78583-7_3},
@@ -3179,7 +3179,7 @@ month       = {Dec},}
 	abstract = {Detecting online hate is a difficult task that even state-of-the-art models struggle with. In previous research, hate speech detection models are typically evaluated by measuring their performance on held-out test data using metrics such as accuracy and F1 score. However, this approach makes it difficult to identify specific model weak points. It also risks overestimating generalisable model quality due to increasingly well-evidenced systematic gaps and biases in hate speech datasets. To enable more targeted diagnostic insights, we introduce HateCheck, a first suite of functional tests for hate speech detection models. We specify 29 model functionalities, the selection of which we motivate by reviewing previous research and through a series of interviews with civil society stakeholders. We craft test cases for each functionality and validate data quality through a structured annotation process. To illustrate HateCheck's utility, we test near-state-of-the-art transformer detection models as well as a popular commercial model, revealing critical model weaknesses.},
 	urldate = {2021-01-28},
 	journal = {arXiv:2012.15606 [cs]},
-	author = {Röttger, Paul and Vidgen, Bertram and Nguyen, Dong and Waseem, Zeerak and Margetts, Helen and Pierrehumbert, Janet},
+	author = {Röttger, Paul and Vidgen, Bertram and Nguyen, Dong and Talat, Zeerak and Margetts, Helen and Pierrehumbert, Janet},
 	month = dec,
 	year = {2020},
 	note = {arXiv: 2012.15606},
@@ -3274,7 +3274,7 @@ month       = {Dec},}
 	urldate = {2021-01-28},
 	booktitle = {Proceedings of the {Fourth} {Workshop} on {Online} {Abuse} and {Harms}},
 	publisher = {Association for Computational Linguistics},
-	author = {Vidgen, Bertie and Hale, Scott and Guest, Ella and Margetts, Helen and Broniatowski, David and Waseem, Zeerak and Botelho, Austin and Hall, Matthew and Tromble, Rebekah},
+	author = {Vidgen, Bertie and Hale, Scott and Guest, Ella and Margetts, Helen and Broniatowski, David and Talat, Zeerak and Botelho, Austin and Hall, Matthew and Tromble, Rebekah},
 	month = nov,
 	year = {2020},
 	pages = {162--172},
@@ -3502,7 +3502,7 @@ month       = {Dec},}
 	abstract = {Detecting online hate is a difficult task that even state-of-the-art models struggle with. In previous research, hate speech detection models are typically evaluated by measuring their performance on held-out test data using metrics such as accuracy and F1 score. However, this approach makes it difficult to identify specific model weak points. It also risks overestimating generalisable model quality due to increasingly well-evidenced systematic gaps and biases in hate speech datasets. To enable more targeted diagnostic insights, we introduce HateCheck, a first suite of functional tests for hate speech detection models. We specify 29 model functionalities, the selection of which we motivate by reviewing previous research and through a series of interviews with civil society stakeholders. We craft test cases for each functionality and validate data quality through a structured annotation process. To illustrate HateCheck's utility, we test near-state-of-the-art transformer detection models as well as a popular commercial model, revealing critical model weaknesses.},
 	urldate = {2021-01-28},
 	journal = {arXiv:2012.15606 [cs]},
-	author = {Röttger, Paul and Vidgen, Bertram and Nguyen, Dong and Waseem, Zeerak and Margetts, Helen and Pierrehumbert, Janet},
+	author = {Röttger, Paul and Vidgen, Bertram and Nguyen, Dong and Talat, Zeerak and Margetts, Helen and Pierrehumbert, Janet},
 	month = dec,
 	year = {2020},
 	note = {arXiv: 2012.15606},
@@ -3609,7 +3609,7 @@ month       = {Dec},}
 	urldate = {2021-01-28},
 	booktitle = {Proceedings of the {Fourth} {Workshop} on {Online} {Abuse} and {Harms}},
 	publisher = {Association for Computational Linguistics},
-	author = {Vidgen, Bertie and Hale, Scott and Guest, Ella and Margetts, Helen and Broniatowski, David and Waseem, Zeerak and Botelho, Austin and Hall, Matthew and Tromble, Rebekah},
+	author = {Vidgen, Bertie and Hale, Scott and Guest, Ella and Margetts, Helen and Broniatowski, David and Talat, Zeerak and Botelho, Austin and Hall, Matthew and Tromble, Rebekah},
 	month = nov,
 	year = {2020},
 	pages = {162--172}
@@ -3986,7 +3986,7 @@ keywords = {opinion mining, Hate speech, literature review, natural language pro
 
 @misc{Rottger:2021,
       title={HateCheck: Functional Tests for Hate Speech Detection Models}, 
-      author={Paul R{\"o}ttger and Bertram Vidgen and Dong Nguyen and Zeerak Waseem and Helen Margetts and Janet Pierrehumbert},
+      author={Paul R{\"o}ttger and Bertram Vidgen and Dong Nguyen and Zeerak Talat and Helen Margetts and Janet Pierrehumbert},
       year={2020},
       eprint={2012.15606},
       archivePrefix={arXiv},
@@ -4197,11 +4197,11 @@ eprint = {
 	file = {Kulynych_et_al_(2020)_POTs.pdf:/Users/zeerakw/Zotero/storage/HBDECAC8/Kulynych_et_al_(2020)_POTs.pdf:application/pdf}
 }
 
-@article{Kirtz:2021,
-	title = {Succeeding to {Fail}: {The} {Impact} of the {Specificity} of {Ambiguity} in {Content} {Moderation}},
+@article{Kirtz:2022,
+	title = {Definitely Maybe: {The} {Impact} of the {Specificity} of {Ambiguity} in {Content} {Moderation}},
 	journal = {In Press},
-	author = {Kirtz, Jaime Lee and Waseem, Zeerak and Tomlinson, Christine and Chun, Wendy Hui Kyong},
-	year = {2021}
+	author = {Kirtz, Jaime Lee and Talat, Zeerak and Tomlinson, Christine and Chun, Wendy Hui Kyong},
+	year = {2022}
 }
 
 @article{Brock:2015,
@@ -4432,7 +4432,7 @@ Perspective was created by Jigsaw and the Google Counter Abuse Technology team i
 This week we are joined by Zeerak Waseem, who researches and specialises in online hate speech. Zeerak is currently a PhD student at the University of Sheffield. Full disclosure: we go completely off-track.},
 	language = {English},
 	urldate = {2021-03-26},
-	author = {Jane, Oriana and Carcas Curry, Amanda and Waseem, Zeerak},
+	author = {Jane, Oriana and Carcas Curry, Amanda and Talat, Zeerak},
 	year = {2021}
 }
 
@@ -4446,7 +4446,7 @@ We are back with Zeerak Waseem for the second part of our conversation about onl
 Disclaimer: we might have gone off topic and got political again..},
 	language = {English},
 	urldate = {2021-03-26},
-	author = {Jane, Oriana and Carcas Curry, Amanda and Waseem, Zeerak},
+	author = {Jane, Oriana and Carcas Curry, Amanda and Talat, Zeerak},
 	year = {2021}
 }
 
@@ -4881,7 +4881,7 @@ Publisher: Society for Industrial and Applied Mathematics},
 	urldate = {2021-01-28},
 	booktitle = {Proceedings of the {Fourth} {Workshop} on {Online} {Abuse} and {Harms}},
 	publisher = {Association for Computational Linguistics},
-	author = {Vidgen, Bertie and Hale, Scott and Guest, Ella and Margetts, Helen and Broniatowski, David and Waseem, Zeerak and Botelho, Austin and Hall, Matthew and Tromble, Rebekah},
+	author = {Vidgen, Bertie and Hale, Scott and Guest, Ella and Margetts, Helen and Broniatowski, David and Talat, Zeerak and Botelho, Austin and Hall, Matthew and Tromble, Rebekah},
 	month = nov,
 	year = {2020},
 	keywords = {\_tablet},
@@ -5514,7 +5514,7 @@ Disclaimer: we might have gone off topic and got political again..},
 	abstract = {We introduce Dynabench, an open-source platform for dynamic dataset creation and model benchmarking. Dynabench runs in a web browser and supports human-and-model-in-the-loop dataset creation: annotators seek to create examples that a target model will misclassify, but that another person will not. In this paper, we argue that Dynabench addresses a critical need in our community: contemporary models quickly achieve outstanding performance on benchmark tasks but nonetheless fail on simple challenge examples and falter in real-world scenarios. With Dynabench, dataset creation, model development, and model assessment can directly inform each other, leading to more robust and informative benchmarks. We report on four initial NLP tasks, illustrating these concepts and highlighting the promise of the platform, and address potential objections to dynamic benchmarking as a new standard for the field.},
 	urldate = {2021-05-05},
 	journal = {arXiv:2104.14337 [cs]},
-	author = {Kiela, Douwe and Bartolo, Max and Nie, Yixin and Kaushik, Divyansh and Geiger, Atticus and Wu, Zhengxuan and Vidgen, Bertie and Prasad, Grusha and Singh, Amanpreet and Ringshia, Pratik and Ma, Zhiyi and Thrush, Tristan and Riedel, Sebastian and Waseem, Zeerak and Stenetorp, Pontus and Jia, Robin and Bansal, Mohit and Potts, Christopher and Williams, Adina},
+	author = {Kiela, Douwe and Bartolo, Max and Nie, Yixin and Kaushik, Divyansh and Geiger, Atticus and Wu, Zhengxuan and Vidgen, Bertie and Prasad, Grusha and Singh, Amanpreet and Ringshia, Pratik and Ma, Zhiyi and Thrush, Tristan and Riedel, Sebastian and Talat, Zeerak and Stenetorp, Pontus and Jia, Robin and Bansal, Mohit and Potts, Christopher and Williams, Adina},
 	month = apr,
 	year = {2021},
 	note = {arXiv: 2104.14337},
@@ -5544,7 +5544,7 @@ Disclaimer: we might have gone off topic and got political again..},
 	abstract = {We present a first-of-its-kind large synthetic training dataset for online hate classification, created from scratch with trained annotators over multiple rounds of dynamic data collection. We provide a 40,623 example dataset with annotations for fine-grained labels, including a large number of challenging contrastive perturbation examples. Unusually for an abusive content dataset, it comprises 54\% hateful and 46\% not hateful entries. We show that model performance and robustness can be greatly improved using the dynamic data collection paradigm. The model error rate decreased across rounds, from 72.1\% in the first round to 35.8\% in the last round, showing that models became increasingly harder to trick -- even though content become progressively more adversarial as annotators became more experienced. Hate speech detection is an important and subtle problem that is still very challenging for existing AI methods. We hope that the models, dataset and dynamic system that we present here will help improve current approaches, having a positive social impact.},
 	urldate = {2021-05-05},
 	journal = {arXiv:2012.15761 [cs]},
-	author = {Vidgen, Bertie and Thrush, Tristan and Waseem, Zeerak and Kiela, Douwe},
+	author = {Vidgen, Bertie and Thrush, Tristan and Talat, Zeerak and Kiela, Douwe},
 	month = dec,
 	year = {2020},
 	note = {arXiv: 2012.15761},
