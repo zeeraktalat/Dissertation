@@ -13,18 +13,34 @@ This chapter introduces related work in Natural Language Processing (NLP) and th
 
 % Introduce the field of abusive language detection
 In recent years, the computational study of online abuse has seen a rapid increase in the number of papers dedicated starting with a handful of papers prior to $2016$ to a thriving research field with numerous papers, shared tasks, and workshops \citep{Vidgen:2020}. In spite of the growth in research dedicated to the detection of online abuse, the research field is still in its infancy with a number of open questions, including questions around definition of the task, annotation guidelines, and modelling techniques.
+\ZTedit{Due to the relative infancy of the field, the ``early'' and ``recent'' work overlap each other in time.
+I use ``early'' and ``recent'' work to distinguish ``early'' from ``recent'' by conceptualising ``early'' as work which laid the foundations of the field and ``recent'' as work that develops, or critiques, these foundations.}
 The earliest work in the field sought to address questions of cyber-bullying \citep{Chen:2012,Cho:2013,Reynolds:2011} and profanity \citep{Sood:profanity:2012,Sood:2013} with sparing focus on demographically specified abuse, such as racism, sexism, and anti-Semitism \citep{Warner:2012}. More recently, work on demographically specified abuse has surfaced as an independent task \citep{Tulkens:2015,Waseem:2016,Waseem-Hovy:2016,Park:2017,Samghabadi:2017,Karan:2018,Gorrell:2018,Stoop:2019,Meyer:2019,Palmer:2020,Vidgen:2020}. As a consequence of increased visibility of hate speech and abuse on online platforms, the academic inquiry into the computational detection has grown along with the regulatory responses \citep{NetzDG:2017,EUCommission:2016}.
 
 Early, and contemporary computational work, has seen a great deal of focus to central questions around the task: how do we annotate and create datasets \citep{Waseem-Hovy:2016,Waseem:2017,Vidgen:2020} and understanding annotator interaction and performance \citep{Ross:2016,Waseem:2016,Vidgen_learning:2020}.
-Early work focused on questions of marginalisation and oppression, for instance through the work of \citet{Waseem-Hovy:2016} who base their annotation on works in gender studies and critical race theory, and collect data based on gendered and racialised abuse; more recently data collection and annotation processes have moved towards a demographically blind process. Such early work was inspired by the marginalisation of certain bodies and the desire to develop computational tools to protect marginalised people \citep{Warner:2012}.marginalisation of certain bodies and the desire to develop computational tools to protect marginalised people \citep{Warner:2012}.
-More recent work has instead directed its focus to demographically blind approaches to data collection and annotation, succumbing to ``marginalisation-blind'' annotation processes and guidelines. Although processes that do not take marginalisation into account, but instead seek to treat every group equally provide an allure of fairness, they also encode dominant discourse on abuse with the subsequent result of the resistance to oppression and marginalisation being treated the same as marginalisation. In concert with the growing evidence of racially biased content moderation tools \citep{Waseem:2018,Davidson:2019}, demographically blind annotation criteria and data curation pose a threat to the goal of developing tools that aid in ensuring people from the right from persecution. One such example is presented by \citet{Salminen:2018} who develop a taxonomy that includes ``anti-white'' as a target of hate on par with anti-Black hate in spite of whiteness as a hegemonic entity that marginalises \citep{McIntosh:1988}.
-A result of this are egregious annotation choice, such as ``The  white  will  always  steal;  FUCK  YOU  TO  ALL  WHITES  RACIST'' labelled as hate speech \citep{Salminen:2018}, in spite of the comment speaking to ongoing racism and the historical exploitation enacted by white societies (e.g. the theft of cultural artefacts from colonised territories \citep{Frost:2019}, the numerous genocides committed by imperialistic colonial states \citep{Weisbord:2003}, and the theft of bodies in the transatlantic slave trade). Moreover, and perhaps of even greater concern, the annotation and curation processes of \citet{Salminen:2018} result in data responding to the abuse of authority committed by police as hate, in one such example they identify the following comment as hate ``did to that poor guy. 10 s of pepper spray directly into the face, run over foot etc. equal it up a little bit, except for the detail of having a fucking stroke. So it still wouldn’t be exactly what the guy went through. Fucking discusting. They get a hard on power tripping others. They are just fucking cowards'', in all likelihood due to the aggressive nature of the comment.
+Early work focused on questions of marginalisation and oppression, for instance through the work of \citet{Waseem-Hovy:2016} who base their annotation on works in gender studies and critical race theory, and collect data based on gendered and racialised abuse; more recently data collection and annotation processes have moved towards a demographically blind process. 
+Such early work was inspired by the marginalisation of certain bodies and the desire to develop computational tools to protect marginalised people \citep{Warner:2012}.
+More recent work has instead directed its focus to demographically blind approaches to data collection and annotation, succumbing to ``marginalisation-blind'' annotation processes and guidelines. 
+Although processes that do not take marginalisation into account, but instead seek to treat every group equally provide an allure of fairness, they also encode dominant discourse on abuse with the subsequent result of the resistance to oppression and marginalisation being treated the same as marginalisation. 
+In concert with the growing evidence of racially biased content moderation tools \citep{Waseem:2018,Davidson:2019}, demographically blind annotation criteria and data curation pose a threat to the goal of developing tools that aid in ensuring people from the right from persecution. 
+One such example is presented by \citet{Salminen:2018} who develop a taxonomy that includes ``anti-white'' as a target of hate on par with anti-Black hate in spite of whiteness as a hegemonic entity that marginalises \citep{McIntosh:1988}.
+A result of this are egregious annotation choice, such as ``The  white  will  always  steal;  FUCK  YOU  TO  ALL  WHITES  RACIST'' labelled as hate speech \citep{Salminen:2018}, in spite of the comment speaking to ongoing racism and the historical exploitation enacted by white societies (e.g. the theft of cultural artefacts from colonised territories \citep{Frost:2019}, the numerous genocides committed by imperialistic colonial states \citep{Weisbord:2003}, and the theft of bodies in the transatlantic slave trade). 
+Moreover, and perhaps of even greater concern, the annotation and curation processes of \citet{Salminen:2018} result in data responding to the abuse of authority committed by police as hate, in one such example they identify the following comment as hate ``did to that poor guy. 10 s of pepper spray directly into the face, run over foot etc. equal it up a little bit, except for the detail of having a fucking stroke. So it still wouldn’t be exactly what the guy went through. Fucking discusting. They get a hard on power tripping others. They are just fucking cowards'', in all likelihood due to the aggressive nature of the comment.
 
-Through such demographically uninformed processes of curating and making data, a danger of erasure of past and ongoing marginalisation and responses to it as well as critical responses to the violent abuse of authority as ``hate speech'' that should be subject to content moderation. The question of automated hate speech detection thus, for works such as \citet{Salminen:2018} is no longer ensuring the right to not be persecuted but instead insuring that processes of marginalisation remain unchallenged.
-For these reasons, I use the datasets released in early work, specifically I use the \textit{Offence} dataset \citep{Davidson:2017}, \textit{Toxicity} dataset \citep{Wulczyn:2017}, and \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016} in all computational chapters. For \autoref{chap:liwc} which examines the influence and generalisability of vocabulary manipulation, I also use the \textit{Hate Expert} \citep{Waseem:2016} and the \textit{StormFront} \citep{Garcia:2019} datasets. Each of these datasets share the common attributes that they are collected either from spaces that are hateful towards marginalised groups or have considerations of marginalisation encoded into the annotation guidelines. In \autoref{chap:mtl} I also use three datasets that are labelled for abuse but instead to tasks that are seemingly related. First, I use the \textit{Argument Base} dataset \citep{Oraby_factfeel:2015}, the second dataset (\textit{Sarcasm}) is developed for sarcasm detection \citep{Oraby_sarcasm:2016}, and the final dataset, \textit{Moral Sentiment}, examines the moral sentiments expressed in tweets \citep{Hoover:2019}.
+Through such demographically uninformed processes of curating and making data, a danger of erasure of past and ongoing marginalisation and responses to it as well as critical responses to the violent abuse of authority as ``hate speech'' that should be subject to content moderation. 
+The question of automated hate speech detection thus, for works such as \citet{Salminen:2018} is no longer ensuring the right to not be persecuted but instead insuring that processes of marginalisation remain unchallenged.
+For these reasons, I use the datasets released in early work, specifically I use the \textit{Offence} dataset \citep{Davidson:2017}, \textit{Toxicity} dataset \citep{Wulczyn:2017}, and \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016} in all computational chapters. 
+For \autoref{chap:liwc} which examines the influence and generalisability of vocabulary manipulation, I also use the \textit{Hate Expert} \citep{Waseem:2016} and the \textit{StormFront} \citep{Garcia:2019} datasets. 
+Each of these datasets share the common attributes that they are collected either from spaces that are hateful towards marginalised groups or have considerations of marginalisation encoded into the annotation guidelines. 
+In \autoref{chap:mtl} I also use three datasets that are labelled for abuse but instead to tasks that are seemingly related. 
+First, I use the \textit{Argument Base} dataset \citep{Oraby_factfeel:2015}, the second dataset (\textit{Sarcasm}) is developed for sarcasm detection \citep{Oraby_sarcasm:2016}, and the final dataset, \textit{Moral Sentiment}, examines the moral sentiments expressed in tweets \citep{Hoover:2019}.
 In an early effort to address issues of annotator biases and under-sampling of some forms of data in the data curation process, \citet{Waseem:2017} propose a typology of abuse that aims to categorise abuse by how it is characterised rather than determining the exact form of abuse.
-To this end, \citet{Waseem:2017} present a 2-dimensional typology of hate; the first dimension operates along implicit and explicitly expressed hate. Implicitly communicated hate, \citet{Waseem:2017} argue is hate that is communicated through subversive means by using code words and communicating implicit biases. Explicit abuse on the other hand is explicit in its intention to abuse, e.g. through the use of slurs. The second dimension concerns itself with the target of abuse that can either be a generalized other, or a specific group, the former category detailing abuse that is targeted towards small groups and individuals while the latter is aimed at generalised targets, e.g. larger demographics.
-It's important to note that content may be simultaneously explicit and implicit, directed and generalised \citep{Waseem:2017}. For instance, content that implicitly targets Muslims, may simultaneously explicitly target a specific group of women.
+To this end, \citet{Waseem:2017} present a 2-dimensional typology of hate; the first dimension operates along implicit and explicitly expressed hate. 
+Implicitly communicated hate, \citet{Waseem:2017} argue is hate that is communicated through subversive means by using code words and communicating implicit biases. 
+Explicit abuse on the other hand is explicit in its intention to abuse, e.g. through the use of slurs. 
+The second dimension concerns itself with the target of abuse that can either be a generalized other, or a specific group, the former category detailing abuse that is targeted towards small groups and individuals while the latter is aimed at generalised targets, e.g. larger demographics.
+It's important to note that content may be simultaneously explicit and implicit, directed and generalised \citep{Waseem:2017}. 
+For instance, content that implicitly targets Muslims, may simultaneously explicitly target a specific group of women.
 
 \begin{table*}[ht]
 \centering
@@ -37,45 +53,89 @@ It's important to note that content may be simultaneously explicit and implicit,
 \label{tab:typology}
 \end{table*}
 
-Modelling for automated hate speech detection has also undergone a development from early to contemporary work. Early work was primarily focused on feature-based modelling \citep[e.g.][]{Waseem-Hovy:2016,Waseem:2016,Davidson:2017,Sahlgren:2018} whereas subsequent work has directed a greater attention to neural network based approaches \citep[e.g.][]{Kolhatkar:2020,Waseem:2018,Gamback:2017,Badjatiya:2017}. In this dissertation I follow a similar pattern of developing baseline models from feature-based models and suggest neural network architectures as extensions and improvements on these. In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models. As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks. In each chapter, I perform the review of the models that are pertinent to the work in the chapter. Here instead I provide a theoretical overview of the models, their components (e.g. dropout and activation functions) and their intended functionalities (i.e. the kind of data that they are designed to operate on and which assumptions are built into the model architectures).
+Modelling for automated hate speech detection has also undergone a development from early to contemporary work. 
+Early work was primarily focused on feature-based modelling \citep[e.g.][]{Waseem-Hovy:2016,Waseem:2016,Davidson:2017,Sahlgren:2018} whereas subsequent work has directed a greater attention to neural network based approaches \citep[e.g.][]{Kolhatkar:2020,Waseem:2018,Gamback:2017,Badjatiya:2017}. 
+In this dissertation I follow a similar pattern of developing baseline models from feature-based models and suggest neural network architectures as extensions and improvements on these. 
+In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models. 
+As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks. 
+In each chapter, I perform the review of the models that are pertinent to the work in the chapter. 
+Here instead I provide a theoretical overview of the models, their components (e.g. dropout and activation functions) and their intended functionalities (i.e. the kind of data that they are designed to operate on and which assumptions are built into the model architectures).
 
 \subsection{Datasets}\label{sec:datasets}
 
-Here I provide an overview of the different datasets that are used throughout this dissertation. For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset. In \autoref{sub:abuse_data} I describe the datasets annotated for hate speech and abuse and then in \autoref{sec:mtl_data}, I turn to the datasets used for the auxiliary tasks for \autoref{chap:mtl}.
+Here I provide an overview of the different datasets that are used throughout this dissertation. 
+For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset. 
+In \autoref{sub:abuse_data} I describe the datasets annotated for hate speech and abuse and then in \autoref{sec:mtl_data}, I turn to the datasets used for the auxiliary tasks for \autoref{chap:mtl}.
 
 \subsubsection{Hate speech and abuse datasets}\label{sub:abuse_data}
 
-\paragraph*{Hate Speech} Published as the first publicly available dataset for hate speech and abusive language detection, \citet{Waseem-Hovy:2016} developed a dataset for detecting abuse towards gendered and racialised minorities. In an interview in the Let's Chat Ethics Podcast, Zeerak Waseem shared that the initial motivation for developing the dataset was the somewhat na{\"i}ve hope to address online harassment as experienced by women during \#GamerGate, a harassment campaign against female game developers and games journalists \citep{Massanari:2015}. This aim of developing tools that can protect marginalised people is apparent in the data sampling and the source of data. As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as ``sexist'', ``racist'', and ``neither''.
+\paragraph*{Hate Speech} Published as the first publicly available dataset for hate speech and abusive language detection, \citet{Waseem-Hovy:2016} developed a dataset for detecting abuse towards gendered and racialised minorities.
+In an interview in the Let's Chat Ethics Podcast, Zeerak Waseem shared that the initial motivation for developing the dataset was the somewhat na{\"i}ve hope to address online harassment as experienced by women during \#GamerGate, a harassment campaign against female game developers and games journalists \citep{Massanari:2015}.
+This aim of developing tools that can protect marginalised people is apparent in the data sampling and the source of data.
+As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as ``sexist'', ``racist'', and ``neither''.
 In efforts to ensure that their collected and annotated sample contains gendered and racialised abuse, they bootstrap their corpus collection by first search for common slurs against women, ethnic minorities, religious minorities, and sexual minorities to identify the salient terms and users for scraping.
 To annotate this dataset, with the target group in mind, \citet{Waseem-Hovy:2016} develop $11$ questions to test whether a comment is hateful or not.
-This set of questions focuses on breadth in the types of hate expressed rather than depth in each type. This is apparent as the tests ranges from asking about explicit forms of hate, such as the use of slurs to implicit forms like questions around stereotyping and the use of straw man arguments in criticisms of minorities.
+This set of questions focuses on breadth in the types of hate expressed rather than depth in each type. 
+This is apparent as the tests ranges from asking about explicit forms of hate, such as the use of slurs to implicit forms like questions around stereotyping and the use of straw man arguments in criticisms of minorities.
 \citet{Waseem-Hovy:2016} annotate their dataset and have their annotations verified by an external annotator.
-Collectively, these decisions are made to ensure that there was a diversity in the forms of hate in addition to the sources. However, as they note, the racist abuse only comes from $9$ different accounts. Moreover, as salient terms were sampled for annotation, some terms (i.e. the hashtag for the Australian TV show My Kitchen Rules) are over-represented in the data. In spite of these issues, the annotations in this dataset are \textit{embodied} within the context of critical race and gender studies perspectives on abuse.
+Collectively, these decisions are made to ensure that there was a diversity in the forms of hate in addition to the sources. 
+However, as they note, the racist abuse only comes from $9$ different accounts. 
+Moreover, as salient terms were sampled for annotation, some terms (i.e. the hashtag for the Australian TV show My Kitchen Rules) are over-represented in the data.
+In spite of these issues, the annotations in this dataset are \textit{embodied} within the context of critical race and gender studies perspectives on abuse.
 
-\paragraph*{Hate Expert} In an extension of the dataset proposed by \citet{Waseem-Hovy:2016}, \citet{Waseem:2016} sample $6,909$ tweets from the original scrape and have it annotated by two groups, in efforts to understand the influence of annotator biases. The first group consisted of ``feminist and anti-racism activists'' \citep{Waseem:2016} who annotate the sample of the dataset with one of four labels ``racist'', ``sexist'', ``both'', and ``neither''. The second group of annotators were recruited from CrowdFlower to re-annotate the sample annotated by the first group.\footnote{CrowdFlower has since been renamed Appen.}
-The label set was expanded by \citet{Waseem:2016} to include the category ``both'', in acknowledgement that marginalisation can be expressed across multiple dimensions, in an \textit{Intersectional} manner. Comparing models optimised on each group of annotators, \citet{Waseem:2016} find that models that use the annotations of the first group consistently outperform models optimised on the second. \citet{Waseem:2016} argue that the reason for this difference is that models optimised on the former group benefit from similarities in the understanding of hate speech, whereas the distinct subjective positionalities of the latter group, that does not have a salient unifying characteristic beyond their work on a crowd-sourcing platform, produces internally inconsistencies in labelling that render it harder for models to consistently identify patterns that they can learn from.
-In presenting this dataset, \citet{Waseem:2016} propose that ideologues can take similar positions on a topic, given their subjective positionalities. They argue that only through a principled understanding of hate speech is it possible to annotate reliably for hate speech and that crowd-sourced annotations for hate speech display inconsistencies that to some degree erases the meaning of the term.
+\paragraph*{Hate Expert} In an extension of the dataset proposed by \citet{Waseem-Hovy:2016}, \citet{Waseem:2016} sample $6,909$ tweets from the original scrape and have it annotated by two groups, in efforts to understand the influence of annotator biases. 
+The first group consisted of ``feminist and anti-racism activists'' \citep{Waseem:2016} who annotate the sample of the dataset with one of four labels ``racist'', ``sexist'', ``both'', and ``neither''.
+The second group of annotators were recruited from CrowdFlower to re-annotate the sample annotated by the first group.\footnote{CrowdFlower has since been renamed Appen.}
+The label set was expanded by \citet{Waseem:2016} to include the category ``both'', in acknowledgement that marginalisation can be expressed across multiple dimensions, in an \textit{Intersectional} manner. 
+Comparing models optimised on each group of annotators, \citet{Waseem:2016} find that models that use the annotations of the first group consistently outperform models optimised on the second.
+\citet{Waseem:2016} argue that the reason for this difference is that \ZTedit{the} models \ZTedit{that are} optimised on the former group benefit from similarities in the understanding of hate speech\ZTdelete{,}\ZTedit{.}
+\ZTdelete{whereas the distinct subjective positionalities of the latter group, that does not have a salient unifying characteristic beyond their work on a crowd-sourcing platform, produces internally inconsistencies in labelling that render it harder for models to consistently identify patterns that they can learn from.}
+\ZTedit{On the other hand, the only salient unifying characteristic for the latter is that they perform work on a micro-work platform, which produces internal inconsistencies in labelling that renders it harder for models to consistently identify patterns that they can learn from.} 
+
+In presenting this dataset, \citet{Waseem:2016} propose that ideologues can take similar positions on a topic, given their subjective positionalities. 
+They argue that only through a principled understanding of hate speech is it possible to annotate reliably for hate speech and that crowd-sourced annotations for hate speech display inconsistencies that to some degree erases the meaning of the term.
 In using this dataset for this dissertation, I use the annotations provided by the feminist and anti-racist activists.
 
 \paragraph*{Offence} Departing from the question of forms of hate speech and gender studies and critical race theory based annotation guidelines, \citet{Davidson:2017} turn instead to ask where the distinction between simply ``offensive'' speech and ``hate speech'' lies.
-Using a list of terms from Hatebase\footnote{Hatebase.org is a website that crowd-sources slurs and insulting turns of phrase. Due to marginalised people being disproportionately targeted, there is a distributional skew towards terms that target marginalised people in the number of terms.} to identify $33,458$ users whose tweets they sample.
-From these users, they randomly sample $25,000$ tweets for annotation by CrowdFlower workers, resulting in $24,802$ annotated tweets. The crowd-workers were given guidelines to aid them in distinguishing between ``offensive content'', ``hateful content'' or ``neither offensive or hateful'', selecting only one for each tweet. \citet{Davidson:2017} instruct their annotators that hate speech is speech that ``is used in reference to certain groups that expresses hatred towards the group or is intended to be derogatory, to humiliate, or to insult the members of the group''. Moreover, they provide examples of such content which includes the straightforward ``Need to send these w******s back to their country''\footnote{Censoring of the slur is mine.} and the more conflicted ``I hate white trash''. The conflict in the latter stems from it being unclear whether the emphasis is on class-based hate or if it is targeting white people. While the former is less contentious, the latter would imply that white people too are targets of marginalisation on the basis of their race. However, as numerous scholars have argued, whiteness is the hegemonic force that marginalises \citep{benjamin_race_2019,Noble:2018}.
-``Offensive'' content is provided as an alternative, less serious form of potentially unwanted content. This group is defined in contrast to the hateful class ``[o]ffensive content might use some of the same words we associate with hate speech but do not \textit{necessarily} constitute hate speech because the words are not used in the same context as ``hate speech````.\footnote{Emphasis added.}
+Using a list of terms from Hatebase to identify $33,458$ users whose tweets they sample.\footnote{Hatebase.org is a website that crowd-sources slurs and insulting turns of phrase. Due to marginalised people being disproportionately targeted, there is a distributional skew towards terms that target marginalised people in the number of terms.}
+From these users, they randomly sample $25,000$ tweets for annotation by CrowdFlower workers, resulting in $24,802$ annotated tweets. 
+The crowd-workers were given guidelines to aid them in distinguishing between ``offensive content'', ``hateful content'' or ``neither offensive or hateful'', selecting only one for each tweet. 
+\citet{Davidson:2017} instruct their annotators that hate speech is speech that ``is used in reference to certain groups that expresses hatred towards the group or is intended to be derogatory, to humiliate, or to insult the members of the group''. 
+Moreover, they provide examples of such content which includes the straightforward ``Need to send these w******s back to their country''\footnote{Censoring of the slur is mine.} and the more conflicted ``I hate white trash''. 
+The conflict in the latter stems from it being unclear whether the emphasis is on class-based hate or if it is targeting white people. 
+While the former is less contentious, the latter would imply that white people too are targets of marginalisation on the basis of their race. 
+However, as numerous scholars have argued, whiteness is the hegemonic force that marginalises \citep{benjamin_race_2019,Noble:2018}.
+``Offensive'' content is provided as an alternative, less serious form of potentially unwanted content. 
+This group is defined in contrast to the hateful class ``[o]ffensive content might use some of the same words we associate with hate speech but do not \textit{necessarily} constitute hate speech because the words are not used in the same context as ``hate speech````.\footnote{Emphasis added.}
 From this definition it's clear that in spite of the instruction to select only one category, \citet{Davidson:2017} acknowledge that there is a potential overlap between offensive language and hate speech. 
-Moreover, unlike the annotation guidelines proposed by \citet{Waseem-Hovy:2016}, the definition of offensive draws in the question of context. Illustrating this point, \citet{Davidson:2017} provide the following example ``Oh shush you know I love you f****t''. This use of context, provides space for inoffensive uses of slurs and insulting terms e.g. for reclaimed and in-group uses, a space that the annotation guidelines of \citet{Waseem-Hovy:2016} does not afford.
+Moreover, unlike the annotation guidelines proposed by \citet{Waseem-Hovy:2016}, the definition of offensive draws in the question of context. 
+Illustrating this point, \citet{Davidson:2017} provide the following example ``Oh shush you know I love you f****t''. 
+This use of context, provides space for inoffensive uses of slurs and insulting terms e.g. for reclaimed and in-group uses, a space that the annotation guidelines of \citet{Waseem-Hovy:2016} does not afford.
 With the annotators being selected from CrowdFlower, the issues of multiple distinct ideologues in the annotator pool raised by \citet{Waseem:2016} are likely also manifest in this dataset.
 However, as the dataset offers a space within which one can utter offensive but not hateful messages, it also offers the space to live, that is it offers spaces that dominant discourse on acceptability of language use would deem as unacceptable.\footnote{By dominant discourses on acceptability, I refer to what mainstream discourses deem as acceptable and unacceptable manners of speaking. However, such a discourses are internally inconsistent, as \citet{Dias:2021} show, acceptable speech can come to include neo-nazi and white supremacist speech that threaten social cohesion while deeming speech by queer communities as toxic and inherently holding greater threat to the boundaries within which society should operate.}
 In consideration of the marginalisation of queer people and people of colour, this dataset thus offers space for their uninterrupted existence. 
 However, as the dataset is labelled for a multi-class classification problem, where a single label is assigned to each document, the dataset does not afford space to be free from exposure to offensive language and hate speech, without also treating the two as equally sanctionable.
 
-\paragraph*{Toxicity} Starting from a similar point as \citet{Davidson:2017}, \citet{Wulczyn:2017} develop a dataset  of $115,737$ comments to understand which types of conversations are likely to make users depart from the conversation. Departing from the early tradition of using Twitter as a source of data, \citet{Wulczyn:2017} consider the Wikipedia editor discussion pages. Taking a narrow view of behaviours that inhibits participation in conversations, \citet{Wulczyn:2017} focus on personal attacks and harassment, specifically asking their annotators whether which entity (the participant or a third party) is the subject of the attack. As a last positive category, they include whether it is ``[a]nother kind of attack or harassment'', thus relegating all forms of harassment that are not directed at specific individuals to a residual category. The dataset thus is comprised of ``personal attacks'' and ``other forms of harassment''. As the study is specifically grounded in identifying personal attacks, this categorisation of various forms of personal attacks and a residual category as positive instances is in line with the aims of the data, if not the description.
-Using this definition, \citet{Wulczyn:2017} select a random sample of $37,611$ and have it refereed by $10$ annotators for personal attacks, resulting in only $0.9\%$ of the labelled data being assigned the positive label. Subsequently, they identify $78,126$ comments that had been made by users whose comments were moderated from the discussion pages, for each user taking $5$ comments that they made around the moderated comment, and similarly subject them to annotation this time resulting in the positive class occupying $16.9\%$ of the labelled data.
-Similarly to \citet{Waseem:2016} and \citet{Davidson:2017}, \citet{Wulczyn:2017} use CrowdFlower to obtain their annotations and subsequently are prone to similar issues in their data. However, to curb such issues they obtain $10$ annotations for each comment, allowing to compute a majority vote that takes a broader perspective on the comment into account. In spite of this approach, where those annotators are from and what their position on personal attacks are, and their ability to identify subtle attacks, still remain uncertain resulting in a dataset that may take a global position or a culturally grounded position on identifying personal attacks, e.g. if a large subset of annotators live in India, a subset of the data may very well reflect Indian perceptions of personal attacks.
-The resulting dataset has been constructed to understand which comments are likely to turn discussions ``toxic'' as a result of personal attacks. Through the use of $10$ annotators for each comment, \citet{Wulczyn:2017} aim for a global understanding of toxicity derived, in part, from personal attacks.
+\paragraph*{Toxicity} Starting from a similar point as \citet{Davidson:2017}, \citet{Wulczyn:2017} develop a dataset  of $115,737$ comments to understand which types of conversations are likely to make users depart from the conversation. 
+Departing from the early tradition of using Twitter as a source of data, \citet{Wulczyn:2017} consider the Wikipedia editor discussion pages. 
+Taking a narrow view of behaviours that inhibits participation in conversations, \citet{Wulczyn:2017} focus on personal attacks and harassment, specifically asking their annotators whether which entity (the participant or a third party) is the subject of the attack. 
+As a last positive category, they include whether it is ``[a]nother kind of attack or harassment'', thus relegating all forms of harassment that are not directed at specific individuals to a residual category. 
+The dataset thus is comprised of ``personal attacks'' and ``other forms of harassment''. 
+As the study is specifically grounded in identifying personal attacks, this categorisation of various forms of personal attacks and a residual category as positive instances is in line with the aims of the data, if not the description.
+\ZTcomment{Return to this for splitting}
+Using this definition, \citet{Wulczyn:2017} select a random sample of $37,611$ and have it refereed by $10$ annotators for personal attacks, resulting in only $0.9\%$ of the labelled data being assigned the positive label. 
+Subsequently, they identify $78,126$ comments that had been made by users whose comments were moderated from the discussion pages, for each user taking $5$ comments that they made around the moderated comment, and similarly subject them to annotation this time resulting in the positive class occupying $16.9\%$ of the labelled data.
+Similarly to \citet{Waseem:2016} and \citet{Davidson:2017}, \citet{Wulczyn:2017} use CrowdFlower to obtain their annotations and subsequently are prone to similar issues in their data. 
+However, to curb such issues they obtain $10$ annotations for each comment, allowing to compute a majority vote that takes a broader perspective on the comment into account. 
+In spite of this approach, where those annotators are from and what their position on personal attacks are, and their ability to identify subtle attacks, still remain uncertain resulting in a dataset that may take a global position or a culturally grounded position on identifying personal attacks, e.g. if a large subset of annotators live in India, a subset of the data may very well reflect Indian perceptions of personal attacks.
+The resulting dataset has been constructed to understand which comments are likely to turn discussions ``toxic'' as a result of personal attacks. 
+Through the use of $10$ annotators for each comment, \citet{Wulczyn:2017} aim for a global understanding of toxicity derived, in part, from personal attacks.
 Similarly to \citet{Davidson:2017}, there appear to be no consideration of the experiences of abuse against marginalised communities.
 Considering Wikipedia's well documented issues with being a hostile space to women \citep{Torres:2016} and the distribution of gender crowd-workers often veering towards a greater representation of men than women \citep{Posch:2018}, the lack of such a consideration may further entrench subjective positions that are hostile towards women into the datasets and subsequently into the models.
 
-\paragraph*{StormFront} Focusing on the white supremacist web-forum StormFront, \citet{Garcia:2019} collect a dataset of $10,568$ sentences annotated by three of the authors for containing hateful utterances. Similarly to \citet{Davidson:2017} and \citet{Wulczyn:2016}, \citet{Garcia:2019} employ a marginalisation-blind definition and understanding of hate speech. In the case of a white supremacist web-forum, employing a marginalisation-blind definition is unlikely to be challenged as the participants are unlikely to engage in derogation against white, straight, cisgender men.
+\paragraph*{StormFront} Focusing on the white supremacist web-forum StormFront, \citet{Garcia:2019} collect a dataset of $10,568$ sentences annotated by three of the authors for containing hateful utterances. 
+Similarly to \citet{Davidson:2017} and \citet{Wulczyn:2016}, \citet{Garcia:2019} employ a marginalisation-blind definition and understanding of hate speech. 
+In the case of a white supremacist web-forum, employing a marginalisation-blind definition is unlikely to be challenged as the participants are unlikely to engage in derogation against white, straight, cisgender men.
 The decision for using StormFront as a source of data was motivated by the prevalence of ``pseudo-rational discussions of race''.
 Moreover, this dataset further distinguishes itself from prior datasets by annotating on a sentence level.
 The authors argue that annotating on a sentence level can reduce the confounding factors by only addressing content which is explicitly hateful.
@@ -195,15 +255,18 @@ Moreover, as the resulting vector sums to $1$ we can treat the values in the vec
 
 \subsubsection{Loss}
 
-Broadly, two different types of neural networks exist: feed-forward networks and networks that use back-propagation. Feed-forward networks chronologically update the model on the basis of the data it is provided without concern for how each update to the model's parameters impact the model's ability to perform the classification task. 
+Broadly, two different types of neural networks exist: feed-forward networks and networks that use back-propagation. 
+Feed-forward networks chronologically update the model on the basis of the data it is provided without concern for how each update to the model's parameters impact the model's ability to perform the classification task. 
 Back-propagation was introduced as a method with which model parameters could be updated after the forward step of the model had completed and an evaluation of the model's performance with its most recent parameter weight s\citep{Goldberg:2017} .
 By obtaining the model's loss, or model error given by a loss function, one can back-propagate the loss through the model to perform an update to the model's parameters after the completion of the forward step.
 In this dissertation, I only make use of back-propagated models with \texttt{Negative Log Likelihood} loss.
 
 \paragraph{Negative Log Likelihood} I choose \texttt{Negative Log Likelihood (NLL)} as a loss function as it is particularly well-suited for use with the \texttt{softmax} function.
 I provide the definition of \texttt{NLL} as provided by the PyTorch library \citep{Paszke:2019} (see \cref{eq:nll}), where $\hat{\mathbf{y}}$ is a vector of the predicted labels, $\mathbf{y}$ is the vector of given labels \citep{Goldberg:2017}.\footnote{See \url{https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html} for the implementation details for \texttt{Negative Log Likelihood} used in PyTorch.}
-Negative log-likelihood operates by by assigning a higher loss to for the correct class for each document on the basis of the probability estimates (obtained through the \texttt{softmax} function) for the class. The higher the probability estimation for the correct class is, the lower the loss is and on the other hand the smaller the probability estimate for the correct class is, the higher the loss is.
-By focusing on the probability estimate for the correct, in terms of ground truth, label, \texttt{NLL} avoids the potential issue of assigning all predictions with a correct or incorrect label a specific value. Thus, \texttt{NLL} addresses the model's certainty rather than the prediction itself.
+Negative log-likelihood operates by by assigning a higher loss to for the correct class for each document on the basis of the probability estimates (obtained through the \texttt{softmax} function) for the class. 
+The higher the probability estimation for the correct class is, the lower the loss is and on the other hand the smaller the probability estimate for the correct class is, the higher the loss is.
+By focusing on the probability estimate for the correct, in terms of ground truth, label, \texttt{NLL} avoids the potential issue of assigning all predictions with a correct or incorrect label a specific value. 
+Thus, \texttt{NLL} addresses the model's certainty rather than the prediction itself.
 
 \begin{figure}[h]
   \begin{equation}\label{eq:nll}
@@ -214,9 +277,12 @@ By focusing on the probability estimate for the correct, in terms of ground trut
 
 \subsubsection{Non-linearities}
 
-In the experiments conducted in this dissertation I use two different non-linear functions that I subject various layers in the neural network models to. The role of non-linearities in neural networks is to allow for models to learn non-linear functions rather than linear ones. The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
+In the experiments conducted in this dissertation I use two different non-linear functions that I subject various layers in the neural network models to. 
+The role of non-linearities in neural networks is to allow for models to learn non-linear functions rather than linear ones. 
+The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
 
-The \texttt{hyperbolic tangent}, or \texttt{Tanh}, function (see \cref{eq:tanh} for its mathematical definition) is a non-linear activation function that element wise transforms the values of the tensor representation of the model into a real valued space between $[-1, 1]$. \texttt{Tanh} is a monotonically increasing function that is symmetrical around $0$ due to which there is a risk of the issue of vanishing gradients for the model \citep{Teuwen:2020}.
+The \texttt{hyperbolic tangent}, or \texttt{Tanh}, function (see \cref{eq:tanh} for its mathematical definition) is a non-linear activation function that element wise transforms the values of the tensor representation of the model into a real valued space between $[-1, 1]$.
+\texttt{Tanh} is a monotonically increasing function that is symmetrical around $0$ due to which there is a risk of the issue of vanishing gradients for the model \citep{Teuwen:2020}.
 Vanishing gradients refers to the issue where the gradients of the models become increasingly small, to the point of no longer having an effect on the parameter updates, due to being centred around $0$.
 
 \begin{figure}[h]
@@ -226,7 +292,10 @@ Vanishing gradients refers to the issue where the gradients of the models become
   \caption{Equation for \texttt{Tanh} \citep{Goldberg:2017}.}
 \end{figure}
 
-One way to address the potential issue of vanishing gradients is to use a \texttt{Rectified Linear Unit} (\texttt{ReLU}) as the activation function (see \cref{eq:relu} for the mathematical definition of \texttt{ReLU}). Unlike the \texttt{tanh} function, \texttt{ReLU} is not a symmetrical function, but instead relies on a binary evaluation of each element in a vector. If the weight of the element under consideration $w_x < 0$, then the value computed is $\mathit{ReLU}(x) = 0$. On the other hand, when the value $w_x > 0$, then the value computed is $\mathit{ReLU}(x) = 1 \cdot w_x$ \citep{Teuwen:2020}.
+One way to address the potential issue of vanishing gradients is to use a \texttt{Rectified Linear Unit} (\texttt{ReLU}) as the activation function (see \cref{eq:relu} for the mathematical definition of \texttt{ReLU}). 
+Unlike the \texttt{tanh} function, \texttt{ReLU} is not a symmetrical function, but instead relies on a binary evaluation of each element in a vector. 
+If the weight of the element under consideration $w_x < 0$, then the value computed is $\mathit{ReLU}(x) = 0$. 
+On the other hand, when the value $w_x > 0$, then the value computed is $\mathit{ReLU}(x) = 1 \cdot w_x$ \citep{Teuwen:2020}.
 
 \begin{figure}[h]
 \begin{equation}\label{eq:relu}
@@ -240,15 +309,25 @@ One way to address the potential issue of vanishing gradients is to use a \textt
 \end{figure}
 
 \subsubsection{Pooling layers}\label{sub:pooling}
-For CNN models it is necessary to use either average pooling or maximum pooling to summarise the features under a filter. As a summary, pooling operations act as a method for downsampling the feature representation obtained after convolutional layers. Two common kinds of pooling operations are average pooling and maximum pooling.
-Average pooling computes the mean value of the pooling features under the filter while maximum pooling extracts the largest value. In my experiments with CNN models, I use maximum pooling exclusively due to its dominance in the CNN models developed for abuse detection \citep{Kolhatkar:2020}.
+For CNN models it is necessary to use either average pooling or maximum pooling to summarise the features under a filter. 
+As a summary, pooling operations act as a method for downsampling the feature representation obtained after convolutional layers. 
+Two common kinds of pooling operations are average pooling and maximum pooling.
+Average pooling computes the mean value of the pooling features under the filter while maximum pooling extracts the largest value. 
+In my experiments with CNN models, I use maximum pooling exclusively due to its dominance in the CNN models developed for abuse detection \citep{Kolhatkar:2020}.
 
 \subsubsection{Optimisation algorithms}
 
-At the heart of neural networks lie the optimisation algorithms that control the rate and manner in which model weights are updated. A number of different optimisation algorithms have been proposed for neural networks, but in my experiments I focus on two algorithms, \texttt{Stochastic Gradient Descent (SGD)} and \texttt{Adam}. For each of these algorithms, I use the originally proposed algorithms, \texttt{SGD} and \texttt{Adam}, and a variant that address specific short-comings of each algorithms, \texttt{Averaged Stochastic Gradient Descent (ASGD)} and \texttt{Adam with decoupled weight decay (AdamW)}. For all algorithms, we use the implementations used in \citet{Paszke:2019} and refer readers to the PyTorch documentation for further details.\footnote{The API reference can be found at \url{https://pytorch.org/docs/stable/optim.html}.}
+At the heart of neural networks lie the optimisation algorithms that control the rate and manner in which model weights are updated. 
+A number of different optimisation algorithms have been proposed for neural networks, but in my experiments I focus on two algorithms, \texttt{Stochastic Gradient Descent (SGD)} and \texttt{Adam}. 
+For each of these algorithms, I use the originally proposed algorithms, \texttt{SGD} and \texttt{Adam}, and a variant that address specific short-comings of each algorithms, \texttt{Averaged Stochastic Gradient Descent (ASGD)} and \texttt{Adam with decoupled weight decay (AdamW)}. 
+For all algorithms, we use the implementations used in \citet{Paszke:2019} and refer readers to the PyTorch documentation for further details.\footnote{The API reference can be found at \url{https://pytorch.org/docs/stable/optim.html}.}
 
 \paragraph{Stochastic Gradient Descent}
-\texttt{Stochastic Gradient Descent}~\citep{Sutskever:2013} is a popular optimisation algorithm used for neural networks and has been used by a large number of researchers for a diverse set of tasks across various machine learning research areas and tasks, including online abuse detection \citep{Singh:2018,Bodapati:2019}. \texttt{SGD} relies on gradient descent, which is an algorithm that computes the gradients of points on a function until it reaches a minima. This process can be computationally expensive as gradient descent requires a computation on the entire dataset. This approach has two issues: First it is computationally expensive as the computation is performed on the entire dataset; second, gradient descent requires a learning rate being given, which determines the position for the next point at which to compute the gradient. If the learning rate is sufficiently small, and the function under optimisation is not a convex function, gradient descent may identify and settle at a local minima rather than the desired global minima.
+\texttt{Stochastic Gradient Descent}~\citep{Sutskever:2013} is a popular optimisation algorithm used for neural networks and has been used by a large number of researchers for a diverse set of tasks across various machine learning research areas and tasks, including online abuse detection \citep{Singh:2018,Bodapati:2019}. 
+\texttt{SGD} relies on gradient descent, which is an algorithm that computes the gradients of points on a function until it reaches a minima. 
+This process can be computationally expensive as gradient descent requires a computation on the entire dataset. 
+This approach has two issues: First it is computationally expensive as the computation is performed on the entire dataset; second, gradient descent requires a learning rate being given, which determines the position for the next point at which to compute the gradient. 
+If the learning rate is sufficiently small, and the function under optimisation is not a convex function, gradient descent may identify and settle at a local minima rather than the desired global minima.
 
 \begin{figure}[h]
   \begin{align}\label{eq:sgd}
@@ -258,10 +337,15 @@ At the heart of neural networks lie the optimisation algorithms that control the
   \caption[Equation for \texttt{Stochastic Gradient Descent}]{Equation for \texttt{Stochastic Gradient Descent} \citep{Sutskever:2014}, where $\epsilon$ is the learning rate, $\nabla f(\theta_t + \mu\nu_t)$ is the gradient, and $\mu$ is the momentum.}
 \end{figure}
 
-\texttt{SGD} similarly computes the gradients of points on a function, but rather than computing the gradient descent on the entire dataset, a single example is selected and the gradient descent is computed for that data point, thus minimising the computation time, even when more iterations are necessary to identify the minima. The second issue of local minima is in part addressed by the random nature of selecting a data point to compute the gradient from. This randomness results in greater fluctuations in the development of the gradient, however, this exact fluctuation and variance may allow the algorithm to identify a better minima.
+\texttt{SGD} similarly computes the gradients of points on a function, but rather than computing the gradient descent on the entire dataset, a single example is selected and the gradient descent is computed for that data point, thus minimising the computation time, even when more iterations are necessary to identify the minima. 
+The second issue of local minima is in part addressed by the random nature of selecting a data point to compute the gradient from. 
+This randomness results in greater fluctuations in the development of the gradient, however, this exact fluctuation and variance may allow the algorithm to identify a better minima.
 
 \paragraph{Averaged Stochastic Gradient Descent}
-Another approach to addressing the issue of identifying optimal minima is \texttt{Averaged Stochastic Gradient Descent}~\citet{Polyak:1992}. \texttt{ASGD} operates similarly to \texttt{SGD} but considers averaged trajectories in order to accelerate the identification of the optimal minima. The acceleration is obtained through a reduction of noise from the stochastic nature of the selection of data point for consideration. \texttt{ASGD} takes the standard \texttt{SGD} algorithm and recursively computes the average $\bar{w_t} = \tfrac{1}{t}\Sigma_{i=1}^t w_t$ \citep{Bottou:2010}.
+Another approach to addressing the issue of identifying optimal minima is \texttt{Averaged Stochastic Gradient Descent}~\citet{Polyak:1992}. 
+\texttt{ASGD} operates similarly to \texttt{SGD} but considers averaged trajectories in order to accelerate the identification of the optimal minima. 
+The acceleration is obtained through a reduction of noise from the stochastic nature of the selection of data point for consideration. 
+\texttt{ASGD} takes the standard \texttt{SGD} algorithm and recursively computes the average $\bar{w_t} = \tfrac{1}{t}\Sigma_{i=1}^t w_t$ \citep{Bottou:2010}.
 
 \paragraph{Adam}
 The \texttt{Adam} algorithm~\citep{Kingma:2015} is also frequently used in abuse detection classification research \citep{Meyer:2019,Zimmerman:2018,Kolhatkar:2020}.
@@ -279,26 +363,36 @@ Finally, the value of $\theta_t$ is updated and the process is repeated if $\the
 Since this correction, papers on abuse detection have started to use this algorithm \citep{Rottger:2021,Vidgen:2020} over the initial \texttt{Adam} implementation that used $L2$ regularisation rather than weight decay.
 
 \subsection{Bayesian Hyper Parameter Tuning}\label{sub:bho}
-The performance of neural network architectures rely on a range of hyper-parameters that control their behaviour from a number of different positions in the model. For instance, the size of the layers in the network can be treated as a hyper-parameter, the learning rate for the optimisation algorithms, and the rate with which to apply dropout in the model.
+The performance of neural network architectures rely on a range of hyper-parameters that control their behaviour from a number of different positions in the model. 
+For instance, the size of the layers in the network can be treated as a hyper-parameter, the learning rate for the optimisation algorithms, and the rate with which to apply dropout in the model.
 As a result of the many different potential hyper-parameters that can be tuned, the complete search space for all hyper-parameters grows exponentially for each new hyper-parameter under consideration. 
-While the same holds true for linear models, the number of parameters to explore often figure in much smaller ranges, for instance for the linear baseline models that I use in this dissertation, only hyper-parameters are used resulting in a search space that can be fully explored in the matter of minutes.
-For neural network models, a full search of the hyper-parameter search space however quickly becomes infeasible and thus introduces the question of how a hyper-parameter search space can be adequately explored without the need for a complete search. 
+While the same holds true for linear models, the number of parameters to be explored often figure in much smaller ranges. 
+\ZTedit{For instance, the searches for parameters and hyper-parameters, for the linear models used in this dissertation are concluded in only minutes due to a smaller search space.}
+\ZTdelete{for the linear baseline models that I use in this dissertation, only hyper-parameters are used resulting in a search space that can be fully explored in the matter of minutes.}
+For neural network models, a full search of the hyper-parameter search space however quickly becomes infeasible \ZTedit{as the number of parameters to be explored scale.}
+\ZTdelete{and thus}This introduces the question of how a hyper-parameter search space can be adequately explored without the need for a complete search through every possible combination. 
 
-One way to perform a hyper-parameter space search, without searching the complete space of every combination, is through Bayesian Optimisation for hyper-parameter identification \citep{Snoek:2012}. Through the use of Gaussian Processes (GP), the selection of hyper-parameters for trial can be cast as an optimisation problem, where the hyper-parameters serve as a feature space and the performance obtained with each parameter serves as the label.
+One way to perform a hyper-parameter space search, without searching the complete space of every combination, is through Bayesian Optimisation for hyper-parameter identification \citep{Snoek:2012}. 
+Through the use of Gaussian Processes (GP), the selection of hyper-parameters for trial can be cast as an optimisation problem, where the hyper-parameters serve as a feature space and the performance obtained with each parameter serves as the label.
 The aim of the GP model is to estimate how each hyper-parameter contributes to the final classification performance of the model and provide suggestions for the next set of hyper-parameters to trial.
 I use \citet{Wandb}, which implements \citet{Snoek:2012}, for all hyper-parameter searches for neural network-based experiments.
 
 \subsection{Metrics}
 
-Model performances can be evaluated in a number of different ways, from qualitative analyses of the model outputs to quantitative analyses. Within the bracket of quantitative analysis, further subdivisions exist including the one I will use in this dissertation, namely the use metrics computed using model predictions and the ground truth.
-For my evaluation, I use the \texttt{F1-score}, \texttt{precision}, \texttt{recall}, and \texttt{accuracy}. As many of the datasets that are used for optimisation and evaluation have heavily imbalanced class distributions, each of these scores provide different aspects into model performances and different levels of insight into the models.
-The metrics all require insights into the agreements between the ground truth and a model's predictions. These agreements can be categorised into four different groups:
+Model performances can be evaluated in a number of different ways, from qualitative analyses of the model outputs to quantitative analyses. 
+Within the bracket of quantitative analysis, further subdivisions exist including the one I will use in this dissertation, namely the use metrics computed using model predictions and the ground truth.
+For my evaluation, I use the \texttt{F1-score}, \texttt{precision}, \texttt{recall}, and \texttt{accuracy}. 
+As many of the datasets that are used for optimisation and evaluation have heavily imbalanced class distributions, each of these scores provide different aspects into model performances and different levels of insight into the models.
+The metrics all require insights into the agreements between the ground truth and a model's predictions. 
+These agreements can be categorised into four different groups:
 \texttt{True Positives (TP)}, where the model's prediction and the ground truth label agree and the label belongs to the positive class; \texttt{True Negatives (TN)}, similarly where model prediction and ground truth agree and the label belongs to the negative class; \texttt{False Positive (FP)}, where the model predicts the label for the positive class but the ground truth is in the negative class; and \texttt{False Negative (FN)}, which is the inverse of \texttt{True Positive}, i.e. the model predicts the negative class but the ground truth is in the positive class.
 \footnote{I do not use the \texttt{Area Under the receiver operating characteristic Curve} as a metric as this metric does assumes a similarity between all underlying samples \citep{Stevenson:2021}. A guarantee that cannot be made when datasets with distinct annotation strategies and sampling are involved .}
 
 \paragraph{Accuracy}
 \texttt{Accuracy} is the simplest metrics among those I use, and it's subsequently also highly volatile to class imbalances.
-The score (see \cref{eq:acc}) computes the number of correct predictions out of all predictions made. For balanced datasets, this metric provides a good insight into a model's overall performance, however for imbalanced data, it is susceptible to providing a distorted view of a model's performance. For instance, if a dataset has a heavy class imbalance, a model that only predicts the majority class will have a deceivingly high \texttt{accuracy} score.
+The score (see \cref{eq:acc}) computes the number of correct predictions out of all predictions made. 
+For balanced datasets, this metric provides a good insight into a model's overall performance, however for imbalanced data, it is susceptible to providing a distorted view of a model's performance. 
+For instance, if a dataset has a heavy class imbalance, a model that only predicts the majority class will have a deceivingly high \texttt{accuracy} score.
 
 \begin{figure}[h]
   \begin{equation}\label{eq:acc}
@@ -309,7 +403,8 @@ The score (see \cref{eq:acc}) computes the number of correct predictions out of 
 
 \paragraph{Precision}
 \texttt{Precision} provides an estimate of how well a model predicts into the positive class.
-Specifically precision asks to which degree classifications into positive class are correct classifications into the class (see \cref{eq:prec}). Thus, one can ascertain to which degree a model can be trusted when it predicts a positive label.
+Specifically precision asks to which degree classifications into positive class are correct classifications into the class (see \cref{eq:prec}). 
+Thus, one can ascertain to which degree a model can be trusted when it predicts a positive label.
 
 \begin{figure}[h]
   \begin{equation}\label{eq:prec}
@@ -330,7 +425,8 @@ By computing the fraction of data predicted correctly into the positive class an
 \end{figure}
 
 \paragraph{F1-score}
-In practice it is often desirable to balance \texttt{precision} and \texttt{recall} as as they allow for intuitions into two crucial aspects of model performance, it's ability to correctly retrieve data into and exclude data from the positive class. The \texttt{F1-score} provides exactly such a balancing by computing the harmonic mean of the \texttt{precision} and \texttt{recall} scores (see \cref{eq:f1score}).
+In practice it is often desirable to balance \texttt{precision} and \texttt{recall} as as they allow for intuitions into two crucial aspects of model performance, it's ability to correctly retrieve data into and exclude data from the positive class. 
+The \texttt{F1-score} provides exactly such a balancing by computing the harmonic mean of the \texttt{precision} and \texttt{recall} scores (see \cref{eq:f1score}).
 
 \begin{figure}[h]
   \begin{equation}\label{eq:f1score}
@@ -339,17 +435,25 @@ In practice it is often desirable to balance \texttt{precision} and \texttt{reca
   \caption{Equation for the \textit{F1-score}.}
 \end{figure}
 
-For abuse detection, the macro average of the F1-score is often used. The macro averaged F1-score, or macro F1-score, sum the F1-score for each class and computes their mean, thus providing insight into the performance of models across the different classes.
+For abuse detection, the macro average of the F1-score is often used. 
+The macro averaged F1-score, or macro F1-score, sum the F1-score for each class and computes their mean, thus providing insight into the performance of models across the different classes.
 In this dissertation, all F1-scores reported are macro-F1 scores as this has been widely used in the abusive language detection field \citep{Fortuna:2021}.
 
 \subsection{Machine Learning Models}
 
-As I explore different experimental research questions, I optimise different machine learning algorithm for detecting abusive language. Each of the model types that I use rely on different methods of operationalising data to obtain internal representations of the different classes. Here $X$ is to mean the processed input to the model, $Y$ is to denote the corresponding ground truth labels, and $\hat{Y}$ denote the set of model predictions. For all models, the aim is to learn a function $f(X|Y)$ that can delineate between each class $y_i\in Y$.
+As I explore different experimental research questions, I optimise different machine learning algorithm for detecting abusive language. 
+Each of the model types that I use rely on different methods of operationalising data to obtain internal representations of the different classes. 
+Here $X$ is to mean the processed input to the model, $Y$ is to denote the corresponding ground truth labels, and $\hat{Y}$ denote the set of model predictions. 
+For all models, the aim is to learn a function $f(X|Y)$ that can delineate between each class $y_i\in Y$.
 
 \paragraph{Logistic Regression}
-The first linear model that I use in this dissertation is Logistic Regression (LR), which has previously been used widely in NLP tasks. Logistic Regression is a model that carries certain assumptions about the data that is represented, in particular, I call to attention its assumption of feature independence. The assumption of feature independence presumes that each individual feature, or word token in the case of language, contributes to the classes in isolation of all other features. Trivially, this assumption does not hold for language.
+The first linear model that I use in this dissertation is Logistic Regression (LR), which has previously been used widely in NLP tasks. 
+Logistic Regression is a model that carries certain assumptions about the data that is represented, in particular, I call to attention its assumption of feature independence. 
+The assumption of feature independence presumes that each individual feature, or word token in the case of language, contributes to the classes in isolation of all other features. 
+Trivially, this assumption does not hold for language.
 
-In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (see \autoref{eq:sigmoid}) which calculates the probability of a data point, or document, belonging to a class. In \autoref{eq:sigmoid}, $w_0, w_1, \ldots, w_n$ denote model coefficients that are obtained through maximum likelihood estimation and $x_1, \ldots, x_n$ represent the features that are treated independently.
+In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (see \autoref{eq:sigmoid}) which calculates the probability of a data point, or document, belonging to a class. 
+In \autoref{eq:sigmoid}, $w_0, w_1, \ldots, w_n$ denote model coefficients that are obtained through maximum likelihood estimation and $x_1, \ldots, x_n$ represent the features that are treated independently.
 
 \begin{figure}[h]
   \begin{equation}\label{eq:sigmoid}
@@ -359,7 +463,10 @@ In terms of mathematical modelling, LR relies on the \texttt{Sigmoid} function (
 \end{figure}
 
 \paragraph{Support Vector Machines}
-The Support Vector Machine (SVM) algorithm seeks to identify a hyper-plane where the data can be mapped to and classes $y_i \in Y$ are linearly separable. Such mappings can be computed using different kernels. Beyond identifying a hyper-plane where the classes are linearly separable, SVMs also have the additional aim of identifying a hyper-plane that maximises the margins, that is the distance between the linear separation and the closest data points for each class. Specifically, SVMs seeks to maximise the prediction given by $sign(w^T\phi(x)+b)$ where $\phi$ is the identity function and $b$ is an independent value.
+The Support Vector Machine (SVM) algorithm seeks to identify a hyper-plane where the data can be mapped to and classes $y_i \in Y$ are linearly separable. 
+Such mappings can be computed using different kernels. 
+Beyond identifying a hyper-plane where the classes are linearly separable, SVMs also have the additional aim of identifying a hyper-plane that maximises the margins, that is the distance between the linear separation and the closest data points for each class. 
+Specifically, SVMs seeks to maximise the prediction given by $sign(w^T\phi(x)+b)$ where $\phi$ is the identity function and $b$ is an independent value.
 Although many different kernels exist for SVM classifiers, I use a linear kernel (see \cref{eq:svm} for the mathematical formula used by \citet{Pedregosa:2011}) as this provides weights for each feature that can be analysed to understand which patterns the model is learning.
 
 % See for SVM documentation: https://scikit-learn.org/stable/modules/svm.html#id15
@@ -372,7 +479,10 @@ Although many different kernels exist for SVM classifiers, I use a linear kernel
 \end{figure}
 
 \paragraph{Multi-Layered Perceptron}
-The Multi-Layered Perceptron (MLP) is perhaps the simplest form of neural network. This neural network is an extension of the Perceptron algorithm by chaining several Perceptron units into a single layer, A Perceptron is updated given the update rule in \autoref{eq:perceptron_update}. Moreover, rather than consisting of a single Perceptron that learns weights of the training data, MLPs are formed of multiple layers of chained Perceptron units. An MLP requires at least three layers, an input layer, at least one hidden layer, and an output layer.
+The Multi-Layered Perceptron (MLP) is perhaps the simplest form of neural network. 
+This neural network is an extension of the Perceptron algorithm by chaining several Perceptron units into a single layer, A Perceptron is updated given the update rule in \autoref{eq:perceptron_update}. 
+Moreover, rather than consisting of a single Perceptron that learns weights of the training data, MLPs are formed of multiple layers of chained Perceptron units. 
+An MLP requires at least three layers, an input layer, at least one hidden layer, and an output layer.
 Similar to the linear models described in the past sections, MLPs also have an independence assumption coded in, as they assume that each input token is independent from each other.
 
 \begin{figure}[h]
@@ -382,14 +492,16 @@ Similar to the linear models described in the past sections, MLPs also have an i
   \caption[The Perceptron weight update function.]{The Perceptron weight update function for binary classification. Where $t$ is the time-step, $\epsilon$ is the learning rate, $x_i$ is the training example, $y_i$ and $\hat{y_i}(t)$ are the ground truth and the model prediction at time-step $t$, respectively.}
 \end{figure}
 
-Finally, the Perceptron, similarly SVM and LR classifiers is a classifier operates on the data in a one-directional, that is a feed-forward manner. MLPs on the other hand can either be developed as feed-forward networks or networks with back-propagation.
+Finally, the Perceptron, similarly SVM and LR classifiers is a classifier operates on the data in a one-directional, that is a feed-forward manner. 
+MLPs on the other hand can either be developed as feed-forward networks or networks with back-propagation.
 A network that uses back-propagation updates the model representation first in the same manner as a feed-forward network in its forward pass, second by computing the loss and propagating it backwards through the model, updating the representation as the loss is propagated through each layer of the model.
 In this dissertation, all MLPs are optimised with back-propagation.
 
 \paragraph{Long-Short Term Memory Networks}
 The idea of recurrence for neural networks stems from the realisation that MLPs are poorly suited to address sequences that move through some conceptualisation of time.
 \footnote{The conceptualisation of time can vary depending on the data and task at hand. For structured prediction, time can be the sequence of tokens while for stock price prediction it can be the traditional understanding of time as a linear construct.}
-To address this short-coming, Recurrent Neural Networks (RNNs) were proposed. RNNs introduce a loop, or recurrence, in the neural network by iterating over the components of the input, linking each iteration (cell) of the loops to all prior iterations.
+To address this short-coming, Recurrent Neural Networks (RNNs) were proposed. 
+RNNs introduce a loop, or recurrence, in the neural network by iterating over the components of the input, linking each iteration (cell) of the loops to all prior iterations.
 By linking into past iterations of the within-model loop, RNNs can model developments of data through a linear conceptualisation of time, by predicating the performance of the loop at time-step $t$ on the representation of the network at time-step $t-1$.
 For instance, when passing a document through a RNN, the model will iterate over the document, treating each token as a time-step.
 The representation derived for the token at time-step $t$ will then be predicated by all preceding tokens.
@@ -398,10 +510,15 @@ In this way, RNN models can encode dependencies to understand complex interactio
 In practice however, RNNs aren't well suited for long-range dependencies, as all preceding time-steps are treated with equal value, leading to a decay over time.
 Additionally, some information occurring at an earlier time-step may not be relevant to all subsequent time-steps.
 To address this issue, \citet{Hochreiter:1997} propose the Long-Short Term Memory (LSTM) network, which is a special form of RNNs.
-LSTMs differ from vanilla RNNs by introducing the concepts of gates. Namely, \citet{Hochreiter:1997} introduce a ``forget'' gate and an ``input'' gate in each cell of the LSTM. Each gate in the LSTM cell can modify the cell state.
+LSTMs differ from vanilla RNNs by introducing the concepts of gates. 
+Namely, \citet{Hochreiter:1997} introduce a ``forget'' gate and an ``input'' gate in each cell of the LSTM. 
+Each gate in the LSTM cell can modify the cell state.
 First, the input at time-step $h_t$ receives the output from the cell at state $h_{t-1}$ and a sigmoid function that determines what information from the cell state at $h_{t-1}$ is retained, given $x_t$.
-Next, the ``input'' gate decides which values will be stored in the cell state. This decision is made by first selecting the values that are to be updated and how much they are to be updated, and then creating a vector of candidate values to be added.
-Having computed which values to forget, store, and update, it is now a simple matter of performing the updates to the cell state at $h_{t-1}$. First modifying the cell-state to only retain the values that are to be remembered. Then, the values selected for updating and their candidate values are added to the cell-state, thus producing a new cell-state.
+Next, the ``input'' gate decides which values will be stored in the cell state. 
+This decision is made by first selecting the values that are to be updated and how much they are to be updated, and then creating a vector of candidate values to be added.
+Having computed which values to forget, store, and update, it is now a simple matter of performing the updates to the cell state at $h_{t-1}$. 
+First modifying the cell-state to only retain the values that are to be remembered. 
+Then, the values selected for updating and their candidate values are added to the cell-state, thus producing a new cell-state.
 Finally, a version of the cell-state, filtered by a sigmoid function to control what is passed on, is output to the next cell $h_{t+1}$.
 
 For my experiments using LSTMs, I use the implementation offered by \citet{Paszke:2019} which uses the variation of LSTMs proposed by \citet{Sak:2014}.
@@ -409,11 +526,13 @@ For my experiments using LSTMs, I use the implementation offered by \citet{Paszk
 \paragraph{Convolutional Neural Network}
 Convolutional Neural Networks (CNN) are a type of neural network that were initially proposed for computer vision tasks.
 Like all other forms of neural networks, CNNs have an input, an output layer, and some hidden layers.
-The hidden layers of CNNs contain \textit{convolutional layers}. These layers apply a series of convolutions, or sliding windows over a matrix of features and compute a summary of those features.
+The hidden layers of CNNs contain \textit{convolutional layers}. 
+These layers apply a series of convolutions, or sliding windows over a matrix of features and compute a summary of those features.
 Where other networks, MLPs for instance, often contain just a single hidden layer, CNNs often contain multiple hidden layers in the form of convolutional layers.
 After the data has been processed by each convolutional layer, a non-linearity is applied to the resulting representation.
 Once all convolutions have been completed, a pooling operation (see \cref{sub:pooling} for more detail on types of pooling) is performed as the final step that is unique to CNNs.
-The operation of using convolutions that consider multiple features can be likened to the use of n-grams where $n>1$. However, unlike traditional n-grams that are processed directly, convolutional layers are subject to the non-linearity and the pooling operation, the latter of which summarises the identified features and creates a modified representation of the learned feature maps.
+The operation of using convolutions that consider multiple features can be likened to the use of n-grams where $n>1$. 
+However, unlike traditional n-grams that are processed directly, convolutional layers are subject to the non-linearity and the pooling operation, the latter of which summarises the identified features and creates a modified representation of the learned feature maps.
 
 \subsection{Multi-Task Learning}\label{sub:mtl}
 The Multi-task Learning (MTL) framework was initially proposed by \citet{Caruana:1993} as a way to optimise a model for a specific primary task by leveraging that (multiple) tasks may be related.
@@ -446,7 +565,8 @@ On the other hand, models that are optimised using soft parameter sharing do not
 % \end{figure}
 
 While the idea of inductive biases from related tasks provides a compelling argument for examining MTL for abuse and hate speech detection, there are some interesting attributes to the framework.
-First, as MTL is compatible with neural networks, researchers can forego feature selection similar to other neural network approaches. This automated feature selection process carries some benefits and risks.
+First, as MTL is compatible with neural networks, researchers can forego feature selection similar to other neural network approaches. 
+This automated feature selection process carries some benefits and risks.
 One benefit of automated feature selection performed by neural networks is that designers of models aren't required to identify potentially suboptimal features. 
 On the other hand, such automated feature identification risks that models identify spurious patterns in the data to exploit without easy ability to easily identify such spurious patterns.
 Moreover, manual feature creation relies on designers of systems to interrogate the data to create features, resulting in research hypothesis being directly embedded in the systems designed to answer the research questions.
@@ -465,7 +585,8 @@ However, through both weighting of the different tasks and the fact that each ta
 
 Finally, in the event that an auxiliary task does not contribute to the primary task as the researcher had hypothesised, it may still contribute to the overall generalisability of the model as the offending task will act as regulariser for the primary task, as it introduces noise into shared layer \citep{Bingel:2018}.
 
-For hard parameter sharing MTL models, the selection of batches for optimising the model requires significant consideration as the batch determines which task is being optimised. Thus, if one task is selected more than others, the resulting model will be tuned towards that model.
+For hard parameter sharing MTL models, the selection of batches for optimising the model requires significant consideration as the batch determines which task is being optimised. 
+Thus, if one task is selected more than others, the resulting model will be tuned towards that model.
 For this reason, there are two ways to control which task acts as the primary task, 1) through the main task being selected most frequently or 2) through weighting the different tasks according to their importance.
 The latter method controls the influence of each task by multiplying the weight of each task with the loss produced following each epoch.
 
@@ -491,28 +612,40 @@ More recently, \citet{Blodgett:2020} surveyed $146$ papers addressing questions 
 
 \subsection{Quantifying harms}
 
-\citet{Shah:2020} propose a mathematical framework for quantifying biases that arise in different steps of the NLP pipeline with a basis in the taxonomy proposed by \citet{Hovy-Spruit:2016}. Here, the authors develop a method to quantify biases that may stem from the data and models optimised on it, aiming to provide designers of NLP pipelines with a method to zoom away from the details of how data and models may be biased and instead obtain an abstraction that provides a guide to where human attention may be needed.
-Moving away from a laboratory setting, \citet{Buolamwini:2018} identify how commercial facial recognition systems perform and fail for people. They find that there is a correlation between a facial recognition system's ability to identify faces and the gender and skin-tone of the subject. They find that, in general the systems surveyed tend to perform worse on darker skin-tones and women, with the ability to detect dark-skinned women.
+\citet{Shah:2020} propose a mathematical framework for quantifying biases that arise in different steps of the NLP pipeline with a basis in the taxonomy proposed by \citet{Hovy-Spruit:2016}. 
+Here, the authors develop a method to quantify biases that may stem from the data and models optimised on it, aiming to provide designers of NLP pipelines with a method to zoom away from the details of how data and models may be biased and instead obtain an abstraction that provides a guide to where human attention may be needed.
+Moving away from a laboratory setting, \citet{Buolamwini:2018} identify how commercial facial recognition systems perform and fail for people. 
+They find that there is a correlation between a facial recognition system's ability to identify faces and the gender and skin-tone of the subject. 
+They find that, in general the systems surveyed tend to perform worse on darker skin-tones and women, with the ability to detect dark-skinned women.
 Turning to language, \citet{Gonen:2019} highlight that many methods for addressing bias in word embeddings leave traces of stereotypes that allow for reconstruction of gendered spaces in word embeddings that have been treated for gender bias.\footnote{Although bias treatment is often termed ``debiasing'', I resist convention as the term ``debias'' is a red-herring for ``acceptable bias''. As I address in greater detail in \cref{chap:disembodied}, such language obscure how methods treated for bias exist and are politicised.}
-In a different conceptualisation and operationalisation of bias, \citet{Waseem:2016} examine how different annotator groups label hate speech. While many of the previous methods seek to eliminate, document, or redress biases in datasets and models, \citet{Waseem:2016} proposes to instead accept that social biases are an inevitable force that cannot simply be removed. Instead, they propose that one can lean into this issue by specifically biasing data towards a specific position. \citet{Waseem:2016} argue that by such deviation from requiring a ``debiased'' or ``global'' position, it is possible to optimise models that outperform systems that are based on data that reflects the quest for a global consensus.
+In a different conceptualisation and operationalisation of bias, \citet{Waseem:2016} examine how different annotator groups label hate speech. 
+While many of the previous methods seek to eliminate, document, or redress biases in datasets and models, \citet{Waseem:2016} proposes to instead accept that social biases are an inevitable force that cannot simply be removed. 
+Instead, they propose that one can lean into this issue by specifically biasing data towards a specific position. 
+\citet{Waseem:2016} argue that by such deviation from requiring a ``debiased'' or ``global'' position, it is possible to optimise models that outperform systems that are based on data that reflects the quest for a global consensus.
 
 \subsection{Harm Reduction}
 At least two broad conceptualisations of bias can be found in the large body of work dedicated to this question \citep[e.g.][]{Agarwal:2018,Romanov:2019,Kulynych:2020,Bolukbasi:2016,Zhao:2017}.
-In the first conceptualisation, bias can be imagined as a finite and countable quantity in a model. Being a countable quantity, it can also be minimised and reduced out of the model or data representation.
+In the first conceptualisation, bias can be imagined as a finite and countable quantity in a model. 
+Being a countable quantity, it can also be minimised and reduced out of the model or data representation.
 The aims of this work, is not only to minimise the discriminatory social biases that exist in the models but also maintain ``good'' performance on the primary task.
 Thus, this line of work accepts a premise that models and data representations that have been treated for bias must still be useful for their intended purpose instead of proposing that models that cannot function without encoding social biases cease to have a valid justification for their existence.
 The second conceptualisation of harm reduction accepts that machine learning models, and optimisation systems more generally, are subject to social biases and instead of direct reductions to the model, seek to identify methods that can externally counteract marginalisation.
 
-Working within the first conceptualisation, \citet{Agarwal:2018} propose a method to modify the weights of optimised models such that they satisfy a given criteria for fairness. In this work, there is a reliance on the knowledge of who, in the case of language data, the speaker is and what demographics they belong to.
-Contrary to this requirement, \citet{Romanov:2019} propose a method that does not have this requirement. Instead, they propose developing an auxiliary machine learning system for the expressed purposed of identifying the demographic belongs of a person given text that they have authored. The predictions of this machine learning system is tehn encoded into the loss function of the task they seek to optimise a model that has been treated for bias, letting the loss be subject to the identities that the author has.
+Working within the first conceptualisation, \citet{Agarwal:2018} propose a method to modify the weights of optimised models such that they satisfy a given criteria for fairness. 
+In this work, there is a reliance on the knowledge of who, in the case of language data, the speaker is and what demographics they belong to.
+Contrary to this requirement, \citet{Romanov:2019} propose a method that does not have this requirement. 
+Instead, they propose developing an auxiliary machine learning system for the expressed purposed of identifying the demographic belongs of a person given text that they have authored. 
+The predictions of this machine learning system is tehn encoded into the loss function of the task they seek to optimise a model that has been treated for bias, letting the loss be subject to the identities that the author has.
 
 Using the second conceptualisation as their basis \citet{Kulynych:2020} propose a class of Protective Optimisation Technologies (POTs) that use the logics of optimisation to counteract marginalisation demographic groups experience as the result of being direct or indirect subjects of optimisation technologies.
 Notably, this class of systems deviates from all other systems in that it does not necessitate developing computational models but rather seek to interact antagonistically with the optimisation technologies that people are subject to.
 Such systems can be computational in nature, for instance \citet{Kulynych:2020} show how an automated system can address disparities in loan applications by identifying which features can be modified by a demographically dissimilar collective that have similar loan applications to reduce the number of false negatives, that is people who are incorrectly predicted to default on loans, in part as a basis of their demographic belonging.
-In an example of a non-computational POTs, \citet{Kulynych:2020} describe how people who see large amounts of traffic being redirected through residential neighbourhoods by route-planning applications report road works and other obstructions, to avoid traffic from being directed through their residential neighbourhoods. Thus, while the residents that resist the optimisation of route-planning applications are not the primary users of the application, they become externalities of those applications and antagonistically use the technologies to address the harms that are inflicted upon them by the optimisation technologies.
+In an example of a non-computational POTs, \citet{Kulynych:2020} describe how people who see large amounts of traffic being redirected through residential neighbourhoods by route-planning applications report road works and other obstructions, to avoid traffic from being directed through their residential neighbourhoods. 
+Thus, while the residents that resist the optimisation of route-planning applications are not the primary users of the application, they become externalities of those applications and antagonistically use the technologies to address the harms that are inflicted upon them by the optimisation technologies.
 
 % Note that \cite{Sap:2019} misuse \cite{Blodgett:2016} to provide assumed demographic affiliation of the author, however author attributes are computationally estimated and \cite{Blodgett:2016}'s method does not afford such attribution.
 
 \section{Summary}
 
-In this chapter, I have provided an introduction to the computational methods and logics that the work in this dissertation rely on. First, I introduced the task of abusive language detection; second, I provided an overview of the datasets that I used in the subsequent chapters of this dissertation; third, I detail the different parts of the modelling process that the machine learning systems developed in this dissertation rely on; and finally, I gave a brief overview of different strands of thinking for work on bias and fairness in the machine learning literature.
+In this chapter, I have provided an introduction to the computational methods and logics that the work in this dissertation rely on. 
+First, I introduced the task of abusive language detection; second, I provided an overview of the datasets that I used in the subsequent chapters of this dissertation; third, I detail the different parts of the modelling process that the machine learning systems developed in this dissertation rely on; and finally, I gave a brief overview of different strands of thinking for work on bias and fairness in the machine learning literature.
