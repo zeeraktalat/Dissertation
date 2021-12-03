@@ -257,7 +257,14 @@ Following this controversy, Facebook reversed their decision to remove the image
 
 \subsection{Platform Policies}
 
-Many large social media companies lay out their policies for acceptable behaviour on their platforms, often detailed in their user guidelines. Many of these have similar phrasing on the acceptance of abusive language,\footnote{For the full policies see \url{https://en-gb.facebook.com/communitystandards/hate_speech} for Facebook's policy on hate speech, \url{https://help.twitter.com/en/rules-and-policies/hateful-conduct-policy} for Twitter's policy on hate speech, and \url{https://www.redditinc.com/policies/content-policy} for Reddit's policy on prohibited content.} in \cref{fig:fb_pol,fig:twitter_pol,fig:reddit_pol}, I show excerpts of the policies on hate speech and prohibited content of three social media platforms.
+Many large social media companies lay out their policies for acceptable behaviour on their platforms, often detailed in their user guidelines.
+Many of these have similar phrasing on the acceptance of abusive language,\footnote{For the full policies see \url{https://en-gb.facebook.com/communitystandards/hate_speech} for Facebook's policy on hate speech, \url{https://help.twitter.com/en/rules-and-policies/hateful-conduct-policy} for Twitter's policy on hate speech, and \url{https://www.redditinc.com/policies/content-policy} for Reddit's policy on prohibited content.} in \cref{fig:fb_pol,fig:twitter_pol,fig:reddit_pol}, I show excerpts of the policies on hate speech and prohibited content of three social media platforms.
+
+These excerpts highlight how platforms envision what prohibited content appears on their platforms and which priorities that they have.
+For instance, in Facebook's policy (see \cref{fig:fb_pol}) they make a brief mention of real-world harms, however incitement to violence is omitted from their guidelines.
+Twitter on the other hand (see \cref{fig:twitter_pol}) provide a much less clear in what is prohibited and what is allowed through the ambiguity that they use \citep{Kirtz:2022}.
+It is, for example unclear what constitutes are ``direct attack'' on a diffuse concepts such as demographic groups.
+Lastly, Reddit (see \cref{fig:reddit_pol}) very succinctly describe the kind of content that is prohibited on the platform, so succinct that considerations around hate speech are entirely omitted.
 
 In all three excerpts of the policies, there is a prohibition of content which attacks others, Reddit's policy on encouraging and inciting violence they further outline that users should not post content that\footnote{for the full policy see \url{https://www.reddithelp.com/en/categories/rules-reporting/account-and-community-restrictions/do-not-post-violent-content}}
 
@@ -265,10 +272,12 @@ In all three excerpts of the policies, there is a prohibition of content which a
   [\dots] that encourages, glorifies, incites, or calls for violence or physical harm against an individual or a group of people
 \end{quote}
 
-Establishing similar outlines for acceptable conduct as seen on Twitter and Facebook. Facebook note in their Community Standards Enforcement Report\footnote{See report here: \url{https://transparency.facebook.com/community-standards-enforcement\#hate-speech}} that they acted on $4$ million items for hate speech and $2.8$ million items for bullying and harassment in the period of January to March 2019. The report does not detail the number of user reports received, nor the amount of content which was not removed.\footnote{Acted on here means acknowledging that the content does violate community standards yet and an action was taken by Facebook.} Considering the scale of the items which have actions taken for different kinds of abuse, there is an incentive to allow for some automation to guide the attentions of human moderators or decrease the volume of content that moderators need to consider.\footnote{The Community Standards Enforcement Report details that automated systems are deployed but do not detail the performances of the system in terms of accuracy, precision, or recall.}
+Establishing similar outlines for acceptable conduct as seen on Twitter and Facebook. Facebook note in their Community Standards Enforcement Report\footnote{See report here: \url{https://transparency.facebook.com/community-standards-enforcement\#hate-speech}} that they acted on $4$ million items for hate speech and $2.8$ million items for bullying and harassment in the period of January to March 2019. The report does not detail the number of user reports received, nor the amount of content which was not removed.\footnote{Acted on here means acknowledging that the content does violate community standards and an action was taken by Facebook.} Considering the scale of the items which have actions taken for different kinds of abuse, there is an incentive to allow for some automation to guide the attentions of human moderators or decrease the volume of content that moderators need to consider.\footnote{The Community Standards Enforcement Report details that automated systems are deployed but do not detail the performances of the system in terms of accuracy, precision, or recall.}
 
 While Facebook report high numbers of removals, the performance of their (human and automated) moderation practices have been the source of criticism as a number of activists have reported being temporarily banned for speaking about racial discrimination while abuse and discrimination received is not addressed \citep{Sharif:2019}.
-Moreover, users have been noting that simply talking about race may mean that their post is removed, particularly if the poster is not white \citep{Guynn:2019}. A report from Pro Publica details that the policies of Facebook in determining whether a post violates community guidelines, by seeking global standards, effectively ``protect the people who least need it and take it away from those who really need it.''\citep{Angwin:2017}
+Moreover, users have been noting that simply talking about race may mean that their post is removed, particularly if the poster is not white \citep{Guynn:2019}. A report from Pro Publica details that the policies of Facebook in determining whether a post violates community guidelines, by seeking global standards, effectively ``protect the people who least need it and take it away from those who really need it.'' \citep{Angwin:2017}
+\ZTcomment{Add reference to Facebook and Donald Trump}
+\ZTedit{Perhaps most damningly, public figures are often exempt from community guidelines with the argument that their content is in the public interest \citep{...}, in spite of the fact that public figures have the potential to influence much larger groups of people, and incitements to violence, for instance, can reach a much larger group of people.}
 
 \begin{figure}[!htb]
   \centering
@@ -284,17 +293,23 @@ Moreover, users have been noting that simply talking about race may mean that th
     \label{fig:twitter_pol}
 \end{figure}
 
-Considering how such policies are described, understood, and enacted by commercial content moderators, content moderation algorithms, and users, \citet{Kirtz:2021} perform an analysis of how different platforms describe their community guidelines and their downstream implications for content moderation technologies and user experiences. They argue that the platform policies fail `at the level of policy by mis-communicating , obscuring or sometimes even misleading the public' \citep[p. 5]{Kirtz:2021}. Moreover, due to such failures of policy, \citet{Kirtz:2021} argue that the platforms fault lines are particularly apparent for marginalised communities that are the subject of disproportionate abuse. Subsequently, the data generated user reports which is used to optimise automated content moderation systems mimic such failures providing little protection along gendered and racialised lines \citep{Kirtz:2021,Waseem:2018}. However, while data provides one source of such errors, modelling techniques also give rise to such failures. For instance, \citet{Kirtz:2021} also identify the use of pre-trained word embeddings as source of propagating such biases, as word embeddings frequently contain biases against marginalised communities \citep{Speer:2017}. \citet{Kirtz:2021} argue that such embedded biases compound any potential biases that policies and content flagging mechanisms introduce.
+\ZTedit{
+Considering how such policies are described, understood, and enacted by commercial content moderators, content moderation algorithms, and users, \citet{Kirtz:2022} perform an analysis of how different platforms describe their community guidelines and their downstream implications for content moderation technologies and user experiences. 
+They argue that the platform policies are often ambiguous and do not provide a clear expectation to users as to what is prohibited content and what is allowed.
+\citet{Kirtz:2022} further argue that the machine learning algorithms that underpin many automated content moderation systems require a degree of specificity to function that is not apparent from the policy guidelines or otherwise communicated.
+Developing guidelines for machine learning systems on the basis of such policies, as a number of studies in NLP do \citep{...} then provides a large ambiguous space for human workers which makes understandings of each category tacit rather than explicit, regardless of whether the workers are employed on low wage contracts in South East Asia \citep{Roberts:2019} or hired by academic researchers.
+}
 
-\afterpage{
+\ZTdelete{`at the level of policy by mis-communicating, obscuring or sometimes even misleading the public' \citep{Kirtz:2022}. Moreover, due to such failures of policy, \citet{Kirtz:2022} argue that the platforms fault lines are particularly apparent for marginalised communities that are the subject of disproportionate abuse. Subsequently, the data generated user reports which is used to optimise automated content moderation systems mimic such failures providing little protection along gendered and racialised lines \citep{Kirtz:2022,Waseem:2018}. However, while data provides one source of such errors, modelling techniques also give rise to such failures. For instance, \citet{Kirtz:2022} also identify the use of pre-trained word embeddings as source of propagating such biases, as word embeddings frequently contain biases against marginalised communities \citep{Speer:2017}. \citet{Kirtz:2022} argue that such embedded biases compound any potential biases that policies and content flagging mechanisms introduce.}
+
+% \afterpage{
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=\textwidth]{Chapter2/Figs/Reddit.png}
-  \caption{Excerpts of policy on prohibited content and hate speech from Facebook, Twitter, and Reddit.}
+  \caption{Excerpts of policy on prohibited content and hate speech from \ZTdelete{Facebook, Twitter, and} Reddit.}
   \label{fig:reddit_pol}
 \end{figure}
-}
-
+% }
 
 \subsection{Regulation}
 In recent years several different governments have sought to address the issue of online abuse, for instance the British Home Office \citep{HomeOffice:2016} and the European Commission \citep{EUCommission:2016} gave guidelines and a call to action to social media networks.
