@@ -110,7 +110,7 @@ She argues that knowledge production is an \textit{active} process, in which we 
 She argues that in science communication an `objective' position is used to describe the object of study.
 However, such an `objective' position, like all other positions comes with its own limitations in what things are rendered visible and what is obscured.
 Thus, an `objective' position is no less subjective, as it privileges the point of view of a particular body marked by subjective social and political meanings and possibilities along the lines of race, class, geography, gender etc. 
-In contrast to other `subjective' positions, an `objective' position claims omniscience for itself by denying its own particular embodiments. 
+In contrast to other `subjective' positions, an `objective' position claims omniscience for itself by denying its own particular embodiments.
 Through this denial the `objective' position obscures its own subjective rootedness.
 In the `objective' position's denial of the subjectivity of its own body, the objective position elevates itself over other `lesser subjective bodies', thus playing the `God trick' \citep{Haraway:1988}.
 Notably, within the frame of the existence of an `objective' body, as \citet{Haraway:1988} argues the `objective' body is that which is held by `unmarked positions of Man and White' \cite[p. 8]{Haraway:1988}.
@@ -312,28 +312,61 @@ Developing guidelines for machine learning systems on the basis of such policies
 % }
 
 \subsection{Regulation}
-In recent years several different governments have sought to address the issue of online abuse, for instance the British Home Office \citep{HomeOffice:2016} and the European Commission \citep{EUCommission:2016} gave guidelines and a call to action to social media networks.
-In a different approach, the German government passed the Network Enforcement Act (NetzDG) \citep{NetzDG:2017} in an aim to provide regulation to curb online abuse and misinformation.
-The regulation states that online platforms will face fines if they systematically fail to remove hate speech within $24$ hours.
+In recent years several different governments have sought \ZTedit{distinct methods} to address the issue of online abuse\ZTdelete{,}\ZTedit{.}
+For instance\ZTedit{,} the British Home Office \citep{HomeOffice:2016} and the European Commission \citep{EUCommission:2016} \ZTedit{have provided guidelines and calls to action for social media networks, }\ZTdelete{gave guidelines and a call to action to social media networks}\ZTdelete{.
+In a different approach}\ZTedit{while}\ZTdelete{,} the German government passed the Network Enforcement Act (NetzDG) \citep{NetzDG:2017} which aims to provide direct regulation for the moderation of online abuse and misinformation\ZTdelete{in an aim to provide regulation to curb online abuse and misinformation}.
+\ZTdelete{The regulation states that online platforms will face}\ZTedit{NetzDG incentivises the moderation of content through} fines if \ZTdelete{they}\ZTedit{social media companies \textit{systematically}} fail to remove \ZTdelete{hate speech}\ZTdelete{prohibited content} within $24$ hours.
 
-Building on this, the European Union is currently considering regulation on disseminating terrorist content which may have implications on hate speech and how social media platforms deal with issues such as hate speech \citep{EUCommission:2018} through the difficulty in distinguishing between content which promotes terrorism and content which is simply hateful - a consideration which is highlighted in the response from the European Union Agency for Fundamental Rights (FRA).
-In their opinion, the FRA suggest that the proposed regulation should provide a clear definition of terrorist content which limits it to inciting or promoting terrorist activities or providing instructions on the making or use of weapons \citep{FRA:2019}.
-A key point of the regulation states that the platforms must remove content within $1$ hour of receiving notice from a trusted authority.
+Building on this, the European Union is currently considering regulation on disseminating terrorist content which may have implications on hate speech and how social media platforms deal with issues such as hate speech \citep{EUCommission:2018}\ZTedit{.}
+\ZTedit{The proposal contains a requirement for social media networks to remove content within $1$ hour of receiving notice from a \textit{trusted authority}.\footnote{Trusted authority was not specified at the time of writing.}}
+\ZTdelete{through the difficulty in distinguishing between content which promotes terrorism and content which is simply hateful - a consideration which is highlighted in the response from the European Union Agency for Fundamental Rights (FRA).}
+\ZTedit{In response to this proposed regulation, the European Union Agency for Fundamental Rights (FRA) highlight the difficulty in the border work in distinguishing between content that promotes terrorism, documents war crimes, or is simply hateful.}
+\ZTdelete{In their opinion, t}\ZTedit{T}he FRA suggest that the proposed regulation should provide a clear definition of terrorist content\ZTedit{,} which \ZTdelete{limits it}\ZTedit{is limited} to inciting or promoting terrorist activities\ZTedit{,} or providing instructions \ZTdelete{on the making or use of weapons}\ZTedit{for making or using weapons} \citep{FRA:2019}.
+\ZTdelete{A key point of the regulation states that the platforms must remove content within $1$ hour of receiving notice from a trusted authority.}
 
-More severely, two bills on sex trafficking were passed in the United States of America, namely the Stop Enabling Sex Traffickers Act (SESTA) and the Fight Online Sex Trafficking Act (FOSTA).
-These two bills aim to prevent sex trafficking by removing sexual solicitation online.
-While the critiques of the bills are numerous for flaws in their conceptualisations \citep{Romano:2018}, impact on criminal investigative work \citep{Q:2018} and the consequences for sex workers - including missing persons and deaths of sex workers \citep{Blue:2018,Simon:2018}, the implications of the bills are far greater in three aspects:
+\ZTCommdng{Add references on intermediary liability law}
+\ZTedit{In contrast to developments in Europe, the governance surrounding the moderation of online content in the United States of America is centred around section 230 of the Communications Decency Act of 1996 (CDA) \citep{CDA_230:1996}.
+Relating to the moderation of online content, Section 230(c) of the Communications Decency Act specifies that ``No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider'' \citep{CDA_230:1996}, thus specifying that service providers, e.g. social media networks are not liable for the content that is created by others and hosted on their platform.
+The over-arching goal of Section 230 has been to ensure that service providers are not liable for hosting content that is beyond their control.
+However, sub-paragraph 2(a) notes that ``No provider or user of an interactive computer service shall be held liable on account of—any action voluntarily taken in good faith to restrict access to or availability of material that the provider or user considers to be obscene, lewd, lascivious, filthy, excessively violent, harassing, or otherwise objectionable, whether or not such material is constitutionally protected,'' thus allowing social media networks to remove and moderate content from their platforms. 
+Section 230 has been central to the evolution of social media networks and their content moderation infrastructures, as many such networks are founded and legally based in the United States of America and therefore subject to its laws.\footnote{This seeming tension between not being liable while being given authority to exercise content moderation is also at odds with the highly permissible notion of Freedom of Speech that is institutionalised in the United States of America's law.
+In the law of the United States of America, the concept of freedom of speech has very few limits, in contrast to the European notion of freedom of speech, which has much greater restrictions \citep{Banks:2016.}}
+\footnote{I note here that although the CDA only applies to the legal territories of the United States of America, it is often used as the guiding principle from which content moderation decisions are motivated.}
+Section 230, its consequences, and potentials are at the deeply complex. 
+Providing a detailed overview of the issue is therefore beyond the scope of this thesis.
+Interested parties can see research and organisations that more specifically deal with the legal landscape for online intermediaries \citet[e.g.]{...} and section 230 specifically \citet[e.g.]{EFF:n.d.;Defterderian_2009;Goldman_2018;Sheridan_1997;Ardia_2010;Leary_2018}.
+}
+
+\ZTedit{Contrasting the permissive nature of Section 230, the United States of America recently instituted two bills, the Stop Enabling Sex Traffickers Act (SESTA) and Fight Online Sex Trafficking Act (FOSTA) which take more active approaches to ensuring that online service providers remove content that offends the bills.}
+\ZTdelete{More severely, two bills on sex trafficking were passed in the United States of America, namely the Stop Enabling Sex Traffickers Act (SESTA) and the Fight Online Sex Trafficking Act (FOSTA).}
+These two bills aim to prevent sex trafficking by removing \ZTedit{online content for} sexual solicitation\ZTdelete{ online}.
+\ZTedit{As a consequence of these bills, a number of online platforms entirely removed all sexual content which particularly has adverse effects for already marginalised communities.
+}
+\ZTedit{These bills have been heavily criticised for flaws in their conceptualisation \citep{Romano:2018}, their impact on criminal investigative work \citep{Q:2018}, and their consequences for sex workers, which include missing persons and deaths of sex workers \citep{Blue:2018,Simon:2018}.}
+More widely, there are three main implications of the bills:
+\ZTdelete{While the critiques of the bills are numerous for flaws in their conceptualisations \citep{Romano:2018}, impact on criminal investigative work \citep{Q:2018} and the consequences for sex workers - including missing persons and deaths of sex workers \citep{Blue:2018,Simon:2018}, the implications of the bills are far greater in three aspects:}
 
 \begin{enumerate}
-  \item{The bills weaken \citep{Romano:2018,Stryker:2018} in Section 230 of the Communications Decency Act (CDA) - which holds that computer service providers are not publishers and thus not liable for content on the platform \citep{EFF:230},}
+  \item{The bills \ZTdelete{weaken}\ZTedit{seek to undermine} \citep{Romano:2018,Stryker:2018} \ZTdelete{in} Section 230 of the Communications Decency Act (CDA) by holding \ZTdelete{ - which holds that computer service providers are not publishers and thus not liable for content on the platform \citep{EFF:230}},}
   \item{the bills are effective retroactively \citep{Stryker:2018}, therefore necessitating moderation of both new and historic content, and}
   \item{the bills do not require a request to remove content prior to potential consequences for not upholding the laws.}
 \end{enumerate}
 
-While the weakening of Section 230 of the CDA falls in line with the European and German regulations by holding social media companies accountable for the content on their platforms,\footnote{I note here that although the CDA only applies to the legal territories of the United States of America, it is often used as the guiding principle from which content moderation decisions are motivated.} the European and German initiatives are designed such that social media platforms respond to flagging and requests for content removal from authorities.
-Furthermore they are not in effect retroactively.
-These differences strongly encourage the use of machine learning to be applied without regard to the precision of the systems.
+\ZTedit{While enforcing more regulation and shifting liability for content on platforms onto the online social networks is in line with the European and German regulations, the consequences of SESTA and FOSTA go a step further, as the bills are retroactively effective, for which reason online online platforms sought to remove all sexual content to avoid the risk of fines at the cost of people's freedom of speech.
+In contrast, the German and European efforts on the other hand largely allow for content to remain, as platforms only need to react if and when content is reported - moreover, they are not retroactively effective, meaning that platforms did not need to perform sweeping removals.
+The contrasts between the European approach and the approach taken by the United States of America, have strong implications for how online platforms develop technology for content moderation.
+For instance, the European approach incentivises social media networks to implement robust content moderation infrastructures, that somewhat evenly balance precision and recall.
+The approach taken by the United States of America, on the other hand incentivises a much less precise method, as platforms have greater risk from retaining content than simply remove it all.
+As a consequence, several platforms removed entire sections of content created by users that \textit{may} have had a \textit{perceived} risk to the platform.
+One such platform was Tumblr which removed a large section of historical and new content produced by queer communities, due to the risk that any content related to sexuality may also have been solicitation.
+The work in this thesis thus more closely aligns with the European approach, seeking not to remove content from entire communities but rather identify specific instances of content to be removed.
+}
 
+\ZTdelete{While \ZTdelete{the weakening of} Section 230 of the CDA falls in line with the European and German regulations by holding social media companies accountable for the content on their platforms,\ZTdelete{\footnote{I note here that although the CDA only applies to the legal territories of the United States of America, it is often used as the guiding principle from which content moderation decisions are motivated.}} the European and German initiatives are designed such that social media platforms respond to flagging and requests for content removal from authorities.
+Furthermore they are not in effect retroactively.
+These differences strongly encourage the use of machine learning to be applied without regard to the precision of the systems.}
+
+\ZTedit{
 \section{Ethical Considerations}
 
 As this dissertation deals with data that is published by individuals who very often are private citizen, it is necessary to consider different aspects of the ethical use of social media data use.
