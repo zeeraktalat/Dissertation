@@ -9,13 +9,16 @@
 
 This chapter introduces related work in Natural Language Processing (NLP) and theoretical background on the machine learning methods that I use throughout this dissertation.
 
-\section{Abusive Language Detection}
+\section{Abusive Language Detection}\label{sec:abuse}
 
 % Introduce the field of abusive language detection
-In recent years, the computational study of online abuse has seen a rapid increase in the number of papers dedicated starting with a handful of papers prior to $2016$ to a thriving research field with numerous papers, shared tasks, and workshops \citep{Vidgen:2020}. In spite of the growth in research dedicated to the detection of online abuse, the research field is still in its infancy with a number of open questions, including questions around definition of the task, annotation guidelines, and modelling techniques.
+In recent years, the computational study of online abuse has seen a rapid increase in the number of papers dedicated starting with a handful of papers prior to $2016$ to a thriving research field with numerous papers, shared tasks, and workshops \citep{Vidgen:2020}. 
+In spite of the growth in research dedicated to the detection of online abuse, the research field is still in its infancy with a number of open questions, including questions around definition of the task, annotation guidelines, and modelling techniques.
 \ZTedit{Due to the relative infancy of the field, the ``early'' and ``recent'' work overlap each other in time.
 I use ``early'' and ``recent'' work to distinguish ``early'' from ``recent'' by conceptualising ``early'' as work which laid the foundations of the field and ``recent'' as work that develops, or critiques, these foundations.}
-The earliest work in the field sought to address questions of cyber-bullying \citep{Chen:2012,Cho:2013,Reynolds:2011} and profanity \citep{Sood:profanity:2012,Sood:2013} with sparing focus on demographically specified abuse, such as racism, sexism, and anti-Semitism \citep{Warner:2012}. More recently, work on demographically specified abuse has surfaced as an independent task \citep{Tulkens:2015,Waseem:2016,Waseem-Hovy:2016,Park:2017,Samghabadi:2017,Karan:2018,Gorrell:2018,Stoop:2019,Meyer:2019,Palmer:2020,Vidgen:2020}. As a consequence of increased visibility of hate speech and abuse on online platforms, the academic inquiry into the computational detection has grown along with the regulatory responses \citep{NetzDG:2017,EUCommission:2016}.
+The earliest work in the field sought to address questions of cyber-bullying \citep{Chen:2012,Cho:2013,Reynolds:2011} and profanity \citep{Sood:profanity:2012,Sood:2013} with sparing focus on demographically specified abuse, such as racism, sexism, and anti-Semitism \citep{Warner:2012}. 
+More recently, work on demographically specified abuse has surfaced as an independent task \citep{Tulkens:2015,Waseem:2016,Waseem-Hovy:2016,Park:2017,Samghabadi:2017,Karan:2018,Gorrell:2018,Stoop:2019,Meyer:2019,Palmer:2020,Vidgen:2020}. 
+As a consequence of increased visibility of hate speech and abuse on online platforms, the academic inquiry into the computational detection has grown along with the regulatory responses \citep{NetzDG:2017,EUCommission:2016}.
 
 Early, and contemporary computational work, has seen a great deal of focus to central questions around the task: how do we annotate and create datasets \citep{Waseem-Hovy:2016,Waseem:2017,Vidgen:2020} and understanding annotator interaction and performance \citep{Ross:2016,Waseem:2016,Vidgen_learning:2020}.
 Early work focused on questions of marginalisation and oppression, for instance through the work of \citet{Waseem-Hovy:2016} who base their annotation on works in gender studies and critical race theory, and collect data based on gendered and racialised abuse; more recently data collection and annotation processes have moved towards a demographically blind process. 
@@ -34,6 +37,7 @@ For \autoref{chap:liwc} which examines the influence and generalisability of voc
 Each of these datasets share the common attributes that they are collected either from spaces that are hateful towards marginalised groups or have considerations of marginalisation encoded into the annotation guidelines. 
 In \autoref{chap:mtl} I also use three datasets that are labelled for abuse but instead to tasks that are seemingly related. 
 First, I use the \textit{Argument Base} dataset \citep{Oraby_factfeel:2015}, the second dataset (\textit{Sarcasm}) is developed for sarcasm detection \citep{Oraby_sarcasm:2016}, and the final dataset, \textit{Moral Sentiment}, examines the moral sentiments expressed in tweets \citep{Hoover:2019}.
+
 In an early effort to address issues of annotator biases and under-sampling of some forms of data in the data curation process, \citet{Waseem:2017} propose a typology of abuse that aims to categorise abuse by how it is characterised rather than determining the exact form of abuse.
 To this end, \citet{Waseem:2017} present a 2-dimensional typology of hate; the first dimension operates along implicit and explicitly expressed hate. 
 Implicitly communicated hate, \citet{Waseem:2017} argue is hate that is communicated through subversive means by using code words and communicating implicit biases. 
