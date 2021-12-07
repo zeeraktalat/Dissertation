@@ -60,10 +60,37 @@ For instance, content that implicitly targets Muslims, may simultaneously explic
 Modelling for automated hate speech detection has also undergone a development from early to contemporary work. 
 Early work was primarily focused on feature-based modelling \citep[e.g.][]{Waseem-Hovy:2016,Waseem:2016,Davidson:2017,Sahlgren:2018} whereas subsequent work has directed a greater attention to neural network based approaches \citep[e.g.][]{Kolhatkar:2020,Waseem:2018,Gamback:2017,Badjatiya:2017}. 
 In this dissertation I follow a similar pattern of developing baseline models from feature-based models and suggest neural network architectures as extensions and improvements on these. 
-In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models. 
-As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks. 
+In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models.
+As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks.
 In each chapter, I perform the review of the models that are pertinent to the work in the chapter. 
 Here instead I provide a theoretical overview of the models, their components (e.g. dropout and activation functions) and their intended functionalities (i.e. the kind of data that they are designed to operate on and which assumptions are built into the model architectures).
+
+\ZTedit{
+\subsection{A Word on Definitions of Hate}
+The definitions of hate speech and offensive content that are used in the machine learning literature deviate quite strongly from how these concepts are defined in fields such as critical race theory, gender studies, and feminist science and technology studies.
+Here, I want to make clear the distinctions between these to schools of thought.
+The primary difference in the critical and computer scientist reading of hate speech and abuse is the consideration of social circumstance and systems of power.
+Critical race theory, gender studies, and feminist science and technology studies all consider how social constructs, such as race and gender influence our experience of the world.
+Turning this consideration of social constructs and power structures towards the question of racism, sexism, and hate speech in general, these fields then distinguish how targets are situated in terms of power when considering whether something is hate speech or not \citep{...}.
+For instance, should two people with different identities be targeted with the same abusive statement, the impacts of that abuse will differ and speak into different histories.
+Should one of these people have a hegemonic identity while the other belongs to an oppressed group, e.g. one is a man and the other a woman, then the abuse will speak into histories of power and marginalisations, respectively.
+Following this line of thinking, abuse then is also a matter of structural power. 
+The distinctions between discrimination and hate speech, for instance, is then co-constituted by what the specific dimension of the abuse is, e.g. gender or race, and the whether the recipient is marginalised along that axis.
+Thus, racism moves from discriminatory statements into hate speech, when the target is also marginalised along the axes of race, and social class-based abuse goes from discriminatory statements into when the target is also oppressed along the axis of class.
+It is important to note here that the distinguishing factor is not whether there is an impact or the strength of the impact of a discriminatory moment on an individual, but rather the historical and contemporary contexts within which such a moment exists.}
+
+\ZTedit{The computer scientist and machine learning literature however largely disengages with questions of power structures.
+Instead, the literature tends to focus in on micro-instances of conflict and to a large degree disconnects the identities of the target with the abuse.
+For instance, in the conceptualisation of \citet{Davidson:2017} and \citet{Wulczyn:2017} the \textit{offensive}, \textit{hate}, and \textit{toxic} are entirely focused on the conversational moment and the presumed intent of the speakers.\footnote{Presumed by annotators.}
+This approach also is divorced from the systemic reading of hate speech which makes the impact central, rather than the intent of the speaker \citep{...}.
+The computer scientific approach to hate, is a comparatively simplistic approach which collapses important distinctions such as how people live at the intersection of multiple identities, i.e. queer brown men or working-class white women.
+}
+
+\ZTedit{In the following chapters, I consider the readings which are most appropriate for the content of the chapters.
+In \cref{chap:dirt}, I consider consequences of the simplistic view computer science takes on hate speech.
+In the next two chapters, \cref{chap:liwc} and \cref{chap:mtl}, I focus on the computer scientific notions of the superset \textit{abuse} and its subsets: \textit{Hate speech, toxicity, and offense}.
+Finally, in \cref{chap:disembodied} I return to the notion of hate speech in the systemic sense, as I consider the wider implications of the processes through which we develop machine learning technologies.
+}
 
 \subsection{Datasets}\label{sec:datasets}
 
