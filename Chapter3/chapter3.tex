@@ -164,8 +164,14 @@ As a last positive category, they include whether it is ``[a]nother kind of atta
 The dataset thus is comprised of ``personal attacks'' and ``other forms of harassment''. 
 As the study is specifically grounded in identifying personal attacks, this categorisation of various forms of personal attacks and a residual category as positive instances is in line with the aims of the data, if not the description.
 \ZTcomment{Return to this for splitting}
-Using this definition, \citet{Wulczyn:2017} select a random sample of $37,611$ and have it refereed by $10$ annotators for personal attacks, resulting in only $0.9\%$ of the labelled data being assigned the positive label. 
-Subsequently, they identify $78,126$ comments that had been made by users whose comments were moderated from the discussion pages, for each user taking $5$ comments that they made around the moderated comment, and similarly subject them to annotation this time resulting in the positive class occupying $16.9\%$ of the labelled data.
+\ZTedit{
+  Using this definition, \citet{Wulczyn:2017} seelct a random sample of $37,611$ comments that are labelled by $10$ annotators for personal attacks.
+  This resulted in only $0.9\%$ of the labelled data in the positive class.
+  To address this, \citet{Wulczyn:2017} identify an additional $78,126$ comments that are sampled from users whose content had been moderated from the discussion pages.
+  For each user, $5$ comments made by the moderated user around the moderated comment were collected and subject to annotation, resulting in the positive class consisting of $16.9\%$ of the total dataset.
+}
+\ZTdelete{Using this definition, \citet{Wulczyn:2017} select a random sample of $37,611$ and have it refereed by $10$ annotators for personal attacks, resulting in only $0.9\%$ of the labelled data being assigned the positive label. 
+Subsequently, they identify $78,126$ comments that had been made by users whose comments were moderated from the discussion pages, for each user taking $5$ comments that they made around the moderated comment, and similarly subject them to annotation this time resulting in the positive class occupying $16.9\%$ of the labelled data.}
 Similarly to \citet{Waseem:2016} and \citet{Davidson:2017}, \citet{Wulczyn:2017} use CrowdFlower to obtain their annotations and subsequently are prone to similar issues in their data. 
 However, to curb such issues they obtain $10$ annotations for each comment, allowing to compute a majority vote that takes a broader perspective on the comment into account. 
 In spite of this approach, where those annotators are from and what their position on personal attacks are, and their ability to identify subtle attacks, still remain uncertain resulting in a dataset that may take a global position or a culturally grounded position on identifying personal attacks, e.g. if a large subset of annotators live in India, a subset of the data may very well reflect Indian perceptions of personal attacks.
