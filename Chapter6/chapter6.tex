@@ -1,239 +1,885 @@
+% **************************** Define Graphics Path **************************
 \ifpdf
     \graphicspath{{Chapter6/Figs/Raster/}{Chapter6/Figs/PDF/}{Chapter6/Figs/}}
 \else
     \graphicspath{{Chapter6/Figs/Vector/}{Chapter6/Figs/}}
 \fi
 
+\chapter[Tasks that Matter: Multi-task Learning for Abusive Language Detection]{Tasks that Matter: Multi-task Learning for Abusive Language Detection\footnotemark{}}\label{chap:mtl}
+\footnotetext{This chapter contains elements of an ongoing collaboration with Joachim Bingel, Hero I/S. All contents of the chapter, are original work produced for this dissertation. The shared elements between the project and this chapter are the machine learning model designs.}
 
-\chapter[State of the Art White Supremacy: On Disembodiment in the Machine Learning Pipeline]{State of the Art White Supremacy: On Disembodiment in the Machine Learning Pipeline\footnotemark{}}\label{chap:disembodied}
-\chaptermark{State of the Art White Supremacy}
-\footnotetext{This chapter contains elements from a collaboration with Smarika Lulz, Joachim Bingel, and Isabelle Augenstein. The associated paper is currently under review in the journal Computational Linguistics. The title is taken from a conversation between Abeba Birhane, Chris Dancy and me, where Chris offered the term State-of-the-Art White Supremacy.}
+\begin{quote}
+  ``So is hate speech detection kind of like sentiment analysis++'' -- ACL 2016 Conference Attendee\ZTdelete{\footnote{Check with anon that I can attribute.}}
+\end{quote}
 
-\begin{citequote}{\citet[p.110-111]{Lorde:1984}}
-What does it mean when the tools of a racist patriarchy are used to examine the fruits of that same patriarchy?  It means that only the most narrow parameters of change are possible and allowable.
-\end{citequote}
+One of the frequently made assumptions is that hate speech detection, and in general abusive language detection, shares many similarities to other tasks that also take on the challenge of identifying and predicting subjective human experiences such as sentiment analysis, sarcasm detection, and emotion detection.
+Indeed, each of these tasks share the characteristic that the identification of each of these on the basis of text is a task of linguistic pragmatics and that the interpretation of a given statement will vary on the basis of parties involved in the communicative act.
+While they share this unifying characteristic, hate and humour, for instance occupy different but sometimes overlapping processes as highlighted by the NGO partners interviewed by \citet{Rottger:2021}.
 
-In each of the previous chapters we have identified different areas of concern for the use of models and data. From the constraints of document transformation in \autoref{chap:liwc} to the influence of multiple data sources and prediction tasks in \autoref{chap:mtl}. In this chapter, I theorise over the core sources of these issues: the context within which models and exist, the models and the data.
-To describe these issues, I invoke the metaphor of the body in three different ways: first, pertaining to the physical material \textit{human body} that we each possess; second, to signify a collection of observations and data points \textit{created by humans}; third, to refer subjective embodiments, that is how \textit{social and cultural meaning} is embedded in the human experience and derivatives of it, i.e. data created by humans.
-Through a consideration of both data generation processes and the modelling stages of the machine learning pipeline, I then apply my theory to the models that I have described in this dissertation in addition to providing a critique of these technologies. 
-Finally, I discuss the implications of current practices in machine learning and argue that for machine learning for social prediction tasks to achieve their goals, we must radically reconsider current approaches to better align with the stated aims.
+Similarities between distinct related tasks pose several interesting questions.
+First, is it best to create multiple annotations, either through re-annotating previously published data or creating an entirely dataset, such that each task is addressed in all of the data or should one try to develop modelling architectures that are overlapping?
+Second, how much data from each task is necessary to annotate, in the case of creating multiple annotations for each document; or, if the task is approached in terms of developing modelling architectures, how much of the data from each task should be used in optimising the model, or alternatively, how should the data from each task be weighted to gain the largest modelling improvements?
 
-\section{Disembodied Machine Learning}
-Machine learning is a practice that is concerned with making decisions based on machine-discernible patterns in observed data. Often, the data upon which machine learning methods are optimised, and later applied to, are `extracted' from the context within which they are created. Through this process of separation of context and datum, an notion of `objectivity' is imposed upon the data and the subsequent operations on the data and their results. Through the repeated separation of datum from context bodies of data, or datasets, are created. These amalgamated bodies of data exist only by virtue of their strict separation from the material bodies that they derive from are then used to optimise machine learning methods. Machine learning method come in two different forms: Supervised learning methods which seek to learn to distinguish between set of bodies of data, and unsupervised models which seek to identify discernible limbs of data within a single body of data. For both supervised and unsupervised models both the underlying data and the model applied to them have strong influences as to what bodies are discovered and what may be discovered within them. As \citet{Benjamin:2019} writes technology operates within social structure `codes [that] operate within powerful systems of meaning that render some things visible, others invisible, and creates a vast array of distortions and dangers'.\vspace{5mm}
+In this chapter, I approach the question of overlapping data through a question of developing a modelling approach that aims to use potential overlaps between each task.
+Specifically, I explore the use of four tasks labelled for different forms of abuse and four non-abusive auxiliary tasks.
+The auxiliary tasks that are not labelled for abuse are: sarcasm detection \citep{Oraby_sarcasm:2016}, predicting moral sentiments \citep{Hoover:2019}, and predicting whether an argument is primarily based in facts or feelings \citep{Oraby_factfeel:2015}.
+As each task may be related only in terms of the abstraction required to understand the meaning of a given text, creating mappings between different classes from different tasks, e.g. sarcastic and abusive, is a complex task that in some cases may not be possible, as one class may not conveniently fit others, e.g. mapping moral sentiments to abuse and vice versa.
+Moreover, data for each task may be collected from different sources, at different times, from different populations that use different vocabularies resulting in models that may learn spurious patterns in the data that are not trivial to identify and address.
+Thus modelling abuse using distinct tasks can be approached in two distinct manners. Either all documents are collapsed into a single dataset without creating maps between the different classes or each task remains a distinct task and model architectures such as Multi-Task Learning (MTL) and Ensemble methods are explored.
+Here I take the latter approach, developing a MTL model that considers each task simultaneously and distinctly from all other tasks (see \cref{sub:mtl} for more details on how MTL functions).
+I select a MTL modelling approach over an ensemble approach as optimising an ensemble requires optimising $n$ entirely distinct models, one for each task, and a final model that considers the outputs of each model, MTL models on the other hand can be optimised such that a models is optimised to perform on its primary task, treating all auxiliary tasks as secondary.
+Moreover, as I use a hard-parameter sharing design for my MTL models, an additional benefit is that all auxiliary tasks act as regularisers, even if they are not directly beneficial to the primary task.
 
-In the advent of machine learning, these models were hailed as objective, unimpeded by subjective human biases, and by extension social marginalisation \citep{oneil:2017}. However, an increasing amount of research suggests that social biases are common in machine learning models \citep{Shah:2020,Buolamwini:2018,Agarwal:2018}, and that biases in the underlying data may be exacerbated by the machine learning models \citep{Zhao:2017,Jia:2020}. As a result of this growing awareness, a number of research directions seek to identify \citep{Shah:2020,Bender-Friedman:2018,Mitchell:2019,Buolamwini:2018}, reduce or remove social biases \citep{Zhao:2017,Agarwal:2018,Romanov:2019,Jia:2020} from machine learning models to prevent further marginalisation. Such work assumes that social biases operate within a positivist logic in which the removal social bias is cast as an optimisation problem, i.e. that there is a finite and quantifiable source of bias that can be disentangled, isolated, and mathematically reduced out of the body of data or mathematical model from which the designer of both models and data are removed.
+Through the use of of MTL models, I find that non-abusive tasks as auxiliary can be beneficial to detecting all forms of abuse examined.
+In line with the results in \cref{chap:liwc}, there is a difference in how helpful different abusive language datasets are for each other.
+However, in spite of benefits from using MTL over some single-task baselines, some baseline models still out-perform some of the MTL models, suggesting that while there are measurable effects of using MTL, there is still room for improvements.
+Moreover, I find that the combinations of auxiliary tasks for abuse detection with auxiliary task of related tasks occupy the space for the models that show most improvements over the baselines.
 
-Here, I provide a challenge to such a positivist logic, drawing on work from feminist Science and Technology Studies and examples from Natural Language Processing I argue that bias and subjectivity in machine learning pipelines are inescapable and can therefore not be simply be reduced or removed, for which reason I hold that an ongoing recognition and reflection on our own positions and the imaginary of objectivity found in subjective realities reflect political choices throughout the machine learning pipeline. Through a contextualisation of bias in these terms, I aim to shift the surrounding discourse away from bias an its elimination to subjective positionality and its implications on the machine learning pipeline from data generation to optimised model.
+\section{Previous work}
 
-\subsection{Embodiment in the Machine Learning Pipeline}
-Through Haraway's \citeyearpar{Haraway:1988} critique of objectivity (see \cref{chap:socialscience} it is possible to understand subjectivity, or bias in machine learning in a way that recognises its potential to create social marginalisation without casting the problem in a positivist, optimisational logic. I argue that the disembodied or objective position exists within the machine learning pipeline at multiple junctions:
+MTL has previously been applied for a number of tasks in NLP, including language specific tasks such as multi-word expression identification \cite{Bingel-Bjerva:2018}, machine translation \cite{Dong:2015}, and sequence labelling \cite{Rei:2017}.
+Further, MTL has also been used in tasks that produce social outcomes such as predicting mental health conditions \cite{Benton:2017}, hate speech detection \cite{Waseem:2018,Rajamanickam:2020,Farha:2020,Djandji:2020}, and rumour verification \cite{Kochkina:2018}.
+
+\subsection{Modelling}
+For hate speech detection, and abusive language detection in general, MTL has been applied to English \citep{Waseem:2018,Rajamanickam:2020} and Arabic \citep{Farha:2020,Djandji:2020}.
+Considering that I use datasets that are entirely in English, I only consider the previous work for hate speech detection using MTL for English language data.
+
+\citet{Waseem:2018} show that the cultural gaps that exist between different datasets, as a result of their collection strategies and annotation procedures, could be addressed.
+Using a hard parameter sharing strategy, they develop a MTL model that uses two different tasks for optimisation.
+In their model, sampling of the batches is chosen at random, with one of the tasks set as the main task and a manual mapping between the distinct classes is performed.
+The machine learning model chosen by \citet{Waseem:2018} for their MTL experiment is a back-propagated MLP with a tanh activation function and Adam as their optimisation function.
+For the input representations \citet{Waseem:2018} experiment with a Bag-of-Words model that uses the $5,000$ most frequent terms and model that uses Byte-Pair encoded input data.
+Similarly to \citet{Waseem:2018}, \citet{Rajamanickam:2020} show that using hard parameter sharing strategy for MTL with an auxiliary task can aid in the detection of hate speech.
+Rather than using a different task coded for abuse as \citet{Waseem:2018} do, \citet{Rajamanickam:2020} instead ask whether jointly learning which emotions are invoked in a given task can aid in the detection of abuse.
+Moreover, the architectures of the two different approaches diverge from one another.
+\citet{Rajamanickam:2020} implement a double encoder model in which the primary and auxiliary share an encoder and each have a stacked Bi-directional Long-Short Memory Network that generate a second encoding.
+The primary and auxiliary task models developed by \citet{Rajamanickam:2020} diverge at this point. The auxiliary task model directly passes the second encoding to a Bi-directional Long-Short Memory Network, the output of which is subject to an attention layer and finally passed through to a linear layer and subject to an activation function before producing the prediction of the model.
+The primary task model sums the encodings obtained from the stacked Bi-directional LSTM networks for the primary and auxiliary task, passing this on to a Bi-directional Long Short Term Memory network.
+The resulting representation is then passed through an attention layer and passed through an output layer generating the prediction.
+A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that the latter use a weighting parameter to distinguish between the primary and auxiliary task.
+\citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set.
+The reason for this discrepancy is that \citet{Waseem:2018} seek to use multi-task learning to optimise a model that is capable of dealing with cross-cultural data, that is a model that is able to perform on both tasks.
+\citet{Rajamanickam:2020} on the other hand seek to improve classification performance on the primary task, thus considering any performance gains on the auxiliary a side-benefit.
+This discrepancy is the result of a natural prioritisation question, as the goal of \citet{Rajamanickam:2020} is to improve classification performance for abuse on a single dataset whereas \citet{Waseem:2018} seek to identify a classifier that can generalise beyond beyond the single dataset.
+
+The work described in this chapter follows \citet{Rajamanickam:2020} in their focus on improving classification performances on the primary task.
+For this reason, I choose auxiliary tasks (see \cref{sec:mtl_data} for an overview of the auxiliary datasets) that have been hypothesised as relevant to the question of detecting different forms of online abuse.
+
+\subsection{Learning Tasks}\label{sec:mtl_tasks}
+
+Multi-task learning, as the name of the framework implies, requires distinct tasks for learning, where each unique auxiliary task asks how learning representations from that task influences model performance on the primary task.
+We saw in \cref{chap:liwc}, the optimised for each abusive dataset has different applications onto other datasets in the case of binary classification. Therefore, I choose to use three different tasks for abusive language as main tasks.
+In contrast to the method in \cref{chap:liwc}, I do not binarise, or otherwise modify the classes in from those proposed by the authors of the datasets.
+This provides for the more challenging tasks of predicting the type of abuse in addition to whether content is abusive or not.
+A further consequence of not binarising the label sets for the main tasks is that the classes don't directly map onto other datasets.
+This means that I preclude considerations of generalisability onto other datasets for abuse without further reduction of the predicted labels into a binarised label space.
+Here I provide brief descriptions of the different datasets and the rationale for their inclusion, for more detail please refer to \cref{sec:datasets} and \cref{sub:liwc_datasets}.
+
+\subsubsection{Main Task Datasets}
+For the main tasks, I choose to use the \textit{Toxicity} dataset \citep{Wulczyn:2017}, the \textit{Offence} dataset \citep{Davidson:2017}, and the \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016}. I choose these three datasets in part due to their size and in part because they examine of three different aspects of abuse.
+Through this choice, I aim to identify which auxiliary tasks can improve performance for each type of abuse.
+Each main task dataset is also used as an auxiliary task when it is not the used as a main task.
+
+\paragraph{Hate Speech}
+The \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016} as proposed consists of $3,383$ comments labelled as sexist, $1,972$ labelled as racist and $11,559$ labelled as neither sexist or racist.
+This dataset was proposed as a first step towards modelling racialised and gendered hate speech.
+I use this dataset to show that the MTL framework can be used to distinguish between different targets of hate, as this dataset seeks to identify different forms of hate speech.
+Beyond using this dataset to show the ability of MTL models to learn how to distinguish different forms of hate speech, this dataset also provides the largest source of hate speech, which otherwise is vanishingly small in other other main task datasets.
+
+\paragraph{Offence}
+The \textit{Offence} dataset \citep{Davidson:2017} was proposed to distinguish `offensive' content from `hateful' and content that is neither `hateful' or `offensive'.
+In the class distribution proposed by \citet{Davidson:2017}, the `offensive' class occupies the vast majority of the dataset, with $19,190$ documents labelled into the class, followed by the negative class which consists of $4,163$ documents, and finally the `hateful' class which contains only $1,430$ documents.
+As such, the class distribution for this dataset varies strongly from the \textit{Hate Speech} and the \textit{Toxicity} dataset, with the majority class being one of the two positive classes.
+In using this dataset for the main task, I show that MTL models can provide a viable modelling approach in spite of a significantly different class distribution.
+
+\paragraph{Toxicity}
+The \textit{Toxicity} dataset \citep{Wulczyn:2017} provides a special case.
+For one, it is the largest dataset consisting of $159,686$ labelled comments split into a training set of $95,692$ comments, a validation set of $32,128$ comments, and an evaluation set of $31,866$ comments.
+In total, this dataset has more than $100,000$ more comments than either the \textit{Toxicity} or \textit{Hate Speech} datasets.
+Second, the dataset proposes a binary classification of `toxic' and `not toxic'.
+Thus, the results from the MTL models optimised for this dataset can be directly compared with the results obtained in \cref{chap:liwc}, unlike the models where the main task is \textit{Offence} or \textit{Hate Speech}.
+Thus, I use this dataset to anchor the performances of the MTL models within the context of the preceding chapter and to show the impact of using a large scale dataset for abuse for MTL modelling.
+
+\subsubsection{Auxiliary Task Datasets}
+
+I choose the auxiliary task datasets for two different purposes: 1) to investigate the impact of using other datasets for abusive language as auxiliary tasks and 2) to examine how datasets that are labelled for other tasks can influence modelling for abuse.
+To answer the first question, I use the three main task datasets in turn as auxiliary datasets when they are not serving as the main task. Moreover, to address the issue of the poor representation of content labelled within as hateful, I also use the \textit{Hate Expert} dataset.
+Addressing the second motivation, I use a dataset labelled for sarcasm \citep{Oraby_sarcasm:2016}, a dataset labelled for the moral sentiment invoked by the text \citep{Hoover:2019}, and finally a dataset where documents are labelled for whether arguments are primarily based in emotion or in facts \citep{Oraby_factfeel:2015}.
+With the exception of the \textit{Moral Sentiments} dataset, all auxiliary task datasets contain between $~5,000$ and $~16,000$ labelled documents, while the \textit{Moral Sentiments} consists of $~35,000$ labelled documents.
+This spread of sizes of auxiliary task datasets allows for considering how auxiliary task dataset size impact the main task.
+
+\paragraph{Sarcasm}
+Previous work on hate speech detection \citep{Rottger:2021} has identified that sarcasm and irony can be contributing factors to misclassification from machine learning models as they take literally things that are communicated to be understood figuratively.
+In efforts to better understand dialogue in online debate forums, \citet{Oraby_sarcasm:2016} develop a balanced dataset of $6520$ comments labelled for the occurrence of sarcasm.
+Through this auxiliary task, MTL models learn representations of how sarcasm is constituted within \textit{Sarcasm} dataset, in addition to the other auxiliary tasks, and the main task.
+Finally, through the use of this dataset, I explore how learning representations for sarcasm detection influences prediction of each operationalisation of detecting abuse.
+
+\paragraph{Argument Basis}
+Previous work on hate speech detection have suggested that many users who utter hate speech do so infrequently, suggesting that discriminatory speech may be produced in moments of carelessness and high emotionality \citep{Waseem:2016}. 
+Moreover, as is apparent from the motivations used by \citet{Garcia:2019} for using StormFront as a data source, white supremacists may seek to mask their discrimination behind the use and distortions of fact.
+Thus, whether hate is produced in the spur of the moment or is a part of a longer pattern, the basis upon which the argument is made, whether it is fact-based or based on emotion, may provide useful signals for learning to predict hate speech and abuse.
+To model the hypothesis that high emotionality may influence the production of abuse, I include the \textit{Argument Basis} dataset \citep{Oraby_factfeel:2015}.
+This dataset was developed using the same underlying data source as the \textit{Sarcasm} dataset, however rather than annotating the dataset for the occurrence of sarcasm, \citet{Oraby_factfeel:2015} annotate $5,848$ comments as being based in either fact or emotion.
+The dataset is slightly imbalanced with $59\%$ of the dataset labelled as primarily fact-based and $41\%$ labelled as primarily based in feelings.
+MTL models for abuse can take advantage of this dataset by learning a joint representation of the basis of an argument along with the main task in question.
+Thus, this auxiliary task can provide insight into the question of whether learning such a joint representation is beneficial to detecting abuse and implicitly provide another signal into the feasibility of more deeply considering the emotional and mental state of the author when writing, e.g. through the use of LIWC in \cref{chap:liwc}.
+
+\paragraph{Moral Sentiments}
+The \textit{Moral Sentiments} dataset is annotated for the vices and virtues represented along five different `factors': \texttt{Loyalty/betrayal}, \texttt{care/harm},\\ \texttt{fairness/cheating}, \texttt{authority/subversion} and \texttt{purity/degradation} \citep{Hoover:2019}.
+The authors of the dataset suggest that these five factors are likely to be represented in data that contains abuse, through their use of a subset of the \textit{Offence} dataset for annotation.
+To explore this further, I use this dataset as an auxiliary task.
+While the impacts of moral sentiments on the \textit{Offence} dataset are likely beneficial, using this auxiliary task on other datasets allows for examining whether representing moral sentiments has a positive impact on other datasets labelled for abuse.
+
+\paragraph{Hate Expert}
+Finally, as learned from \cref{chap:liwc}, some datasets for abusive language appear to be more closely related to others.
+For this reason, I include the \textit{Hate Expert} dataset as an auxiliary task dataset to verify this finding and to provide a dataset to help address the poor representation of hate speech in the classes.
+In \cref{chap:liwc} I binarise this dataset, here on the other hand I retain all $4$ classes in the dataset. 
+In the expert annotated data, the four classes have a highly imbalanced distribution, the largest class being the negative class consuming $84\%$ of the data, while the second largest class `sexism' consumes $13\%$ of the data, the `racist' class consuming $1.4\%$ of the data and the final class, `both racist and sexist' contributing with $0.7\%$ of the data.
+
+Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ documents means less than $50$ documents are labelled for the minority class, and given that I create stratified splits for the training ($80\%$), validation ($10\%$), and evaluation ($10\%$) sets, less than $40$ documents remain in the training set.
+Thus there is not enough data for a machine learning model to learn patterns of abuse in the intersection between racist and sexist speech.
+However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the optimisation process.
+
+\section{Modelling}\label{sec:mtl_modelling}
+For the experiments conducted, I only use one form of tokens to allow for an examination of the impact of the auxiliary tasks rather than the impact of tokenisation.
+I choose to represent all documents as their Byte-Pair encoded representations as these minimise the number of out-of-vocabulary tokens as this representation retains competitive performances in \cref{chap:liwc}.
+To this end, I pre-process all documents using a $200$ dimensional Byte-Pair Embedding \citep{Heinzerling:2018}.
+The pre-processing here follows the same method as in \cref{chap:liwc}, that is each document is lower-cased, all hyper-links are replaced with a `<URL>' token, all usernames are replaced with a `<USER>' token, and all hashtags are replaced with a `<HASHTAG>' token.
+Then each document is passed through the Byte-Pair Embeddings to produce the Byte-Pair encoded representations, that is their sub-word units.
+
+I develop three different types of baseline models: a linear single-task model where the model is optimised and evaluated on the same task, a non-linear single-task model, and a linear ensemble model where a model is optimised on the basis of outputs from the auxiliary task models.
+In terms of experimental models, I follow \citet{Waseem:2018} in designing a multi-task Multi-Layered Perceptron implemented in PyTorch \citep{Paszke:2019}. I select an MLP over more complex neural networks architectures like Convolutional Neural Networks and Long-Short Term Memory networks due to the speed with which MLPs are optimised along with their general performance in \cref{chap:liwc}.
+
+I perform parameter and hyper-parameter optimisation for the linear and non-linear models, respectively.
+For the non-linear models I use the Weights and Biases library \citep{Wandb} to perform Bayesian Hyper-Parameter Optimisation.
+For the linear models, I use grid-search as implemented in the Scikit-Learn library \citep{Pedregosa:2011}.
+
+Once models have been optimised, they are each evaluated on the validation data and the evaluation data.
+For non-linear models, the performance on the validation data guides the decision on which parameter configurations are chosen for analysis while for linear models, cross-validation is applied during the grid-search which aids in determining which parameter configuration performs best.
+
+\subsection{Baseline Models}\label{sub:mtl_baselines}
+I develop three baseline models: a linear single-task model, a neural network single-task model, and a linear ensemble model.
+I choose to use a linear single-task model as a baseline as these can provide a strong baseline against neural network approaches for abuse detection while also being fast and efficient to optimise.
+The non-linear neural network baseline is chosen as a counter-point to the linear baseline, using a MLP to more directly be able to consider the influence of the multi-task architecture for the experimental models.
+Finally, I choose to an ensemble classifier that is optimised on the outputs of linear single-task models for each of the auxiliary task models as an ensemble, similarly to a multi-task model, can take advantage of learned representations for each auxiliary task for producing a prediction for the main task.
+
+\paragraph{Single-Task Baselines}
+Following prior work \citep{Waseem:2016,Davidson:2017}, I optimise all single-task models using a Support Vector Machine with a linear kernel (see \cref{sec:model_background} for more details on SVMs).
+All linear single-task models are optimised on unigram counts of the Byte-Pair encoded tokens and are subject to parameter-optimisation of the regularisation type ($L1$ and $L2$) and the strength of regularisation (using values $0.1, 0.2, \ldots, 1.0$).
+
+\paragraph{MLP Single-Task Baseline}
+I develop a MLP as a non-linear counter-part to the linear single-task models to provide a baseline of the performance of a neural network approach that only relies on the Byte-Pair unigrams for the main task to optimise for the main task.
+To ensure that the baseline model is also tuned for optimal performance, I perform a hyper-parameter sweep  over the batch size ($\{16, 32, 64\}$), the dropout value ($[0.0, 0.5]$), the dimensionality of the embedding layers ($\{64, 100, 200, 300\}$), the number of epochs for optimisation ($\{50, 100, 200\}$), the dimensionality of the hidden layers ($\{64, 100, 200, 300\}$), the learning rate ($[1^{-5}, 1.0]$), the Non-linearity to apply ($\{Tanh, ReLU\}$), and the optimiser function ($\{SGD, ASGD, Adam, AdamW\}$).
+I conduct at least $50$ independent trials of distinct hyper parameter settings which identify the best hyper parameter configuration.
+
+\paragraph{Ensemble Baseline}
+The ensemble baselines require a different optimisation scheme that relies on a classifier that is optimised for each auxiliary task and an ensemble classifier that relies on the outputs of the auxiliary task classifiers, by virtue of the nature of ensemble classifiers.
+For this reason, I first optimise a linear SVM for each auxiliary task and perform a grid search over the type of regulariser ({$L1$, $L2$}) and the strength of the regularisation (${0.1, 0.2,\ldots, 1.0}$) (see \cref{tab:ensemble_aux_params} for the parameter settings for each auxiliary task).
+Once all auxiliary task classifiers have been optimised, I optimise a Logistic Regression model on the outputs of the auxiliary task classifiers on the main task training data, similarly subject to a grid-search over the same parameter values as the auxiliary task models
+.
+During this optimisation procedure, the ensemble is provided with the training data for the main task, which is vectorised to the vocabulary of each auxiliary task and a prediction is obtained for each task.
+For each document, predictions of all auxiliary task classifiers are vectorised and a classifier is optimised on the auxiliary task predictions.
+While this method allows for every datasets to be passed through the model, by design this method limits the vocabulary to that which exists in the training datasets for the auxiliary tasks, rather than the main task.
+This risk however is mitigated by the use of sub-words obtained by pre-processing all data through the Byte-Pair embeddings.
+
+\subsection{Experimental Models}
+For the experimental models, I follow \citet{Waseem:2018} in using a Multi-Layered Perceptron model.
+The Multi-task MLP architecture that I design consists of an input embedding layer which is unique to each task, a shared linear hidden layer, followed by another linear hidden layer that is specific to each task, a linear output layer for each task, and finally the \texttt{softmax} is computed on the model representation.
+I also include a dropout layer and a non-linear activation function, where I treat the decision of activation function as an hyper-parameter optimising between the choice of \texttt{ReLU} and \texttt{Tanh} activation functions.
+
+My architecture of the Multi-task MLP deviates from the architecture proposed by \citet{Waseem:2018} in two ways: the choice of input layer and the choice of activation function.
+Where I use an embedding layer as the input layer for each task, \citet{Waseem:2018} use a onehot encoded input layer and they use a \texttt{Tanh} activation function for all of their experiments.
+Following the experimental approach in \cref{chap:liwc}, I keep the embedding layer randomly initialised rather than using a pre-trained embedding layer.
+The motivation for optimising the embedding layer, even with sparse data, is that pre-trained embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
+
+The optimisation procedure for the Multi-task MLP deviates significantly from the optimisation procedures associated with the baseline models.
+For the Multi-task MLP, I optimise my models by giving all tasks an equal weight but distinguish between the main task and the auxiliary tasks by the probability with which a batch from task is chosen.
+A task is chosen each time a batch is to be selected, where the primary task is chosen with a probability of $0.6$ when there are two or more auxiliary tasks and $0.7$ when there is only one auxiliary task.
+As each task is chosen probabilistically, it is necessary for the probabilities to sum to $1.0$, thus the weight of each auxiliary task is $\frac{1.0-P(M)}{N}$, where $N$ is the total number of auxiliary tasks and $P(M)$ is the probability of the main task being chosen.
+Given that I choose the task to be optimised probabilistically, I do not weight the loss as in \citet{Rajamanickam:2020}.
+Once a task has been chosen, a batch is selected from the data associated with the task and is passed through the model and the loss on the batch is computed and back-propagated through the network, a process which is repeated for a number of epochs, where the exact number of epochs is a hyper-parameter that I tune.
+For single-task models, it is common to iterate over the entire dataset, obtaining a batch count given the size of the dataset and the batch size.
+MTL models however are optimised for a number of datasets, including auxiliary task datasets where obtaining a high performance on the auxiliary task may not be of concern, rather learning inductive biases from the data are.
+For this reason, I limit the number of batches that are selected in each epoch, setting a global value of $300$ batches per epoch.
+Through the use of the probabilities with batches are chosen from each task in conjunction with the number of epochs and the batches being shuffled between each epoch, I ensure that my models gain a representative perspective of each dataset and their labelled data.
+These representations of the datasets afford the models the ability to jointly learn representations based on the auxiliary tasks and the primary task.
+
+For my hyper-parameter exploration, I explore the hyper-parameters listed above, that is the number of epochs ($\{50, 100, 200\}$) and the activation function ($\{Tanh, ReLU\}$).
+I also perform a hyper-parameter optimisation of the choice of optimisation algorithm ($\{Adam, AdamW,$\\$SGD,ASGD\}$); the dimensionality of the shared layer (${64, 128, 256}$); the learning rate ($[1^{-5}, 1.0]$); the dimensionality of the task-specific hidden layers (${64, 100, 200, 300}$); the dimensionality of the task-specific input layers ($\{64, 100, 200, 300\}$); the value of dropout $[0.0, 0.5]$; and lastly the batch size ($\{16, 32, 64\}$).
+Note, that the batch size can have an influence over how much of each dataset is exposed to the model at optimisation time as the number of batches selected per epoch does not scale with the variation in the batch size.
+
+\subsection{Auxiliary Task Configurations}\label{sub:aux_task_selection}
+In order to select the auxiliary tasks and their combinations that contribute most towards the performances of the primary, I add auxiliary tasks as they prove useful to the main task in terms of performance boosts.
+To perform this selection, I design three different scenarios of auxiliary task configurations:
+
 \begin{enumerate}
-  \item{In the data which is often removed from context and potentially adjudicated by externalised others,}
-  \item{in the person designing the experiment and pipeline, and}
-  \item{in the model optimised on the disembodied data stemming from embodied data subjects.}
+  \item Auxiliary tasks consist only of abusive language detection tasks,
+  \item auxiliary tasks consist only of non-abusive language detection tasks, and
+  \item auxiliary tasks are a combination of abusive language detection tasks and tasks that are not abusive language detection tasks.
 \end{enumerate}
-First, as data collection processes require decisions to be made to delineate individual pieces of datum that are relevant to the task from those that are deemed irrelevant, it is often necessary to also create a separation between the person who created the datum and the datum in and of itself. Thus, a datum is removed from the context of its creator. Further, datum is often disassociated with the time and the social and political contexts within which it is created. In the case of supervised machine learning, the datum is then provided to a number of annotators, who frequently are neither the creator of the datum nor necessarily situated with contexts of the creator or the datum. These annotators then determine which limb of data, within the larger body of data, the datum belongs to given a set of criteria for such judgement.
-Second, as the designer of the model themselves are frequently removed from the contexts within which the body of data are created, they determine how the data are to be represented through a choice of features, setting limits on vocabularies (see \autoref{chap:intro}), transforming the input (as seen in \autoref{chap:liwc}), and the choice of models with their requirements of representing data.
-Third, as machine learning models step through disembodied data and embody it within itself, the model itself manipulates the representations of data to identify discernible boundaries between the limbs of data. In this process, the models further disembody the data from the data itself, operating within an assumption that datum consist of the sum of its parts.
 
-In each of these situations lay value judgements on which perspectives of the data are relevant and which are irrelevant. I observe here a peculiarity of machine learning, as data which is disembodied from its creator then becomes the body of knowledge upon which the machine learning model draws on, implicitly transforming all positions that exist outside of the model's internal body then becomes disembodied from the model. This transformation from disembodied to embodied then can serve as an explanation for calls for `more' and `more diverse' data \citep{Holstein:2019}.
-It is worth noting here that the model-embodiment is tacitly acknowledged in the research fields of domain adaptation \citep{Daume:2007} and transfer learning. Through these fields' acknowledgement that to the knowledge held in machine learning models are limited to the domains that are present in the datasets the models are optimised on and that even small perturbations in the input to the model may drastically degrade its performance~\citep{Szegedy:2014,Daume:2007}. These acknowledgements of embodiment exist in a self-contradictory tension with the position of objectivity within which these transfer-learning and domain adaptation methods operate within.
+I initially experiment with only one auxiliary task and select those that either outperform all baseline models or obtain the highest performances, in the case where some baseline models outperform all experimental models with one auxiliary task.
+I then construct experiments with all combinations of the selected auxiliary tasks.
 
-\subsubsection{The Embodied Designer}
+\section{Results}
 
-Though often referred to as a `researcher' or `developer', I draw on Herbert \citet{Simon:1969} to construct my understanding of a \textit{designer}. I direct attention not to the profession of the individual or team in the machine learning pipeline but instead to the their action.
+\subsection{Baseline Models}
 
-\begin{citequote}{\citep[p. 111]{Simon:1969}}
-  Everyone designs who devises courses of action aimed at changing existing situations into preferred ones.
-\end{citequote}
+In \cref{tab:linear_singletask_params,tab:mlp_singletask_params,tab:ensemble_params} I present the best identified hyper-parameters for each model type.
+Focusing on the regulariser, all linear models prefer an $L2$ regulariser, likely because it redistributes the weights of equally important features rather than zeroing any of them out.
+Moreover, as observed in \cref{tab:linear_singletask_params} all models prefer a low regularisation strength when a linear single-task classifier is optimised.
 
-Following \citet{Simon:1969}, the \textit{designer} can then be understood to be anyone in the machine learning pipeline. While this includes annotators in addition to developers and researchers, I direct focus to the last two as as they can direct and supersede the choices of annotators.
-
-Often a lack of diversity in machine learning development teams is cited as a source of socially biased technologies along with corresponding calls for an increase in designers embodying diverse experiences \citep{West:2019}.
-Similar to my argument, such calls argue that the embodied designers project an embodiment of self into the technologies they develop through data and modelling choices. This argument, in line with \citet{Haraway:1988} suggests that it is only through the recognition and promoting different embodiments that certain perspectives, understandings, and uses can be achieved.
-
-\subsection{Embodiment in Data}
-As \citet{Gitelman:2013} argues, datasets do not exist naturally but must be produced. Considering this production of data through \citet{Haraway:1988}, datasets can be understood as a form of knowledge that is produced through disembodying embodied experiences. Subjectivity can thus stem from a number of sources including the source of the data \citep{Gitelman-Jackson:2013}, the data sampling method \citep{Shah:2020}, and the selection of annotators \citep{Waseem:2016,Derczynski:2016}.
-
-Grounding my discussion in Natural Language Processing, I show how subjectivity manifests itself in machine learning models through a number of meaning-making processes, modelling choices, and data idiosyncrasies. I seek here to highlight the subjective and embodied nature of of data and classifications and that by taking a position of objectivity, we cannot do justice to the needs and wants of individuals or communities.
-
-\subsubsection{Natural Language Processing Tasks}
-
-A range of, if not all, Natural Language Processing tasks are highly sensitive to the subjective values encoded in data. While such issues have frequently been studied in the context of high-level tasks, such as machine translation and abusive language detection, less attention has been given to core Natural Language Processing tasks. Notably, the primary object of study of biases in core Natural Language Processing has been the Part of Speech tagging task \citep{Blodgett:2016,Jorgensen:2016} for which reason I also investigate the task.
-Generally, I argue that by removing the adjudication of content, be it abusive language, translations; text simplification; part of speech tagging; or any of the many other tasks natural language processing as a field has and is addressing, from the user experiencing the phenomenon, I delegitimise the very tools that are built through a cloak of presumed objectivity which is neither truly neutral nor objective.
-
-\paragraph{High-level tasks} High-level tasks that require semantic and pragmatic understanding, e.g. machine translation, dialogue systems, metaphor detection, sarcasm detection, and abusive language detection are all highly sensitive to subjective values encoded in the data. In machine translation, research has identified a range of issues including stylistic \citep{Hovy:2020} and gender biases \citep{Vanmassenhove:2018}. Particularly issues that pertain to the reinforcement of sexist stereotypes have been the object of academic \citep{Zhao:2017} and public \citep{Locklear:2018} scrutiny. A classic example of stereotypical translation are the translations stereotyped occupations from a language that does not contain grammatical gender to a language that does, e.g. the translations of \textit{doctor} from English (unmarked for gender) to the German Arzt (marked for masculine) and \textit{nurse} from English (unmarked for gender) to Krankenschwester (marked for feminine). Here we see that the `objective', yet stereotypified translations are embodied in a patriarchal context which delegates high prestige to men and low prestige to women. While the translations may be correct in individual cases, they are not always correct. Moreover, assigning a single gold label to a given translation in itself provides an issue as an input text may have several distinct and correct translations. However, most optimisation processes and evaluation algorithms assume that there exists a single correct translation, and that is the one the model is provided for optimisation and evaluation. I note that word embeddings similarly harbour stereotypical associations \citep{Bolukbasi:2016}.
-
-%similarly to the example of translations of \textit{doctor} and \textit{nurse} in machine translation, word embeddings have been shown to harbour similar stereotyped associations, e.g. that the feminine equivalent of masculine-coded \textit{programmer} is to \textit{homemaker} \citet{Bolukbasi:2016}.
-
-The issue of highly subjective `truths' and gold labels for data extends to several other tasks such as text simplification and abusive language detection. In text simplification, numerous datasets make the claim that some words, sentences, or texts are difficult to read while others are easy. These labels are typically provided by human annotators who may agree on some labels and this agreement may aid in the ability of models optimised on such data to generalise to other datasets. However, the process of externalising the labelling process disembodies the data and subsequent models from the embodiments of the diverse set of users of simplification technology and how text difficulty manifests for those users \citep{Bingel:2018}.
-
-Further, as is apparent in abusive language detection, if the positionality of the adjudicators deviate within the group of adjudicators less consistent annotations can be derived \citep{Waseem:2016}, which harm both the model and the supposed users of it. Many other causes and effects of disembodiment have been considered in the task of identifying abusive language. For instance, \citet{Waseem:2018} argue that datasets for abusive language embody a white perspective on respectability, finding that almost all uses of the \textit{n-word} are tagged in the positive class in the dataset released by \citet{Davidson:2017} regardless whether its use is within the African-American community. The labelling of the \textit{n-word} does not necessarily embody a white perspective on respectability as the word does have frequent pejorative uses \citep{Croom:2013}, however disregarding the usage of the word within the black diaspora, as datasets and tools frequently do \citep{Davidson:2019}, does constitute a white supremacist idea of control of marginalised bodies and languages, for which there is a rich history \citep{Craft:2020}. Indeed \citet{Waseem:2018} find that a large subset of the documents that contain the \textit{n-word} in \citet{Davidson:2017} that are labelled as hate speech and offensive language are likely to be in-group uses. This issue however is not limited to the dataset presented by \citet{Davidson:2017}, in fact, all datasets examined by \citet{Davidson:2019} result in consistent and disproportionate error rates for African American English speakers. Systems built on these datasets, or as I argue here, datasets that are constructed within a social order where the white cisgender male body is constructed as the `neutral' or `objective', will replicate such biases. Thus, the race towards state-of-the-art machine learning models for content moderation is also a race towards state-of-the-art white supremacy.
-
-\paragraph{Core Natural Language Processing tasks}
-Beyond these issues existing in high-level tasks which may require a certain level of cognitive abstraction, they also exist in lower level, core Natural Language Processing tasks such as Part of Speech tagging and dependency parsing. While I restrict the examples here to part of speech tagging, I contend that precisely the same arguments apply to dependency parsing.
-
-Considering part of speech tagging, I find multiple junctions at which theory and data influence the process of developing tag-sets. First, the tagset is developed based on a subjective linguistic theory that licenses some tags while rejects other. This linguistic theory is typically informed by observations on specific types language in the data it is developed to describe. Second, in the choice of sources of data. If the observed language production is a forum dedicated to computer games, the linguistic theory used to develop the part of speech tagset, the linguistic theories that form the basis of the tagset are likely to focus on informal, and perhaps adolescent communication patterns. If on the other hand, the source of data primarily consists of newswire documents, the linguistic theory is likely to specifically address language production in formal settings. Third, in the development of a dataset of part of speech tags, I see similar issues of adjudication as for the high level tasks.\footnote{Although this may be mitigated by using optimised linguists to label the dataset.}
-Thus, the development of part of speech tag-sets and datasets it is applied on is a practice in developing descriptors and data which are mired in the context of the language production they seek to describe.
-
-An example of one such tagset is the Penn Treebank tagset \citep{Marcus:1993}, the \textit{de-facto} standard for describing English word classes in Natural Language Processing. The Penn Treebank tagset was developed on primarily financial newswire text and published works in the U.S. in 1961 \citep{Francis:1982}. The tagset was primarily motivated by economic factors, such as there being several word classes that were ambiguous or word classes which occurred with such low frequency that they might only describe a single word. The Penn Treebank tagset was thus developed with formal Standard American English in mind and is thus better suited to describe language which conforms to the English the underlying theory the tagset describes than other varieties, sociolects, or slang \citep{Blodgett:2016,Jorgensen:2016}.
-This issue becomes even more drastically apparent when a tagset developed for English is forced upon some other language, which it is far removed from being able to describe.
-
-\subsection{Embodiment in Modelling}
-
-While datasets are an important source of how a model may be embodied, machine learning methods themselves encode which embodiments are highlighted and which are subjugated. I primarily focus on supervised machine learning in the exploration of how models exacerbate disembodied positions, as unsupervised methods are more directly volatile to subjective choices of the researcher, e.g. how the data is represented and which parameters the model is subject to.
-
-As I seek to distinguish distinct model behaviours, I offer that models act on a spectrum from \textit{localized} to \textit{global} behaviour. In this conceptualisation, localized behaviour refers to when a model seeks to ground the datum within the context it is derived from, often using knowledge external to the training data, e.g. context-aware models \citep{Garcia:2019,Devlin:2019}. Conversely, global modal behaviour instead operates only within the realm of the training data it is optimised on, i.e. models that compound multiple senses of a word with little or no regard to their local contexts. Although language production is situated within a wider socio-political context of society, I limit my use of `context' to the entirety of the sentence provided to the model.
-
-By virtue of the subjective nature of embodying a datum within its context, there is large variation in how locally acting models may be developed. One tactic to situate datum within its context is through the use of transfer learning which allows for knowledge produced outside of the training data to alter what the model embodies. For instance, should a dataset embody the language production within multiple sociolects, through the use of pre-trained language models \citep{Devlin:2019} or mixed-member language models \citep{Blodgett:2016} deeper information about the sociolects in question can be provided by using the context of the sentence to identify how to situate the representation of a document.\footnote{As different language and dialectal varieties may not be equally distributed in training data for contextual models \citep{Dunn:2020}, similar issues of which bodies are given the privilege space plague such models \citep{Tan-Celis:2019}.} The Multi-task learning paradigm also offers an avenue for embodying data in their contexts through their ability to encode information about the creator of the datum \citep{Benton:2017,Garcia:2019}. Transfer learning can similarly be applied to direct the model to embody the context a datum is derived from. For instance, \citet{Romanov:2019} encode demographic information of the datum's creator into the model in efforts to deter models from learning stereotyped representations of marginalised speakers and communities.
-
-Globally acting models on the other hand do not afford such embodiment. Through their reduction of a features in a model to a single sense, they are inherently unable to take into account the embodiment of the author, even if they are provided signals for how to embody a document at optimisation and inference time due to the fact that such models remake meaning according to the distribution of features. Any step taken towards embodying datum in its original context move globally acting models along the spectrum towards being locally acting models. An example of such a step are word embeddings. Through their representation of words by the words that co-occur with the word's neighbouring words, thus assuming a similarity between the word and other words. While they provide a slight shift towards locally acting models, the frequency-based nature of how closely associated a word is, they fail to take a meaningful step away from being globally acting models, as all instances of a token occurring in the dataset will be reduced to a singular representation that does not take the surrounding context, i.e. the sentence, into account.
-It is important to note here that while word embeddings, and in fact contextual word embeddings provide a step towards localising models, the techniques of developing such embeddings rely on processes of disembodying a large set of data from their creators and constructing an amalgamated body of data that can collective embodiments. This amalgamated data carries with it many small influences of the specific subjective embodiments of each data creator.
-
-\section{Embodiment and disembodiment in the abusive language detection pipeline}
-In the above sections, I describe generally how subjective embodiments are manipulated and inserted throughout the machine learning pipeline for the general case. In this section, I turn my attention to abuse detection technologies in an examination of the subjective embodiments in the pipeline for this particular application of machine learning.
-
-As with many machine learning pipelines, abusive language detection pipelines can have different starting points depending on whether any data is being annotated, or previously annotated data is used.
-
-For the latter case, the considerations of feature and model selection  are particularly relevant to the development, however designers of models should be aware of the influences of subjective embodiment in the annotation process and as the effects of the annotation process remain in the dataset.
-
-One such effect is of the designer of the dataset, in fact, as I have argued in the previous sections, the subjective embodiments of the designers (and annotators) permeate through every step of the pipeline. For this reason, I address how the subjective embodiments of the designer influence in each step of the pipeline in the subsections addressing it.
-
-\subsection{Annotation Guidelines}
-
-Perhaps the most clear case of subjective embodiments being inserted into pipeline is apparent in the annotation guidelines. For the abusive language detection guideline there is no consensus on how to operationalise abuse \citep{Waseem:2017}. This lack of consensus leads many distinct groups of designers to create their own guidelines on the basis of distinct sources of understandings of abuse. The choice of which background is used depends strongly on the researchers. For instance, \citet{Waseem-Hovy:2016} rely on critical race theory and gender studies to inform their annotation guidelines. Conversely, \citet{Davidson:2017} rely on social media platforms' community guidelines to label abuse and \citet{Fiser:2017} rely on Slovenian legal definitions of hate speech to inform their annotation guidelines. These distinct motivations in part are informed by the culture within which the researchers exist. For instance, the designers behind \citet{Davidson:2017} are situated in the context of the strong freedom of speech protections in the United States of America. The aim of their work, to distinguish hate speech from otherwise offensive content can then be understood to be motivated by the issue of incorrectly labelling non-hateful entries as hateful, in contrast to the strong freedom of speech protections that exist in the United States of America. On the other hand, \citet{Waseem-Hovy:2016} seek to address the issue of discriminatory speech, motivated by the harassment of women on social media. Their understanding of hate speech is then motivated by ensuring protection of marginalised communities, in part due to their belonging to another marginalised community.
-Thus, while annotation guidelines are strongly argued and motivated, the local embodiments and contexts of the authors influence the guidelines that they create.
-
-\subsection{Sampling data}
-
-Beyond distinctions in the annotation guidelines, the sampling of data similarly is influenced by the subjective embodiments of the designers, resulting in distinct datasets examining different geographic cultures \citep{Waseem:2018}. For instance, the distinct motivations also influence the topics that are under investigation \citep{Waseem:2018}. \citet{Fiser:2017} detail a framework based in the Slovenian legal context, where the authors of the study reside, directing the hate studied to be directly addressing hate occurring in Slovenia; similarly, \citet{Davidson:2017} seek to examine in hate in the United States of America, further they also limit their data sampling to tweets posted from inside the United States of America; finally, \citet{Waseem-Hovy:2016} specifically seek to address abuse towards women and other minorities, notably religious minorities.
-In this way, datasets reflect more than investigations into different aspects of abuse, they also result in the specific interests and values of the designers, as they choose sampling strategies that align with such interests. Additionally, it's worth noting here that the source of funding for the construction of the pipeline may also influence, for instance through grants from government agencies that specify that abuse must be considered within a national context or geographic territory.
-
-\subsection{Annotators}
-
-Another source of subjective embodiments being encoded into data is through the annotation \citep{Waseem:2016}. As \citet{Waseem:2016} show, distinct groups of people will internalise and operationalise annotation guidelines depending on the values they hold. As such, a group of human annotators will annotate data according to these values, resulting in annotations that highlight how different people and groups of people operationalise the annotation guidelines. This has strong implications for abusive language detection datasets through the implication that, unless annotators are carefully selected and optimised, the annotations derived from each annotator, or group of annotators with similar backgrounds and values  may be internally incompatible with with the remainder of annotators.
-
-Annotators, too, are subject to the embodiments and goals of the designers. Such influence is afforded the designers is wielded through direct influences on annotators, such as the annotator selection \citep{Waseem:2016}, training \citep{Vidgen:2020}, guidance that is provided \citep{Palmer:2020}, and selection of annotations to use \citep{Hovy:2013}; and through indirect selections, such as payment-level for annotation \citep{Sabou:2014}.
-
-As \citet{Hovy:2013} show, the reliability of annotations is important to the successes of the any subsequent task, however the question of what constitutes a reliable annotation is one that reflects the designer's positions on `correct' labelling for the task. In terms of abusive language detection, `high quality' annotations thus reflect how the designers envision the task and the embodiments that they operate within. Consider for instance a pool of annotators with diverse and divergent political positions tasked with annotating hate speech. If the designers' understanding of what constitutes hate speech does not align with a sub-group of annotators, those annotations can then be disregarded as they do not conform. However, considering the positionality of the sub-group, their annotations may be entirely consistent with how they operationalise hate speech. For instance, should a group of people who politically self-identify to be on the far-right form a sub-group of annotators, then their operationalisation of hate speech is likely to diverge in some areas from the remaining annotating population, while being consistent with their own operationalisation of hate speech. In such a case, the designers are likely to disregard their annotation to ensure that the resulting data aligns with their own aims and hopes. As \citet{Waseem:2016} argues, annotators form their operationalisations of hate speech on the basis of the annotation guidelines and will embed their own subjective positioning into the resulting data.
-
-This issue exists not only for subsets of the annotation pool, entire pools of annotators may also consistently label within the designers' expectations, yet in contrast to the annotation framework. In one such instance, \citet{Davidson:2017} find that ``[h]uman coders appear to consider racists or homophobic terms to be hateful but consider words that are sexist and derogatory towards women to be only offensive''. Such divergences in labels towards groups is inconsistent with the annotation guidelines, the authors, however, note this as a strength of their annotation framework, through the affordance of distinguishing between hateful and offensive content.
-Where there are distinct sub-groups within the data, selecting which group to consider has bearing on the internal consistency of the dataset and subsequently on any patterns a model might learn \citep{Waseem:2016}. This leads \citep{Waseem:2016} to conclude that the selection of annotators should follow processes that allow for identifying, if not recruiting, annotators that share backgrounds and align on socio-political issues.
-Such discrepancies can be addressed through annotator training, as \citet{Vidgen:2020} show. In instituting such annotator training and addressing discrepancies between annotators, the designers directly train the annotators to reconstruct the embodied positions on hate speech that they hold and train the annotators to disregard their own notions of what defines hate speech.
-
-Finally, as \citet{Sabou:2014} argue, designing the task and setting the payment level can indirectly influence which annotators put themselves forward to work on the task. To attract `good' annotators, it necessary to set payment for each annotation, using incentives such as high payment per document labelled. In this way, annotators are incentivised to learn the subjective positionings of the designers. For a great deal of work in abusive language detection, the task and data are further disembodied in the annotation selection process, as the annotators are unlikely to appear in the dataset, or have the knowledge that they may be in the dataset, thus by adding an additional layer of disembodiment and embodiment, through adding an adjudication layer on disembodied data then further disembodies the model from the contexts they are derived from. One study however diverges from this notion of universal understandings of what abuse constitutes \citep{Arora:2020}. By asking the very journalists who are a target of abuse, they ensure that the labels that are associated with each data point is embedded within the subjective positioning of the each journalist.
-
-% TODO: Add writing about how the designers influence (through annotator selection, training, providing guidance, payment, etc.)
-
-\subsection{Feature selection}
-
-Considering what information the machine learning models consider as pertinent, i.e. the bodies of data that are provided to the model at optimisation time, I similarly find ample space for subjective positioning to be embedded. I construct here the notion of feature selection to mean the construction of features based on theoretical insights and hypotheses in addition to the sub-selection of complete vocabularies. Considered through the lens of abusive language detection, harmful patterns of marginalisation are made apparent.\vspace{5mm}
-
-\subsubsection{Manually constructed features}
-
-A large body of work surrounding hate speech detection has investigated the question of which manual features are useful to the task of automated detection \citep{Waseem:2016,Chiril:2019,Fortuna:2018,Stankovic:2020}. Similarly, in \autoref{chap:liwc} I explore whether rationalising over content using LIWC can have beneficial influences for machine learning approaches for abusive language detection. Clearly, there is an interest in providing scaffolding for computational models to identify and address hate speech detection.
-
-Through the use of higher level cognition, designers embed preconceived notions of what information computational models should deem relevant, for instance in \autoref{chap:liwc}, I consider whether higher level cognitive information about the function of language can influence modelling. The assumption that is while words may provide ample space for over-fitting models to specific instances and patterns that are do not generalise beyond the data provided. By limiting the feature space to a much smaller discrete space of possible inputs, I argue that it is possible to achieve performance gains on out-of-domain data, relative to the input.
-Another frequently used modelling assumption is that computational models can benefit from considering words in some context, generally obtained using n-gram representations of the text \citep{Waseem-Hovy:2016,Davidson:2017,Chiril:2019}. This modelling choice represents an assumption that not only do the individual words matter, but the context within which they appear and are embodied carries significance. This stands in contrast to lexicon-based methods \citep{Hurtlex:2019} that assume that the occurrence of some terms, disembodied from the local sentential context, should direct the model towards predicting either abuse or not abuse.
-
-\subsubsection{Feature selection in neural architectures}
-
-Many neural machine learning models are used with an assumption of simply providing the input data as it occurs, subject to replacing usernames with a user token, hashtags with a hashtag token, etc. This modelling choice on the designers part relies on two strong assumptions: first, that neural models, by way of loss functions, can update the model's internal representation of the data to identify patterns that correlate in the input to the model with the output labels without need for human cognition over the data. The second assumption is that all information provided by users will, to some degree, be relevant to modelling abuse without any abstractions.
-
-Considering the second assumption first, it stands in contrast with the use of externally computed word embeddings that such models frequently rely on \citep{Kshirsagar:2018,Isaksen:2020}. To use pre-trained embeddings, it is necessary to align the vocabulary of the training data with the vocabulary that the previously optimised models hold, thus there is some selection of which tokens can be considered for relevance. Particularly considering hate speech on social media, where users may obscure words and misspellings are common \citep{Rottger:2021}, the very words that are omitted from the model's knowledge and embodiments may in fact be the terms that distinguish the content from non-abusive content.
-
-Consider for instance the tweet posted by the American rapper Azealia Banks, an African American woman, directed towards fellow musician Zain Malik, a South Asian man, (see \autoref{fig:azealia_banks}). While the tweet uses profane language, the text is written in African American English, making the use of the \textit{n-word} ambiguous. Similarly, as Azealia Banks is a woman, the use of the \textit{b-word} similarly holds ambiguous meaning, thus on the basis of those terms it cannot unambiguously be identified as hate speech. It clearly is abusive and offensive, in the call for the target to perform fellatio on Banks. Only through the use of \textit{curry scented} does the tweet move unambiguously beyond being offensive to being hateful. As `curry' and `scented' are tokens likely to exist in pre-trained word embeddings and language models, we should expect a model to correctly identify this tweet as abusive. However, should there be attempts at obfuscating those tokens, e.g. by replacing all occurrences of the letter `e' with the number `$3$' resulting in `sc3nt3d', it is reasonably to expect that a language model and word embeddings would not have previously encountered this token, and mapping into the embedding vocabulary would result in the token being represented by a token designated for tokens unseen at the optimisation time of the embeddings. On this basis, a model may incorrectly label it as simply offensive rather than hate speech.\footnote{Given the social biases against African American English in computational models, the tweet is likely to be identified as hateful in spite of the obscuring as a result of computational models disproportionately labelling African American English as hate speech \citep{Davidson:2019}.}
-% In this way, the aligning the training data to the representations known in the embedding further disembodies the model from the human speaker, resulting in the model being shifted further towards the globalised end of our spectrum.
-
-\begin{figure}[h]
+\begin{table}[h]
   \centering
-  \includegraphics[scale=0.5]{Azealia_banks.jpeg}
-  \caption{Azealia Banks tweeting to Zain Malik.}
-  \label{fig:azealia_banks}
-\end{figure}
+  \begin{tabular}{l|cc}
+                                            & Regulariser & Regularisation Strength \\\hline
+    \textit{Offence} Linear Single task     & L2          & 0.2                     \\
+    \textit{Hate Speech} Linear Single task & L2          & 0.1                     \\
+    \textit{Toxicity} Linear Single task    & L2          & 0.1
+  \end{tabular}
+  \caption{Best model parameters for linear single-task models.}
+  \label{tab:linear_singletask_params}
+\end{table}
 
-Returning now to the first assumption: that neural models can simply rely on input data to identify salient and relevant patterns in the data without human cognition over the relevance of inputs. The strength of neural network models, and in fact machine learning in general, lies in the ability for models to identify patterns in data that correlate to output labels. Thus models construct and manipulate their embodiment of the disembodied data that they are provided. In the construction and manipulation of the model's embodiment of the data lies an implication of the designers' embodiments being reflected in the model. Specifically, through deciding that no higher order representations of the data are to be made, the designers implicitly argue, and embed the normative value that what is relevant to abusive language detection is not human reasoning as to the concept of abuse nor the theoretical and qualitative insights that have been gathered made. Instead, such a practice theorises that there exist some degree of distributed language understanding that renders such cognition irrelevant. Such an (implicit) assumption made by the designers contradicts recent studies that argue that language understanding models do not obtain the ability to understand language, instead they learn to parrot it \citep{Bender-Koller:2020}.
+For the ensemble classifier a different picture emerges (see \cref{tab:ensemble_params}.
+As this model is optimised on a very sparse feature set that consists only of the predictions of the auxiliary task classifiers, it is no surprise that an $L2$ regulariser is preferred.
+Moreover, there are indications of a correlation between the dataset size and the strength of the regularisation, with the smallest dataset requiring the greatest regularisation strength ($0.5$ for \textit{Hate Speech}) and the largest dataset requiring the lowest regularisation strength ($0.1$ for \textit{Toxicity}).
 
-Disregarding for a moment whether such models truly learn to understand or simply parrot language, models that only use surface forms of tokens with the use of pre-trained language models or word embeddings similarly exist on on the globalised end of the model spectrum, albeit further towards the localised end of the spectrum than models that do not use representations optimised on external bodies of data, as these models shift away from the embodiments of the users their data is derived from and further towards the designers' specific positionalities.
+\begin{table}[]
+  \centering
+  \begin{tabular}{l|ccc}
+    Dataset                  & Vocabulary Size & Training Documents & \# Classes\\\hline
+    \textit{Offence}         & 23263           & 19826              & 3\\
+    \textit{Hate Speech}     & 19981           & 13525              & 3\\
+    \textit{Toxicity}        & 95739           & 95692              & 2\\
+    \textit{Hate Expert}     & 12005           & 5527               & 4\\
+    \textit{Sarcasm}         & 21159           & 7508               & 2\\
+    \textit{Argument Basis}  & 22275           & 8433               & 2\\
+    \textit{Moral Sentiment} & 31779           & 27989              & 11
+  \end{tabular}
+  \caption{Vocabulary sizes for each of the datasets used.}
+  \label{tab:aux_vocab_sizes}
+\end{table}
 
-\subsection{Model selection}
+This narrative however is complicated by the best parameters found in \cref{tab:ensemble_aux_params}.
+Here, the smallest abusive language dataset requires the largest regularisation power while other, in line with the observation on \cref{tab:ensemble_params}.
+However, classifiers optimised for the larger \textit{Offence} dataset require more regularisation strength than classifiers optimised the smaller \textit{Hate Speech}.
+In tandem, these observations suggest that beyond the size of the dataset in terms of numbers, other factors may influence the strength of the regularisation.
+One such potential factor may be the vocabulary size.
+Observing the vocabulary sizes in \cref{tab:aux_vocab_sizes}, it appears that vocabulary sizes in conjunction with the dataset sizes may be causes for the regularisation strength for models optimised for the different datasets.
 
-As a number of models are optimised to identify which model best embodies the data, the designers must make normative decisions to identify what constitutes `best'. In this way, designers reassert their embodiments onto the decision on which model is selected for further use. However, the choice of designating what constitutes `best' is often times a decision that is made prior to any model optimisation. For abusive language detection, best refers to performance for some metrics. For instance, \citet{Gorrell:2018} set out to have a model that has a high precision at the cost of recall. They make this choice to ensure high confidence in their model's predictions of the positive class as their use case is comments made to politicians, where the the ability to criticise without sanction is of particular importance. \citet{Wulczyn:2016} and \citet{Kshirsagar:2018} on the other hand select their models using the Area Under the receiver operating characteristic Curve (AUC) and F1-score, respectively. Both of these metrics for identifying what constitutes `the best performing' model give preference to models that balance classification error, such that models are attuned to false positives as well as false negatives.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|cc}
+                                            & Regulariser & Regularisation Strength \\\hline
+    \textit{Offence} Aux Classifier         & L2          & 0.2                     \\
+    \textit{Hate Speech} Aux Classifier     & L2          & 0.1                     \\
+    \textit{Toxicity} Aux Classifier        & L2          & 0.1                     \\
+    \textit{Hate Expert} Aux Classifier     & L2          & 0.5                     \\
+    \textit{Sarcasm} Aux Classifier         & L2          & 0.1                     \\
+    \textit{Argument Basis} Aux Classifier  & L2          & 0.1                     \\
+    \textit{Moral Sentiment} Aux Classifier & L2          & 0.1
+  \end{tabular}
+  \caption{Auxiliary task parameters for ensemble classifier.}
+  \label{tab:ensemble_aux_params}
+\end{table}
 
-Through these choices of metrics we can discern some aims of the modelling process. Where \citet{Gorrell:2018} aim to situate their model within the context of abuse towards British Members of Parliament as it occurs on Twitter, they forego claims of universal applicability. The best performing model, within their understanding is a model which, within the context, produces as few false positives as possible, explicitly accepting that the number of false negatives may be high. Considering then the purpose of their modelling process, it is to allow for embodied downstream analysis of how abuse targets a very specific group. \citet{Wulczyn:2016} and \citet{Kshirsagar:2018} on the other hand develop their models with the aim of obtaining a high degree of generalisation onto the test data in addition to data outside of the sample the model is trained to perform on. Within this goal lies an assumption that there exist an `objective' understanding of what constitutes abuse, which is invariable to the specific embodiments of different users, that is, \citet{Wulczyn:2016} and \citet{Kshirsagar:2018} assume the existence of a global understanding of what abuse is, in addition to an imagined average user that is disembodied from all facets of human life.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|cc}
+                                             & Regulariser & Regularisation Strength \\\hline
+    \textit{Offence} Ensemble Classifier     & L2          & 0.2                     \\
+    \textit{Hate Speech} Ensemble Classifier & L2          & 0.5                     \\
+    \textit{Toxicity} Ensemble Classifier    & L2          & 0.1
+  \end{tabular}
+  \caption{Parameters for the ensemble classifiers.}
+  \label{tab:ensemble_params}
+\end{table}
 
-\section{Dissertation Models}
+Turning to the hyper-parameters for the non-linear baseline in \cref{tab:mlp_singletask_params}, the number of similar and shared values across models optimised for each dataset decreases to share only one parameter, the batch size.
+The models optimised for the larger datasets, the \textit{Offence} and \textit{Toxicity} dataset also share a preference for using ReLU as their non-linearity.
+Moreover, the baseline models optimised for these two datasets also prefer a higher learning rate compared to the model optimised for the smaller \textit{Hate Speech} dataset.
 
-Here I consider the two model types that I have developed in \autoref{chap:liwc} and \autoref{chap:mtl}. I document the considerations and assumptions each model type reveals throughout the machine learning pipeline. Rather than go through the entire pipeline, I begin my analysis at the entry points, that the choices of datasets and the modelling choices, as I only make use of previously published datasets.
+\begin{table}[h]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|cccccccc}
+                                          & Batch Size & Dropout & Embedding Dim & Epochs & Hidden Dim & Learning Rate & Non-linearity & Optimiser \\\hline
+    \textit{Offence} MLP Single Task      & 64         & 0.318   & 300           & 200    & 100        & 0.003586      & ReLU          & SGD       \\
+    \textit{Hate Speech} MLP Single Task  & 64         & 0.1458  & 300           & 100    & 100        & 0.0007246     & Tanh          & AdamW     \\
+    \textit{Toxicity MLP} Single Task     & 64         & 0.1978  & 200           & 50     & 200        & 0.006056      & ReLU          & Adam
+  \end{tabular}%
+  }
+  \caption{Best hyper parameters for non-linear single task model for each main task dataset.}
+  \label{tab:mlp_singletask_params}
+\end{table}
 
-\subsection{Vocabulary reduction}\label{sub:vocab_redux}
+\subsubsection{Validation Data Performances}
+Prior to an analysis of the baseline model performances on the evaluation set, I examine their performances on the validation set to gain an insight in the viability of the modelling approach and expected outcomes on the evaluation data.
 
-In \autoref{chap:liwc}, I optimised the machine learning models using the datasets published by \citet{Davidson:2017} and \citet{Wulczyn:2016}. The decision to use these datasets as training data stems from the two datasets coming from two distinct sources, Twitter and Wikipedia editor discussions.
-To be able to measure the generalisability of the models optimised in \citet{Davidson:2017}, I reduce the multi-class classification task to a binary classification task. Through this reduction in classes, I enforce a normative choice that the detection of abuse has greater value than the identification of the specific type of abuse. Similarly, for all other datasets used for evaluating generalisability (i.e. \citet{Waseem:2016,Waseem-Hovy:2016,Gibert:2018}) are similarly subject to a reduction of output classes, here to align the labels learned by the model with the output labels in these external evaluation sets. My own experiences of hate speech and racialised abuse are at the heart of such a prioritisation.
-Further, the modelling choice of how to represent data are also subject to my subjective embodiments. While on one hand the reduction of the input space to a much smaller input space means that the size of the subsequent models, and by extension the complexity of the models.\footnote{I appreciate that even with a reduction of the model size and complexity, neural networks are still too complex to be readily understood without the aid of additional tools.} On the other hand, through such a reduction in the vocabulary, a large majority of words will no longer be represented by the text in the models. Here, my own beliefs that abuse detection models that rely too strongly on the occurrence of specific tokens ultimately provide an issue towards the goal of achieving models that can protect marginalised people from abuse. On the other end of the vocabulary size spectrum, I use byte-pair encoded documents. Due to the nature of generating sub-words, this increases the size of the vocabulary, in comparison to simply using the existing word. I use sub-words and byte-pair encoding to minimise issues of out-of-vocabulary items on the basis of intentional obfuscation of words, e.g. through inserting spaces or punctuation in the middle of words \citep{Rottger:2021}. Moreover, it is motivated by my own lived experiences belonging to a target demographics of abuse and observations I have made of other groups, where people using intentional obfuscation of words, often targets to circumvent simple content filtering techniques, i.e. `moslems' instead of `Muslims'. While the modality I work with is text, such obfuscations also occur in the spoken word through intentional mispronunciation.
+Considering the results for all baseline models in \cref{tab:baseline_dev_wh,tab:baseline_dev_wulczyn,tab:baseline_dev_davidson} it is immediately clear that ensemble models provide a poor method for identifying each form of abuse.
+Additionally, the linear SVM baseline models provide for good baselines to compare the experimental models with, as the SVM baselines tend to out-perform the non-linear baselines.
 
-In the use of linear models as baseline models, the underlying assumption is that simple correlations of word occurrences with labels, as are found with linear models, do not capture the complex interactions between words in text required to make qualified judgements on abuse. This assumption too is influenced by my own positionality as a brown Muslim who grew up in a predominately white country where brown people, and in particular Muslims, are vilified for their existence. As I am often wont to recount, growing up and watching the news Danish police bulletins for wanted persons frequently used the description `Muslim looking' to describe brown men. Such experiences have made it clear to me that social norms surrounding the use of tokens cannot be readily understood from the words, or multi word expressions without greater contextualisation. For this reason, I use LSTMs as they can capture long interactions between words and are less directly reliant on the occurrence of individual patterns. In addition, a number of past studies having shown the efficacy of CNNs for abuse detection \citep{Park:2017, Mitchell:2019,Kolhatkar:2020,Rizwan:2020,Safaya:2020,Gamback:2017}, I use such models, due to the influence of past work on the topic of hate speech and abuse detection.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|cccc}
+               & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+    Linear SVM & \textbf{0.8515} & \textbf{0.8239} & \textbf{0.7741} & \textbf{0.7962} \\
+    Ensemble   & 0.8493          & 0.2123          & 0.2500          & 0.2296          \\
+    MLP        & 0.8117          & 0.7117          & 0.7737          & 0.7378
+  \end{tabular}
+  \caption{Baseline validation scores on the \textit{Hate Speech} dataset.}
+  \label{tab:baseline_dev_wh}
+\end{table}
 
-As the models described in \autoref{chap:liwc} that only use words or byte-pair encoded words as input rely entirely on the training data to learn patterns in data, its apparent that those models fall towards the very extreme of the globalised end of the spectrum that I propose. On the other hand, while still towards the globalised end of the spectrum, the models that rely on LIWC as the input come are shifted more to the localised end of the spectrum, as the LIWC dictionary that is used to map from words to LIWC categories is informed by considering data external to the data the models rely on.
+The exception to this pattern is provided by the MLP optimised for the \textit{Toxicity} dataset, where the MLP baseline outperforms the SVM baseline in terms of \texttt{recall} and \texttt{F1-score}.
+For all datasets, the MLP classifiers show a drop in \texttt{precision} on the development set, suggesting that while they may be comparable in terms of \texttt{recall}, the MLP models tend to misclassify into the positive class at a greater rate than the negative classes.
 
-%{\color{green!80!black}
-%\zw{If there is time to add pre-trained embeddings + LIWC embedding layer}
-%All models described in \autoref{chap:liwc} fall towards the globalised end of the spectrum, however some further to the extreme ends than others. All linear models that use words or byte-pair encoded data as input represent the extreme globalised-end of the spectrum, as these models only rely on the training data. The linear models that use LIWC categories, and those that use words/BPE in addition to LIWC categories shift slightly towards the localised end of the spectrum by virtue of the LIWC dictionary being developed using external data to inform the creation of the categories.
-%As all neural network models use pre-trained word or BPE embeddings, they can be placed further towards the localised end of the spectrum. Similarly to the use of LIWC for linear models, the use of LIWC as additional input shifts the models further towards the localised end of the spectrum.
-%}
+Observing the results for the baseline models optimised for the \textit{Hate Speech} dataset in \cref{tab:baseline_dev_wh}, the largest drop in performance occurs for the positive classes when using the MLP.
+The relatively smaller drop in \texttt{accuracy} is aligned with that the positive classes are minority classes, thus a performance drop in the positive classes has a small impact as the relative number of misclassification remains small.
+For the ensemble, the negligible drop in \texttt{accuracy}, in comparison to \texttt{precision} and \texttt{recall}, suggests that although the performance on \texttt{precision} and \texttt{recall} are abysmal, the largest performance drop happens into the positive classes.
 
-The motivation for using Byte-Pair encoding is reflected in a) my own personal assumptions about the importance of textual representations and b) computational considerations. Briefly, to minimise the number of out-of-vocabulary items, I use BPE to deconstruct the training data into smaller word-parts, that allow for a) deconstructing words to minimise the influence of intentional obfuscations (e.g. `mooslim women`) of tokens, as I have frequently noted and been subject to abuse that seeks to obscure  and b) better handling of unknown tokens for the computational models.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|cccc}
+               & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+    Linear SVM & \textbf{0.8898} & \textbf{0.7224} & \textbf{0.7107} & \textbf{0.8661} \\
+    Ensemble   & 0.7744          & 0.2581          & 0.3333          & 0.2910          \\
+    MLP        & 0.8708          & 0.6581          & 0.7024          & 0.6773
+  \end{tabular}
+  \caption{Baseline validation scores on the \textit{Offence} dataset.}
+  \label{tab:baseline_dev_davidson}
+\end{table}
 
-However, while some models find themselves further towards the localised end of the spectrum than others, all models that I use in \autoref{chap:liwc} are positioned in the globalised end of the spectrum as none of the data representations take into account the local subjective positionality of the individuals in the data, instead they all rely on some abstraction away from the subjective self through processes of disembodiment.
+For the baseline models optimised for the \textit{Offence} dataset on the other hand, the \texttt{accuracy} score reveals a different performance drop.
+In this dataset, the `offence' class is the majority class, thus the \texttt{accuracy} obtained provides insight into how well the models predict into that class.
+The drop in \texttt{precision} is therefore likely to primarily occur in the other two classes in the dataset, one of which, the `hate' class, also being a positive class.
+The model scores here tell a story of misclassifications primarily in the negative class and the positive `hate' class.
 
-\subsection{Multitask learning}\label{sub:mtl_inchap}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|cccc}
+                & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+    Linear SVM  & \textbf{0.9570} & \textbf{0.8967} & 0.8411          & \textbf{0.8663}          \\
+    Ensemble    & 0.9045          & 0.4522          & 0.5000          & 0.4749          \\
+    MLP         & 0.9480          & 0.8145          & \textbf{0.8671} & 0.8382
+  \end{tabular}
+  \caption{Baseline validation scores on the \textit{Toxicity} dataset.}
+  \label{tab:baseline_dev_wulczyn}
+\end{table}
 
-%\zw{If we use current methods}
-In \autoref{chap:mtl} I turn to the question of which embodiments, in terms of social constructs such as sarcasm \citep{Oraby_sarcasm:2016}, the basis of a statement \citep{Oraby_factfeel:2015}, and moral foundation \citep{Hoover:2019} in addition to other hate speech and offensive language datasets \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} would be helpful for a classification model for abuse detection in improving performance on the associated test set.
+Finally, the models optimised for the \textit{Toxicity} dataset are the only ones where the non-linear baseline outperforms the linear SVM.
+This dataset is developed for binary classification on an imbalanced dataset, where the minority class is the positive class.
+Thus, the negligible drops in \texttt{accuracy} provide information into the ability of the models to predict into negative class.
+The MLP baseline optimised for the \textit{Toxicity} classifier provides a stronger performance on the \texttt{recall}, meaning that it has an improved ability in correctly identifying the data that does not belong in the positive class compared to the linear SVM.
 
-For this task,  I reuse BPE representations of documents from \autoref{chap:liwc}. therefore some of the embodiments of the models, with regard to text representation remain. Here I focus on those that change for the models described in \autoref{chap:mtl}. Due to the reuse of BPE representations, the analysis of those modelling choices remain the same \autoref{sub:vocab_redux}. However, as I include more datasets into consideration, I also implicitly invite the question `why those datasets'? To answer this question, it's necessary to revisit the aims of each dataset.
+On the basis of the model performances on the validation sets, we can expect that the ensemble models will uniformly under-perform on the evaluation data while the MLP models provide a competitive, but lower, performance than the linear SVM baselines.
+The primary performance drop for the MLP models is likely to be in their \texttt{precision}, that is their ability to classify into the positive classes.
 
-One frequently identified issue with computational modelling of abuse is the issue of sarcasm \citep{Rottger:2021} and I use \citet{Oraby_sarcasm:2016}. In this choice lay two assumptions: first, that computational models for abuse detection can benefit from better understanding what constitutes abuse. Second, that there does exist some line between in which sarcasm that mimics abuse is not also abuse. Both assumptions are the result of years of researching online abuse, and in particular exposing myself to the abuse that occurs in online spaces. While I may have become desensitised to abuse through the disproportionate amounts I am exposed to through my research, I frequently see that online abuse, and responses to it, are expressed through humour, in particular sarcasm.\footnote{By responses I mean general reactions and responses to abuse beyond the direct responses to a perpetrator of abuse.}
-The second dataset, asks the question of whether an argument is made in the basis of feeling or on the basis of facts \citep{Oraby_factfeel:2015}. As a majority of people who perpetrate online abuse do so infrequently \citep{Waseem-Hovy:2016} an underlying cause for being abusive may well be due to being impassioned, and thus being able to determine whether an argument is made with a basis in feelings or fact may be possible to help improve performance for abuse detection.
-We also use a dataset annotated for moral foundation \citep{Hoover:2019}. In this dataset, each document is labelled for which moral foundations it invokes in the annotators. As moral foundations and online abuse can be thought of as concepts that are orthogonal to each other, as moral foundations provide for a higher level of cognition about content that is read, I believe that using such a dataset can aid in optimising a multi-task classifier for the primary task. Here, my own experiences of the harms that occur from being subject to racialised abuse and the apparent desire to inflict such harm from the perpetrators lead me to include this as an auxiliary task.
-Finally, I use a number of datasets for online abuse \citep{Garcia:2018,Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016}. For this task, I do not reduce the question of detecting to a binary task. However, my subjective positioning does not change from what is detailed in \autoref{sub:vocab_redux}.
+\subsubsection{Evaluation Data Performances}
+Turning to the performances of the baseline models on the evaluation set, the model performances and the patterns remain mostly stable between the validation and the evaluation set across the datasets: the linear SVM out-perform all other models in most cases and the ensemble models mostly post poor classification performances.
+In addition, the linear SVM models tend to perform best in terms of \texttt{precision}, with the MLP models obtaining a lower \texttt{precision} score.
 
-Similarly for the choices in developing the data and textual representations, my own subjective embodiments and experiences are a factor in the modelling decisions. This is particularly true for multi-task learning, where I specifically set the weights for how much each task is to contribute to the main task through the frequency of selection. Such a weighting relies on my own consideration of how important each task is to the overall task of identifying abuse. The specific architecture of the model is influenced by their usefulness in prior work \citep{Bingel:2018} and seeking to answer the question of how more complex models would influence the performance on the task.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|llll}
+             & Accuracy        & Precision       & Recall          & F1-score        \\\hline
+    Linear   & 0.8440          & \textbf{0.8182} & 0.7671          & \textbf{0.7892} \\
+    Ensemble & \textbf{0.8454} & 0.2113          & 0.2500          & 0.2291          \\
+    MLP      & 0.8056          & 0.6686          & \textbf{0.7894} & 0.7132
+  \end{tabular}
+  \caption{Baseline model evaluation set performances on the \textit{Hate Speech} dataset.}
+  \label{tab:baseline_test_wh}
+\end{table}
 
-Using the multi-task learning framework has strong implications for where on the localisation spectrum the models can exist within. For instance, the use multiple different datasets to influence a single model precludes the extreme ends of the modelling spectrum. However, such an optimisation regime also precludes the extremely localised end of the spectrum for the same reason. As each auxiliary task will work, if as nothing else, as a regulariser for the main task. As I use multi-task learning to contextualise the task of abusive language detection within the frame of tasks that have been indicated in prior literature as relevant to the task of abusive language detection, the model is both drawn to a more localised position.
-However, as I do not optimise my models on any tasks that seek to make predictions on users, the model does not cross entirely into the space of localised models. Instead the models that I produce, by virtue of learning considerations on tone, argument-basis, sarcasm, and moral sentiment learn some representations of the faculties that I believe of importance to the task. These auxiliary tasks then provide an avenue for the models to be more closely situated within the how each individual person can be represented as a function of how they express themselves. Thus, while further towards being a localised end of the spectrum than the LIWC models, the models fall short of significantly situating the modelling of individuals within the context and lived experiences of that individual.
+Within the performances for each dataset there are some discrepancies between the performances on the validation and the evaluation sets.
+Unlike for the validation set, the MLP models optimised for the \textit{Hate Speech} dataset obtain a higher \texttt{recall} score on the evaluation set (see \cref{tab:baseline_test_wh}) than the linear SVM.
+This suggests that the MLP baseline is better suited for correctly identifying the negative class while the linear SVM is better suited for identifying the positive classes.
 
-%{\color{green!80!black}
-%\zw{If chapter with Joachim and James is used}
-%In \autoref{chap:mtl} I turn to the question of which embodiments, in terms of cultural contexts of the production of abuse matters. Here, I consider the question of whether hate speech that is produced in one cultural context can map to hate speech produced in another cultural context. From this follows then that rather than building a single model or dataset that can be the arbitrator of what constitutes abuse, one can build a model that allows for translations between different cultural contexts. To this end, I explore whether, on the basis of training data alone, a multi-task learning model can learn to bridge two different cultural contexts. Here, I use two different kinds of input with two different expectations and rationales.
-% \zw{Text representations: BPE, BoW}
-%First, I use a Bag-of-Words (BoW) as input to my multi-task learning model and second, I use BPE encoded data. The use of BPE follows along the logic and reasoning outlined in \autoref{sub:vocab_redux}. The use of BoW as input on the other hand is motivated by the contrast: the wish to represent the data directly. Here the focus is not on obfuscation but on considering the cross-cultural means of expression. For instance the use of the \textit{n-word} with the colloquial `-ga' ending is situated differently in some of the datasets than the same word using the '-er' ending. While both words stem from the same root, they have vastly different meanings and communicate distinct messages \citep{Rahman:2012}. As such, in spite of their shared stem, it can be desirable to retain the two words as distinct tokens as a BoW approach allows for.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|llll}
+             & Accuracy        & Precision       & Recall          & F1-score        \\\hline
+    Linear   & \textbf{0.8871} & \textbf{0.6997} & 0.6789          & \textbf{0.6850} \\
+    Ensemble & 0.7729          & 0.4241          & 0.3948          & 0.3946          \\
+    MLP      & 0.8790          & 0.5625          & \textbf{0.9163} & 0.5721
+  \end{tabular}
+  \caption{Baseline model evaluation set performances on the \textit{Offence} dataset.}
+  \label{tab:baseline_test_davidson}
+\end{table}
 
-% \zw{Dataset choices: Davidson, Waseem \& Hovy, Waseem}
-%The motivating factor behind the choice of datasets used is the knowledge that what constitutes hate speech in one cultural context may not constitute it in another. It's therefore necessary to use datasets that represent different cultural contexts, that can then be examined. Rather than using \citet{Wulczyn:2017} in addition to \citet{Davidson:2017}, I use \citet{Waseem:2016,Waseem-Hovy:2016} for two different reasons: The combination of \citet{Waseem:2016,Waseem-Hovy:2016} result in a dataset of comparable size, albeit slightly smaller, than \citet{Davidson:2017}. The second reason for choosing \citet{Waseem:2016,Waseem-Hovy:2016} over \citet{Wulczyn:2017} is that like \citet{Davidson:2017}, \citet{Waseem:2016,Waseem-Hovy:2016} is collected from Twitter, thus allowing one cultural aspect, i.e. the affordances of the platform, fixed while the content and geographic position of the users writing content vary.
+Further discrepancies are found for the models optimised for the \textit{Offence} dataset.
+On the validation set, the linear SVM outperformed all other models across all metrics.
+On the evaluation data however, the MLP baseline outperforms the linear SVM in terms of \texttt{recall} with a $0.2$ increase (see \cref{tab:baseline_test_davidson}).
+This increase is obtained while there is a decrease in \texttt{precision} of $0.09$.
 
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|llll}
+                          & Accuracy        & Precision       & Recall          & F1-score        \\\hline
+    Linear                & \textbf{0.9582} & \textbf{0.9008} & 0.8450          & \textbf{0.8702} \\
+    Ensemble\footnotemark & 0.8450          & 0.9006          & \textbf{0.9582} & 0.8702          \\
+    MLP                   & 0.9397          & 0.6979          & 0.9359          & 0.7632
+  \end{tabular}
+  \caption{Baseline model evaluation set performances on the \textit{Toxicity} dataset.}
+  \label{tab:baseline_test_wulczyn}
+\end{table}
+\footnotetext{The \texttt{accuracy} and \texttt{precision} for the ensemble classifiers have a lower performance, however rounding up to represent the performances by 4 decimal points creates the illusion of identical performance.}
 
-% \zw{Globalised-localised model spectrum}
-%Using the multi-task learning framework has strong implications for where on the localisation spectrum the models can exist within. For instance, the use multiple different datasets to influence a single model precludes the extreme ends of the modelling spectrum. However, such a training regime also precludes the extremely localised end of the spectrum for the same reason. As each auxiliary task will work, if as nothing else, as a regulariser for the main task.
-%As I use multi-task learning to try to learn models that can model abuse across geo-cultural and geo-political contexts, the model shifts in its position on the model spectrum in comparison to single task models. Such a shift happens as some modelling choices draw it towards a more localised model. On the other hand other choices strongly push it towards a more globalised model, the result of which is that only a minor shift happens, in comparison to single-task models using the same data representations. The choices that pull the model towards being more localised is the use of sub-words computed using byte-pair embeddings. As such embeddings are computed outside of the dataset, they provide the data representation, and subsequently the model, with external knowledge on the composition of words. On the other hand, the use of using three datasets for abusive language detection for the main and auxiliary tasks, suggests that any given model will learn some cultural patterns of abuse, but those patterns are limited to two specific instances of abuse, rather than learning about situating the user in their own subjective embodiments. Moreover, as I do not train my models on any tasks that seek to make predictions on users, the model does not cross entirely into the space of localised models.
+The largest discrepancy between the validation set and evaluation set (see \cref{tab:baseline_test_wulczyn}) however is found in the ensemble baseline optimised for the \textit{Toxicity} dataset.
+Here the ensemble classifier obtains a competitive classification performance across metrics to the linear SVM.
+While the ensemble baseline breaks with the pattern observed on the validation set, the MLP baseline does not.
+Similarly to its' performances on the validation data, the MLP is competitive with the linear SVM in terms of \texttt{accuracy} and posts poorer performance in terms of \texttt{precision}.
+Meanwhile, the MLP baseline outperforms all other models in terms of \texttt{recall} however the poor performance in terms of \texttt{precision} results in a \texttt{F1-score} that is not competitive with the other baseline models.
 
-% \zw{Model choices: MLP}
-%Similarly for the choices in developing the data and textual representations, my own subjective embodiments and experiences are a factor in the modelling decisions. This is particularly true for multi-task learning, where I specifically set the weights for how much each task is to contribute to the main task. Such a weighting relies on my own consideration of how important each task is to the overall task of identifying abuse. The specific architecture of the model is influenced by their usefulness in prior work \citep{Bingel:2018} and seeking to answer the question of how more complex models would influence the performance on the task.
-%}
+\subsection{Experimental Model Performances}
+As the experimental models are MLP models that have been adapted for Multi-Task Learning, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
+The best hyper-parameter settings for each of the experimental settings for each main task are shown in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn}.\footnote{Note that the `Aux Task Weight' column only contains a single value as each auxiliary task is given the same weight.}
+In these tables, I show the best hyper-parameter settings for the models with one auxiliary task and each of the subsequent dataset configurations selected based.
+The dataset configurations are chosen on the basis of their \texttt{F1-score} performance on the validation data where only the main task and a single auxiliary task (see further detail on dataset combination selection in \cref{sub:aux_task_selection}).
+For all configurations of the datasets, I perform at least $50$ distinct trials of potential hyper-parameters to identify the best-performing hyper-parameters.
+The selection of each hyper-parameter setting to trial is performed through Bayesian Hyper-Parameter Optimisation which selects a candidate set of parameters for trial given the results of past trials and an objective.
+For these experiments, I set the objective to maximise the \texttt{F1-score} on the validation data as the models optimise for minimisation on the training loss.
 
-\section{Discussion}
+\subsubsection{Validation Set Performances}
 
-Given that subjective choices and biases masquerading as disembodied `objective' positions permeate through the machine learning pipeline, the quest for objectivity and bias-free machine learning becomes redundant. In fact, the search for objectivity in the pipeline creates a veneer of social progress that may cause further harm to already marginalised communities by obscuring and entrenching the dominance of certain bodies over others. Without taking the unique embodiments of all data subjects into account, this imaginary of fair only serves as a justification of maintaining oppressive structures that are inherently harmful and reductive. Considering the question of hate speech detection, developing automated tools that are applied to a general population makes inherent decisions on behalf of the user-group. As such decisions are codified through the machine learning pipeline, they are presented as disembodied and objective decisions on what constitutes hate speech. Through such codification of white perspectives on respectability, attempts to address `bias' only serve to justify existing oppressive structures.
+Observing the best hyper-parameters identified for each dataset in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn} three salient attributes are immediately clear.
+First, the vast majority of models prefer ReLU as a non-linearity.
+Second, most models prefer the largest batch size that I experiment with, namely $64$.
+Finally, Some version of the stochastic gradient descent optimisation algorithm is preferred by all but two models, the vast majority of models preferring averaged stochastic gradient descent.
 
-Only by recognising the positionality of the designers of machine learning models can one account for what (and whom) ones own position and the models derived from it privilege and sanction, and the political consequences of these. As data permeates through the machine learning pipeline, a consideration of how data is embodied can empower the designer to answer specific questions that are embodied and mired in context. Such considerations allow designers to interrogate the contexts within which data are created and meaning is made at each step in the dataset creation process. It is through such recognition of context and embodiment that one can realise that as context change, so does the applicability data. 
-Further, only by such recognition of the deeply complex nature of embodiment and data can one hope to ask and ascertain which views the models privilege and which are subjugated. For building content moderation systems for hate speech and abuse, the designers of machine learning pipelines can ask how their own embodiments prejudice them to selectively sanction some speech patterns. Moreover, designers may want to ask themselves how such sanctions create downstream implications for the speech that is sanctioned.
+Turning to the performances of the best performing models on the validation data.
+The results presented in the first 6 rows of \cref{tab:mtl_dev_wh,tab:mtl_dev_davidson,tab:mtl_dev_wulczyn} guide decision for which auxiliary task datasets to experiment with.
+The decision in which auxiliary task datasets to select is guided by two different objectives: 1) selecting auxiliary task data that outperform the MLP baselines in terms of Macro F1 score and 2) selecting auxiliary tasks that can aid in outperforming the best-performing baseline.
+I separate these two objectives as not all MLP baselines outperform the linear SVMs (please refer back to \cref{tab:baseline_dev_wh,tab:baseline_dev_davidson,tab:baseline_dev_wulczyn} for the results on the validation sets).
+Thus, the first objective provides insight into the utility of using MTL as a modelling approach can be observed through the ability of MTL-based models to out-perform their single-task counterparts.
+However, in the interest of identifying auxiliary tasks that contribute towards improved models for different forms of abusive language detection, I set up the second objective of identifying auxiliary tasks that most positively contribute towards the prediction of abusive language.
 
-Although there are methods with which we can move towards more localized machine learning models, what positions are given space remains a political question.
-It is only through wholly representing the context and embodiments of the data creator and the datum that one can hope to arrive at sufficiently localized models. Thus, rather than asking how to eliminate bias and subjective experiences from machine learning in the pursuit of objectivity, shifting the question to consider embodiments would ask us to reflect on the subjective experiences that are given voice. For hate speech detection, such reflections would have designers ask which groups to base their understanding of abuse and the subsequent annotations and models that are derived from it. Such a shift would then require us to ask and reflect upon which bodies' subjective experiences we need to account for to give voice to socially, and computationally, marginalised groups.
+Selecting the auxiliary tasks for the models optimised for the \textit{Hate Speech} dataset poses the challenge that none of the model configurations with a single auxiliary task outperform the linear SVM baseline on the development set though they all outperform the MLP baseline (see \cref{tab:baseline_dev_wh} for the baseline models and the first six rows of \cref{tab:mtl_dev_wh} for the MTL models).
+For this reason, I choose the best performing MTL auxiliary task configurations to continue further experiments with.
+I select the top four auxiliary tasks as they are have a maximal difference of $0.01$ from one another.
+The auxiliary task datasets that I proceed to experiment with are the \textit{Hate Expert} dataset, the \textit{Offence} dataset, the \textit{Moral Sentiment} dataset and the \textit{Sarcasm} dataset.
 
-%
-% \section{Machine Learning as a Conservative Practice}
-% \zw{Write about dominant and subjugated discourses for machine learning here; bring in that ML is a conservative practice}
-%
-% \zw{Citations needed: Foucault on dominant and subjugated discourses, Fraser on subaltern publics, some archival theory on marginalising effects of dominant discourses.i}
+Similarly to the pattern observed for the baseline models optimised for the \textit{Hate Speech} data, most of the MTL MLP dataset configurations outperform the baselines in terms of \texttt{recall} while struggling in the \texttt{precision} score.
+\afterpage{%
+\begin{landscape}
+  \begin{table}[]
+    \centering
+    \resizebox{0.75\paperheight}{!}{%
+    \begin{tabular}{l|ccccccccccc}
+      Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Hate Expert                                       & 64         & 0.7              & 0.3              & 0.3705  & 200           & 50     & 200,200         & 0.9084        & ReLU          & ASGD      & 128        \\
+      Toxicity                                          & 64         & 0.7              & 0.3              & 0.02884 & 100           & 100    & 64,64           & 0.3873        & Tanh          & ASGD      & 128        \\
+      Offence                                           & 32         & 0.7              & 0.3              & 0.4568  & 64            & 100    & 200,200         & 0.2846        & ReLU          & ASGD      & 256        \\
+      Moral Sentiment                                   & 64         & 0.7              & 0.3              & 0.1954  & 300           & 100    & 100,100         & 0.06402       & ReLU          & ASGD      & 256        \\
+      Sarcasm                                           & 64         & 0.7              & 0.3              & 0.4534  & 300           & 100    & 300,300         & 0.3894        & ReLU          & ASGD      & 128        \\
+      Argument Basis                                    & 64         & 0.7              & 0.3              & 0.1556  & 100           & 50     & 100,100         & 0.4948        & ReLU          & ASGD      & 256        \\ \hline
+      Hate Expert | Offence                             & 64         & 0.6              & 0.2              & 0.3703  & 200           & 50     & 200,200,200     & 0.9429        & ReLU          & ASGD      & 128        \\
+      Hate Expert | Moral Sentiment                     & 64         & 0.6              & 0.2              & 0.311   & 100           & 50     & 300,300,300     & 0.6185        & ReLU          & ASGD      & 128        \\
+      Offence | Moral Sentiment                         & 16         & 0.6              & 0.2              & 0.1408  & 300           & 100    & 64,64,64        & 0.1237        & Tanh          & SGD       & 128        \\
+      Sarcasm | Hate Expert                             & 64         & 0.6              & 0.2              & 0.3054  & 100           & 50     & 64,64,64        & 0.06252       & ReLU          & SGD       & 64         \\
+      Sarcasm | Offence                                 & 16         & 0.6              & 0.2              & 0.4576  & 300           & 200    & 100,100,100     & 0.2276        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Moral Sentiment                         & 64         & 0.6              & 0.2              & 0.3586  & 300           & 50     & 100,100,100     & 0.3822        & ReLU          & ASGD      & 64         \\
+      Hate Expert  | Offence | Moral Sentiment          & 16         & 0.6              & 0.133333333      & 0.414   & 200           & 100    & 300,300,300,300 & 0.8435        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Hate Expert | Moral Sentiment           & 32         & 0.6              & 0.133333333      & 0.152   & 64            & 100    & 200,200,200,200 & 0.3459        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Offence | Moral Sentiment               & 64         & 0.6              & 0.133333333      & 0.05853 & 300           & 100    & 64,64,64,64     & 0.04528       & ReLU          & ASGD      & 64         \\
+      Sarcasm | Hate Expert | Offence | Moral Sentiment & 16         & 0.6              & 0.1              & 0.143   & 64            & 100    & 64,64,64,64,64  & 0.2368        & ReLU          & ASGD      & 256
+    \end{tabular}%
+    }
+    \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Hate Speech} dataset.}
+    \label{tab:mtl_params_wh}
+  \end{table}
+  \vfill
+  \begin{table}[]
+    \centering
+    \resizebox{0.75\paperheight}{!}{%
+    \begin{tabular}{l|ccccccccccc}
+      Aux                                               & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims     & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Hate Expert                                       & 32         & 0.7              & 0.3              & 0.06554 & 100           & 200    & 300,300         & 0.2921        & ReLU          & ASGD      & 256        \\
+      Hate Speech                                       & 64         & 0.7              & 0.3              & 0.1785  & 100           & 50     & 100,100         & 0.281         & ReLU          & SGD       & 128        \\
+      Toxicity                                          & 64         & 0.7              & 0.3              & 0.4405  & 300           & 50     & 200,200         & 0.3469        & ReLU          & ASGD      & 256        \\
+      Sarcasm                                           & 32         & 0.7              & 0.3              & 0.1476  & 300           & 50     & 200,200         & 0.9616        & ReLU          & ASGD      & 128        \\
+      Argument Basis                                    & 16         & 0.7              & 0.3              & 0.2952  & 300           & 100    & 64,64           & 0.4306        & ReLU          & ASGD      & 64         \\
+      Moral Sentiment                                   & 32         & 0.7              & 0.3              & 0.1953  & 200           & 100    & 300,300         & 0.1415        & ReLU          & SGD       & 64         \\ \hline
+      Hate Speech | Toxicity                            & 64         & 0.6              & 0.2              & 0.1663  & 100           & 50     & 100,100,100     & 0.3764        & ReLU          & SGD       & 256        \\
+      Sarcasm | Hate Speech                             & 32         & 0.6              & 0.2              & 0.1497  & 100           & 100    & 300,300,300     & 0.2229        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Toxicity                                & 32         & 0.6              & 0.2              & 0.166   & 64            & 100    & 300,300,300     & 0.511         & ReLU          & ASGD      & 64         \\
+      Argument Basis | Hate Speech                      & 64         & 0.6              & 0.2              & 0.0265  & 100           & 200    & 200,200,200     & 0.4188        & ReLU          & ASGD      & 256        \\
+      Argument Basis | Toxicity                         & 64         & 0.6              & 0.2              & 0.3497  & 300           & 100    & 200,200,200     & 0.3466        & ReLU          & ASGD      & 128        \\
+      Argument Basis | Sarcasm                          & 64         & 0.6              & 0.2              & 0.4527  & 200           & 100    & 64,64,64        & 0.509         & ReLU          & ASGD      & 256        \\
+      Sarcasm | Toxicity | Hate Speech                  & 64         & 0.6              & 0.133333333      & 0.4113  & 300           & 100    & 200,200,200,200 & 0.1113        & ReLU          & ASGD      & 256        \\
+      Argument Basis | Hate Speech | Toxicity           & 16         & 0.6              & 0.133333333      & 0.2439  & 200           & 200    & 100,100,100,100 & 0.8852        & ReLU          & ASGD      & 64         \\
+      Argument Basis | Hate Speech | Sarcasm            & 64         & 0.6              & 0.133333333      & 0.3725  & 200           & 200    & 200,200,200,200 & 0.3176        & ReLU          & ASGD      & 64         \\
+      Argument Basis | Toxicity | Sarcasm               & 64         & 0.6              & 0.133333333      & 0.259   & 64            & 100    & 300,300,300,300 & 0.6679        & ReLU          & ASGD      & 128        \\
+      Argument Basis | Hate Speech | Toxicity | Sarcasm & 64         & 0.6              & 0.1              & 0.0103  & 64            & 100    & 64,64,64,64,64  & 0.4785        & ReLU          & ASGD      & 64
+    \end{tabular}%
+    }
+    \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Offence} dataset.}
+    \label{tab:mtl_params_davidson}
+  \end{table}
+  \vfill  
+  \begin{table}[]
+    \centering
+    \resizebox{0.75\paperheight}{!}{%
+    \begin{tabular}{l|ccccccccccc}
+      Aux                                                                & Batch Size & Main Task Weight & Aux Task Weights & Dropout & Embedding Dim & Epochs & Hidden Dims             & Learning Rate & Non-linearity & Optimiser & Shared Dim \\ \hline
+      Waseem                                                             & 64         & 0.7              & 0.3              & 0.1166  & 300           & 200    & 64,64                   & 0.4055        & ReLU          & ASGD      & 256        \\
+      Hate Speech                                                        & 64         & 0.7              & 0.3              & 0.3346  & 100           & 50     & 300,300                 & 0.003051      & ReLU          & AdamW     & 256        \\
+      Offence                                                            & 64         & 0.7              & 0.3              & 0.03044 & 300           & 200    & 200,200                 & 0.3432        & ReLU          & SGD       & 128        \\
+      Moral Sentiment                                                    & 64         & 0.7              & 0.3              & 0.3558  & 300           & 200    & 64,64                   & 0.7853        & ReLU          & ASGD      & 256        \\
+      Sarcasm                                                            & 64         & 0.7              & 0.3              & 0.3711  & 200           & 200    & 100,100                 & 0.9143        & ReLU          & ASGD      & 256        \\
+      Argument Basis                                                     & 64         & 0.7              & 0.3              & 0.3995  & 300           & 50     & 200,200                 & 0.5104        & ReLU          & SGD       & 128        \\ \hline
+      Hate Speech | Offence                                              & 64         & 0.6              & 0.2              & 0.03108 & 300           & 200    & 100,100,100             & 0.2465        & ReLU          & SGD       & 256        \\
+      Moral Sentiment | Hate Speech                                      & 64         & 0.6              & 0.2              & 0.3406  & 300           & 200    & 200,200,200             & 0.2291        & ReLU          & SGD       & 64         \\
+      Moral Sentiment | Offence                                          & 64         & 0.6              & 0.2              & 0.08389 & 200           & 200    & 64,64,64                & 0.8606        & ReLU          & ASGD      & 128        \\
+      Sarcasm | Moral Sentiment                                          & 64         & 0.6              & 0.2              & 0.2051  & 200           & 200    & 300,300,300             & 0.8602        & ReLU          & ASGD      & 64         \\
+      Sarcasm | Hate Speech                                              & 64         & 0.6              & 0.2              & 0.2315  & 300           & 200    & 300,300,300             & 0.2219        & ReLU          & SGD       & 128        \\
+      Sarcasm | Offence                                                  & 64         & 0.6              & 0.2              & 0.02304 & 100           & 200    & 64,64,64                & 0.804         & ReLU          & ASGD      & 256        \\
+      Moral Sentiment | Hate Speech | Offence                            & 64         & 0.6              & 0.133333333      & 0.3018  & 200           & 200    & 300,300,300,300         & 0.9543        & ReLU          & ASGD      & 256        \\
+      Sarcasm | Moral Sentiment | Hate Speech                            & 64         & 0.6              & 0.133333333      & 0.2762  & 200           & 100    & 300,300,300,300         & 0.4007        & ReLU          & SGD       & 128        \\
+      Sarcasm | Moral Sentiment | Offence                                & 64         & 0.6              & 0.133333333      & 0.2939  & 64            & 200    & 200,200,200,200         & 0.8591        & ReLU          & ASGD      & 64         \\
+      Sarcasm | Moral Sentiment | Hate Speech | Offence                  & 32         & 0.6              & 0.1              & 0.1936  & 300           & 50     & 100,100,100,100,100     & 0.004907      & ReLU          & AdamW     & 64         \\
+      Argument Basis | Moral Sentiment                                   & 64         & 0.6              & 0.2              & 0.01288 & 200           & 200    & 300,300,300             & 0.968         & ReLU          & ASGD      & 256        \\
+      Argument Basis | Sarcasm                                           & 64         & 0.6              & 0.2              & 0.061   & 200           & 200    & 300,300,300             & 0.384         & ReLU          & SGD       & 256        \\
+      Argument Basis | Hate Speech                                       & 64         & 0.6              & 0.2              & 0.09094 & 200           & 200    & 300,300,300             & 0.8456        & ReLU          & ASGD      & 128        \\
+      Argument Basis | Offence                                           & 64         & 0.6              & 0.2              & 0.2733  & 300           & 100    & 100,100,100             & 0.3757        & ReLU          & SGD       & 256        \\
+      Argument Basis | Moral Sentiment | Sarcasm                         & 64         & 0.6              & 0.133333333      & 0.03792 & 300           & 200    & 300,300,300,300         & 0.934         & ReLU          & ASGD      & 64         \\
+      Argument Basis | Moral Sentiment | Hate Speech                     & 64         & 0.6              & 0.133333333      & 0.05325 & 300           & 200    & 300,300,300,300         & 0.4349        & ReLU          & SGD       & 64         \\
+      Argument Basis | Moral Sentiment | Offence                         & 64         & 0.6              & 0.133333333      & 0.1082  & 300           & 200    & 100,100,100,100         & 0.3236        & ReLU          & SGD       & 128        \\
+      Argument Basis | Moral Sentiment | Sarcasm | Hate Speech           & 64         & 0.6              & 0.1              & 0.06104 & 100           & 200    & 300,300,300,300,300     & 0.565         & ReLU          & SGD       & 256        \\
+      Argument Basis | Moral Sentiment | Sarcasm | Offence               & 64         & 0.6              & 0.1              & 0.2149  & 300           & 200    & 100,100,100,100,100     & 0.6336        & ReLU          & SGD       & 128        \\
+      Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech & 64         & 0.6              & 0.08             & 0.2348  & 100           & 100    & 200,200,200,200,200,200 & 0.546         & ReLU          & SGD       & 256
+    \end{tabular}%
+    }
+    \caption{Hyper-parameters for best performing MTL models optimised on the \textit{Toxicity} dataset.}
+    \label{tab:mtl_params_wulczyn}
+  \end{table}
+\end{landscape}
+} %
 
+Although none of the auxiliary task datasets outperform all baselines, they all outperform the MLP baseline thus providing early indication that learning a representation that all auxiliary tasks that I consider provide some beneficial information to the main task of detecting abuse.
+
+\begin{table}[h]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|cccc}
+                                                      & Accuracy        & Precision       & Recall          & F1-score        \\\hline
+    \textit{Hate Expert}                              & 0.8171          & 0.7463          & 0.7776          & \textit{0.7608} \\
+    \textit{Offence}                                  & 0.8141          & \textbf{0.7518} & 0.7609          & \textit{0.7558} \\
+    Toxicity                                          & 0.8082          & 0.7433          & 0.7562          & 0.7495          \\
+    \textit{Moral Sentiment}                          & 0.8242          & 0.7462          & 0.7865          & \textit{0.7644} \\
+    Argument Basis                                    & 0.8094          & 0.7374          & 0.7638          & 0.7494          \\
+    \textit{Sarcasm}                                  & 0.8194          & 0.7259          & 0.7944          & \textit{0.7551} \\\hline
+    Hate Expert | Moral Sentiment                     & 0.8212          & 0.7220          & 0.7996          & 0.7540          \\
+    Offence | Moral Sentiment                         & 0.7957          & 0.7552          & 0.7408          & 0.7476          \\
+    Hate Expert | Offence                             & 0.8200          & 0.7521          & 0.7781          & 0.7623          \\
+    Sarcasm | Hate Expert                             & 0.8171          & 0.7068          & 0.7994          & 0.7431          \\
+    Sarcasm | Offence                                 & 0.8141          & 0.7284          & 0.7731          & 0.7449          \\
+    Sarcasm | Moral Sentiment                         & \textbf{0.8289} & 0.7425          & 0.8009          & \textbf{0.7664} \\
+    Hate Expert | Offence | Moral Sentiment           & 0.8165          & 0.7212          & 0.7913          & 0.7497          \\
+    Sarcasm | Hate Expert | Moral Sentiment           & 0.8259          & 0.7279          & \textbf{0.8051} & 0.7566          \\
+    Sarcasm | Offence | Moral Sentiment               & 0.8194          & 0.7204          & 0.7916          & 0.7497          \\
+    Sarcasm | Hate Expert | Offence | Moral Sentiment & 0.8200          & 0.7389          & 0.7834          & 0.7561
+  \end{tabular}%
+  }
+  \caption{Experimental model validation scores on the \textit{Hate Speech} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
+  \label{tab:mtl_dev_wh}
+\end{table}
+
+For the MTL models optimised on the \textit{Offence} dataset, a similar issue of the linear SVM baseline outperforming the MTL configurations with one auxiliary task.
+Here, I set the same $0.01$ cut off in difference from the best performing auxiliary task as a criteria for inclusion.
+This results in the \textit{Hate Speech}, \textit{Toxicity} and the \textit{Sarcasm} datasets to be selected for further experiments.
+
+\begin{table}[h]
+  \centering
+  %\resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|cccc}
+                                                          & Accuracy        & Precision       & Recall          & F1-score        \\ \hline
+    \textit{Hate Speech}                                  & 0.8857          & 0.7422          & 0.7076          & \textit{0.7232} \\
+    \textit{Toxicity}                                     & 0.8962          & 0.7124          & 0.7562          & \textit{0.7286} \\
+    Hate Expert                                           & 0.8882          & 0.7122          & 0.7042          & 0.7069          \\
+    \textit{Sarcasm}                                      & 0.8845          & \textbf{0.7503} & 0.7149          & \textit{0.7312} \\
+    \textit{Argument Basis}                               & 0.8987          & 0.7039          & 0.7489          & \textit{0.7164}          \\
+    Moral Sentiment                                       & 0.8853          & 0.7237          & 0.7020          & 0.7105          \\\hline
+    Hate Speech | Toxicity                                & 0.8914          & 0.7381          & 0.7251          & 0.7309          \\
+    Sarcasm | Hate Speech                                 & \textbf{0.9023} & 0.7005          & \textbf{0.7619} & 0.7167          \\
+    Sarcasm | Toxicity                                    & 0.8954          & 0.7367          & 0.7361          & \textbf{0.7349} \\
+    Sarcasm | Toxicity | Hate Speech                      & 0.8979          & 0.7338          & 0.7449          & 0.7345          \\
+    Argument Basis | Hate Speech                          & 0.8862          & 0.7018          & 0.7136          & 0.7069          \\
+    Argument Basis | Toxicity                             & 0.8958          & 0.7076          & 0.7449          & 0.7218          \\
+    Argument Basis | Sarcasm                              & 0.8906          & 0.7126          & 0.7194          & 0.7098          \\
+    Argument Basis | Hate Speech | Toxicity               & 0.8765          & 0.7226          & 0.6992          & 0.7103          \\
+    Argument Basis | Hate Speech | Sarcasm                & 0.8950          & 0.6952          & 0.7354          & 0.7069          \\
+    Argument Basis | Toxicity | Sarcasm                   & 0.8991          & 0.7122          & 0.7481          & 0.7211          \\
+    Argument Basis | Hate Speech | Toxicity | Sarcasm     & 0.8902          & 0.6977          & 0.7281          & 0.7079
+  \end{tabular}
+  %%
+  %}
+  \caption{Experimental model validation scores on the \textit{Offence} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
+  \label{tab:mtl_dev_davidson}
+\end{table}
+
+For the \textit{Offence} dataset, the auxiliary tasks that are most beneficial turn out to be two other datasets for abusive language and one for sarcasm detection, unlike the \textit{Hate Speech} dataset, where the two best performing non-abusive tasks obtain scores that are competitive with the two best abusive language detection tasks.
+
+\begin{table}[h]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|cccc}
+                                                                       & Accuracy        & Precision       & Recall          & F1-score        \\\hline
+    \textit{Hate Speech}                                               & 0.9513          & 0.8326          & 0.8726          & \textit{0.8511} \\
+    \textit{Offence}                                                   & 0.9490          & \textbf{0.8523} & 0.8524          & \textit{0.8524} \\
+    Hate Expert                                                        & 0.9499          & 0.8001          & 0.8881          & 0.8370          \\
+    \textit{Moral Sentiment}                                           & 0.9528          & 0.8165          & 0.8918          & \textit{0.8491} \\
+    \textit{Sarcasm}                                                   & 0.9511          & 0.8130          & 0.8846          & \textit{0.8441} \\
+    \textit{Argument Basis}                                            & 0.9534          & 0.8195          & 0.8932          & \textit{0.8515} \\\hline
+    Moral Sentiment | Offence                                          & 0.9517          & 0.8158          & 0.8862          & 0.8465          \\
+    Moral Sentiment | Hate Speech                                      & 0.9555          & 0.8167          & 0.9081          & 0.8551          \\
+    Hate Speech | Offence                                              & 0.9504          & 0.8386          & 0.8652          & 0.8512          \\
+    Sarcasm | Moral Sentiment                                          & 0.9533          & 0.8008          & 0.9093          & \textbf{0.8575} \\
+    Sarcasm | Hate Speech                                              & \textbf{0.9558} & 0.8191          & 0.9079          & 0.8566          \\
+    Sarcasm | Offence                                                  & 0.9522          & 0.7957          & 0.9068          & 0.8469          \\
+    Argument Basis | Hate Speech                                       & 0.9521          & 0.8148          & 0.8889          & 0.8421          \\
+    Argument Basis | Moral Sentiment                                   & 0.9538          & 0.8101          & 0.9038          & 0.8492          \\
+    Argument Basis | Sarcasm                                           & 0.9535          & 0.8376          & 0.8808          & \textit{0.8575} \\
+    Argument Basis | Offence                                           & 0.9542          & 0.8093          & 0.9066          & 0.8496          \\
+    Moral Sentiment | Hate Speech | Offence                            & 0.9529          & 0.7956          & 0.9121          & 0.8419          \\
+    Sarcasm | Moral Sentiment | Hate Speech                            & 0.9533          & 0.7938          & 0.917           & 0.8402          \\
+    Sarcasm | Moral Sentiment | Offence                                & 0.9523          & 0.7861          & \textbf{0.9184} & 0.8368          \\
+    Argument Basis | Moral Sentiment | Sarcasm                         & 0.9526          & 0.8214          & 0.8869          & 0.8503          \\
+    Argument Basis | Moral Sentiment | Hate Speech                     & 0.9516          & 0.8469          & 0.8661          & 0.8562          \\
+    Argument Basis | Moral Sentiment | Offence                         & 0.953           & 0.8248          & 0.8867          & 0.8523          \\
+    Sarcasm | Moral Sentiment | Hate Speech | Offence                  & 0.9548          & 0.8117          & 0.9086          & 0.8519          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Hate Speech           & 0.9514          & 0.8315          & 0.8740          & 0.8511          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence               & 0.9517          & 0.8098          & 0.8905          & 0.8442          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech & 0.9534          & 0.8039          & 0.9067          & 0.8459
+  \end{tabular}%
+  }
+  \caption{Experimental model validation scores on the \textit{Toxicity} dataset. Configurations written in \textit{italic} signify the auxiliary tasks chosen for further exploration and \textbf{bolded} scores indicate the highest performances.}
+  \label{tab:mtl_dev_wulczyn}
+\end{table}
+
+Finally, turning to the \textit{Toxicity} dataset, several of the MTL models using a single auxiliary task outperform all linear baselines.
+In fact, all auxiliary tasks, with the exception of the \textit{Hate Expert} dataset outperform all baseline models on the validation set in terms of \texttt{F1-score}.
+Thus, all auxiliary tasks, asides from the \textit{Hate Expert} task, are selected for further experimentation.\vspace{5mm}
+
+\subsubsection{Evaluation Data Performances}
+Turning to the performance on the test sets, the results presented in \cref{tab:mtl_test_wh,tab:mtl_test_davidson,tab:mtl_test_wulczyn} are the means of five runs with different random seeds and the standard deviation for each metric.
+
+\paragraph{Hate Speech Main Task}
+Considering first the results in \cref{tab:mtl_test_wh} for the MTL models optimised for the \textit{Hate Speech} task.
+All but one dataset configurations yield an improved \texttt{accuracy} over the MLP baseline, though none outperform the SVM baseline.
+The best auxiliary task configuration for \texttt{accuracy} is one that uses the \textit{Hate Expert} and the \textit{Sarcasm} auxiliary tasks.
+Similarly to the results on the validation set, most MTL MLP models yield an improvement in terms of \texttt{recall} over all baselines, while only one shows a strong decrease in performance.
+The best auxiliary task configuration in terms of \texttt{recall} only uses the \textit{Toxicity} dataset for an auxiliary task.
+In terms of \texttt{precision}, all task configurations provide an improvement over the MLP baseline, though similarly to the case with the \texttt{accuracy} score, none outperform the best-performing baseline in terms of \texttt{precision}, the linear SVM.
+Although all task configurations yield an improvement over the MLP baseline, an interesting issue occurs where the use of all auxiliary tasks has a detrimental effect, resulting in the worst performance of the MTL models in terms of \texttt{precision}.
+For the \texttt{F1-score}, no models outperform the SVM baseline, though all models outperform the MLP baseline.
+The strongest performance here is obtained by an auxiliary task combination where two out of three auxiliary tasks are non-abusive in nature.
+This performance gain is obtained through an increase in the experimental model's ability in \texttt{precision} at the cost of a slightly lower \texttt{recall} score.
+Although, on their own, none of the non-abusive tasks obtain the highest performances out of all auxiliary task configurations, they frequently post highly competitive scores with the all other configurations.
+This suggests that some of the improvements obtained when using multiple auxiliary tasks is obtained through the information of non-abusive information encoded into the shared layer of the model.
+
+Aligning with the insights on dataset mappings identified in \cref{chap:liwc}, the \textit{Hate Expert} dataset provides for boosted predicted power when used in conjunction with a non-abusive auxiliary task.
+Somewhat surprisingly, the \textit{Offence} auxiliary task equally provides boosts in performance.
+These improvements in performance indicate that the source domain of the data offer greater inductive biases, that can be optimised, than the size, as evidenced by the \textit{Toxicity} dataset not being selected for further experimentation.
+The selection of the \textit{Hate Expert} auxiliary task also suggests that an alignment of dataset goals, and the processes to achieve those goals, also have a positive factor.
+
+\begin{table}[]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|cccc}
+                                                      & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
+    Hate Expert                                       & 0.8082 ($\sigma$ 0.0098)          & 0.7496 ($\sigma$ 0.0117)          & 0.7661 ($\sigma$ 0.0153)          & 0.7564 ($\sigma$ 0.0044)          \\
+    Offence                                           & 0.8194 ($\sigma$ 0.0047)          & 0.7001 ($\sigma$ 0.0181)          & \textbf{0.8204} ($\sigma$ 0.0069) & 0.7430 ($\sigma$ 0.0124)          \\
+    Toxicity                                          & 0.8105 ($\sigma$ 0.0075)          & 0.7236 ($\sigma$ 0.0244)          & 0.7779 ($\sigma$ 0.0184)          & 0.7424 ($\sigma$ 0.0165)          \\
+    Moral Sentiment                                   & 0.8234 ($\sigma$ 0.0024)          & 0.7302 ($\sigma$ 0.0120)          & 0.8039 ($\sigma$ 0.0079)          & 0.7595 ($\sigma$ 0.0067)          \\
+    Argument Basis                                    & 0.8141 ($\sigma$ 0.0090)          & 0.7380 ($\sigma$ 0.0185)          & 0.7744 ($\sigma$ 0.0228)          & 0.7489 ($\sigma$ 0.0146)          \\
+    Sarcasm                                           & 0.8192 ($\sigma$ 0.0018)          & 0.7262 ($\sigma$ 0.0167)          & 0.7993 ($\sigma$ 0.0145)          & 0.7548 ($\sigma$ 0.0065)          \\
+    Hate Expert | Moral Sentiment                     & 0.8173 ($\sigma$ 0.0071)          & 0.7366 ($\sigma$ 0.0089)          & 0.7882 ($\sigma$ 0.0191)          & 0.7523 ($\sigma$ 0.0100)          \\
+    Offence | Moral Sentiment                         & 0.7985 ($\sigma$ 0.0090)          & 0.6994 ($\sigma$ 0.0240)          & 0.7628 ($\sigma$ 0.0155)          & 0.7244 ($\sigma$ 0.0163)          \\
+    Hate Expert | Offence                             & 0.8147 ($\sigma$ 0.0053)          & 0.7294 ($\sigma$ 0.0222)          & 0.7845 ($\sigma$ 0.0184)          & 0.7505 ($\sigma$ 0.0070)          \\
+    Sarcasm | Hate Expert                             & \textbf{0.8253} ($\sigma$ 0.0079) & 0.7333 ($\sigma$ 0.0277)          & 0.8096 ($\sigma$ 0.0167)          & 0.7618 ($\sigma$ 0.0171)          \\
+    Sarcasm | Offence                                 & 0.8182 ($\sigma$ 0.0051)          & 0.7186 ($\sigma$ 0.0266)          & 0.8031 ($\sigma$ 0.0139)          & 0.7518 ($\sigma$ 0.0160)          \\
+    Sarcasm | Moral Sentiment                         & 0.8215 ($\sigma$ 0.0071)          & 0.7209 ($\sigma$ 0.0231)          & 0.8108 ($\sigma$ 0.0101)          & 0.7548 ($\sigma$ 0.0164)          \\
+    Hate Expert | Offence | Moral Sentiment           & 0.7901 ($\sigma$ 0.0176)          & 0.7488 ($\sigma$ 0.0057)          & 0.7366 ($\sigma$ 0.0227)          & 0.7407 ($\sigma$ 0.0153)          \\
+    Sarcasm | Hate Expert | Moral Sentiment           & 0.8180 ($\sigma$ 0.0071)          & 0.7129 ($\sigma$ 0.0222)          & 0.8016 ($\sigma$ 0.0046)          & 0.7473 ($\sigma$ 0.0166)          \\
+    Sarcasm | Offence | Moral Sentiment               & 0.8151 ($\sigma$ 0.0066)          & \textbf{0.7502} ($\sigma$ 0.0070) & 0.7762 ($\sigma$ 0.0103)          & \textbf{0.7623} ($\sigma$ 0.0051) \\
+    Sarcasm | Hate Expert | Offence | Moral Sentiment & 0.8124 ($\sigma$ 0.0101)          & 0.6898 ($\sigma$ 0.0221)          & 0.8142 ($\sigma$ 0.0053)          & 0.7278 ($\sigma$ 0.0234)
+  \end{tabular}%
+  }
+  \caption{Experimental model evaluation scores on the \textit{Hate Speech} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
+  \label{tab:mtl_test_wh}
+\end{table}
+
+\paragraph{Offence Main Task}
+When using \textit{Offence} detection as the main task, most models outperform all baselines in terms of \texttt{F1-score} (see \cref{tab:mtl_test_davidson}).
+The exception to this pattern are two auxiliary task configurations: the first where only the \textit{Argument Basis} auxiliary task is used, and the second where the \textit{Sarcasm} auxiliary task is used in conjunction with one abusive language detection task.
+In the setting where only one auxiliary task is used, the \textit{Hate Speech} auxiliary task somewhat surprisingly provides for slightly bigger improvements across all scores than the \textit{Toxicity} auxiliary task.
+This further evidences that abusive tasks from the same data source provide for a good source of data.
+When combining multiple auxiliary tasks however, the \textit{Toxicity} data provides for more stable improvements across different auxiliary task combinations.
+This further lends credibility to the observation that a similarity of dataset goals is useful in a multi-task setting.
+
+Focusing on the non-abusive auxiliary tasks, the \textit{Sarcasm} and \textit{Argument Basis} auxiliary tasks are selected for further experimentation given the results on the validation data.
+The \textit{Sarcasm} auxiliary task, when used in isolation from other auxiliary tasks, offers competitive results with the abusive language detection auxiliary tasks used in isolation, and outperforms the closely related \textit{Toxicity} auxiliary task in terms of \texttt{accuracy}.
+The \textit{Argument Basis} auxiliary task affords performance improvements along \texttt{accuracy}, \texttt{precision}, and \texttt{F1-score} and only when this task is used in conjunction with other auxiliary tasks, specifically the \textit{Sarcasm} and \textit{Hate Speech} auxiliary tasks, do the models outperform the best baseline model in terms of \texttt{precision}.
+
+The experimental models optimised for the \textit{Offence} detection task post a poorer \texttt{recall} than the best performing baseline model, thus the increased performances in \texttt{F1-score} are driven by improvements in \texttt{precision} score.
+The best performing baseline model, in terms of \texttt{recall}, obtains a score of $0.91$ but only obtains $0.57$ in terms of \texttt{precision}.
+Thus, adding auxiliary tasks provides for models that are more balanced in terms of performance on \texttt{precision} and \texttt{recall}, yielding an improved performance in terms of \texttt{F1-score} as neither \texttt{precision} or \texttt{recall} are being neglected in favour of the other.
+Comparing the MTL models to the SVM baseline, all auxiliary task settings models strongly outperform the baseline in terms of \texttt{recall}.
+
+\begin{table}[]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|cccc}
+                                                           & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
+    Hate Speech                                            & 0.8970 ($\sigma$ 0.0028)          & 0.6952 ($\sigma$ 0.0240)          & 0.7685 ($\sigma$ 0.0339)          & 0.7119 ($\sigma$ 0.0138)          \\
+    Toxicity                                               & 0.8916 ($\sigma$ 0.0036)          & 0.6829 ($\sigma$ 0.0176)          & 0.7659 ($\sigma$ 0.0074)          & 0.7099 ($\sigma$ 0.0159)          \\
+    Hate Expert                                            & 0.8871 ($\sigma$ 0.0048)          & 0.6794 ($\sigma$ 0.0274)          & 0.7552 ($\sigma$ 0.0110)          & 0.7028 ($\sigma$ 0.0193)          \\
+    Sarcasm                                                & 0.8933 ($\sigma$ 0.0029)          & 0.6790 ($\sigma$ 0.0303)          & 0.7594 ($\sigma$ 0.0141)          & 0.6987 ($\sigma$ 0.0271)          \\
+    Argument Basis                                         & 0.8973 ($\sigma$ 0.0045)          & 0.6740 ($\sigma$ 0.0238)          & 0.7775 ($\sigma$ 0.0202)          & 0.6847 ($\sigma$ 0.0207)          \\
+    Moral Sentiment                                        & 0.8956 ($\sigma$ 0.0045)          & 0.6860 ($\sigma$ 0.0344)          & 0.7541 ($\sigma$ 0.0267)          & 0.6938 ($\sigma$ 0.0356)          \\
+    Hate Speech | Toxicity                                 & 0.8860 ($\sigma$ 0.0046)          & 0.6961 ($\sigma$ 0.0157)          & 0.7294 ($\sigma$ 0.0211)          & 0.7033 ($\sigma$ 0.0135)          \\
+    Sarcasm | Hate Speech                                  & 0.8891 ($\sigma$ 0.0080)          & 0.6561 ($\sigma$ 0.0239)          & 0.7757 ($\sigma$ 0.0157)          & 0.6806 ($\sigma$ 0.0200)          \\
+    Sarcasm | Toxicity                                     & 0.8977 ($\sigma$ 0.0011)          & 0.6723 ($\sigma$ 0.0126)          & \textbf{0.7899} ($\sigma$ 0.0063) & 0.6811 ($\sigma$ 0.0227)          \\
+    Sarcasm | Toxicity | Hate Speech                       & 0.8923 ($\sigma$ 0.0028)          & 0.6877 ($\sigma$ 0.0213)          & 0.7601 ($\sigma$ 0.0079)          & 0.7091 ($\sigma$ 0.0151)          \\
+    Argument Basis | Hate Speech                           & 0.8864 ($\sigma$ 0.0036)          & 0.7043 ($\sigma$ 0.0320)          & 0.7386 ($\sigma$ 0.0173)          & 0.7155 ($\sigma$ 0.0139)          \\
+    Argument Basis | Toxicity                              & 0.8917 ($\sigma$ 0.0052)          & 0.6929 ($\sigma$ 0.0203)          & 0.7552 ($\sigma$ 0.0049)          & 0.7143 ($\sigma$ 0.0139)          \\
+    Argument Basis | Sarcasm                               & 0.9010 ($\sigma$ 0.0022)          & 0.6939 ($\sigma$ 0.0170)          & 0.7791 ($\sigma$ 0.0110)          & 0.7105 ($\sigma$ 0.0190)          \\
+    Argument Basis | Hate Speech | Toxicity                & 0.8972 ($\sigma$ 0.0036)          & 0.6861 ($\sigma$ 0.0089)          & 0.7723 ($\sigma$ 0.0085)          & 0.7064 ($\sigma$ 0.0083)          \\
+    Argument Basis | Hate Speech | Sarcasm                 & \textbf{0.9025 ($\sigma$ 0.0007)} & \textbf{0.7107 ($\sigma$ 0.0090)} & 0.7820 ($\sigma$ 0.0093)          & \textbf{0.7291 ($\sigma$ 0.0072)} \\
+    Argument Basis | Toxicity | Sarcasm                    & 0.8925 ($\sigma$ 0.0044)          & 0.6973 ($\sigma$ 0.0218)          & 0.7472 ($\sigma$ 0.0082)          & 0.7138 ($\sigma$ 0.0125)          \\
+    Argument Basis | Hate Speech | Toxicity | Sarcasm      & 0.8948 ($\sigma$ 0.0016)          & 0.6979 ($\sigma$ 0.0048)          & 0.7652 ($\sigma$ 0.0102)          & 0.7100 ($\sigma$ 0.0049)
+  \end{tabular}%
+  }
+  \caption{Experimental model evaluation scores on the \textit{Offence} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
+  \label{tab:mtl_test_davidson}
+\end{table}
+
+\paragraph{Toxicity Main Task}
+\afterpage{
+\begin{landscape}
+\begin{table}[]
+  \centering
+  \resizebox{0.75\paperheight}{!}{%
+  \begin{tabular}{l|cccc}
+                                                                        & Accuracy                          & Precision                         & Recall                            & F1-score                          \\\hline
+    Hate Speech                                                         & 0.9523 ($\sigma$ 0.0006)          & 0.8265 ($\sigma$ 0.0184)          & 0.8836 ($\sigma$ 0.01505)         & 0.8513 ($\sigma$ 0.0052)          \\
+    Offence                                                             & 0.9506 ($\sigma$ 0.0027)          & \textbf{0.8445 ($\sigma$ 0.0091)} & 0.8637 ($\sigma$ 0.0147)          & 0.8535 ($\sigma$ 0.0049)          \\
+    Hate Expert                                                         & 0.9497 ($\sigma$ 0.0008)          & 0.7794 ($\sigma$ 0.0081)          & 0.9074 ($\sigma$ 0.0124)          & 0.8283 ($\sigma$ 0.0027)          \\
+    Moral Sentiment                                                     & 0.9535 ($\sigma$ 0.0005)          & 0.8058 ($\sigma$ 0.0074)          & 0.9061 ($\sigma$ 0.0088)          & 0.8469 ($\sigma$ 0.0025)          \\
+    Sarcasm                                                             & 0.9532 ($\sigma$ 0.0004)          & 0.8029 ($\sigma$ 0.0131)          & 0.9078 ($\sigma$ 0.0130)          & 0.8452 ($\sigma$ 0.0050)          \\
+    Argument Basis                                                      & 0.9477 ($\sigma$ 0.0040)          & 0.7604 ($\sigma$ 0.0307)          & 0.9152 ($\sigma$ 0.0098)          & 0.8145 ($\sigma$ 0.0245)          \\
+    Moral Sentiment | Offence                                           & 0.9518 ($\sigma$ 0.0005)          & 0.7897 ($\sigma$ 0.0125)          & 0.9118 ($\sigma$ 0.0144)          & 0.8370 ($\sigma$ 0.0048)          \\
+    Moral Sentiment | Hate Speech                                       & 0.9530 ($\sigma$ 0.0013)          & 0.7984 ($\sigma$ 0.0163)          & 0.9109 ($\sigma$ 0.0114)          & 0.8430 ($\sigma$ 0.0088)          \\
+    Hate Speech | Offence                                               & \textbf{0.9538 ($\sigma$ 0.0008)} & 0.8238 ($\sigma$ 0.0142)          & 0.8931 ($\sigma$ 0.0139)          & \textbf{0.8537 ($\sigma$ 0.0038)} \\
+    Sarcasm | Moral Sentiment                                           & 0.9526 ($\sigma$ 0.0007)          & 0.7929 ($\sigma$ 0.0092)          & 0.9132 ($\sigma$ 0.0054)          & 0.8401 ($\sigma$ 0.0052)          \\
+    Sarcasm | Hate Speech                                               & 0.8947 ($\sigma$ 0.0798)          & 0.7800 ($\sigma$ 0.0733)          & 0.8467 ($\sigma$ 0.0535)          & 0.8070 ($\sigma$ 0.0654)          \\
+    Sarcasm | Offence                                                   & 0.9523 ($\sigma$ 0.0007)          & 0.7949 ($\sigma$ 0.0138)          & 0.9099 ($\sigma$ 0.0113)          & 0.8402 ($\sigma$ 0.0065)          \\
+    Argument Basis | Hate Speech                                        & 0.9514 ($\sigma$ 0.0008)          & 0.8027 ($\sigma$ 0.0153)          & 0.8966 ($\sigma$ 0.0159)          & 0.8410 ($\sigma$ 0.0057)          \\
+    Argument Basis | Moral Sentiment                                    & 0.9528 ($\sigma$ 0.0004)          & 0.8026 ($\sigma$ 0.0070)          & 0.9047 ($\sigma$ 0.0060)          & 0.8443 ($\sigma$ 0.0031)          \\
+    Argument Basis | Sarcasm                                            & 0.9528 ($\sigma$ 0.0011)          & 0.8182 ($\sigma$ 0.0224)          & 0.8925 ($\sigma$ 0.0144)          & 0.8495 ($\sigma$ 0.0095)          \\
+    Argument Basis | Offence                                            & 0.9511 ($\sigma$ 0.0014)          & 0.7813 ($\sigma$ 0.0132)          & 0.9162 ($\sigma$ 0.0139)          & 0.8321 ($\sigma$ 0.0079)          \\
+    Moral Sentiment | Hate Speech | Offence                             & 0.9532 ($\sigma$ 0.0005)          & 0.7932 ($\sigma$ 0.0095)          & 0.9174 ($\sigma$ 0.0100)          & 0.8415 ($\sigma$ 0.0042)          \\
+    Sarcasm | Moral Sentiment | Hate Speech                             & 0.9517 ($\sigma$ 0.0012)          & 0.7845 ($\sigma$ 0.0115)          & 0.9165 ($\sigma$ 0.0051)          & 0.8348 ($\sigma$ 0.0072)          \\
+    Sarcasm | Moral Sentiment | Offence                                 & 0.9513 ($\sigma$ 0.0012)          & 0.7760 ($\sigma$ 0.0106)          & \textbf{0.9235 ($\sigma$ 0.0065)} & 0.8303 ($\sigma$ 0.0071)          \\
+    Argument Basis | Moral Sentiment | Sarcasm                          & 0.9535 ($\sigma$ 0.0005)          & 0.8053 ($\sigma$ 0.0160)          & 0.9083 ($\sigma$ 0.0177)          & 0.8467 ($\sigma$ 0.0054)          \\
+    Argument Basis | Moral Sentiment | Hate Speech                      & 0.9532 ($\sigma$ 0.0018)          & 0.8170 ($\sigma$ 0.0075)          & 0.8947 ($\sigma$ 0.0133)          & 0.8503 ($\sigma$ 0.0046)          \\
+    Argument Basis | Moral Sentiment | Offence                          & 0.9537 ($\sigma$ 0.0007)          & 0.8194 ($\sigma$ 0.0142)          & 0.8958 ($\sigma$ 0.0102)          & 0.8520 ($\sigma$ 0.0057)          \\
+    Sarcasm | Moral Sentiment | Hate Speech | Offence                   & 0.9526 ($\sigma$ 0.0018)          & 0.7883 ($\sigma$ 0.0228)          & 0.9197 ($\sigma$ 0.0131)          & 0.8379 ($\sigma$ 0.0128)          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Hate Speech            & 0.9526 ($\sigma$ 0.0003)          & 0.8242 ($\sigma$ 0.0190)          & 0.8869 ($\sigma$ 0.0155)          & 0.8512 ($\sigma$ 0.0060)          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence                & 0.9505 ($\sigma$ 0.0017)          & 0.8107 ($\sigma$ 0.0232)          & 0.8852 ($\sigma$ 0.0183)          & 0.8417 ($\sigma$ 0.0098)          \\
+    Argument Basis | Moral Sentiment | Sarcasm | Offence | Hate Speech  & 0.9512 ($\sigma$ 0.0018)          & 0.7948 ($\sigma$ 0.0236)          & 0.9035 ($\sigma$ 0.0187)          & 0.8374 ($\sigma$ 0.0118)
+  \end{tabular}%
+  }
+  \caption{Experimental model evaluation scores on the \textit{Toxicity} dataset. \textbf{bolded} scores indicate the highest performances and $\sigma$ values indicate the standard deviation.}
+  \label{tab:mtl_test_wulczyn}
+\end{table}
+\end{landscape}
+}
+
+The final task that I explore experimentally through MTL is the \textit{Toxicity} detection task.
+This task is the task that has the most auxiliary tasks that are explored experimentally with five out of six tasks explored, the only task that is note explored is the \textit{Hate Expert} task.
+Moreover, this is also the task with the largest dataset available and the only binary task, meaning that this is the only task where the results are directly comparable with the results obtained in \cref{chap:liwc}.
+
+Observing experimental model results in \cref{tab:mtl_test_wulczyn} with the performances of the baseline models in \cref{tab:baseline_test_wulczyn}, we see that no setting of the auxiliary tasks outperform the SVM baseline in terms of \texttt{F1-score} or \texttt{accuracy}.
+However, all task configurations outperform the SVM in terms of \texttt{recall} and are competitive in terms of the \texttt{accuracy} score with the worst performing configuration, one that uses the \textit{Sarcasm} and the \textit{Hate Speech} auxiliary tasks scoring $0.0635$ below the SVM baseline and $0.045$ lower the MLP baseline.
+On the other hand, the best performing model in terms of \texttt{accuracy} has a score that is $0.0044$ lower than the SVM baseline and $0.0141$ higher than the MLP baseline.
+For \texttt{precision}, similarly none of the experimental settings outperform the SVM or the ensemble baselines.
+The best auxiliary task configuration only uses the \textit{Offence} auxiliary task and obtains a \texttt{precision} score of $0.8445$, $0.0563$ lower than the SVM baseline, while the worst performing auxiliary task setting only uses the \textit{Argument Basis} with a score of $0.7604$ or $0.1404$ lower than the SVM baseline.
+Here is an indication that using the \texttt{F1-score} as the only metric by which the auxiliary tasks are chosen is suboptimal as the \textit{Hate Expert} auxiliary task outperforms the \textit{Argument Basis} auxiliary task for all metrics asides from the \texttt{recall} score.
+Although the performance in terms of \texttt{precision} is lower than the SVM baseline, all auxiliary task configurations outperform the MLP baseline with the worst performing task setting outperforming the MLP baseline by $0.0625$ and a $0.1466$ improvement over the baseline for the best-performing task setting.
+For the \texttt{recall} score, the best performing baseline model is the ensemble baseline, closely followed by the MLP baseline.
+Neither of these baselines are outperformed by the MTL models though all experimental models improve on the SVM baseline.
+The best performing model here uses three different auxiliary tasks, namely the \textit{Sarcasm} task, the \textit{Moral Sentiment} task, and the \textit{Offence} task and only underperforms by $0.0124$ in comparison to the MLP baseline.
+Finally, focusing on the \texttt{F1-score}.
+Although no auxiliary task setting outperforms the best performing baseline, the SVM baseline, task configurations strongly outperform the MLP baseline.
+The best performing auxiliary task setting uses the \textit{Hate Speech} and the \textit{Offence} auxiliary tasks, that is all of the abusive language detection tasks under consideration and it outperforms the MLP baseline by $0.0905$.
+The worst performing auxiliary task setting outscores the MLP baseline by $0.0438$ and uses the \textit{Sarcasm} and the \textit{hate Speech} auxiliary tasks.
+
+In relation to the classification scores achieved by the best model for the \textit{Toxicity} dataset in \cref{chap:liwc}, the best performing model selected by highest \texttt{F1-score} is a LSTM model that uses word tokens as its input, score, obtains $0.9510$ in \texttt{accuracy}, $0.8047$ in \texttt{precision}, $0.9058$ in \texttt{recall}, and $0.8357$ in \texttt{F1-score}.\footnote{The scores here are the mean score over five different configurations of the random seeds.}
+Thus, the model from \cref{chap:liwc} is outperformed, in terms of \texttt{accuracy}, \texttt{precision} and \texttt{F1-score}, as the best performing auxiliary task settings, ranked by \texttt{F1-score}.
+This further demonstrating the space for MTL models to improve performance on single-task models.
+
+\paragraph{Auxiliary Task Patterns}
+When considering the performances of each main task in isolation, the larger patterns across the different main tasks are obscured by the details of the model performances.
+Here I take a birds-eye view on all three main tasks and the patterns that emerge from across the different main tasks and their auxiliary task settings.
+
+In the performances of all three main tasks, auxiliary task configurations that include abusive language detection tasks tend to post the high performances.
+This may be because forms and phrasings in abusive, and non-abusive, text that are infrequently occurring in the main task can be aided by the data provided in the abusive auxiliary tasks.
+This is particularly evidenced through the improvements along the \texttt{precision} score, meaning that using abusive language detection auxiliary tasks can minimise the number of false negatives that the model predicts.
+These increases in the \texttt{precision} scores also positively affect the \texttt{F1-score}s, although these are often hampered by a lower \texttt{recall} score.
+While there appears to be a lesser impact of dataset size, likely because the number of epochs is fixed, so the larger datasets are not afforded the ability to contribute more by virtue of their size, the data source and dataset goals appear to influence the performances.
+This is apparent in all three main task settings but is particularly visible when the main task is \textit{Offence} detection.
+Here, \textit{Hate Speech} shares the same data source but has different annotation goals whereas \textit{Toxicity} shares in the dataset goals but the data has a different source.
+In the setting where only one auxiliary task is used, both post comparative performances.
+When two auxiliary tasks are used and these auxiliary tasks are used together, they produce results that are lower across all metrics asides from \texttt{recall} than when only one of the tasks are used.
+When both auxiliary abuse detection tasks are used, then adding a at least one more auxiliary task that is not abuse detection has a slightly beneficial impact on the model performance.
+
+The non-abusive auxiliary tasks may at first seem to contribute less towards improved model performances than the abuse detection auxiliary tasks, however for two out of three different main tasks, the best \texttt{F1-score}s are obtained by the combination of abuse detection tasks and auxiliary tasks that are not addressing the question of abuse.
+The non-abuse related auxiliary tasks, when used in conjunction with abuse detection tasks offer modelling improvements across all metrics.
+However, some non-abusive tasks appear to be more applicable in general, specifically the \textit{Sarcasm} auxiliary task appears across all three main tasks while the \textit{Argument Basis} and \textit{Moral Sentiment} auxiliary tasks appear for two different main task settings.
+Moreover, all three auxiliary tasks appear in the best performing auxiliary task configurations and in the setting where only one auxiliary task is used, they achieve competitive performances with the models that use an abuse detection auxiliary task.
+
+\section{Conclusions}
+
+Automated detection of abuse occurring in online spaces is a complex problem that is contingent on the ability to contextualise comments made by authors with the intentions of the authors, how the comments are perceived by readers, and situating the comments within the contexts of the authors.
+In this chapter, I attempt to address the issue of contextualisation through the use of Multi-Task Learning.
+Using MTL, I examine how different auxiliary tasks impact in-domain classification of abuse detection.
+Specifically, I examine how the use of datasets developed for the purpose of optimising machine learning models for abuse as auxiliary tasks can impact the in-domain performances of different forms of abuse detection.
+I contrast the use of these resources with resources that are developed for classifying the basis of an argument, the moral sentiments displayed in messages, and the use of sarcasm and examine how these impact the ability of MTL models to classify abuse, when the resources are used as auxiliary tasks.
+Finally, I examine whether there are synergies between datasets developed for detecting abuse and datasets developed to predict other constructs that are conducive towards improved in-domain classification performance for the main task.
+
+Through the use of MTL, I show that machine learning models developed for detecting abuse can benefit from using auxiliary task datasets.
+In studying the first question, how other abuse detection datasets impact performance on the main task, when they are used as auxiliary tasks, I find that datasets that 1) share in the goals of the main task dataset, or 2) are sampled from the same data source, even with disparate dataset goals positively influence the performance of neural machine learning models on the main task.
+The former condition further provides support for the findings in \cref{chap:liwc} where I identified that common dataset goals allow for better generalisation.
+Rather than provide for better generalisation from one task to another, I find in this chapter that different datasets with similar goals can provide be used in a multi-task setting to improve the in-domain classification results for one another.
+The latter observation can be understood through the aims and purposes of the MTL framework.
+MTL operates with the express notion that distinct tasks may share inherent latent information that can be represented in a machine learning model through joint optimisation of the tasks.
+Where language production on online platforms is created under restrictions put in place by the platforms and the cultures of communication that are fostered on the platforms.
+Thus, through using auxiliary tasks for abuse where the data is sourced form the same platform(s), an MTL model can optimise representations of the particularities of communication on the platform(s) in question, thus gaining a representation that can yield improvements in the performances of the main task.
+
+In addressing the second question, how data developed for tasks that are not directly related to abuse detection can impact the performance of abuse detection models, I find that such tasks can aid in the classification capabilities of abuse detection models, when the choice of tasks is informed by specific questions surrounding the primary task.
+In particular, I find that the tasks of identifying whether an argument is made on an emotional or factual basis, detecting sarcasm, and detecting the moral sentiments all have a beneficial impact across the different main task settings.
+While I find that all non-abusive auxiliary tasks that I experiment with are beneficial for some forms of abuse, I also find that not all such tasks are equally well suited for all forms of abuse.
+For instance, the \textit{Argument Basis} auxiliary task does not perform well enough to be included in the experiments, when it is used as the only auxiliary task to the \textit{Hate Speech} main task.
+Similarly, when the main task is the \textit{Offence} task, the \textit{Moral Sentiment} auxiliary task does not perform well enough on the validation data to warrant inclusion in the experiments.
+% Thus, the selection of auxiliary tasks should be informed by the intuition of the designer of the machine learning experiment in addition to the empirical performance of a model.
+
+For the third question pertaining to how the abusive and non-abusive auxiliary tasks interact when used in conjunction with each other, the results obtained in this chapter are clear.
+I find that there are clear benefits to the main task from using a combination of abusive and non-abusive auxiliary tasks with several task configurations that include abusive and non-abusive auxiliary tasks posting highly competitive scores with other top performing models, if not outperforming all other task configurations outright.
+By identifying abusive and non-abusive auxiliary tasks that perform well in the case where there is only one auxiliary task, it is possible for a model that uses them can benefit from the selected task to post performances that improve on the scores achieved in the single-auxiliary task setting.
+Moreover, as multiple auxiliary tasks are used, MTL-based models also learn representations of each task, thus they come to closer reflect how people speak.
+This is particularly clear when the auxiliary task is \textit{Sarcasm} detection, where models learn representations of what constitutes abuse in addition to how sarcasm is expressed in the auxiliary task data.
+Thus, MTL models hold the potential for more closely representing different facets of speech, and subsequently different facets of speakers, than single-task machine learning models.
+
+\subsection{Future Work}
+The findings in this chapter have implications in the way automated abuse detection has been performed to date.
+Beyond the limited number of auxiliary tasks that have been investigated in this chapter, there is space for further experimentation on different kinds of auxiliary tasks.
+For instance, two natural extensions of this work in terms of auxiliary task selection are apparent: 1) the investigation of how optimising for core NLP tasks can yield a potential benefit as these can aid MTL models in representing language construction in different data sources and 2) following on the work of \citet{Davidson:2019} and \citet{Dias:2021}, using datasets that specifically incorporate varieties of English spoken by groups that are often subject to high false positive errors can allow designers to encode in the model how different groups are affected and should be affected by machine learning models for content moderations.
+Building on my findings of how similarity in data sources impact the main task, there is space for investigating how non-abusive tasks that are collected from the same data source can impact the modelling performance.
+
+Beyond a consideration of different auxiliary tasks there are also several modelling questions that could be further explored.
+First, from my experiments I find that the models tend to prefer the largest batch size that I experiment with, thus an investigation on the impacts of larger batch sizes is warranted.
+The question of how to weight the different auxiliary tasks and the frequency with which batches are selected from each also warrants further investigation as all auxiliary tasks are unlikely to contribute equally, thus identifying dynamic methods for weighting each task or setting the frequency with which batches are chosen from each task may also provide an avenue for improved performances.
+Finally, in my experimental models I do not use pre-trained embedding layers in my models, however the use of these have been shown to achieve high classification performances in single-task neural networks, thus the use of pre-trained embedding layers may allow for further improvements of the classification scores achieved.

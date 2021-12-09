@@ -324,7 +324,7 @@ Building on this, the European Union is currently considering regulation on diss
 \ZTdelete{In their opinion, t}\ZTedit{T}he FRA suggest that the proposed regulation should provide a clear definition of terrorist content\ZTedit{,} which \ZTdelete{limits it}\ZTedit{is limited} to inciting or promoting terrorist activities\ZTedit{,} or providing instructions \ZTdelete{on the making or use of weapons}\ZTedit{for making or using weapons} \citep{FRA:2019}.
 \ZTdelete{A key point of the regulation states that the platforms must remove content within $1$ hour of receiving notice from a trusted authority.}
 
-\ZTCommdng{Add references on intermediary liability law}
+\ZTComment{Add references on intermediary liability law}
 \ZTedit{In contrast to developments in Europe, the governance surrounding the moderation of online content in the United States of America is centred around section 230 of the Communications Decency Act of 1996 (CDA) \citep{CDA_230:1996}.
 Relating to the moderation of online content, Section 230(c) of the Communications Decency Act specifies that ``No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider'' \citep{CDA_230:1996}, thus specifying that service providers, e.g. social media networks are not liable for the content that is created by others and hosted on their platform.
 The over-arching goal of Section 230 has been to ensure that service providers are not liable for hosting content that is beyond their control.
@@ -368,19 +368,20 @@ These differences strongly encourage the use of machine learning to be applied w
 
 \ZTedit{
 \section{Ethical Considerations}
-
 When dealing with a subject like online abuse and content moderation, there are a number of ethical issues that are necessary to bear in mind, from the anonymisation of already-existing data to the methods of collecting new data.
 These issues are further complicated by the strength with which identity intersects with whether something is offensive, as some things are only visible as offensive, or non-offensive, when one has intimate knowledge and familiarity the target.
 What is the ground truth then becomes subject to the particular subjectivities of an individual who is involved in the communicative act.
+}
 
+\ZTedit{
 Considering first the issue of anonymisation, though it is important to perform some level of anonymisation for ethical as well as technical reasons, i.e. minimising tokens to overfit to, there is also a greater risk of performing anonymisation to a strong degree, i.e. make the author of a text entirely unrecoverable.
 One such risk of strong anonymisation, which would require that the text is reordered, is that the dialectal indicators of belonging to a demographic would be erased, thus directly contradicting the need to have intimate grounding in the subjectivities of a given speaker.
 Moreover, when releasing a new dataset, researchers need to address the issue of potential harms arising from data being publicly available.
 One alternative to such publication of data is for data of a sensitive nature, i.e. labelled or identifiable social media data, to never be released publicly.
 An imaginable configuration for this could be that data is never released, however researchers can submit models and code to train and evaluate on the dataset.
-Such a governance model however comes with several drawbacks: 1) it is not possible for researchers to analyse the kinds of mistakes that machine learning models make, 2) the governance model severely inhibits who has access to data, and 3) it renders invisible analysis and drawbacks of the datasets, something which is of vital importance as our understanding of abuse and hate speech continuously grows.
+Such a governance model however comes with several drawbacks: 1) it is not possible for researchers to analyse the kinds of mistakes that machine learning models make, 2) the governance model severely inhibits who has access to data, and 3) it renders invisible analysis and drawbacks of the datasets, something which is of vital importance as our understanding of abuse and hate speech continuously grows.}
 
-Turning now to concerns around creating datasets.
+\ZTedit{Turning now to concerns around creating datasets.
 Creating a dataset for online abuse requires designating \textit{someone} to look at a large volume of data, in which abusive content will likely appear without warning.
 Being situated in such a context can have mental health concerns due to the exposure to vicarious trauma, i.e. trauma occurring from witnessing traumatic events.
 As \citet{Roberts:2019} notes, the human workers who deal with moderating content for large tech companies often experience severe mental health issues as a consequence to their job.
@@ -388,16 +389,17 @@ This issue of subjecting workers to trauma is then further exacerbated when we c
 Specifically, people will be most attuned to the various ways in which hateful and offensive content is directed towards their own identities.
 Consider for a moment dog-whistles \citep{...}, the coded language that is used to target specific demographic groups, the specific group that is being targeted may be the only group that can correctly identify a speech act as abusive or hateful.
 Thus, it is of great importance that the workers that are recruited label data about their own identities, however this too comes with a great personal cost.
-Recruiting people to annotate abuse and hateful speech targeted towards their own identities also means exposing them to violence that specifically targets them, which may make the issue of vicarious trauma even more acute \citep{...}.
+Recruiting people to annotate abuse and hateful speech targeted towards their own identities also means exposing them to violence that specifically targets them, which may make the issue of vicarious trauma even more acute \citep{...}.}
 
-Turning lastly to the use of modelling and predicting online abuse, there are risks of harms to people from model misclassification, in particular to people who are in communities that are already marginalised.
+\ZTedit{Turning lastly to the use of modelling and predicting online abuse, there are risks of harms to people from model misclassification, in particular to people who are in communities that are already marginalised.
 As \citet{Waseem:2018} indicate and \citet{Davidson:2019} and \citet{Dias:2020} lay clear, there are significant racialised issues with classification of abuse, leading to African American English speakers and queer folks being censored through a disproportionate amount of false positives.
 One might turn to the question of whether computational modelling is at all appropriate for content moderation or whether it is best to return to entirely human content moderation pipelines.
 This question is complicated by the sheer scale of content being generated, with billions of new tweets, Facebook and Reddit posts, and YouTube videos and comments created each day.
 The scale is then far beyond what could be hoped to be reviewed by human content moderators alone - suggesting a need for some form of automation to aid the human workers in their task.
 But is it acceptable for anyone to have to be subjected to the violence of harmful and abusive content at scale?
-If it isn't acceptable, then it is imperative that we develop content moderation technologies quickly and robustly, to address the right to be free from persecution in online spaces.
+If it isn't acceptable, then it is imperative that we develop content moderation technologies quickly and robustly, to address the right to be free from persecution in online spaces.}
 
+\ZTedit{
 \subsection{Ethics Statement}
 }
 As this dissertation deals with data that is published by individuals who very often are private citizen, it is necessary to consider different aspects of the ethical use of social media data use.
