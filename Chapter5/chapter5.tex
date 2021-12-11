@@ -125,6 +125,31 @@ One notable exception to this is the work of \citet{Gorrell:2018}.
 In this work, the authors use a ``set of NLP tools, combining them into a semantic pipeline'' \citep[pp. 601]{Gorrell:2018}.
 Rather than using supervised classification techniques, a rule-based systems was developed to detect abuse that they argue allows for a interpretable and easy to modify method to address weaknesses of the approach without the need for additional large quantities of data.\footnote{This detail on the rule-based nature of the classification systems was provided by Genevieve Gorrell in personal communications.}
 However, this approach is a laborious one as it requires the researchers to manually identify patterns of abuse and construct rules that can address such patterns along with any exceptions to the patterns that are not abusive.
+
+\ZTedit{
+\paragraph*{Prior work on lexical replacements}
+}
+\ZTedit{
+  Reducing the dimensionality of data has been approached from a number of different avenues in prior literature.
+  A large body of work is dedicated to the mathematical induction of what features to retain and which to omit\citep{...}.
+  The object of the mathematical approach is to identify which features provide the most information about the distinctions between each class and which features provide the least information, and therefore can be omitted when optimising a machine learning model.
+  Another body of work has been dedicated to dimensionality reduction through semantic replacements.
+  One approach to such a reduction is the use of clustering algorithms, e.g. Brown Clustering \citep{Derczynski_2015}.
+  Another, more recent approach is to perform partial replacements of some tokens.
+  This method has been used in recent studies on abuse detection by using the HurtLex resource \citep{Bassignana_Basile_Patti_2018}.
+  HurtLex is a multi-lingual lexicon that seeks to map ``offensive'' words into three macro categories, and seventeen fine-grained categories.
+}
+
+\ZTedit{
+  Several papers have approached the task of abuse detection across multiple languages by using HurtLex to perform a reduction in the feature space of offensive words in the lexicon.
+  For instance, \citet{Pamungkas_2020} use HurtLex to create a feature vector for each of the fine-grained categories to be used for training and classification, as a way to separate out profanities and hateful terms.
+  \citet{Chiril_2019} use HurtLex across English and French tweets to count the number of times each of the fine-grained categories are invoked.
+  They optimise their models using the length of the tweets along with the number of times each fine-grained category is invoked in a tweet.
+  Others have used HurtLex in combination with deep learning methods by creating onehot encodings \citep{Pamungkas_2019} and using the encoding to create a HurtLex embedding layer \citep{Koufakou_2020}.
+  These approaches all either directly reduce the feature space or seek to force optimised models to pay particular attention to the tokens included in the HurtLex resource.
+  The approach that I take in this chapter contrasts these approaches by replacing all tokens with their respective LIWC categories and optimising models on the resulting document representations.
+}
+
 \vspace{5mm}
 
 In this chapter, we take inspiration from the use of manually crafted features as a way to provide testable hypothesis while departing from the notion of feature generation.
