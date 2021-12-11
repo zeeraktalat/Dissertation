@@ -149,6 +149,15 @@ Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ do
 Thus there is not enough data for a machine learning model to learn patterns of abuse in the intersection between racist and sexist speech.
 However, I choose to keep this data in the dataset to provide more instance of hate speech and to complicate, albeit only slightly, the question of what constitutes hate for the machine learning systems that use this dataset in the optimisation process.
 
+\ZTedit{
+Although this dataset does not hold many examples of intersectional abuse, the problem of intersectional abuse is highly prudent one, as people exist across intersections of different identities, e.g. gender and race or disability and sexuality.
+While the dataset does not hold enough samples of intersectional abuse to optimise machine learning models for this, I believe that this reflects the particular interests and biases of authors of datasets, rather than an inherent challenge.
+Developing datasets for abuse can provide for significant challenges, such as dealing with the notion of ground truth and recruiting annotators that are attuned to abuse across intersections of identity \citep{Waseem:2016}, sampling \citep{Wiegand:2019}.
+Neither of these issues are provide fundamental limits to the ability of optimising models for identifying intersectional abuse, however they betray the interests, subjectivities, and priorities of researchers within the field.
+The issues of the harms of content moderation infrastructures from \cref{chap:dirt} and the challenges that I seek to address in this thesis also hold, potentially more strongly, when considering the intersection between identities.
+It is therefore of great importance for the research field of abuse detection to devote resources towards the creation of datasets for intersectional abuse and identify the specific ways in which contemporary content moderation systems fail to protect those who are marginalised across multiple intersections of identity.
+}
+
 \section{Modelling}\label{sec:mtl_modelling}
 For the experiments conducted, I only use one form of tokens to allow for an examination of the impact of the auxiliary tasks rather than the impact of tokenisation.
 I choose to represent all documents as their Byte-Pair encoded representations as these minimise the number of out-of-vocabulary tokens as this representation retains competitive performances in \cref{chap:liwc}.
