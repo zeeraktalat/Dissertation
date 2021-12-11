@@ -29,6 +29,7 @@ Thus modelling abuse using distinct tasks can be approached in two distinct mann
 Here I take the latter approach, developing a MTL model that considers each task simultaneously and distinctly from all other tasks (see \cref{sub:mtl} for more details on how MTL functions).
 I select a MTL modelling approach over an ensemble approach as optimising an ensemble requires optimising $n$ entirely distinct models, one for each task, and a final model that considers the outputs of each model, MTL models on the other hand can be optimised such that a models is optimised to perform on its primary task, treating all auxiliary tasks as secondary.
 Moreover, as I use a hard-parameter sharing design for my MTL models, an additional benefit is that all auxiliary tasks act as regularisers, even if they are not directly beneficial to the primary task.
+\ZTedit{Thus, I seek to partially address \textit{RQ II} by asking \textit{RQ 3}: How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}
 
 Through the use of of MTL models, I find that non-abusive tasks as auxiliary can be beneficial to detecting all forms of abuse examined.
 In line with the results in \cref{chap:liwc}, there is a difference in how helpful different abusive language datasets are for each other.
@@ -847,6 +848,12 @@ In the performances of all three main tasks, auxiliary task configurations that 
 This may be because forms and phrasings in abusive, and non-abusive, text that are infrequently occurring in the main task can be aided by the data provided in the abusive auxiliary tasks.
 This is particularly evidenced through the improvements along the \texttt{precision} score, meaning that using abusive language detection auxiliary tasks can minimise the number of false negatives that the model predicts.
 These increases in the \texttt{precision} scores also positively affect the \texttt{F1-score}s, although these are often hampered by a lower \texttt{recall} score.
+\ZTedit{The lower performance in terms of recall is somewhat surprising, as one might imagine that the inclusion of more abusive data would often mean that there is an improvement along the lines of recall.
+However, as I retain the class distribution in the different splits of the dataset and shuffle the order of batches between each epoch, it may be that the same batches are frequently chosen and that when distinct batches are chosen, they do not, on aggregate, provide for enough new examples of abuse to provide a boost in terms of recall.
+Moreover, the weighting of each auxiliary task may provide an additional cause for this pattern, as each auxiliary task has an equal probability of being selected in a given configuration and not enough abusive samples are provided to the model to improve recall.
+Finally, this may also be due to using several different forms of abuse with distinct definitions of what constitutes abuse.
+Such disparate definitions and forms of abuse may provide competing signals to models on documents with a high degree of textual similarity.
+}
 While there appears to be a lesser impact of dataset size, likely because the number of epochs is fixed, so the larger datasets are not afforded the ability to contribute more by virtue of their size, the data source and dataset goals appear to influence the performances.
 This is apparent in all three main task settings but is particularly visible when the main task is \textit{Offence} detection.
 Here, \textit{Hate Speech} shares the same data source but has different annotation goals whereas \textit{Toxicity} shares in the dataset goals but the data has a different source.
