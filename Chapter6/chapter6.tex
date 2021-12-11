@@ -107,6 +107,12 @@ To answer the first question, I use the three main task datasets in turn as auxi
 Addressing the second motivation, I use a dataset labelled for sarcasm \citep{Oraby_sarcasm:2016}, a dataset labelled for the moral sentiment invoked by the text \citep{Hoover:2019}, and finally a dataset where documents are labelled for whether arguments are primarily based in emotion or in facts \citep{Oraby_factfeel:2015}.
 With the exception of the \textit{Moral Sentiments} dataset, all auxiliary task datasets contain between $~5,000$ and $~16,000$ labelled documents, while the \textit{Moral Sentiments} consists of $~35,000$ labelled documents.
 This spread of sizes of auxiliary task datasets allows for considering how auxiliary task dataset size impact the main task.
+\ZTedit{The choice of inclusion of each of these datasets rely on differing rationales.
+While some tasks that I include have been suggested in previous research others have not been previously been addressed.
+Those that have not previously been addressed are included because the theories that underlie them suggest that there may be a theoretical correlation that can be taken advantage of using MTL.
+For instance, the \textit{Moral Sentiments} dataset is based in theory from social psychology which seeks to describe the moral sentiments that are communicated in text documents, e.g. concerns relating to caring for others and concerns for not harming others.
+The inclusion criteria for auxiliary tasks that I use is then both motivated empirically, i.e. through findings from past research, and theoretically through the potential overlaps between the foundations of a given task and the abuse classification task.
+}
 
 \paragraph{Sarcasm}
 Previous work on hate speech detection \citep{Rottger:2021} has identified that sarcasm and irony can be contributing factors to misclassification from machine learning models as they take literally things that are communicated to be understood figuratively.
@@ -115,7 +121,8 @@ Through this auxiliary task, MTL models learn representations of how sarcasm is 
 Finally, through the use of this dataset, I explore how learning representations for sarcasm detection influences prediction of each operationalisation of detecting abuse.
 
 \paragraph{Argument Basis}
-Previous work on hate speech detection have suggested that many users who utter hate speech do so infrequently, suggesting that discriminatory speech may be produced in moments of carelessness and high emotionality \citep{Waseem:2016}. 
+Previous work on hate speech detection have suggested that many users who utter hate speech do so infrequently, suggesting that discriminatory speech may be produced in moments of carelessness and high emotionality \citep{Waseem:2016}.
+\ZTedit{Given that discriminatory speech may also be produced in moments of high emotionality, obtaining a representation within the model of whether a statement was made with a basis in emotion or fact may be a useful signal for identifying abuse.}
 Moreover, as is apparent from the motivations used by \citet{Garcia:2019} for using StormFront as a data source, white supremacists may seek to mask their discrimination behind the use and distortions of fact.
 Thus, whether hate is produced in the spur of the moment or is a part of a longer pattern, the basis upon which the argument is made, whether it is fact-based or based on emotion, may provide useful signals for learning to predict hate speech and abuse.
 To model the hypothesis that high emotionality may influence the production of abuse, I include the \textit{Argument Basis} dataset \citep{Oraby_factfeel:2015}.
@@ -127,6 +134,8 @@ Thus, this auxiliary task can provide insight into the question of whether learn
 \paragraph{Moral Sentiments}
 The \textit{Moral Sentiments} dataset is annotated for the vices and virtues represented along five different `factors': \texttt{Loyalty/betrayal}, \texttt{care/harm},\\ \texttt{fairness/cheating}, \texttt{authority/subversion} and \texttt{purity/degradation} \citep{Hoover:2019}.
 The authors of the dataset suggest that these five factors are likely to be represented in data that contains abuse, through their use of a subset of the \textit{Offence} dataset for annotation.
+\ZTedit{Moreover, identifying the moral factors may elicit information about the underlying assumptions and intents that speakers hold when they engage in the production of abuse.
+Thus, including the optimisation of moral sentiments in the optimisation of models for abuse detection, may provide contextualisation of a given speaker's intent when they do, or do not, produce abuse.}
 To explore this further, I use this dataset as an auxiliary task.
 While the impacts of moral sentiments on the \textit{Offence} dataset are likely beneficial, using this auxiliary task on other datasets allows for examining whether representing moral sentiments has a positive impact on other datasets labelled for abuse.
 
