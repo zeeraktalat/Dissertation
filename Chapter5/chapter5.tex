@@ -1120,7 +1120,9 @@ Additionally, the models optimised on the \textit{Offence} tend to perform well 
 
 \subsubsection{Computational costs}
 
-The final motivation for using LIWC representations over surface forms is the hypothesis that with a smaller vocabulary, the models will optimise faster, thus reducing the environmental impact of developing machine learning models for abuse detection.
+\ZTdelete{The final motivation for using LIWC representations over surface forms is the hypothesis that with a smaller vocabulary, the models will optimise faster, thus reducing the environmental impact of developing machine learning models for abuse detection.}
+\ZTedit{Reducing the size of the vocabulary may also have implications for time required to optimised models, which can have downstream effects on the environmental impacts of developing machine learning models for abuse detection.
+Here, I consider the impacts that using LIWC-based document representations have on optimisation time.}
 Figures \ref{fig:davidson_train_time} to \ref{fig:garcia_train_time} show the number of minutes taken for each model to optimised on each dataset with the error bars representing the standard deviation across $5$ runs.
 
 First, there is a predictable correlation with the complexity of the machine learning model and the time required to optimise a model, with the MLP models being the quickest to be optimised and the LSTM models taking the longest, with the exception of the CNN models optimised on the \textit{Hate Expert} dataset, where the LIWC CNN requires roughly twice as long as the LIWC LSTM to optimise (see \cref{fig:waseem_train_time}).
