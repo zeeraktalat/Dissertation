@@ -29,31 +29,31 @@ Finally, as datasets for hate speech detection frequently contain biases along r
 In the interest of curtailing the spread of online abuse, a large number of technical approaches have been considered in the ever-increasing body of research on the topic (please see \cref{chap:nlp} for a broad overview on the topic).
 Here, I focus on three different strands of research. 
 First, I briefly introduce the LIWC dictionary. 
-Second, I consider manual development of features for machine learning models, as it is necessary to form hypotheses for what might serve as indicators of abuse, on the basis of the dataset and problem in question. 
-Third, I examine neural network approaches for abusive language detection. 
+Second, I consider manual development of features for machine learning models, as it is necessary to form hypotheses for what might serve as indicators of abuse, on the basis of the dataset and problem in question.
+Third, I examine neural network approaches for abusive language detection.
 Finally, I consider the growing body of research devoted to examining the generalisability of computational models for abusive language detection. 
 I restrict my attention to studies in conducted on abuse in English as it is most pertinent to this work.
 
 \subsection{Linguistic Inquiry and Word Count}
 
 The Linguistic Inquiry and Word Count dictionary and software was initially developed by \citet{Pennebaker:2001} in an effort to address the issue of high disagreement and negative effects on well-being of judges, as they reviewed essays written on people's experiences of emotional upheaval. 
-In order to minimise such costs, \citet{Pennebaker:2001} turned to computationally counting words that were in $80$ ``psychology-relevant categories'' in order to gain an understanding of the emotional states and cognition of the authors at the time of writing. 
-By passing over a large body of text within a single document, e.g. personal essays, \citet{Pennebaker:2001} compute the percentage occurrence of each invoked category. 
+In order to minimise such costs, \citet{Pennebaker:2001} turned to computationally counting words that were in $80$ ``psychology-relevant categories'' in order to gain an understanding of the emotional states and cognition of the speakers at the time of writing.
+By passing over a large body of text within a single document, e.g. personal essays, \citet{Pennebaker:2001} compute the percentage occurrence of each invoked category.
 While there are some examples that appear clear cut, e.g. the categorisation of articles such as `a' and `the', other word classes, such as ``emotion word categories'' are more clearly subjective and require deeper human consideration \citep{Tausczik:2010}.
 Though LIWC was initially developed using long form texts, the version of the dictionary that I use in this dissertation is an expanded version that also used Twitter and ``blogs'' in the development of the dictionary \citep{Pennebaker:2015}.
 As such, though not originally intended for the use on short-form messages, LIWC has evolved with the rise of new forms of communication in efforts for the dictionary to accurately reflect language use in short-form documents.
 As LIWC was originally developed using long-form documents in the United States of America, the language that is reflected in the dictionary is predominately white American English and thus it excludes other languages and many dialects within American English.
-By such exclusion, the dictionary does not accommodate for different forms of communicating, in particular it is likely to only insufficiently cover the language use of a variety of marginalised communities. 
-Such a lack of recognition however has a benefit. 
-By not learning language patterns of e.g. African American English speakers who are disproportionately represented in the positive classes of several datasets for abuse \citep{Waseem:2018,Davidson:2019}, it is possible that models optimised on this representation are less likely to be biased against those groups. 
-Although such lack of recognition can have positive effects, such as lower false positive rate, the politics of not being recognised, as argued by \citet{Benjamin:2019} are not straightforward and the lack of recognition does not provide a guarantee that systemic harm will not occur. 
+By such exclusion, the dictionary does not accommodate for different forms of communicating, in particular it is likely to only insufficiently cover the language use of a variety of marginalised communities.
+Such a lack of recognition however has a benefit.
+By not learning language patterns of e.g. African American English speakers who are disproportionately represented in the positive classes of several datasets for abuse \citep{Waseem:2018,Davidson:2019}, it is possible that models optimised on this representation are less likely to be biased against those groups.
+Although such lack of recognition can have positive effects, such as lower false positive rate, the politics of not being recognised, as argued by \citet{Benjamin:2019} are not straightforward and the lack of recognition does not provide a guarantee that systemic harm will not occur.
 For instance, if systems developed to detect abuse did not recognise Multi-cultural London English due to vocabulary reductions, any abuse that was written in that dialect would not be recognised, leaving those users in harms way.
-Given that LIWC was developed using ``dictionaries, thesauruses, questionnaires, and lists made by research assistants'' \citep{Tausczik:2010} in a North American context, it is highly unlikely that word forms that differ from mainstream usage were included. 
+Given that LIWC was developed using ``dictionaries, thesauruses, questionnaires, and lists made by research assistants'' \citep{Tausczik:2010} in a North American context, it is highly unlikely that word forms that differ from mainstream usage were included.
 For instance, the commonly used `brotha' and `bruva' in North American and British contexts, respectively, are absent from the dictionary.
 \vspace{5mm}
 
-In this thesis, I utilise LIWC to provide the word categories that each word invokes, and rather than compute the overall word classes exhibited in a document, I use the LIWC categories of each word in a document as an alternative representation of the document from which percentages of word categories invoked can be recovered. 
-Thus, my approach diverges slightly in the goals of using LIWC, however it does not diverge in the method for obtaining information about the psychological state of the author.
+In this thesis, I utilise LIWC to provide the word categories that each word invokes, and rather than compute the overall word classes exhibited in a document, I use the LIWC categories of each word in a document as an alternative representation of the document from which percentages of word categories invoked can be recovered.
+Thus, my approach diverges slightly in the goals of using LIWC, however it does not diverge in the method for obtaining information about the psychological state of the speaker.
 
 \ZTedit{
 \subsubsection{Limitations of Psychometrics}
@@ -68,19 +68,19 @@ In particular, being a mixture of statistical correlations and human judgements 
 This is particularly evident in its lack of inclusion of terms that are particular to dialects within and outside of the United States of America.
 The creators of LIWC indeed caution a heavy reliance on the dictionary as a means to identify the mental and emotional states, arguing that it is in nature imprecise \citep{Tausczik:2010}.
 
-In the work described below, there is a heavy reliance on LIWC however it is not used to predict the emotional and mental states of the authors of given texts.
+In the work described below, there is a heavy reliance on LIWC however it is not used to predict the emotional and mental states of the speakers of given texts.
 Instead, I use it precisely because of its impreciseness and its highly limited expression, to gain a very rough alternate representation to the texts provided.
-While this limited expression does not allow for making judgements on the mental states of the authors, it does allow for an investigation into the potential of representing texts for abuse classification using a smaller vocabulary that does not rely on the structured (i.e. Part of Speech tags) but instead provides a rudimentary approximations of authors' subjectivities.
+While this limited expression does not allow for making judgements on the mental states of the speakers, it does allow for an investigation into the potential of representing texts for abuse classification using a smaller vocabulary that does not rely on the structured (i.e. Part of Speech tags) but instead provides a rudimentary approximations of speakers' subjectivities.
 }
 
 \subsection{Modelling}
 \subsubsection{Manually Selected Features}
 
-A large body of work has sought to use manually developed features for online abuse detection \citep[e.g.]{Davidson:2017,Waseem:2017,Wiegand:2019,Fortuna:2018}, showing performance boosts from using manually developed features such as the predicted author gender \citep{Waseem-Hovy:2016} or Part-of-Speech (POS) tags \citep{Davidson:2017}. 
+A large body of work has sought to use manually developed features for online abuse detection \citep[e.g.]{Davidson:2017,Waseem:2017,Wiegand:2019,Fortuna:2018}, showing performance boosts from using manually developed features such as the predicted speaker gender \citep{Waseem-Hovy:2016} or Part-of-Speech (POS) tags \citep{Davidson:2017}.
 The primary reasons for using manually crafted features is two-fold: First, by using manually crafted features it is necessary to have some understanding of the data at hand and some intuition about which features may distinguish the classes in the data from one another. 
 Second, as manual features are frequently used with models that don't use neural architecture, they allow for interpretable models, in the sense that one can often identify how each token contributed towards a final prediction. 
 Moreover, as features are often computationally fast to compute, the use of features along with their expressive interpretability, allow for quickly testing hypothesis surrounding online abuse and its nature.
-In a consideration of a handful of systems that employ some of the most frequently used features for the development of automated systems for detecting various forms of online abuse, distinct modelling choices, features and rationales for their use become prominent. 
+In a consideration of a handful of systems that employ some of the most frequently used features for the development of automated systems for detecting various forms of online abuse, distinct modelling choices, features and rationales for their use become prominent.
 Here I provide a brief overview of prominent features; how they are used, including which models and feature weighting schemes they are used with; and the explicit and implicit rationales for the use of each feature.
 
 First, the most common feature used, and rarely used on its own, is a Bag-of-Words (BoW) \citep{Fortuna:2018,Davidson:2017}, where each token in a document is treated as independent from the remainder of the document. 
@@ -110,8 +110,6 @@ In these studies, LIWC has been used in conjunction with other features such as 
 This use of LIWC, similar to the motivations for its use in this chapter, relies on an assumption that the mental states of the speaker and the interpretations of readers will relay information on the intention of the speaker to cause offence.
 For instance, \citet{Nina:2018} compute the percentages of emotions that are expressed in abusive documents in efforts to identify correlations between impassioned speech and abuse, asserting an intuition that abusive speech is likely to occur in individual moments dominated by emotion rather than rationality.
 A position that \citep{Waseem:2016} argue is likely as they find that considering the top $100$ most frequently occurring tokens, ranked using Term Frequency - Inverse Document Frequency (TF-IDF), does not aid in the prediction of hate speech, suggesting that in many cases it may be a question of moments of abuse rather than consistently abusive people.
-
-\ZTcomment{Add text on dimensionality reduction here}
 
 All features must be weighted, either through raw counts or their relative frequency.
 One such frequently used weighting scheme is TF-IDF which weights features by their relative frequency in the corpus \citep{Fortuna:2018}, assigning higher weight to the features that are rare corpus-wide and lower weights to those that common.
@@ -154,8 +152,8 @@ However, this approach is a laborious one as it requires the researchers to manu
 
 \vspace{5mm}
 
-In this chapter, we take inspiration from the use of manually crafted features as a way to provide testable hypothesis while departing from the notion of feature generation.
-Specifically, we hypothesise that LIWC categories can provide deep information for predictive modelling that can allow for high performance in spite of token sparsity when using neural network methods.
+In this chapter, I take inspiration from the use of manually crafted features as a way to provide testable hypothesis while departing from the notion of feature generation.
+Specifically, I hypothesise that LIWC categories can provide deep information for predictive modelling that can allow for high performance in spite of token sparsity when using neural network methods.
 
 \subsubsection{Neural Networks}\label{sec:liwc_nn}
 Though the earliest models for the tasks were predominately linear models that used manually generated features \citep{Waseem-Hovy:2016,Davidson:2017,Warner:2012} more recent work has been dominated by the development of neural network based models for automated abuse detection, posting ever-evolving State-of-the-Art models and classification performances \citep[e.g.]{Park:2017,Badjatiya:2017,Zimmerman:2018,Stoop:2019,Isaksen:2020}.
@@ -178,7 +176,7 @@ First, \citet{Kolhatkar:2020} acts as a one-step classifier whereas the architec
 Second, \citet{Kolhatkar:2020} only acts on documents tokenised into words and punctuation whereas \citet{Park:2017} propose a CNN that takes documents tokenised into words and punctuation in addition to documents tokenised into characters.
 \citet{Park:2017} show that through the use of a one-step CNN optimised on word and character input, they achieve a performance boost obtaining a F1-score of $0.827$ on the datasets proposed by \citet{Waseem-Hovy:2016} and \citet{Waseem:2016}, though the performance boost is lost once a two-step hybrid CNN is used.
 
-As CNNs build feature mappings by passing over the data using filters, they come with certain assumptions built into them. 
+As CNNs build feature mappings by passing over the data using filters, they come with certain assumptions built into them.
 As researchers define the number of filters and the stride size, they also define the range, in terms of token order, within which the is given leave to identify token interactions.
 The implication of this is then that there will likely be some, potentially overlapping, ranges that the models learn patterns from.
 Depending on how researchers define these, the models will develop feature mappings corresponding to the ranges provided.
@@ -432,7 +430,7 @@ To address the issue of the model over-fitting the data, either by identifying s
 To address the issues of exploding and vanishing gradients, I employ gradient clipping \citep{Bengio:1994}, to normalise the value of the gradients in the optimisation procedures.
 
 I use a single optimisation procedure for all models to control the influence of confounding factors in the optimisation process.
-The models are given data, which they iterate over in a pre-defined number of epochs, shuffling the dataset between each epoch. 
+The models are given data, which they iterate over in a pre-defined number of epochs, shuffling the dataset between each epoch.
 Within each epoch, batches of the data through are passed through the model for prediction during optimisation.
 The loss following the model performance is then back-propagated through model, updating the internal representation in the process.
 This process is repeated for the assigned maximum number of epochs, or the model triggers the early stopping \citep{Prechelt:1998} criteria, which is that the computed loss on the validation set has been strictly increasing for at least $15$ epochs.
@@ -441,14 +439,14 @@ To be able to speak to the optimisation time, I start a timer when the model opt
 I repeat this process for at least $200$ unique trials for each model and dataset combination and use the \texttt{F1-score} on the validation set to identify the best configuration of hyper-parameters.
 Once the best hyper-parameters are selected, I rerun the models with $5$ different random seeds and obtain these models' performance on all evaluation sets, that is the in-domain test for the dataset the models are trained on and the out-of-domain evaluation sets from the remaining datasets.
 
-In efforts to identify the best hyper-parameters without performing a grid-search of all possible combinations, I turn towards Bayesian Hyper-Parameter Tuning \citep{Neal:1996}. 
-Briefly, Bayesian Optimisation allows for estimating the best hyper-parameters for a model through a series of trials with different hyper-parameter settings. 
+In efforts to identify the best hyper-parameters without performing a grid-search of all possible combinations, I turn towards Bayesian Hyper-Parameter Tuning \citep{Neal:1996}.
+Briefly, Bayesian Optimisation allows for estimating the best hyper-parameters for a model through a series of trials with different hyper-parameter settings.
 I use the implementation of Bayesian Hyper-Parameter Optimisation offered through \citet{Wandb} and set the objective of the hyper-parameter optimisation to maximise the macro \texttt{F1-score} on the development data (please refer to \cref{sub:bho} for more detail).
 
 The parameters that I perform the optimisation for varies across the different model types as they require different hyper-parameters to be defined. 
 A set of hyper-parameters are constant across models: the size of mini-batches provided to the model for optimisation, the learning rate, the number of epochs, and the embedding size. 
 For each dataset and model type, I perform at last $200$ trials with different parameter settings, leading to choosing a final set of hyper-parameters that I run with five different random seeds.
-The values for the learning rate are sampled from a uniform distribution while the batch size and number of epochs to optimise for are sampled from a categorical distribution. 
+The values for the learning rate are sampled from a uniform distribution while the batch size and number of epochs to optimise for are sampled from a categorical distribution.
 More generally, the values for all hyper-parameters, asides from dropout and the learning rate are sampled from a categorical distribution.
 
 \begin{itemize}
@@ -459,8 +457,8 @@ More generally, the values for all hyper-parameters, asides from dropout and the
 
 \subsubsection{Multi-Layered Perceptron}
 
-The first neural architecture that I implement is a Multi-Layered Perceptron. 
-I choose this model as it is the simplest form of a neural network and thus well suited for an initial investigation into the feasibility of neural network approaches for the LIWC-based representations. 
+The first neural architecture that I implement is a Multi-Layered Perceptron.
+I choose this model as it is the simplest form of a neural network and thus well suited for an initial investigation into the feasibility of neural network approaches for the LIWC-based representations.
 The MLP architecture that I use also lays the basis for the architectures for all other neural network based models in this chapter. 
 The network consists of an embedding input layer, a hidden layer, an output layer, and a softmax layer which produces the probabilities for each class. 
 I subject the model's representation to a dropout layer and a non-linear activation function between the input layer and hidden layer, and the hidden and output layer.
@@ -878,7 +876,7 @@ Moreover, as loss values most frequently are small, I display the losses on a  l
 \end{figure}
 
 In observing the \texttt{F1-score}s on the validation sets in \cref{fig:davidson_dev_f1,fig:wulczyn_dev_f1,fig:waseem_dev_f1,fig:waseem_hovy_dev_f1,fig:garcia_dev_f1}, a general pattern emerges in which most models, regardless of input type, display similar learning curves.
-There are however some notable exceptions to this rule. 
+There are however some notable exceptions to this rule.
 One such exception can be observed in \cref{fig:davidson_dev_f1}, where the LIWC-based CNN displays volatile performances throughout the entire optimisation procedure.
 Another exception can be observed in \cref{fig:waseem_dev_f1}, where the BPE based MLP model starts with a low performance, but increasingly improves until the final few epochs, where the model predictions become very volatile and ultimately triggers early stopping with a large drop in performance.
 In addition to these two exceptions, the models that are optimised for the \textit{StormFront} dataset (see \cref{fig:garcia_dev_f1})  in which three patterns emerge: first, there are some models that show a large variability in their performances from epoch to epoch, these models tend to trigger early stopping at an early stage; second, there are models that show a smaller degree of variability in classification performance as the model is optimised, but as they pass through the epochs, the model performance steadily increases and the variability in performances decreases; and third, there are models that obtain a high score early in the optimisation procedure and trigger early stopping at an early stage.
@@ -1312,8 +1310,8 @@ In this chapter, I do not make use of pre-trained embedding layers \citep{Park:2
 I avoid these as they are not compatible with the LIWC vocabulary and thus would not be applicable to the core questions in this chapter.
 
 Addressing the second aim of this chapter, to investigate the implication of using LIWC to represent documents on the computational, and thus environmental costs of developing machine learning models, show that optimisation time of neural network models has a relation to the size of the surface-token vocabulary size and that models that make use of LIWC can provide competitive in-domain results and, in some instances out-perform on out-of-domain evaluation sets. 
-Moreover, I find that the question of whether the time consumed by LIWC-based modelling, whether it is less or more than surface token-based models, can be reframed as a question of in-domain validity or generalisability onto an unseen sample. 
-As the goal for machine learning models is ultimately to generalise onto unseen data where the distributions of data may not mirror those that the models have been optimised on, LIWC-based document representations may prove to be a valuable direction for future work, as it optimises models to identify patterns in cognitive processes and the emotional state of the author and the output labels, while reducing the number of tokens that can act as confounding factors.
+Moreover, I find that the question of whether the time consumed by LIWC-based modelling, whether it is less or more than surface token-based models, can be reframed as a question of in-domain validity or generalisability onto an unseen sample.
+As the goal for machine learning models is ultimately to generalise onto unseen data where the distributions of data may not mirror those that the models have been optimised on, LIWC-based document representations may prove to be a valuable direction for future work, as it optimises models to identify patterns in cognitive processes and the emotional state of the speaker and the output labels, while reducing the number of tokens that can act as confounding factors.
 
 The results in this chapter have several implications for research into detecting online abuse.
 First, the positive results using LIWC suggests that thinking carefully about document representation and vocabulary reduction can have beneficial outcomes, in particular for out-of-domain performance.
