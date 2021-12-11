@@ -1323,4 +1323,14 @@ Therefore I plan to address these questions in future work by using pre-trained 
 
 \ZTedit{
 \section{Summary}
+In this chapter, I sought to examine how large scale reductions in the vocabulary space using LIWC-based document representations influence computational modelling of content moderation technologies in efforts to address \textit{RQ II}: how computational methods can be used to address issues that result in downstream marginalisation caused by content moderation technologies.
+In this way, I sought to address the concerns of automated content moderation models over-fitting to individual tokens, which has a large impact on marginalised communities \citep{Dias:2021}, I examine a method to drastically reduce the vocabulary space in order to prevent over-fitting.
+Using LIWC to represent documents, I found that reducing the vocabulary strongly shifted the distribution of tokens from unique to each class to being shared across the classes, thus also limiting the number of tokens to which models can over-fit.
+Moreover, I find that models optimised on LIWC-based document representations allow for reasonable in-domain and out-of-domain performance.
+The performance of models appears to have a correspondence to the size of the dataset used for optimisation and the annotation guidelines.
+This pattern then suggests that using LIWC-based representations can allow for encoding the cultural specificities of similar annotation frameworks.
+This further suggests that moving between different value systems, and notions of respectability will not improve on the results obtained using surface form representations.
+In spite of this, the results I obtain in this chapter suggest that using very rough and error-prone information on the emotional and mental states of speakers can provide for approximations that can be useful for abuse detection.
+However, reducing the vocabulary space does not have strong implications for the time required to optimise models, perhaps due to the greater proportion of shared tokens.
+The implication here then is that using LIWC does not have a strong benefit in terms of environmental impacts of global climate change.
 }
