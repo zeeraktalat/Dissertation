@@ -876,7 +876,7 @@ I contrast the use of these resources with resources that are developed for clas
 Finally, I examine whether there are synergies between datasets developed for detecting abuse and datasets developed to predict other constructs that are conducive towards improved in-domain classification performance for the main task.
 
 Through the use of MTL, I show that machine learning models developed for detecting abuse can benefit from using auxiliary task datasets.
-In studying the first question, how other abuse detection datasets impact performance on the main task, when they are used as auxiliary tasks, I find that datasets that 1) share in the goals of the main task dataset, or 2) are sampled from the same data source, even with disparate dataset goals positively influence the performance of neural machine learning models on the main task.
+In studying \ZTdelete{the first question,} how other abuse detection datasets impact performance on the main task when they are used as auxiliary tasks, I find that datasets that 1) share in the goals of the main task dataset, or 2) are sampled from the same data source, even with disparate dataset goals positively influence the performance of neural machine learning models on the main task.
 The former condition further provides support for the findings in \cref{chap:liwc} where I identified that common dataset goals allow for better generalisation.
 Rather than provide for better generalisation from one task to another, I find in this chapter that different datasets with similar goals can provide be used in a multi-task setting to improve the in-domain classification results for one another.
 The latter observation can be understood through the aims and purposes of the MTL framework.
@@ -884,14 +884,14 @@ MTL operates with the express notion that distinct tasks may share inherent late
 Where language production on online platforms is created under restrictions put in place by the platforms and the cultures of communication that are fostered on the platforms.
 Thus, through using auxiliary tasks for abuse where the data is sourced form the same platform(s), an MTL model can optimise representations of the particularities of communication on the platform(s) in question, thus gaining a representation that can yield improvements in the performances of the main task.
 
-In addressing the second question, how data developed for tasks that are not directly related to abuse detection can impact the performance of abuse detection models, I find that such tasks can aid in the classification capabilities of abuse detection models, when the choice of tasks is informed by specific questions surrounding the primary task.
+In addressing \ZTdelete{the second question,} how data developed for tasks that are not directly related to abuse detection can impact the performance of abuse detection models, I find that such tasks can aid in the classification capabilities of abuse detection models, when the choice of tasks is informed by specific questions surrounding the primary task.
 In particular, I find that the tasks of identifying whether an argument is made on an emotional or factual basis, detecting sarcasm, and detecting the moral sentiments all have a beneficial impact across the different main task settings.
 While I find that all non-abusive auxiliary tasks that I experiment with are beneficial for some forms of abuse, I also find that not all such tasks are equally well suited for all forms of abuse.
 For instance, the \textit{Argument Basis} auxiliary task does not perform well enough to be included in the experiments, when it is used as the only auxiliary task to the \textit{Hate Speech} main task.
 Similarly, when the main task is the \textit{Offence} task, the \textit{Moral Sentiment} auxiliary task does not perform well enough on the validation data to warrant inclusion in the experiments.
 % Thus, the selection of auxiliary tasks should be informed by the intuition of the designer of the machine learning experiment in addition to the empirical performance of a model.
 
-For the third question pertaining to how the abusive and non-abusive auxiliary tasks interact when used in conjunction with each other, the results obtained in this chapter are clear.
+\ZTdelete{For the third question pertaining to}\ZTedit{Finally, considering} how the abusive and non-abusive auxiliary tasks interact when used in conjunction with each other, the results obtained in this chapter are clear.
 I find that there are clear benefits to the main task from using a combination of abusive and non-abusive auxiliary tasks with several task configurations that include abusive and non-abusive auxiliary tasks posting highly competitive scores with other top performing models, if not outperforming all other task configurations outright.
 By identifying abusive and non-abusive auxiliary tasks that perform well in the case where there is only one auxiliary task, it is possible for a model that uses them can benefit from the selected task to post performances that improve on the scores achieved in the single-auxiliary task setting.
 Moreover, as multiple auxiliary tasks are used, MTL-based models also learn representations of each task, thus they come to closer reflect how people speak.
@@ -908,3 +908,18 @@ Beyond a consideration of different auxiliary tasks there are also several model
 First, from my experiments I find that the models tend to prefer the largest batch size that I experiment with, thus an investigation on the impacts of larger batch sizes is warranted.
 The question of how to weight the different auxiliary tasks and the frequency with which batches are selected from each also warrants further investigation as all auxiliary tasks are unlikely to contribute equally, thus identifying dynamic methods for weighting each task or setting the frequency with which batches are chosen from each task may also provide an avenue for improved performances.
 Finally, in my experimental models I do not use pre-trained embedding layers in my models, however the use of these have been shown to achieve high classification performances in single-task neural networks, thus the use of pre-trained embedding layers may allow for further improvements of the classification scores achieved.
+
+\ZTedit{
+\section{Summary}}
+\ZTedit{
+  In this chapter, I have sought to examine multi-task learning as a method to incorporate greater context into machine learning models than what is provided in only datasets for abuse.
+  Thus, I have attempted to address \textit{RQ II} by examining which auxiliary tasks provide for useful contextualisation for abuse detection.
+  That is, I have sought to answer \textit{RQ 3}: How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?
+
+  From my experiments, I find that multi-task learning can be a useful technique for abuse detection due to the joint representation of multiple tasks that is encoded in the model.
+  I further find that selecting the appropriate auxiliary tasks is heavily dependent on the primary task dataset and the goals the authors had in developing the resource.
+
+  These findings make clear the potential for contemporaneous machine learning techniques to more closely embody the subjectivities of an individual.
+  Returning briefly to the infrastructure of content moderation and content moderation as a third party reader, the proximity between the values held by the third party reader and the recipient is strongly indicative of the abilities of content moderation infrastructures to more accurately represent a given recipient.
+  Multi-task learning for hate speech detection, and more generally abuse detection, then offers a means through which practitioners can begin to develop machine learning models that more closely represent the readers whose behalf they are purported to act on behalf of.
+}
