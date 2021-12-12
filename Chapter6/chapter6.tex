@@ -20,7 +20,7 @@ Similarities between distinct related tasks pose several interesting questions.
 First, is it best to create multiple annotations, either through re-annotating previously published data or creating an entirely dataset, such that each task is addressed in all of the data or should one try to develop modelling architectures that are overlapping?
 Second, how much data from each task is necessary to annotate, in the case of creating multiple annotations for each document; or, if the task is approached in terms of developing modelling architectures, how much of the data from each task should be used in optimising the model, or alternatively, how should the data from each task be weighted to gain the largest modelling improvements?
 
-In this chapter, I approach the question of overlapping data through a question of developing a modelling approach that aims to use potential overlaps between each task.
+In this chapter, I approach the question of overlapping data operationalised through a question of developing a modelling approach that aims to use potential overlaps between each task.
 Specifically, I explore the use of four tasks labelled for different forms of abuse and four non-abusive auxiliary tasks.
 The auxiliary tasks that are not labelled for abuse are: sarcasm detection \citep{Oraby_sarcasm:2016}, predicting moral sentiments \citep{Hoover:2019}, and predicting whether an argument is primarily based in facts or feelings \citep{Oraby_factfeel:2015}.
 As each task may be related only in terms of the abstraction required to understand the meaning of a given text, creating mappings between different classes from different tasks, e.g. sarcastic and abusive, is a complex task that in some cases may not be possible, as one class may not conveniently fit others, e.g. mapping moral sentiments to abuse and vice versa.
@@ -143,7 +143,7 @@ While the impacts of moral sentiments on the \textit{Offence} dataset are likely
 \paragraph{Hate Expert}
 Finally, as learned from \cref{chap:liwc}, some datasets for abusive language appear to be more closely related to others.
 For this reason, I include the \textit{Hate Expert} dataset as an auxiliary task dataset to verify this finding and to provide a dataset to help address the poor representation of hate speech in the classes.
-In \cref{chap:liwc} I binarise this dataset, here on the other hand I retain all $4$ classes in the dataset. 
+In \cref{chap:liwc} I binarise this dataset, here on the other hand I retain all $4$ classes in the dataset.
 In the expert annotated data, the four classes have a highly imbalanced distribution, the largest class being the negative class consuming $84\%$ of the data, while the second largest class `sexism' consumes $13\%$ of the data, the `racist' class consuming $1.4\%$ of the data and the final class, `both racist and sexist' contributing with $0.7\%$ of the data.
 
 Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ documents means less than $50$ documents are labelled for the minority class, and given that I create stratified splits for the training ($80\%$), validation ($10\%$), and evaluation ($10\%$) sets, less than $40$ documents remain in the training set.
@@ -696,7 +696,7 @@ For the \texttt{F1-score}, no models outperform the SVM baseline, though all mod
 The strongest performance here is obtained by an auxiliary task combination where two out of three auxiliary tasks are non-abusive in nature.
 This performance gain is obtained through an increase in the experimental model's ability in \texttt{precision} at the cost of a slightly lower \texttt{recall} score.
 Although, on their own, none of the non-abusive tasks obtain the highest performances out of all auxiliary task configurations, they frequently post highly competitive scores with the all other configurations.
-This suggests that some of the improvements obtained when using multiple auxiliary tasks is obtained through the information of non-abusive information encoded into the shared layer of the model.
+This suggests that some of the improvements obtained when using multiple auxiliary tasks is obtained through the \ZTdelete{information}\ZTedit{use} of non-abusive information encoded into the shared layer of the model.
 
 Aligning with the insights on dataset mappings identified in \cref{chap:liwc}, the \textit{Hate Expert} dataset provides for boosted predicted power when used in conjunction with a non-abusive auxiliary task.
 Somewhat surprisingly, the \textit{Offence} auxiliary task equally provides boosts in performance.
@@ -836,7 +836,7 @@ Although no auxiliary task setting outperforms the best performing baseline, the
 The best performing auxiliary task setting uses the \textit{Hate Speech} and the \textit{Offence} auxiliary tasks, that is all of the abusive language detection tasks under consideration and it outperforms the MLP baseline by $0.0905$.
 The worst performing auxiliary task setting outscores the MLP baseline by $0.0438$ and uses the \textit{Sarcasm} and the \textit{hate Speech} auxiliary tasks.
 
-In relation to the classification scores achieved by the best model for the \textit{Toxicity} dataset in \cref{chap:liwc}, the best performing model selected by highest \texttt{F1-score} is a LSTM model that uses word tokens as its input, score, obtains $0.9510$ in \texttt{accuracy}, $0.8047$ in \texttt{precision}, $0.9058$ in \texttt{recall}, and $0.8357$ in \texttt{F1-score}.\footnote{The scores here are the mean score over five different configurations of the random seeds.}
+In relation to the classification scores achieved by the best model for the \textit{Toxicity} dataset in \cref{chap:liwc}, the best performing model selected by highest \texttt{F1-score} is a LSTM model that uses word tokens as its input\ZTdelete{, score,} obtains $0.9510$ in \texttt{accuracy}, $0.8047$ in \texttt{precision}, $0.9058$ in \texttt{recall}, and $0.8357$ in \texttt{F1-score}.\footnote{The scores here are the mean score over five different configurations of the random seeds.}
 Thus, the model from \cref{chap:liwc} is outperformed, in terms of \texttt{accuracy}, \texttt{precision} and \texttt{F1-score}, as the best performing auxiliary task settings, ranked by \texttt{F1-score}.
 This further demonstrating the space for MTL models to improve performance on single-task models.
 
