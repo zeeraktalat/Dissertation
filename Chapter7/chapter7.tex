@@ -7,15 +7,27 @@
 
 \chapter[State of the Art White Supremacy: On Disembodiment in the Machine Learning Pipeline]{State of the Art White Supremacy: On Disembodiment in the Machine Learning Pipeline\footnotemark{}}\label{chap:disembodied}
 \chaptermark{State of the Art White Supremacy}
-\footnotetext{This chapter contains elements from a collaboration with Smarika Lulz, Joachim Bingel, and Isabelle Augenstein. The associated paper is currently under review in the journal Computational Linguistics. The title is taken from a conversation between Abeba Birhane, Chris Dancy and me, where Chris offered the term State-of-the-Art White Supremacy.}
+\footnotetext{This chapter contains elements from a collaboration with Smarika Lulz, Joachim Bingel, and Isabelle Augenstein. The associated paper is currently under review in the journal Computational Linguistics. The title is taken from a conversation between Abeba Birhane, Chris Dancy and myself, where Chris offered the term State-of-the-Art White Supremacy.}
 
 \begin{citequote}{\citet[p.110-111]{Lorde:1984}}
 What does it mean when the tools of a racist patriarchy are used to examine the fruits of that same patriarchy?  It means that only the most narrow parameters of change are possible and allowable.
 \end{citequote}
 
-In each of the previous chapters we have identified different areas of concern for the use of models and data. From the constraints of document transformation in \autoref{chap:liwc} to the influence of multiple data sources and prediction tasks in \autoref{chap:mtl}. In this chapter, I theorise over the core sources of these issues: the context within which models and exist, the models and the data.
-To describe these issues, I invoke the metaphor of the body in three different ways: first, pertaining to the physical material \textit{human body} that we each possess; second, to signify a collection of observations and data points \textit{created by humans}; third, to refer subjective embodiments, that is how \textit{social and cultural meaning} is embedded in the human experience and derivatives of it, i.e. data created by humans.
-Through a consideration of both data generation processes and the modelling stages of the machine learning pipeline, I then apply my theory to the models that I have described in this dissertation in addition to providing a critique of these technologies. 
+In each of the previous chapters we have identified different areas of concern for the use of models and data.
+From the constraints of document transformation in \autoref{chap:liwc} to the influence of multiple data sources and prediction tasks in \autoref{chap:mtl}.
+\ZTedit{
+  In each of these chapters, I sought to find means to make computational methods more closely come to represent the subjectivities and contexts of speakers from within frames of existing computational methods.
+  As the chapters collectively point to, there is an inherent limitation to what is achievable within computational pipelines in which the entire process, from dataset creation to modelling, is not developed while respecting human subjectivities.
+  Specifically, the need for finding ways to approximate contexts and subjectivities highlights how the current machine learning pipeline does not specify how subjectivities are embedded in these technologies.
+  Understanding precisely where such shortcomings arise in the machine learning pipeline requires a deeper consideration of human embodiments within it.
+  Moreover, it requires a deeper consideration of how machine learning, as an academic practice, presents itself and disembodies itself from the subjective human experiences that machine learning purports to be developed for.
+  For this reason, I turn to considering how human embodiment and disembodiment happens throughout the machine learning pipeline.
+  Here, I return to \textit{RQ I} by asking how subjective experiences are embodied in the machine learning pipeline (\textit{RQ 4}) and what the implications of this are (\textit{RQ 5}).
+}
+In this chapter, I then theorise over the core sources of these issues: the context within which models and exist, the models and the data.
+To describe these issues, I invoke the metaphor of the body in three different ways: first, pertaining to the physical material \textit{human body} that we each possess; second, to signify a collection of observations and data points \textit{created by humans}; and third, to refer subjective embodiments, that is how \textit{social and cultural meaning} is embedded in the human experience and derivatives of it, i.e. data created by humans.
+\ZTdelete{Through a consideration of both data generation processes and the modelling stages of the machine learning pipeline, I apply my theory to the models that I have described in this dissertation in addition to providing a critique of these technologies.}
+\ZTedit{I then apply my theory to the computational models in \cref{chap:liwc,chap:mtl} and apply a critique of these techologies through a consideration of the data generation process and the modelling stages of the machine learning pipeline.}
 Finally, I discuss the implications of current practices in machine learning and argue that for machine learning for social prediction tasks to achieve their goals, we must radically reconsider current approaches to better align with the stated aims.
 
 \section{Disembodied Machine Learning}
