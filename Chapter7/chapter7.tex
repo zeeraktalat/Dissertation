@@ -222,15 +222,66 @@ However, as I do not optimise my models on any tasks that seek to make predictio
 %}
 
 \section{Discussion}
+\ZTcomment{Asked to update and make less terse}
+\ZTcomment{Make two additional points:}
+\ZTcomment{1. How to move away from the focus on designing systems for the designers of the systems: e.g. participatory design - also think about how to make it not predatory.}
+\ZTcomment{2. Add a consideration of the political economy of content moderation and machine learning - as a way to address the large focus on the designers of systems and contextualise their role in the social systems machine learning systems are embedded in.}
+\ZTcomment{Add an argument for the implications this has for computational modelling - where do we go from here, why is this important, what is the impact of my considerations?}
 
-Given that subjective choices and biases masquerading as disembodied `objective' positions permeate through the machine learning pipeline, the quest for objectivity and bias-free machine learning becomes redundant. In fact, the search for objectivity in the pipeline creates a veneer of social progress that may cause further harm to already marginalised communities by obscuring and entrenching the dominance of certain bodies over others. Without taking the unique embodiments of all data subjects into account, this imaginary of fair only serves as a justification of maintaining oppressive structures that are inherently harmful and reductive. Considering the question of hate speech detection, developing automated tools that are applied to a general population makes inherent decisions on behalf of the user-group. As such decisions are codified through the machine learning pipeline, they are presented as disembodied and objective decisions on what constitutes hate speech. Through such codification of white perspectives on respectability, attempts to address `bias' only serve to justify existing oppressive structures.
+Given that subjective choices and biases masquerading as disembodied `objective' positions permeate through the machine learning pipeline, the quest for objectivity and bias-free machine learning becomes redundant.
+\ZTedit{This redundancy is made apparent as all choices in the machine learning development pipeline embody the subjective experiences of all people who are a part of the pipeline, from people whose data is gathered, to annotators and the designers of the pipelines.
+As these experiences are embedded in the system, so slips away the illusion of `objectivity' and `neutrality' of the machine learning technologies.}
+In fact, the search for objectivity in the pipeline creates a veneer of social progress that may cause further harm to already marginalised communities by obscuring and entrenching the dominance of certain bodies over others.
+\ZTedit{Such harm is instituted by providing a veneer of more just, or fair, machine learning technologies that nonetheless perform institutional violences upon all who are externalised by the development process and the subjective experiences that lie at the heart of them.}
+Without taking the unique embodiments of all data subjects into account, this imaginary of fair only serves as a justification of maintaining oppressive structures that are inherently harmful and reductive.
 
-Only by recognising the positionality of the designers of machine learning models can one account for what (and whom) ones own position and the models derived from it privilege and sanction, and the political consequences of these. As data permeates through the machine learning pipeline, a consideration of how data is embodied can empower the designer to answer specific questions that are embodied and mired in context. Such considerations allow designers to interrogate the contexts within which data are created and meaning is made at each step in the dataset creation process. It is through such recognition of context and embodiment that one can realise that as context change, so does the applicability data. 
-Further, only by such recognition of the deeply complex nature of embodiment and data can one hope to ask and ascertain which views the models privilege and which are subjugated. For building content moderation systems for hate speech and abuse, the designers of machine learning pipelines can ask how their own embodiments prejudice them to selectively sanction some speech patterns. Moreover, designers may want to ask themselves how such sanctions create downstream implications for the speech that is sanctioned.
+Considering the \ZTdelete{question}\ZTedit{task} of hate speech detection, developing automated tools that are applied to a general population makes inherent decisions on behalf of the user-group.
+\ZTedit{The decisions made by the third party judge, i.e. content moderation technologies, embed subjective experiences of the data subjects whose data has been stripped from the context it was created in, the annotators, and the designers of the technologies.}
+\ZTedit{However, as}\ZTdelete{As} such decisions are codified through the machine learning pipeline, they are presented as disembodied and objective decisions on what constitutes hate speech.
+\ZTedit{In this way, machine learning technologies embed normative socio-political positions on respectability and acceptability as I argued in \cref{chap:dirt}.
+These normative values come to be presented as `objective' through the disembodiments that occur in the machine learning pipeline.
+However, such notions of objectivity merely provide a thin veil over the subjective embodiments of the designers and annotators.
+With the vast majority of research on abusive language detection being developed for English in the global economic north \citep{Vidgen-Derczynski:2020}, the notions of respectability that are normative with respect white majoritarian countries and cultures.}
+Through such codification of white perspectives on respectability \ZTedit{masqueraded as objective}, attempts to address `bias' \ZTedit{in machine learning technologies for content moderation} only serve to justify existing oppressive structures \ZTedit{by further obscuring the subjectivities embedded in the systems}.
 
-Although there are methods with which we can move towards more localized machine learning models, what positions are given space remains a political question.
-It is only through wholly representing the context and embodiments of the data creator and the datum that one can hope to arrive at sufficiently localized models. Thus, rather than asking how to eliminate bias and subjective experiences from machine learning in the pursuit of objectivity, shifting the question to consider embodiments would ask us to reflect on the subjective experiences that are given voice. For hate speech detection, such reflections would have designers ask which groups to base their understanding of abuse and the subsequent annotations and models that are derived from it. Such a shift would then require us to ask and reflect upon which bodies' subjective experiences we need to account for to give voice to socially, and computationally, marginalised groups.
+As data permeates through the machine learning pipeline, a consideration of how data is embodied can empower the designer to answer specific questions that are embodied and mired in context.
+Such considerations allow designers to interrogate the contexts within which data are created and meaning is made at each step in the dataset creation process.
+It is through such recognition of context and embodiment that one can realise that as context change, so does the applicability data.
+Further, only by such recognition of the deeply complex nature of embodiment and data can one hope to ask and ascertain which views the models privilege and which are subjugated.
+For building content moderation systems for hate speech and abuse, the designers of machine learning pipelines can ask how their own embodiments prejudice them to selectively sanction some speech patterns.
+Moreover, designers may want to ask themselves how such sanctions create downstream implications for the speech that is sanctioned.
 
+Although there are methods with which we can move towards more localised machine learning models, what positions are given space remains a political question.
+It is only through wholly representing the context and embodiments of the data creator and the datum that one can hope to arrive at sufficiently localised models.
+Thus, rather than asking how to eliminate bias and subjective experiences from machine learning in the pursuit of objectivity, shifting the question to consider embodiments would ask us to reflect on the subjective experiences that are given voice.
+For hate speech detection, such reflections would have designers ask which groups to base their understanding of abuse and the subsequent annotations and models that are derived from it.
+Such a shift would then require us to ask and reflect upon which bodies' subjective experiences we need to account for to give voice to socially, and computationally, marginalised groups.
+
+Only by recognising the positionality of the designers \ZTedit{and annotators} of machine learning models \ZTedit{and data} can one account for what (and whom) ones own position, and the models derived from it privilege and sanction, and the political ramifications of these.
+\ZTedit{For these reasons, it is imperative that machine learning moves away from consolidating power in the designers and move towards development practices that are rooted in the participation of the people who will be subject to the models, i.e. the intended users of the models.
+Participatory design practices however can quickly turn predatory if the turn to participatory design principles does not also provide for a redistribution of power \citep{Kelly_2019}.
+Here, Sasha Costanza-Chock's \citeyearpar{Costanza-Chock_2018} work on design justice can provide a guide towards developing participatory design practices for machine learning systems.
+\citet{Costanza-Chock_2018} argue for design practices that centre the experiences and needs of the communities for whom the design practice is taking place.
+Specifically, \citet{Costanza-Chock_2018} argues that design practices should have ``sustainable, community-led and -controlled outcomes.''
+By working towards such goals, machine learning research can come develop processes and technologies that specifically cater to the communities for whom we are developing our technologies.}
+
+\ZTedit{
+\section{Summary}}
+\ZTedit{
+  In this chapter, I have sought to examine how subjective embodiments permeate through the machine learning pipeline in efforts examine the machine learning infrastructures that underpin contemporary content moderation technologies.
+  Thus, in this chapter I seek to examine \textit{RQ I} by examining how subjective embodiments are embedded into machine learning infrastructures and what the consequences of this are.
+  In this chapter, I then provide a reading of machine learning against the grain by critically examining how subjective embodiments become embedded within the machine learning infrastructure.
+  By performing this reading, I have used this chapter to examine the ways in which machine learning systems come to produce socially biased outcomes, such that machine learning research can move beyond the discriminatory practices that we have developed.}
+
+  \ZTedit{
+  Identifying processes for developing machine learning technologies that are not discriminatory is of particular importance to content moderation technologies, as these technologies currently produce discriminatory outputs in terms of censorship of marginalised communities (see \cref{chap:dirt} for further details).
+  The work that I have performed in this chapter, identifies specific ways in which machine learning, and machine learning for content moderation encodes the subjectivities that are widely read as social biases.
+  To address this concern, I propose that researches be aware of the specific ways in which they embed their subjectivities throughout the machine learning pipeline and consciously make decisions in the development process to ensure that the subjectivities that are embedded within the systems reflect the aims and the subjectivities of the people who that the content moderation systems are to be applied to.
+  Specifically, I suggest that researchers are mindful of their own subjectivities and the desired outcomes of the technologies and that research engages in a genuine efforts for participatory design by collaborating with the communities that technologies are developed for.
+  Moreover, I argue that the universalist notions applied in machine learning, and for the algorithmic detection of abusive language, contribute strongly to the ongoing marginalisation that machine learning systems perpetuate.
+  Finally, I argue that it is only by taking steps away from such universalist notions and towards co-developing systems with communities that are community-led and community-controlled that we can hope to overcome the issues of discriminatory systems and, in the case of content moderation, systems that do not censor marginalised communities.
+  systems that are community-led and -controlled that
+}
 %
 % \section{Machine Learning as a Conservative Practice}
 % \zw{Write about dominant and subjugated discourses for machine learning here; bring in that ML is a conservative practice}
