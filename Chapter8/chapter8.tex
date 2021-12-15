@@ -15,98 +15,131 @@
 In this dissertation I have sought to explore the content moderation infrastructures that are built for classifying textual abuse in online spaces.
 The contributions of the thesis are structured around four central themes:
 How the notions of ``healthy'' and ``toxic'' content are operationalised, the implications of such operationalisation and how these come to embody hegemonic imaginaries on respectability;
-how large vocabulary reductions, that represent the mental and emotional states of speakers rather than their words, influence the ability of models to classify in-domain and out-of-domain data;
-how different, seemingly related, tasks can be used to jointly optimise model representations to gain models that more closely come to reflect the contexts a given speaker is operating in when speaking;
+how large vocabulary reductions, that represent the mental and emotional states of speakers rather than their words influence the ability of models to classify in-domain and out-of-domain data;
+how different, apparently related, tasks can be used to jointly optimise model representations to gain models that more closely come to reflect the contexts a given speaker is operating in when speaking;
 and finally, how the subjective embodiments of data subjects and modellers alike are embodied in the machine learning pipeline and how these collectively come to privilege hegemonic discourses.
-These four distinct themes are connected through two over-arching questions: How does the human fit into abusive language technologies and how can machine learning models for content moderation come to more closely respect and represent their humanity?
-
-To adequately answer these questions, I address each theme in turn through a multi-disciplinary perspective that affords insights into the technical, social, and political dimensions of content moderation infrastructures for abusive texts.
-The contributions in this dissertation are thus in part of theoretical nature and in part of experimental nature.
-By examining the questions through theoretical and experimental lenses, I begin to uncover the political and technical complexities of content moderation infrastructures and obtain insights that are opaque when these questions are addressed purely theoretically or purely experimentally.
-The dissertation has been structured such that I start and finish with primarily theoretical contributions while the primarily experimental contributions constitute the middle of the thesis.
-I choose this structure to remain faithful to the machine learning pipeline for content moderation, addressing first definitional questions and then questions of modelling.
-Finally, I take a step back and reflect on the machine learning pipeline from start to an end.
-
-The research questions I address in this dissertation are:
-
+These four distinct themes are connected through two over-arching \ZTedit{research} questions: \ZTdelete{How does the human fit into abusive language technologies and how can machine learning models for content moderation come to more closely respect and represent their humanity?}
 \begin{center}
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
-    \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
-        \item{\textit{How are notions of ``toxicity'' operationalised in content moderation infrastructures and what are the socio-political implications of such operationalisations?}}
-        \item{\textit{How do modelling choices impact how computational models for content moderation learn and represent hegemonic notions of respectability?}}
-        \item{\textit{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}}
-        \item{\textit{What are the implications of using LIWC as input on model development in terms of optimisation time?}}
-        \item{\textit{What are the implications on generalisability of LIWC-based models?}}
-        \item{\textit{What is the impact of using auxiliary tasks that are non-abusive in nature for detecting specific forms of abuse?}}
-        \item{\textit{Does using different forms of abusive language detection tasks as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}
-        \item{\textit{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}
-        \item{\textit{How are the subjective embodiments embedded in the machine learning pipelines?}}
-        \item{\textit{Which processes in the machine learning pipeline are influenced by the subjective embodiments of the designers and people they rely on and how are they expressed?}}
-        \item{\textit{What are the implications of such subjective embodiments with regard to developing machine learning models?}}
-        \item{\textit{What are the implications of subjective embodiments on the goal of developing fair and equitable machine learning models?}}
+    \begin{enumerate}[start=1, label={\textbf{RQ \roman*}}]
+      \item\textit{\ZTedit{What technical and social factors are present in the socially discriminatory predictions of content moderation systems?}}
+      \item\textit{\ZTedit{In which ways can computational methods be used to address limitations that are influential in discriminatory outputs from computational modelling?}}
     \end{enumerate}
     \vspace{5mm}
 \end{minipage}
 \end{center}
 
-In \cref{chap:filter}, I address research questions $1$-$2$.
-In addressing RQ 1, I critique of how notions of ``toxicity'' are operationalised and employed through a consideration of of Mary \citet{Douglas:1966} work on social pollution.
-I argue that notions of ``toxic'' and ``healthy'' are operationalised within several socio-cultural contexts: that of the designers of the task, the contexts of the annotators, and the contexts of distinct modelling techniques.
+To adequately answer these questions, I address each theme in turn through \ZTedit{through multiple disciplines.
+This approach affords insights into the technical, social, and political dimensions of content moderation infrastructures for abusive texts.}
+\ZTdelete{a multi-disciplinary perspective that affords insights into the technical, social, and political dimensions of content moderation infrastructures for abusive texts.}
+The contributions in this dissertation are thus in part \ZTdelete{of theoretical nature and in part of experimental nature}\ZTedit{theoretical and in part experimental in nature}.
+By examining the questions through theoretical and experimental lenses, I \ZTedit{can} begin to uncover the political and technical complexities of content moderation infrastructures
+\ZTedit{Furthermore, this multi-disciplinary approach affords}\ZTdelete{and obtain} insights that are opaque when the questions are addressed purely theoretically or purely experimentally \ZTedit{approach}.
+The dissertation has been structured such that I start and finish with primarily theoretical contributions while the primarily experimental contributions constitute the middle of the thesis.
+I choose this structure to remain faithful to the machine learning pipeline for content moderation, addressing first definitional questions and then questions of modelling.
+Finally, I take a step back and reflect on the machine learning pipeline from start to an end.
+
+In efforts to answer \textit{RQ I} and \textit{RQ II}, I formulate sub-questions that ask the following directed research questions:
+\ZTdelete{The research questions I address in this dissertation are:}
+
+\begin{center}
+\begin{minipage}{0.9\textwidth}
+\vspace{5mm}
+    \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
+        \item{\textit{\ZTedit{How are notions of ``toxicity'' operationalised and modelled, and what are their socio-political implications for content moderation systems?}}}
+        \item{\textit{\ZTedit{What are the modelling implications of using LIWC to substitute the use of words and sub-words as input tokens?}}}
+        \item{\textit{\ZTedit{How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}}}
+        \item{\textit{\ZTedit{How are the subjective embodiments embedded in the machine learning pipelines?}}}
+        \item{\textit{\ZTedit{What are the implications of such subjective embodiments with regard to developing machine learning models?}}}
+        \item{\textit{\ZTdelete{How are notions of ``toxicity'' operationalised in content moderation infrastructures and what are the socio-political implications of such operationalisations?}}}
+        \item{\textit{\ZTdelete{How do modelling choices impact how computational models for content moderation learn and represent hegemonic notions of respectability?}}}
+        \item{\textit{\ZTdelete{Can LIWC provide a meaningful substitute to using words or sub-word tokens as input tokens and how is model performance affected by such a substitution?}}}
+        \item{\textit{\ZTdelete{What are the implications of using LIWC as input on model development in terms of optimisation time?}}}
+        \item{\textit{\ZTdelete{What are the implications on generalisability of LIWC-based models?}}}
+        \item{\textit{\ZTdelete{What is the impact of using auxiliary tasks that are non-abusive in nature for detecting specific forms of abuse?}}}
+        \item{\textit{\ZTdelete{Does using different forms of abusive language detection tasks as auxiliary tasks have a positive influence on model performance for specific forms of abuse?}}}
+        \item{\textit{\ZTdelete{How does combining abusive and non-abusive auxiliary tasks influence model performance on specific forms of abuse?}}}
+        \item{\textit{\ZTdelete{How are the subjective embodiments embedded in the machine learning pipelines?}}}
+        \item{\textit{\ZTdelete{Which processes in the machine learning pipeline are influenced by the subjective embodiments of the designers and people they rely on and how are they expressed?}}}
+        \item{\textit{\ZTdelete{What are the implications of such subjective embodiments with regard to developing machine learning models?}}}
+        \item{\textit{\ZTdelete{What are the implications of subjective embodiments on the goal of developing fair and equitable machine learning models?}}}
+    \end{enumerate}
+    \vspace{5mm}
+\end{minipage}
+\end{center}
+
+In \cref{chap:filter}, I address research question $1$.
+In addressing \textit{RQ 1}, I critique of how notions of ``toxicity'' are operationalised and employed through a consideration of of Mary \citet{Douglas:1966} work on social pollution.
+I argue that notions of ``toxic'' and ``healthy'' are operationalised within several socio-cultural contexts: \ZTdelete{that}\ZTedit{the context} of the designers of the task, the contexts of the annotators, and the contexts of distinct modelling techniques.
 These contexts, however are not reflected on in the process of developing automated content moderation tools, instead they are assumed to have little influence, resulting in models that collapse each of these contexts into a single entity that embodies them.
-Such embodiment, is predicated on efforts towards obtaining a global understanding of ``toxic'' and ``healthy'' content, thus reproducing racialised and gendered positions on respectability.
+Such embodiment is predicated on efforts towards obtaining a global understanding of ``toxic'' and ``healthy'' content, thus reproducing racialised and gendered positions on respectability.
 As such, the content moderation systems that I examine, engage in toxic slippage, where they simultaneously over-police the content produced by people inhabiting marginalised positions while also failing to protect these groups from ``toxic'' content.
 
-I address RQ 2 by examining the model development process and the choices that are made in this.
-I argue that the model development process exhibits three prominent avenues that lead to models that maintain pre-existing, hegemonic power structures.
+\ZTdelete{I address RQ 2 by examining the model development process and the choices that are made in this.}
+\ZTedit{Moreover,} I argue that the model development process exhibits three prominent avenues that lead to models that maintain pre-existing, hegemonic power structures.
 First, through the training data, which is likely to more frequently have occurrences of some identity terms in the positive class than in the negative class, e.g. ``black'', ``gay'', and ``woman''.
 Thus, a model is likely to learn identity terms have a greater association to ``toxic'' content.
-Moreover, I argue that even when several datasets with competing definitions of abuse are used, models will come to better represent the overlaps in the datasets and labels than the data which is separate.
-Second, through the use of pre-trained embeddings that take a distributional perspective on language production and are known to harbour harmful social biases against minoritised groups \citep{Speer:2017}.
+\ZTdelete{Moreover}\ZTedit{Further}, I argue that even when several datasets with competing definitions of abuse are used, \ZTedit{the optimisation procedures result in models better representing the overlaps of data and labels, at the expense of where the datasets or labels diverge from one another.}
+\ZTdelete{models will come to better represent the overlaps in the datasets and labels than the data which is separate.}
+Second, \ZTedit{models come to embody discriminatory norms} through the use of \ZTdelete{pre-trained}\ZTedit{pre-optimised} embeddings that take a distributional perspective on language production and are known to harbour harmful social biases against minoritised groups \citep{Speer:2017}.
 Lastly, I argue that the models themselves are likely to exacerbate hegemonic positions, given that machine learning models have been shown to amplify social biases that exist in datasets \citep{Zhao:2017}.
 These findings have an impact on future work for computational modellers as they provide theoretical scaffolding for why and how marginalised communities come to suffer under abuse classification models.
 Thus, the contributions here begin to forge a path towards abuse detection models that are centred around the experiences of those who are most likely to suffer harms from misclassifications.
 
-In \cref{chap:liwc}, I turn towards research questions $3$-$5$.
-Starting with RQ 3, I optimise three different neural network models and two baselines for five different datasets, each experimenting with 3 different data representations: Word tokens, sub-words, and LIWC encoded documents.
-I find that using LIWC encoded documents to optimise machine learning models can obtain competitive results with linear models and neural networks optimised on word token and sub-word representations alike.
+\ZTedit{One challenge that is raised in \cref{chap:dirt} is the notion of the pluralist model that Opt Out develop.
+While a pluralist model does allow for people embed their own subjectivities into the modelling process, they are not exempt from the critiques made in \cref{chap:dirt}.
+In fact, as we see in the chapter, Opt Out incorrectly moderates \cref{fig:flash_hoe} due to the uses of the \textit{b-word} and references to sexual promiscuity.
+Moreover, as pluralist models also need some centralisation for optimising the machine learning model, they are similarly subject to the risks of optimising towards hegemonic positions.
+This risk may be slightly decreased as the pluralist model is only be applicable to a single person at a time. 
+Thus the hegemonic positions that they may come to embody might only affect singular individuals who specifically provide data to the model that would encode such hegemonic positions.
+This further raises an issue for consideration, namely that of the harms individuals may enact on a larger community.
+Specifically, if a person's model comes to embody positions that are tailored to the individual, are there any limitations that should be set for minimal notions of acceptability, that are applied for everyone using such pluralist models?
+For instance, should people who believe in the genocide of other people be afforded the ability to determine that calls for genocide is acceptable content while resistance to such calls is deemed as unacceptable?
+If such minimal notions of acceptability are to be set, further questions around who is to determine them and what exceptions should be made to this remain as vital questions.}
+
+In \cref{chap:liwc}, I turn towards research questions $2$\ZTdelete{-$5$}.
+Starting with \textit{RQ \ZTdelete{3}\ZTedit{2}}, I optimise three different neural network models and two baselines for five different datasets, each experimenting with 3 different data representations: Word tokens, sub-words, and LIWC encoded documents.
+I find that using LIWC encoded documents to optimise machine learning models can obtain competitive results with linear models and neural networks \ZTedit{that are} optimised on word tokens and sub-word representations alike.
 Specifically, I find that for linear models, LIWC-based models can obtain classification performances that are as good or better than models optimised on the other two representations, though for some dataset and model combinations there is a significant drop in performance.
 For neural network models, I similarly find that LIWC models can provide for in-domain classification improvements in some cases, and in most cases provide with a competitive performance.
 I find that all three neural model types are well suited for the use of LIWC, with the best performances achieved by the CNN models.
 Thus, I conclude that while there is space for the improvements in model performances, LIWC based modelling can provide for an alternative to using word-token or sub-word document representations.
 
-To address RQ 4, I monitor the models for how long they require for the optimisation procedure.
+\ZTdelete{To address RQ 4, I monitor the models for how long they require for the optimisation procedure.}
+\ZTedit{I further observe how machine learning models are affected by the vocabulary change in terms of the time required to fully optimise them.}
 I find that in many cases, LIWC-based modelling for neural networks show a reduction in the time it takes for a model to finish the optimisation procedure.
-I also observer that in some cases, the LIWC-based models take as long, or longer, than models optimised on other document representations.
-In particular, I find that there is a relationship between the complexity of the model and the model optimisation time, where the more complex a model is, the longer it takes to optimise.
+\ZTedit{However,} I also observer that in some cases, the LIWC-based models take as long, or longer, than models optimised on other document representations.
+In particular, I find \ZTdelete{that there is} a relationship between the complexity of the model and the model optimisation time, where the more complex a model is, the longer it takes to optimise.
 That is, I find that all but one LIWC MLPs take less time to complete the optimisation procedure than their word-token and sub-word counterparts.
 For CNNs, LIWC models tend to finish optimising close to as close as word-token models, and faster than sub-word based models, with a single exception where the LIWC model takes almost twice as long as its closest competitor.
 Finally, for LSTM models, I similarly find that in most configurations of datasets, LIWC-based models tend to finish optimising quicker than the other models.
 Here too there is a single outlier in which the LIWC LSTM model takes longer to finish optimising than all other models.
 Thus, I find that in terms of speed in optimising the models, LIWC-based modelling in most cases provides for as fast or faster model optimisation procedures.
 
-I address RQ 5 by applying all optimised models on all datasets, including those that the model has not been optimised on.
+\ZTdelete{I address RQ 5 by applying all optimised models on all datasets, including those that the model has not been optimised on.}
+\ZTedit{I also examine how the LIWC-based models perform when evaluated on out-of-domain data by applying on all models across all datasets, including those that the model has not been optimised for.}
 Using this method, I find that LIWC-based models often provide for out-of-domain performances that out-perform all other out-of-domain models.
 Particularly LIWC-based models optimised on the \textit{Toxicity} dataset performs well on out-of-domain data.
 Finally, I observe that all models tend to perform better on out-of-domain datasets where the goal of the dataset resembles the goal of the dataset the model is optimised on.
 
 As the results of my experiments show, there is space for improving in-domain and out-of-domain classification performances by thinking carefully about how data is represented.
-Research questions 3-5 invite researchers to think carefully about data representations.
-Moreover, in specific next steps, there is space to investigate what the impact on modelling is when combining LIWC and word-tokens or sub-word tokens.
-Such combinations would also allow for using models that have pre-trained embedding layers for the word and sub-word parts of the data representations.
-The use of which is likely to provide for additional improvements on both in-domain and out-of-domain performances.
+Research question\ZTdelete{s 3-5}\ZTedit{2} invites researchers to think carefully about data representations.
+Moreover, in specific next steps, there is space to investigate what the impact on modelling is when \ZTdelete{combining} LIWC\ZTedit{-based document representations are combined with} and word-token or sub-word token \ZTedit{representations}.
+Such combinations would \ZTdelete{also} allow for using models that have \ZTdelete{pre-trained}\ZTedit{pre-optimised} embedding layers for the word and sub-word parts of the data representations.
+The use of \ZTdelete{which}\ZTedit{pre-optimised layers} is likely to provide for additional improvements on both in-domain and out-of-domain performances.
 
-Turning questions of context, I address research questions $6$-$8$ in \cref{chap:mtl}.
+Turning questions of context, I address research questions \ZTdelete{$6$-$8$}\ZTedit{$3$} in \cref{chap:mtl}.
 In this chapter, I experiment with Multi-Task Learning with three main tasks for distinct forms of abuse, the \textit{Offence} detection task, the \textit{Hate Speech} detection task, and the \textit{Toxicity} detection task.
-Each of these is also used as an auxiliary task when it is not the also the primary task.
+Each of these is also used as an auxiliary task when it is not the primary task.
 For auxiliary tasks I use the three main task datasets in turn, and the \textit{Hate Expert} dataset, as my abusive auxiliary tasks.
 For my non-abusive auxiliary tasks I use the \textit{Sarcasm} detection task, the \textit{Moral Sentiment} prediction task, and the \textit{Argument Basis} task.
-Addressing RQ 6 and 7 collectively, I find that there is a positive impact on model performances, in terms of improvements over a single task MLP baseline when using almost any dataset as an auxiliary task.
-Specifically to RQ 6, I observe that the three main task models that I use all benefit from using sarcasm detection as an auxiliary task.
+\ZTdelete{Addressing RQ 6 and 7 collectively,}\ZTedit{Through my experiments,} I find that there is a positive impact on model performances, in terms of improvements over a single task MLP baseline when using almost any dataset as and auxiliary task.
+Specifically\ZTdelete{ to RQ 6}, I observe that the three main task models \ZTedit{that I optimise}\ZTdelete{that I use} all benefit from using sarcasm detection as an auxiliary task.
 Moreover, two out of three auxiliary tasks also benefit from using the remaining two non-abusive auxiliary tasks.
 Using combinations of only non-abusive tasks also improves modelling performances, though none of these combinations achieve the best-performing auxiliary task combination.
 
-Turning to RQ 7, I find that using abusive tasks as auxiliary tasks has a positive impact on the model performances.
+\ZTdelete{Turning to RQ 7,}In fact, I find that using abusive tasks as auxiliary tasks has a positive impact on the model performances.
 Unlike the non-abusive tasks there is one auxiliary task setting for one dataset where the highest performance is achieved by a combination of only abusive auxiliary tasks.
 The use of abusive tasks in particular has a beneficial impact on performances in terms of precision score.
 In the abusive tasks however, I also find that not all tasks are equally suited.
@@ -114,111 +147,91 @@ In particular, I observe a relationship between abusive datasets that share simi
 For instance, the \textit{Hate Expert} dataset only performs well enough as an auxiliary tasks to be selected as for further when the main task is the \textit{Hate Speech} task which was sampled from the same collection of data and annotated using the same guidelines.
 Moreover, I find that the \textit{Offence} auxiliary task is useful for both main tasks, where it shares the dataset source with the \textit{Hate Speech} task and shares annotation goal with the \textit{Toxicity} task.
 
-As I address RQ 8, I find that combining abusive and non-abusive auxiliary tasks provides for some of the best model improvements.
+\ZTdelete{As I address RQ 8,}\ZTedit{When considering combinations of abusive and non-abusive auxiliary tasks,} I find that combining abusive and non-abusive auxiliary tasks provides for some of the best model improvements.
 Specifically, I find that using the \textit{Sarcasm} task in conjunction with one or more abusive tasks provides for high performing models.
 This suggests that encoding representations for sarcasm detection in combination with an auxiliary abuse dataset can have benefits on the main task performance.
-It is worth noting that all three non-abusive auxiliary tasks appear in the best-performing auxiliary task configurations, showing the best performances are obtained when abusive and non-abusive auxiliary tasks are used together.
+It is worth noting that all three non-abusive auxiliary tasks appear in the best-performing auxiliary task configurations \ZTdelete{, showing}\ZTedit{and} the best performances are obtained when abusive and non-abusive auxiliary tasks are used together.
 
 The findings in this chapter, provides several paths for future work.
-For instance, one avenue of future work is to explore more non-abusive auxiliary tasks such as sentiment analysis.
+For instance, one avenue \ZTdelete{of}\ZTedit{for} future work is to explore more non-abusive auxiliary tasks such as sentiment analysis.
 Additionally, future research can address improvements in modelling e.g. by using more complex modelling architectures or by optimising the weight each auxiliary task is given.
 
-Finally, in \cref{chap:disembodied}, I address the final three research questions: RQ 9-12.
-In this chapter, I critically analyse the entire machine learning pipeline for NLP and apply my insights to models developed in this thesis for abuse detection.
+Finally, in \cref{chap:disembodied}, I address the final \ZTdelete{three}\ZTedit{two} research questions: \textit{RQ 4 \& 5}\ZTdelete{9-12}.
+In this chapter, I \ZTdelete{critically analyse}\ZTedit{read against the grain in my considerations of} the \ZTdelete{entire} machine learning pipeline for NLP.
+\ZTedit{I further} apply my insights to models developed in this thesis for abuse detection.
 
-Through my critical analysis, I find that subjectivity is embedded into machine learning in all processes in which humans with their subjective experiences are involved.
+Through my \ZTdelete{critical analysis}\ZTedit{reading}, I find that subjectivity is embedded into machine learning in all processes \ZTdelete{in which humans with their subjective experiences are involved}\ZTedit{that humans with their subjective experiences are involved in}.
 The subjective experiences of people involved in the modelling pipeline express their subjective experiences through the data collection, annotation, and model building processes.
-Thus, I argue that to address issues of bias, fairness, and representing the users of models, it is necessary for awareness of the subjective experiences that modellers want to represent and develop processes which foster the human and computational expression of these.
+Thus, I argue that to address issues of bias, fairness, and representing the users of \ZTedit{machine learning} models, it is necessary for awareness of the subjective experiences that modellers want to represent and develop processes which foster the human and computational expression of these.
+\ZTedit{One avenue for such development processes is through participatory design with a focus on notions of design justice, as outlined by \citet{Costanza-Chock_2018}.}
 Moreover, to develop which are fair an equitable, it is necessary to start with the development process of machine learning models with those whose experiences are not embodied in machine learning.
-Thus, rather than attempting to force models that have learned to reproduce oppressive structures, this research calls for modelling to be centred around the subjective, lived experiences of people and their needs.
+Thus, rather than attempting to force models that have \ZTdelete{learned}\ZTedit{been optimised} to reproduce oppressive structures, this research calls for modelling to be centred around the subjective, lived experiences of people and their needs.
 
 In future work, there is more space for practitioners and researchers to engage in identifying how their own subjective experiences influence their design decisions.
-Moreover, an implication of this work is that models that embody desired subjective experiences can be developed, given that the resources are developed.
+Moreover, an implication of this work is that models that embody desired subjective experiences can be developed, given that the resources \ZTedit{for this} are developed.
 
-Returning to the guiding questions of how the human fits into abusive language technologies and how machine learning models for moderating online abuse expressed through text, the findings in this dissertation suggest that at the current stage, people are not well represented by the models that the field have produced and is on track to produce.
-Moreover, content moderation technologies for online abuse expressed through text at present have largely not sought to model to closely represent the subjective experiences of users.
+\ZTedit{Returning to the guiding questions of how machine learning systems for content moderation come to produce socially discriminatory outputs and the ways in which computational methods can come to address some of these concerns, my findings in this dissertation are that machine learning systems very poorly represent the subjective experiences of large groups of people, and the computational approaches that I developed to more faithfully represent these people make positive steps but still fall shy of making truly faithful representations.}
+\ZTdelete{Returning to the guiding questions of how the human fits into abusive language technologies and how machine learning models for moderating online abuse expressed through text, the findings in this dissertation suggest that at the current stage, people are not well represented by the models that the field have produced and is on track to produce.}
+Moreover, content moderation technologies for online abuse expressed through text at present have largely not sought \ZTdelete{to model }to closely represent the subjective experiences of users.
 Particularly, they have failed to represent the perspectives and experiences of those who stand to be harmed most by content moderation technologies, instead focusing on goals such as having models that take a global perspective on abuse.
 These issues are the result of a computing culture that seeks to abstract away subjectivity in search of, if not ``objective truths'', global consensus on inherently subjective questions.
 However, as I show in this dissertation, there is vast, and largely unexplored, space for developing models that more closely seeks to represent the people and thus better make space for peoples subjective experiences.
-For instance, in \cref{chap:liwc}, we see how using modelling that seeks to encode the mental and emotional state of the author yields ... % TODO Finish sentence
+For instance, in \cref{chap:liwc}, we see how using modelling that seeks to encode the mental and emotional state of the author yields \ZTedit{for improved performances on out-of-domain data, when the annotation goals of the in-domain and out-of-domain data align, thus providing space for generalising specific perspectives.}
 Moreover, as observed in \cref{chap:mtl} the use of Multi-Task Learning can allow for models to learn representations of related auxiliary tasks, such as whether a comment is sarcastic or the expressed moral sentiments, can allow for deeper engagements with the intentions of the speaker, thus moving modelling to more closely represent the speakers and their intentions.
+
+\ZTedit{In seeking answers to the guiding questions, my work in this dissertation both fails to achieve the research goals and manages to fulfil them.
+My work fails to achieve these goals by not fully engaging with the questions in more depth and in the same vein achieves these research goals by providing a step into these questions.
+Moreover, my work achieves the research goals by providing alternative readings and methods for machine learning that can afford more faithful representations of people.
+On the other hand, the work fails to achieve its goals by not providing definitive answers, but instead provides suggestions for research directions.
+While I construct the successes and failures in absolute terms here, my position is more nuanced.
+The work that I have performed provides for some beginnings of research directions and for some further steps for pre-existing directions.
+The failures of not achieving definitive answers are offset by having identified new questions to ask while the successes of providing steps for new directions also make space for analyses of the limitations of the directions that I have investigated.}
 
 In this dissertation, I have sought to identify challenges and opportunities for developing models for the content moderation of online abuse. This is scaffolding for a hopeful path forward - one that centres the subjective experiences and humanity of those impacted by content moderation technologies,  and that brings back considerations of the social hierarchies that make them most vulnerable to abuse.
 I hope to bring the experiences of these people back into the heart of the task.
 
-% I begin with \cref{chap:filter}, where I consider how the concept of sanitisation is invoked and operationalised in content moderation settings through terminology such as ``healthy conversations'' \citep{Twitter:Health:2018} and ``toxic'' content \citep{Wulczyn:2017,Perspective:Github}.
-%
-% Drawing on Mary Douglas' \citeyearpar{Douglas:1966} theories of social pollution and Josh Lepawsky's \citeyearpar{Lepawsky:2019} on dirt an toxicity, I argue that content moderation infrastructures can be understood as practices of meaning making and community building.
-% Moreover, I reposition the role of content moderation from negative removal to positive re-ordering of environments.
-% Such positive re-ordering seeks to maintain communities and their cultural values, e.g. the sanitisation of online platforms to constitute a child-friendly environment.
-% Such sanitisation of online spaces carries with it social and cultural codes of ``dirty'' and ``sanitised'', the ``toxic'' and the ``healthy''.
-% Precisely as \citet{Douglas:1966} reminds us ``no single item is dirty apart from a particular system of classification in which it does not fit’'' \citep[pp. vii]{Douglas}, which in terms of content moderation systems means that they are situated in specific cultural understandings of ``toxicy'' and ``healthy''.
-% For the moderation of language, these cultural codes are often applied to speech produced by marginalised communities.
-% For instance, as \citet{Davidson:2019} show, automated content moderation systems disproportionately identify African American English as being abusive while \citet{Dias:2020} show that commercial systems find white supremacist speech to be more acceptable than the speech of queer drag queens.
-% Thus content moderation systems engage in toxic slippage, where they on one hand fail to protect marginalised communities and on the other hand disproportionately police those communities.
-%
-% Through an analysis of two different publicly available content moderation systems, I argue that the marginalising effect of content moderation systems are embodied in the modelling pipeline in three distinct processes each of which are often made opaque.
-% First, in the operationalisation of ``toxic'' or ``abusive'' as these definitions and understandings are derived from cultural understandings of toxicity.
-% Second, they are embodied in the choice of annotators and the frequent use of majority voting on each document for annotation, encoding a hegemonic perspective on acceptability.
-% Third, beyond the annotation procedures, dominant discourse perspectives on respectability are embedded into the modelling e.g. in the use of pre-trained embeddings that are trained on texts available on the web.
-% Through these three means, content moderation systems are constituted by social hegemonies while simultaneously constituting these hegemonies by the replication of them.
-% Thus, content moderation systems partake in culture wars on what ``acceptability'' is to constitute.
-% When content moderation systems engage in such conflicts in power dynamics, they must also address the ongoing reconfigurations of dirt as the cultural contexts surrounding these change.
-%
-% Using Mary Douglas' framework on social pollution and dirty, I conclude that the notion of a ``sanitised'' space also raises the question of whom it is sanitised for.
-% Until content moderation infrastructures are centred around the experiences of marginalised communities, they will continue to systematically disenfranchise such communities from the full ability to create boundaries that can constitute their subjective experiences.
+\ZTedit{
+\section{Limitations and Future Work}
+The work in this thesis has a number of limitations, both computationally and theoretically.
+A core limitation that applies to all aspects of this thesis is that the work is primarily investigating content moderation as it applies to the global economic north, specifically for English speaking nations, with a particular focus on the United States of America.
+For all aspects of this thesis, future work would be well suited to develop on the work presented here by centring specific contexts in the global economic south, where content moderation, or the lack thereof has had disastrous consequences.
+}
+\ZTedit{ % Dirt
+  Moreover, my chapter on content moderation and social pollution (see \cref{chap:dirt}) provides a next step, expanding on \citet{Liboiron:2018}.
+  While this chapter extends a general theoretical framework, it is centred around how content moderations deals with race and gender, and to a lesser degree sexuality in the global economic north.
+  A limitation here is then that the considerations and how they apply to other contexts, i.e. the global economic south are not included.
+  Future work could then think more deeply about the specificities with which our framework requires extension for specific contexts and that of content moderation in the global economic south.
+}
 
-% TODO Finish the findings here once the results
-% \zw{Not done}
-% Addressing the issues raised in \cref{chap:filter} requires a reconfiguration of the entire pipeline for automated content moderation.
-% In \cref{chap:liwc}, I start to examine one method for such reconfiguration: vocabulary reduction and document representations.
-% Here, I experiment with three different document representations: a representation where the documents undergo a word-based tokenisation process, a representation where I use sub-words to minimise out-of-vocabulary items, and finally a representation where I represent each word in a sentence as its corresponding categories in the Linguistic Inquiry and Word Count \citep[LIWC,]{Pennebaker:2001} dictionary, which allows for an approximation into the mental and emotional states of the speaker.
-%
-% I find two primary implications of using LIWC represented documents for modelling, the performance of the models notwithstanding.
-% First, the LIWC dictionary is a dictionary with a small vocabulary resulting in large reductions in the vocabulary sizes for the models.
-% \zw{Double check these results and add them to the chapter}
-% Second, as a consequence of the smaller vocabulary sizes, models trained on this representation diverge from the word-token models in the time it takes to train them, in general requiring to epochs for LIWC-based models to converge, though model processes these iterations faster, yielding faster model training in general.
-%
-%
-%
-%
-% In \cref{chap:mtl}, I further investigate how optimising a model for multiple tasks simultaneously can influence model performances on specific forms of abuse.
-% Using hard parameter sharing Multi-Task Learning \citep{Caruana:1993}, I develop Multi-Layered Perceptron models that are optimised for different forms of abuse and investigated the impact of different auxiliary tasks for each type of abuse.
-% I narrowed down on the number of abusive tasks from \cref{chap:liwc}, which considered five different abusive language detection tasks to three tasks in \cref{chap:mtl} that I treat as main tasks.
-% Moreover, in \cref{chap:mtl}, I do not collapse the classes into binary classification, as I do in \cref{chap:liwc}.
-% The three tasks that I consider are: Disambiguating offensive content from hateful content and non-offensive content, disambiguating between toxic and non-toxic content, and classifying racism, sexism, and the absence of these.
-% For auxiliary tasks, I explore two different kinds of auxiliary task.
-% First, I explore four auxiliary tasks for abuse detection: hate speech detection, expert annotated hate speech detection, toxicity detection, and offensive language detection.
-% Three of these also serve as main tasks and a dataset is not used as an auxiliary task when it is also the main task selected for optimisation.
-% For the auxiliary tasks that are not abusive in nature, I explore the impact of sarcasm detection, detecting moral sentiment, and detecting whether an argument is based in facts or feelings on the main task.
-% I compare these MLP models with three different baselines, a linear SVM, a single-task MLP, and an ensemble classifier.
-% I find that although not all MTL MLP models outperform all baseline models, they consistently outperform the single-task MLP when given a single auxiliary task, regardless of whether the auxiliary task is abusive in nature or not.
-% Moreover, I find that not all auxiliary tasks are equally suitable, for instance, I find that the \textit{Hate Expert} auxiliary task is only useful when the main task is the \textit{Hate Speech} task. 
-% These two datasets are annotated from the same data sample and follow the same annotation guidelines.
-% More generally, I find that there are benefits in main task classification performance when the auxiliary task is abuse detection and at least one of two conditions are met:
-% 1) the main task and auxiliary task datasets are sampled from the same, or 2) the main task and auxiliary tasks share annotation goals.
-% The first condition arises from observing the patterns in auxiliary task impact across all three main tasks as the \textit{Offence} auxiliary task yields improvements when the main task is either the \textit{Hate Speech} task or the \textit{Toxicity} task, where data source and dataset goals match, respectively.
-% When the auxiliary is not abusive in nature, \textit{Sarcasm} and \textit{Moral Sentiment} auxiliary tasks stably increases performance across the different main tasks.
-% The \textit{Argument Basis} auxiliary task on the other hand does not provide improvements across all datasets.
-% When considering combinations of auxiliary tasks, I find that using exclusively abusive tasks, or exclusively non-abusive tasks tend to obtain good scores, though these tend to be outperformed when the auxiliary task setting uses a combination of abusive and non-abusive tasks.
-% In such settings where abusive and non-abusive tasks are combined, the best performing settings tend to be where one abusive auxiliary task is used and two or more non-abusive tasks.
-% Additionally, \textit{Sarcasm} frequents in most of the best performing configurations, along the different metrics.
-% Through multi-task learning, it is thus possible to represent different facets of how speakers act in different situations allowing for models that more closely come to embody the context of the speaker.
-%
-% In \cref{chap:disembodied}, I take a step back from the experimental modelling, observing how different subjectivities are embedded into the machine learning pipeline.
-% I argue here that through processes of disembodiment, machine learning as a practice hides and obscures its own positionality and the subjective decisions that are embedded in the systems.
-% I consider four different aspects of the modelling pipeline through which subjective experiences are embedded: in the data as it is removed from the subjective bodies that create them, in the adjudication of data for supervised classification tasks by annotators who often do not exist in the data, in the person(s) designing the experiment and modelling pipeline, and in the model trained on the disembodied data.
-% Extending the argument put forth by \citet{Haraway:1988} to machine learning, disembodied machine learning offers a veil of ``objectivity'' behind which a hegemonic and oppressive subjective experience is given space to be constituted in and through machine learning models.
-% Subsequently, other experiences, often marginalised and are left as residual experiences that must either conform to or accept the experience embodied by the modelling processes and models.
-% Thus, the goal of ``bias-free'' machine learning becomes a fantasy that at best performs some harm reduction and at worst obscures how machine learning models and designers of such models are complicit in perpetuating harms of oppressive structures.
-% To ascertain the degree to which a model takes into account the subjective experiences of the people it is developed for, I propose a spectrum to consider models through.
-% This spectrum ranges from fully ``localised'' models, that is models that seek to be situated within the context of the datum it is derived from to ``globalised'' models, that is models that do not seek to be grounded within such context.
-% As modelling processes for NLP tasks, and abuse, increasingly rely on technologies such as pre-trained embeddings, pre-trained language models, and multi-task learning, the field is moving towards models that are increasingly localised in nature, most models are unlikely to be at the extreme ends of the modelling spectrum.
-% Past work in abuse detection that has relied on linear models, and as is the case in for most single-task models in this dissertation, however are situated as fully globalised models.
-% Particularly when developing models for social prediction, such as abuse detection, it becomes vital to develop models that take into account the positionality of users.
-% A lack of active recognition in the modelling pipeline leads to privileging hegemonic perspectives over those of marginalised people, that is privileging those who stand to be least harms of models that fit poorly to their subjective experiences over those who stand to experience the most harm from such poor fits.
-% I conclude the chapter by calling for an increased recognition of the people behind the machine, that is the designers of the pipelines, the human adjudicators on the data, and the data subjects whose data is being used to train models.
-% Only by recognising the subjective embodiments of the participating people is it possible to describe, interrogate, and address how meaning is made in each step of the modelling process and answer whether the model that has been produced truly serves the people it has been produced for.
-% Until such steps are taken, machine learning modelling will continue to reproduce hegemonic views, which for content moderation and abuse detection, among many other tasks, comes to mean white supremacist imaginaries on acceptability.
-%
-% \vspace{5mm}
+\ZTedit{ % LIWC
+  In terms of computational limitations, the work in \cref{chap:liwc} is limited to English as the LIWC dictionary is only defined for English.
+  Moreover, using LIWC is most appropriate for content written in mainstream American English, as this is the only variant of English that it is defined for.
+  Finally, the use of psychometrics has deep-rooted issues, a reliance on any psychometrics carries a risk of reproducing harmful and hegemonic reductions of psychological constructs.
+  Future work could then consider other forms of low-vocabulary representations that are not rooted in such problematic histories.
+  Furthermore, future work could consider how low-vocabulary representations can be used in conjunction with pre-optimised technologies such as large language models and word embeddings.
+  Centring other languages than English would also have the direct benefit of requiring a different vocabulary reduction technique as LIWC only exists for mainstream American English.
+}
+
+\ZTedit{ % MTL
+  Similarly to the limitations of \cref{chap:liwc}, the work I have performed on Multi-Task Learning would benefit greatly from centring other languages than English and other populations and nations beyond that of the United States of America.
+  Moreover, although there are improvements on the baselines in this chapter, there is ample space for considering how Multi-Task Learning could be used to improve results further.
+  This space also includes considerations of wider computational architectures, e.g. the inclusion of pre-optimised technologies as internal layers of the model, or directly experiment with Multi-Task Learning using solely large language models.
+  Although I perform an extensive investigation of tasks, several more tasks could be considered for exploration including rumour detection and sentiment analysis.
+
+  Both computational chapters could be extended along the lines of directly including considerations of demographic belonging.
+  That is, the loss functions for the neural networks used in both chapters could take into account the demographic information that is available about the speakers.
+  By considering demographic information, machine learning models could come to start to encode pre-existing power structures and account for these in their functions.
+}
+\ZTedit{ % Disembodied
+  The final contribution of my thesis is largely theoretical and functionally translation work between fields.
+  For this reason, introducing the notion of disembodiment to the machine learning and NLP communities, starts at the beginning, and thus the chapter seeks to provide a foundation for future thought.
+  The limitations of this work then is that there is far more depth to consider in how each of the aspects highlighted contribute to disembodying machine learning technologies from human experiences.
+  Moreover, the pipeline that I have sought to read and analyse is a research pipeline.
+  In a production pipeline for a commercial entity, machine learning technologies are often embedded in deeper technical structures.
+  As machine learning technologies are increasingly being deployed into such production pipelines, it is prudent with a consideration of how embodiment and disembodiment happens in a commercial, for-profit entity.
+}
+
+\ZTedit{
+  Finally, with the work in this thesis I have sought to lay the foundations for new directions for abusive language detection and machine learning.
+  The scaffolding that I provide directly invites and welcomes work to build around the scaffolding and develop the structures further, such that we can emphasise justice in the processes we create for developing new technologies for people and communities.
+}
