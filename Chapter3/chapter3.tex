@@ -98,7 +98,7 @@ Here I provide an overview of the different datasets that are used throughout th
 For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset. 
 In \autoref{sub:abuse_data} I describe the datasets annotated for hate speech and abuse and then in \autoref{sec:mtl_data}, I turn to the datasets used for the auxiliary tasks for \autoref{chap:mtl}.
 
-\subsubsection{Hate speech and abuse datasets}\label{sub:abuse_data}
+\subsubsection{Hate Speech and Abuse Datasets}\label{sub:abuse_data}
 \ZTedit{
   To perform any machine learning modelling of abusive language it is necessary to use some datasets.
   However, as we saw in \cref{sec:abuse}, many of the datasets that exist at the time of writing suffer from a number of issues, including mislabelling of African American English and sampling issues \citep{Wiegand:2017}.
@@ -166,7 +166,7 @@ As a last positive category, they include whether it is ``[a]nother kind of atta
 The dataset thus is comprised of ``personal attacks'' and ``other forms of harassment''. 
 As the study is specifically grounded in identifying personal attacks, this categorisation of various forms of personal attacks and a residual category as positive instances is in line with the aims of the data, if not the description.
 \ZTedit{
-  Using this definition, \citet{Wulczyn:2017} seelct a random sample of $37,611$ comments that are labelled by $10$ annotators for personal attacks.
+  Using this definition, \citet{Wulczyn:2017} select a random sample of $37,611$ comments that are labelled by $10$ annotators for personal attacks.
   This resulted in only $0.9\%$ of the labelled data in the positive class.
   To address this, \citet{Wulczyn:2017} identify an additional $78,126$ comments that are sampled from users whose content had been moderated from the discussion pages.
   For each user, $5$ comments made by the moderated user around the moderated comment were collected and subject to annotation, resulting in the positive class consisting of $16.9\%$ of the total dataset.
@@ -193,7 +193,7 @@ This method for mitigation does not account for longer sequences of sentences th
 Moreover, as \citet{Garcia:2019} take a very conservative position on what constitutes hate, for instance, the use of a derogatory term, on a white supremacist web-forum, ``cannot be said to be a deliberate attack, taken without any more context, despite it likely being offensive.'' For this reason, \citet{Garcia:2019} argue that simply the occurrence of slurs weaponised against marginalised communities cannot be said to be hateful.
 Thus, while initially side-stepping the issue of marginalisation-blind definitions by sourcing data from a white supremacist web-forum, it is softly reintroduced by taking a conservative stance on what constitutes hate.
 
-\subsubsection{Non-abuse datasets}\label{sec:mtl_data}
+\subsubsection{Non-abuse Datasets}\label{sec:mtl_data}
 
 \ZTcomment{Add examples of each dataset}
 \paragraph*{Sarcasm} \citet{Oraby_sarcasm:2016} develop a dataset for sarcasm detection in dialogues. The dataset was developed in order to address the lack annotation for subtypes of sarcasm, i.e. rhetorical questions and hyperbole, at scale in previous datasets.
@@ -221,7 +221,7 @@ Noting that there is low occurrence of moral sentiments expressed in a random sa
 For annotation, \citet{Hoover:2019} train $8$ undergraduate research assistants to an expert-level familiarity with the moral foundations taxonomy, annotating $4,000 - 6,000$ for each discourse domain. The annotators are trained through training sessions and, in early stages, discussion surrounding annotator disagreement.  
 The annotator selection procedure here thus develops on the suggestion of \citet{Waseem:2016} to use expert annotators to describing a means of training expert annotators for a highly subjective task. Interestingly, as the annotation process continues past early stages, annotator disagreements are not resolved, instead the authors opt for expressing the inherent subjectivity of the human annotation task.
 
-\subsubsection{Non-English datasets for abuse}
+\subsubsection{Non-English Datasets for Abuse}
 %\zw{See hatespeechdatasets.com and ACL anthology}
 
 In this dissertation, I focus my attention to detecting abuse in English language datasets as my methods do not map to other languages. However, an important growing body of research and resources are being developed for other languages such as Arabic \citep{ousidhoum_multilingual_2019,Albadi:2018,mulki_l-hsab_2019}, Croatian \citep{Ljubesic:2018}, Danish \citep{sigurbergsson_offensive_2019}, French \citep{Chiril:2019,Chung:2019}, and Urdu \citep{Rizwan:2020} amongst many more.
@@ -266,7 +266,7 @@ In terms of language, using sub-words to represent documents can minimise the nu
 
 In this dissertation, I use the pre-trained Byte-Pair Embeddings (BPE) developed by \citet{Heinzerling:2018}. These embeddings were optimised for $275$ languages using the Wikipedia pages in each language as the source of data. \citet{Heinzerling:2018} provide embeddings for $1,000,\, 3,000,\, 5,000,\, 10,000,\, 25,000,\, 50,000,\, 100,000$, and $200,000$ merge operations with dimensions $25,\, 50,\, 100,\, 200$, and $300$. For all chapters in this dissertation, I choose the $300$ dimensional embeddings that have been subject to $200,000$ merge operations as these embeddings are likely to offer good representations of the data that used in this dissertation.
 
-\subsection{Strategies against over-fitting}\label{sec:anti-overfit}
+\subsection{Strategies Against Over-fitting}\label{sec:anti-overfit}
 
 Machine learning models are prone to identify salient patterns in the training data with the result that they perform poorly on evaluation sets and out-of-domain data. In order to address this issue, I use a number of different techniques depending on the type of model used.
 For linear models, I experiment with three different regularisers: L1 regularisation, L2 regularisation, and Elasticnet.
@@ -357,14 +357,14 @@ On the other hand, when the value $w_x > 0$, then the value computed is $\mathit
 \caption{Equation for \texttt{ReLU}.}
 \end{figure}
 
-\subsubsection{Pooling layers}\label{sub:pooling}
+\subsubsection{Pooling Layers}\label{sub:pooling}
 For CNN models it is necessary to use either average pooling or maximum pooling to summarise the features under a filter. 
 As a summary, pooling operations act as a method for downsampling the feature representation obtained after convolutional layers. 
 Two common kinds of pooling operations are average pooling and maximum pooling.
 Average pooling computes the mean value of the pooling features under the filter while maximum pooling extracts the largest value. 
 In my experiments with CNN models, I use maximum pooling exclusively due to its dominance in the CNN models developed for abuse detection \citep{Kolhatkar:2020}.
 
-\subsubsection{Optimisation algorithms}
+\subsubsection{Optimisation Algorithms}
 
 At the heart of neural networks lie the optimisation algorithms that control the rate and manner in which model weights are updated. 
 A number of different optimisation algorithms have been proposed for neural networks, but in my experiments I focus on two algorithms, \texttt{Stochastic Gradient Descent (SGD)} and \texttt{Adam}. 
@@ -407,7 +407,7 @@ However, rather than updating all parameters with with the same learning rate, \
 This is followed by computing the bias-corrected mean and uncentred variance estimates, respectively which are computed by factoring in exponential decay rates for the moment (mean and uncentred variances) estimates.
 Finally, the value of $\theta_t$ is updated and the process is repeated if $\theta_t$ has not converged.
 
-\paragraph{Adam with decoupled weight decay} \texttt{Adam with decoupled weight decay (AdamW)} was proposed by \citet{Loshchilov:2019} as a result of examining the implementation of Adam in many libraries for neural network optimisation and finding that many had incorrectly implemented \texttt{Adam} using $L2$ regularisation rather than weight decay.
+\paragraph{Adam with Decoupled Weight Decay} \texttt{Adam with decoupled weight decay (AdamW)} was proposed by \citet{Loshchilov:2019} as a result of examining the implementation of Adam in many libraries for neural network optimisation and finding that many had incorrectly implemented \texttt{Adam} using $L2$ regularisation rather than weight decay.
 
 Since this correction, papers on abuse detection have started to use this algorithm \citep{Rottger:2021,Vidgen:2020} over the initial \texttt{Adam} implementation that used $L2$ regularisation rather than weight decay.
 
@@ -654,12 +654,12 @@ In general, work in the field operates along three different strands
 
 \subsection{Mapping Uses and Limitations}
 
-A number papers have sought to map limitations in prior work and proposed methods for future works to document ethical risks and ramifications.
+A number of papers have sought to map limitations in prior work and proposed methods for future works to document ethical risks and ramifications.
 In early work, \citet{Hovy-Spruit:2016} design a taxonomy of ethical risks of NLP systems from over generalisation to dual use of models and from exclusion of demographies of people in datasets to over- and under-exposure of topics to a model.
 Following with considerations of datasets, \citet{Bender-Friedman:2018} and \citet{Gebru:2018} propose ``data statements'' and ``data sheets'', respectively, to documenting the processes with which datasets for machine learning experiments are created and the logics that they draw on for their creation, and shortly thereafter \citet{Mitchell:2019} propose an analogous ``model card'' framework for describing the design rationales for machine learning models.
 More recently, \citet{Blodgett:2020} surveyed $146$ papers addressing questions of bias in NLP, and identify that in spite of the large body of work, the notion of ``bias'' is often under-specified to a point that ``techniques [for addressing bias] are poorly matched to their motivations, and are not comparable to one another'' \citep[p. 5455]{Blodgett:2020}.
 
-\subsection{Quantifying harms}
+\subsection{Quantifying Harms}
 
 \citet{Shah:2020} propose a mathematical framework for quantifying biases that arise in different steps of the NLP pipeline with a basis in the taxonomy proposed by \citet{Hovy-Spruit:2016}. 
 Here, the authors develop a method to quantify biases that may stem from the data and models optimised on it, aiming to provide designers of NLP pipelines with a method to zoom away from the details of how data and models may be biased and instead obtain an abstraction that provides a guide to where human attention may be needed.
@@ -686,7 +686,7 @@ Contrary to this requirement, \citet{Romanov:2019} propose a method that does no
 Instead, they propose developing an auxiliary machine learning system for the expressed purposed of identifying the demographic belongs of a person given text that they have authored. 
 The predictions of this machine learning system is tehn encoded into the loss function of the task they seek to optimise a model that has been treated for bias, letting the loss be subject to the identities that the author has.
 
-Using the second conceptualisation as their basis \citet{Kulynych:2020} propose a class of Protective Optimisation Technologies (POTs) that use the logics of optimisation to counteract marginalisation demographic groups experience as the result of being direct or indirect subjects of optimisation technologies.
+Using the second conceptualisation as their basis, \citet{Kulynych:2020} propose a class of Protective Optimisation Technologies (POTs) that use the logics of optimisation to counteract marginalisation demographic groups experience as the result of being direct or indirect subjects of optimisation technologies.
 Notably, this class of systems deviates from all other systems in that it does not necessitate developing computational models but rather seek to interact antagonistically with the optimisation technologies that people are subject to.
 Such systems can be computational in nature, for instance \citet{Kulynych:2020} show how an automated system can address disparities in loan applications by identifying which features can be modified by a demographically dissimilar collective that have similar loan applications to reduce the number of false negatives, that is people who are incorrectly predicted to default on loans, in part as a basis of their demographic belonging.
 In an example of a non-computational POTs, \citet{Kulynych:2020} describe how people who see large amounts of traffic being redirected through residential neighbourhoods by route-planning applications report road works and other obstructions, to avoid traffic from being directed through their residential neighbourhoods. 

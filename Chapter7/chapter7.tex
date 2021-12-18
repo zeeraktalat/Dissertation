@@ -7,7 +7,7 @@
 
 \chapter[State of the Art White Supremacy: On Disembodiment in the Machine Learning Pipeline]{State of the Art White Supremacy: On Disembodiment in the Machine Learning Pipeline\footnotemark{}}\label{chap:disembodied}
 \chaptermark{State of the Art White Supremacy}
-\footnotetext{This chapter contains elements from a collaboration with Smarika Lulz, Joachim Bingel, and Isabelle Augenstein. The associated paper is currently under review in the journal Computational Linguistics. The title is taken from a conversation between Abeba Birhane, Chris Dancy and myself, where Chris offered the term State-of-the-Art White Supremacy.}
+\footnotetext{This chapter contains elements from a collaboration with Smarika Lulz, Joachim Bingel, and Isabelle Augenstein. The associated paper is currently under review in the Conference on Fairness, Accountability, and Transparancy (FAccT). The title is taken from a conversation between Abeba Birhane, Chris Dancy and myself, where Chris offered the term State-of-the-Art White Supremacy.}
 
 \begin{citequote}{\citet[p.110-111]{Lorde:1984}}
 What does it mean when the tools of a racist patriarchy are used to examine the fruits of that same patriarchy?  It means that only the most narrow parameters of change are possible and allowable.
@@ -294,7 +294,7 @@ On the other hand, \citet{Waseem-Hovy:2016} seek to address the issue of discrim
 Their understanding of hate speech is then motivated by ensuring protection of marginalised communities, in part due to their belonging to a marginalised community.
 Thus, while annotation guidelines are strongly argued and motivated, the local embodiments and contexts of the authors influence the guidelines that they create.
 
-\subsection{Sampling data}
+\subsection{Sampling Data}
 Beyond distinctions in the annotation guidelines, the sampling of data similarly is influenced by the subjective embodiments of the designers, resulting in distinct datasets examining different geographic cultures \citep{Waseem:2018}.
 \ZTdelete{For instance, the}\ZTedit{These} distinct motivations \ZTdelete{also} influence the \ZTdelete{topics}\ZTedit{questions} that are under investigation \ZTedit{in the research of different groups}\citep{Waseem:2018}.
 \ZTedit{For instance,} \citet{Fiser:2017} detail a framework based in the Slovenian legal context, where the authors of the study reside, directing the hate studied to be directly addressing hate occurring in Slovenia.
@@ -345,12 +345,12 @@ By asking the very journalists who are a target of abuse \ZTedit{to perform anno
 
 % TODO: Add writing about how the designers influence (through annotator selection, training, providing guidance, payment, etc.)
 
-\subsection{Feature selection}
+\subsection{Feature Selection}
 Considering what information the machine learning models consider as pertinent, i.e. the bodies of data that are provided to the model at optimisation time, I similarly find ample space for subjective positioning\ZTdelete{ to be embedded}.
 I construct here the notion of feature selection to mean the construction of features based on theoretical insights, hypotheses about the phenomena and \ZTdelete{in addition to} the sub-selection of complete vocabularies.
 Considered through the lens of abusive language detection, harmful patterns of marginalisation are apparent \ZTedit{as designers realise themselves in the features that they construct}.
 
-\subsubsection{Manually constructed features}
+\subsubsection{Manually Constructed Features}
 A large body of work surrounding hate speech detection has investigated the question of which manual features are useful to the task of automated detection \citep{Waseem:2016,Chiril:2019,Fortuna:2018,Stankovic:2020}.
 Similarly, in \autoref{chap:liwc} I explore whether rationalising over content using LIWC can have beneficial influences for machine learning approaches for abusive language detection.
 Clearly, there is an interest in providing scaffolding for computational models to identify and address hate speech detection.
@@ -362,7 +362,7 @@ Another frequently used modelling assumption is that computational models can be
 This modelling choice represents an assumption that \ZTedit{that the context within which words appear carries significance beyond the word on its own.}\ZTdelete{not only do the individual words matter, but the context within which they appear and are embodied carries significance.}
 This stands in contrast to lexicon-based methods \citep{Hurtlex:2019} that assume that the occurrence of some terms, disembodied from the local sentential context, should direct the model towards predicting either abuse or not abuse.
 
-\subsubsection{Feature selection in neural architectures}
+\subsubsection{Feature Selection in Neural Architectures}
 Many neural machine learning models are used with an assumption of simply providing the input data as it occurs, subject to replacing usernames with a user token, hashtags with a hashtag token, and so forth.
 This modelling choice on the designers part relies on two strong assumptions. 
 First, that neural models\ZTdelete{, by way of loss functions,} can \ZTedit{loss functions to} update the model's internal representation of the data \ZTedit{in order} to identify patterns that correlate in the input \ZTdelete{to the model} with the output labels, without \ZTedit{the} need for human cognition \ZTedit{or oversight} over the data \ZTedit{or optimisation process}.
@@ -434,7 +434,7 @@ Here I consider the two model types that I have developed in \autoref{chap:liwc}
 I document the considerations and assumptions each model type reveals throughout the machine learning pipeline.
 Rather than go through the entire pipeline, I begin my analysis at the entry points, that is the choices of datasets and the modelling choices, as I only make use of previously published datasets.
 
-\subsection{Vocabulary reduction}\label{sub:vocab_redux}
+\subsection{Vocabulary Reduction}\label{sub:vocab_redux}
 In \autoref{chap:liwc}, I optimised the machine learning models using the datasets published by \citet{Davidson:2017}, \citet{Wulczyn:2016}, \citet{Waseem:2016}, \citet{Waseem-Hovy:2016}, and \citet{Garcia:2018}.
 The decision to use these datasets as optimisation data stems from these datasets originating from three distinct sources: Twitter; StormFront, a white nationalist internet forum; and Wikipedia editor discussions.
 To be able to measure the generalisability of the models optimised on \citet{Davidson:2017}, \citet{Waseem:2016}, and \citet{Waseem-Hovy:2016}, I reduce the multi-class classification tasks to binary classification tasks.
@@ -478,7 +478,7 @@ Their globalised position derives from the fact that none of the data representa
 Instead, all of the models rely on some abstraction away from the self through processes of disembodiment.}
 \ZTdelete{find themselves further towards the localised end of the spectrum than others, all models that I use in \autoref{chap:liwc} are positioned in the globalised end of the spectrum as none of the data representations take into account the local subjective positionality of the individuals in the data, instead they all rely on some abstraction away from the subjective self through processes of disembodiment.}
 
-\subsection{Multi-task learning}\label{sub:mtl_inchap}
+\subsection{Multi-Task Learning}\label{sub:mtl_inchap}
 %\zw{If we use current methods}
 In \autoref{chap:mtl} I turn to the question of which \ZTedit{constructs would be helpful for machine learning models to embody in aims of improving performance for a given abusive language detection task.}\ZTdelete{embodiments}
 \ZTedit{Specifically, I examine whether jointly learning representations of sarcasm \citep{Oraby_sarcasm:2016}, whether an argument is based in fact or feelings \citep{Oraby_factfeel:2015}, the moral sentiments elicited \citep{Hoover:2019}, and related notions of hate speech and offensive language \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} improves classification performance.}
