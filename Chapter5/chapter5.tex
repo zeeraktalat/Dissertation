@@ -5,7 +5,7 @@
     \graphicspath{{Chapter5/Figs/Vector/}{Chapter5/Figs/}}
 \fi
 
-\chapter{What Do You Mean?! The Predictive Power of Vocabulary Manipulation for Abuse Detection}\label{chap:LIWC}
+\chapter{What Do You Mean?! The Predictive Power of Vocabulary Manipulation for Abuse Detection}\label{chap:liwc}
 \chaptermark{What Do You Mean?!}
 
 One of the key issues in machine learning for content moderation is that such systems in deployed settings (see \cref{chap:filter}) as well as in research (see \cref{chap:intro} and \cref{chap:nlp}) over-fit to individual tokens that are over-represented in the positive and negative classes respectively.
@@ -60,14 +60,14 @@ The use of psychometrics for computational research is a highly contested practi
 In their paper ``Algorithmic Psychometrics and the Scalable Subject'', Luke \citet{Stark_2018} highlights the racist, sexist, and classist history of psychometrics, which were originally proposed by Francis Galton, a known eugenicist \citep{Stark_2018}.
 Psychometrics were first proposed as ``the art of imposing measurement and number upon operations of the mind'' (Francis Galton quoted in \citet{Stark_2018}), which aligned with Galton's views on eugenics as methods for psychometrics were amenable to ``hierarchies of class, race and sex in Victorian Britain's industrial imperialist capitalism'' \citep[p.209]{Stark_2018}.
 Rather than steering away from this troubled past, the field of psychometrics has continued to embrace the foundational notions proposed by Galton and begun to operate in digital media on large bodies of data.
-However, as \citet{Stark_2018} argues, the use of psychometrics to make judgements on and for people faces a serious challenge of the ongoing development of people as they lack both qualitative and quantitative data about a whole person.
+However, as \citet{Stark_2018} argues, the use of psychometrics to make judgements on and for people faces a serious challenge of the ongoing development of people as they lack both qualitative and quantitative data about a whole person.}
 
-LIWC, as a psychometric tool is embedded within this troubling history and development.
+\ZTedit{LIWC, as a psychometric tool is embedded within this troubling history and development.
 In particular, being a mixture of statistical correlations and human judgements LIWC comes to embody the particular subjectivities of the developers of the dictionary.
 This is particularly evident in its lack of inclusion of terms that are particular to dialects within and outside of the United States of America.
-The creators of LIWC indeed caution a heavy reliance on the dictionary as a means to identify the mental and emotional states, arguing that it is in nature imprecise \citep{Tausczik:2010}.
+The creators of LIWC indeed caution a heavy reliance on the dictionary as a means to identify the mental and emotional states, arguing that it is in nature imprecise \citep{Tausczik:2010}.}
 
-In the work described below, there is a heavy reliance on LIWC, however it is not used to predict the emotional and mental states of the speakers of given texts.
+\ZTedit{In the work described below, there is a heavy reliance on LIWC, however it is not used to predict the emotional and mental states of the speakers of given texts.
 Instead, I use it precisely because of its impreciseness and its highly limited expression, to gain a very rough alternate representation to the texts provided.
 While this limited expression does not allow for making judgements on the mental states of the speakers, it does allow for an investigation into the potential of representing texts for abuse classification using a smaller vocabulary that does not rely on the structured (e.g. Part of Speech tags) but instead provides a rudimentary approximations of speakers' subjectivities.
 }
@@ -1347,3 +1347,4 @@ This further suggests that moving between different value systems, and notions o
 In spite of this, the results I obtain in this chapter suggest that using rough and error-prone information on the emotional and mental states of speakers can provide for contextualisation that can be useful for abuse detection.
 However, reducing the vocabulary space does not have strong implications for the time required to optimise models, perhaps due to the greater proportion of shared tokens.
 The implication here then is that using LIWC does not have a strong benefit in terms of environmental impacts of global climate change.
+}
