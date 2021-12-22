@@ -5,10 +5,11 @@
 % !TEX root = ../thesis.tex
 
 \chapter{Theoretical Background}\label{chap:socialscience}
-As abuse and automated decision making systems for detecting abuse can disproportionately affect some populations over others, often communities that are already disproportionately subject to negative societal biases.
+As abuse and automated-decision making systems for detecting abuse can disproportionately affect some populations over others. 
+Often communities that are already disproportionately subject to negative societal biases \ZTedit{face the worst consequences of such systems}.
 Therefore, this dissertation considers abuse not only as a technical question of how to address abuse, but also a social question of how abuse detection systems exist and affect greater societal contexts.
 To fully speak to these issues, it is necessary to have a solid understanding of power and processes of marginalisation.
-This chapter introduces the core concepts from social science and science, technology studies (STS), and Critical Race Theory (CRT) that can provide such a foundation. 
+This chapter introduces the core concepts from social science, science and technology studies (STS), and Critical Race Theory (CRT) that can provide such a foundation. 
 Beyond this, this chapter reviews the previous literature that the latter chapters of this dissertation relies on. 
 Speaking directly towards online abuse, I discuss work on conceptualising online abuse and hate speech.
 I briefly introduce the legal landscape surrounding online abuse and content moderation.
@@ -23,9 +24,9 @@ In a consideration of how automated systems might impact different populations, 
 The question of marginalisation and privilege has been subject to a large amount of attention from a vast number of fields, including computer science \citep{Bender:2021,Dinan:2020,Mitchell:2019}, gender studies \citep{McIntosh:1988,Mohanty:1984}, law \citep{Crenshaw:1989}, critical race theory \citep{Benjamin:2019,Myers:2019}, and science and technology studies \citep{Haraway:1988}.
 In this chapter, and in this dissertation, I draw on the knowledge produced in critical race theory, science and technology studies, and computer science.
 
-\subsection{Theoretical underpinnings}
+\subsection{Theoretical Underpinnings}
 
-In `Black Reconstruction in America' \citet{Dubois:1935} argues that whiteness in America functions as a `psychological wage' providing poor whites in the nineteenth and early twentieth century social status due to not being Black. Through this distinction, he argues that whiteness offers a wage to poor whites who are similarly exploited by capitalism, offering `compensation' beyond monetary compensations. Further, assigning whiteness a higher value, or an idealised position, relies on the devaluation and marginalisation of blackness and Black existence.
+In `Black Reconstruction in America' \citet{Dubois:1935} argues that whiteness in America functions as a `psychological wage' providing poor whites in the nineteenth and early twentieth century social status due to not being Black. Through this distinction, he argues that whiteness offers a wage to poor whites who are similarly exploited by capitalism, offering `compensation' beyond monetary compensations. Further, assigning whiteness a higher value, or an idealised position, relies on the devaluation and marginalisation of Blackness and Black existence.
 
 % Here he describes a deliberate effort to segregate poor whites and Blacks to prevent potential class-based alliances between the two to avoid collective action. To create such divisions, efforts were made to distinguish whites along racial lines with an aim to align them with their employers. Although in many ways treated the same and living under the same conditions of poverty, whites came to feel a suporiority over Blacks. Notably, in reference to the social mobility of the white working class, \cite{Dubois:1935} writes
 % \begin{citequote}{\cite{Dubois:1935}}
@@ -47,31 +48,31 @@ In recent years, there has been a greater focus on social and economic dispariti
 
 As humans we are never confined to a single identity.
 In recognition of this, \citet{Crenshaw:1989} analyses three legal cases in the United States in which Black women were discriminated against while Black men and white women were not.
-She argues that the discrimination of Black Women face marginalisation across multiple axes as they exist on the intersection of several marginalised groups: namely being Black and being women.
-In one of the three cases presented, Hughes et al. v. General Motors, the plaintiffs, alleged that General Motors had engaged in discriminatory practices when they fired them, based on seniority.
-Through the trial it was discovered that all black women hired after $1970$ were fired in a round of seniority-based lay-offs.
+She argues that the discrimination of Black women face marginalisation across multiple axes as they exist on the intersection of several marginalised groups: namely being Black and being women.
+In one of the three cases presented, Hughes et al. v. General Motors, the plaintiffs alleged that General Motors had engaged in discriminatory practices when they fired them, based on seniority.
+Through the trial it was discovered that all Black women hired after $1970$ were fired in a round of seniority-based lay-offs.
 The courts found that no discrimination had occurred on the basis of sex, as white women were not fired, thus the discrimination could not be based on gender.
 The court proposed that the case be consolidated with another active case against General Motors on the grounds of racial discrimination.
 However, as the case was brought on the basis of combination of gender and race-based discrimination, the two lawsuits could not be consolidated. 
-Thus, the marginalisation of black women could not be identified along racialised or gendered lines individually. 
-To expose the marginalisation faced by black women \citet{Crenshaw:1989} theorises an \textit{intersectional} lens.
-\citet{Crenshaw:1989} sheds light on the unique forms of discrimination that are rendered invisible by not considering, or refusing to consider as in the cases she discusses, how existing on the intersection of multiple marginalised identities, such as black women, creates forms of marginalisation that are distinct being marginalised along a single axis.
+Thus, the marginalisation of Black women could not be identified along racialised or gendered lines individually. 
+To expose the marginalisation faced by Black women \citet{Crenshaw:1989} theorises an \textit{intersectional} lens.
+\citet{Crenshaw:1989} sheds light on the unique forms of discrimination that are rendered invisible by not considering, or refusing to consider as in the cases she discusses, how existing on the intersection of multiple marginalised identities, such as Black women, creates forms of marginalisation that are distinct from being marginalised along a single axis.
 
-\subsection{Marginalisation through technology}
+\subsection{Marginalisation Through Technology}
 % \zw{Add about how equality does not provide equal outcomes or experiences as the world outside of the model is inherently unjust.}
 
-While Crenshaw's \citep{Crenshaw:1989} paper was published more than thirty years ago, the underlying consideration of how multiple identities intersect to create new forms of discrimination is still relevant to new technology that is being developed. 
+While Crenshaw's \citeyearpar{Crenshaw:1989} paper was published more than thirty years ago, the underlying consideration of how multiple identities intersect to create new forms of discrimination is still relevant to new technology that is being developed. 
 In $2018$, \citet{Kearns:2018} independently realised that when developing algorithms to detect bias in machine learning systems it is possible to create models that are fair on the basis of singular characteristics, such as race or gender but biased towards the combination of characteristics.
 They thus propose an algorithm to identify an optimal number of sub-groups to consider for addressing bias in machine learning systems. 
 In recognition of \citet{Kearns:2018} and inspired by \citet{Crenshaw:1989}, \citet{Foulds:2019} propose a new measure of the fairness of machine learning systems that takes into account an intersectional nature of marginalisation.
 
-However, the work of \citet{Kearns:2018,Foulds:2019} both operate within the confines of the machine. As \citet{Blodgett:2020} reminds us, the question of what bias and fairness mean is an inherently normative question, for which reason it is imperative that researchers define their notion of bias.
-\citet{Blodgett:2020} recommend that considerations of bias take into account the social hierarchies that exist outside of the realm of modelling, arguing that `work analysing ``bias'' in NLP systems will paint a much fuller picture if it engages with the relevant literature outside of NLP that explores the relationships between language and social hierarchies`.
-Thus, computational work cannot be divorced from the social systems that they exist in.
+However, the work of \citet{Kearns:2018} and \citet{Foulds:2019} both operate within the confines of the machine. As \citet{Blodgett:2020} reminds us, the question of what bias and fairness mean is an inherently normative question, for which reason it is imperative that researchers define their notion of bias.
+\citet{Blodgett:2020} recommend that considerations of bias take into account the social hierarchies that exist outside of the realm of modelling, arguing that `work analysing ``bias'' in NLP systems will paint a much fuller picture if it engages with the relevant literature outside of NLP that explores the relationships between language and social hierarchies.
+Thus, computational work cannot be divorced from the social systems that it exists in.
 
 In another line of recent work on how technology can marginalise, \citet{Sweeney:2013} identified how search results from Google were racially biased against names that are frequently used by African Americans.
 \citet{Sweeney:2013} found that when searching for names with a higher association with African Americans, advertisements for examining arrest reports were shown at a higher frequency than when searching for names frequently used by white Americans.
-Going a step further, \citet{Noble:2018} shows how search engines reinforce racialized and gendered logics and can aid in radicalisation processes in favour of white supremacy.
+Going a step further, \citet{Noble:2018} shows how search engines reinforces racialized and gendered logics and can aid in radicalisation processes in favour of white supremacy.
 She argues that search engines do not merely reflect society and frequent search terms, but create their own reality through ranking.
 
 \begin{citequote}{Safiya \citet[p.148]{Noble:2018}}
@@ -80,35 +81,33 @@ She argues that search engines do not merely reflect society and frequent search
 
 Moving beyond the world of search engines, \citet{Benjamin:2019} describes how information technology at large reinforce white supremacy by providing disparate outcomes for different racial groups.
 \citet{Benjamin:2019} argues technology encodes such discriminatory biases in spite of, and in part due to, its `allure of objectivity'.
-She argues that within our global social structure `codes operate within powerful systems of meaning that render some things visible, others invisible, and creates a vast array of distortions and dangers'.
-As technology operates within such systems do not require the explicit intent for racism to produce racist outcomes.
-In one example, she highlights the identity number system in India produced discriminatory outcomes when their identity number, Aadhar, could not be identified:
+She argues that within our global social structure `codes operate within powerful systems of meaning that render some things visible, others invisible, and creates a vast array of distortions and dangers' as technology operates within such systems do not require the explicit intent for racism to produce racist outcomes.
+In one example, she highlights the identity number system in India that produced discriminatory outcomes when their identity number, Aadhar, could not be identified:
 
 \begin{citequote}{Ruha \citet[p. 133]{Benjamin:2019}}
   There are already reports of citizens being denied welfare services, including children unable to receive school lunches when their Aadhaar could not be authenticated. In this way the New Jim Code gives rise to digital untouchables.
 \end{citequote}
 
 \citet{Benjamin:2019} argues that this signifies a discriminatory blindness in technology that are in part brought by the makers, who are predominately white and male.
-Moreover, she describes a number of other examples ranging from designating black neighbourhoods as incubators for criminality to using NLP to identify the Roman numeral `X' to represent the number ten, resulting in incorrect street names such as `Malcom Ten Boulevard'.
-She argues that `No malice needed, no N-word required, just a lack of concern for how the past shapes the present' and that racism'.
-
+Moreover, she describes a number of other examples ranging from designating Black neighbourhoods as incubators for criminality to using NLP to identify the Roman numeral `X' to represent the number ten, resulting in incorrect street names such as `Malcom Ten Boulevard'.
+She argues that `No malice needed, no N-word required, just a lack of concern for how the past shapes the present' and that racism' \citep[p. 48]{Benjamin:2019}
 Notably, \citet{Benjamin:2019} proposes four dimensions that information technological systems rely on to discriminate, what she refers to as `the new Jim Code'.
 The first dimension is the appearance of impartiality, which she argues is not impartial given its embedding in the global social structures.
 The second is personalisation, which relies on the use of stereotyped information to be created.
 The third is merit, although systems of merit themselves are subjective and prejudiced as they too operate within our social structures.
-Finally, she argues that the fourth arises from `forward-looking enterprises that promises social good', one such instance being machine learning, and as this dissertation argues, abusive language detection technologies.
+Finally, she argues that the fourth arises from `forward-looking (i.e. predictive) enterprises that promises social good' \citep[p. 85]{Benjamin:2019}, one such instance being machine learning, and as this dissertation argues, abusive language detection technologies.
 
 \section{The `God Trick'}
 % \zw{Discuss Haraway}
 
 \begin{citequote}{Donna \citet{Haraway:1988}}
-  No one ever accused the God of monotheism of objectivity, only indifference"
+  No one ever accused the God of monotheism of objectivity, only indifference
 \end{citequote}
 
-In her foundational feminist STS work Donna \citet{Haraway:1988} calls to question the notion of objectivity, critically examining science communication through a feminist lens.
+In her foundational feminist STS work, Donna \citet{Haraway:1988} calls to question the notion of objectivity, critically examining science communication through a feminist lens.
 She argues that knowledge production is an \textit{active} process, in which we subjectively construct knowledge based on our particular, subjective bodies.
 She argues that in science communication an `objective' position is used to describe the object of study.
-However, such an `objective' position, like all other positions comes with its own limitations in what things are rendered visible and what is obscured.
+However, such an `objective' position, like all other positions comes with its own limitations in terms of what things are rendered visible and what is obscured.
 Thus, an `objective' position is no less subjective, as it privileges the point of view of a particular body marked by subjective social and political meanings and possibilities along the lines of race, class, geography, gender etc. 
 In contrast to other `subjective' positions, an `objective' position claims omniscience for itself by denying its own particular embodiments.
 Through this denial the `objective' position obscures its own subjective rootedness.
@@ -121,27 +120,27 @@ From this it follows that embodied positions are mired in a particular, in contr
 Accepting new knowledge from these specific embodied represents a threat to the claim of omniscience presented by the disembodied `objective' position.
 However, as \citet{Haraway:1988} argues, subjectively embodied positions allow for things to made visible, that are otherwise rendered invisible to the `objective' position.
 For instance, in the context of labelling uses of the \textit{n-word}, an exclusive focus on its derogatory use would imply an understanding of the word through a disembodied and universalised position, as this universal position is often occupied by the white male body \citep{Haraway:1988}.
-Only through an engagement with the particularised experiences and histories of black bodies can the rich cultural meaning that is crafted in African-American communities be revealed and observed \citep{Rahman:2012}.
+Only through an engagement with the particularised experiences and histories of Black bodies can the rich cultural meaning that is crafted in African-American communities be revealed and observed \citep{Rahman:2012}.
 
 
 % \section{Situated knowledge and subjugated data discourses} \zw{Actually write this as previous work instead of what we're going to do}
 % Finally, one cannot talk about data in the context of machine learning without considering where it comes from or how the methods applied to it will affect it. We borrow here loosely from \cite{Fraser:1989} and \cite{Spivak}'s notion of the ``subaltern counterpublics'', that is ``parallel discursive arenas where members of subordinated social groups invent counterdiscourse, and Foucault's notion of dominant and subjugated discourses to understand the processes of marginalisation occurring through the use of machine learning models. Similarly, we rely on \cite{Haraway:1988}'s work on ``Situated Knowledge'' to better understand how machine learning methods, and data used in such methods assume a ``view from nowhere'', employing the ``God trick'' allowing for the illusion of objectivity as a result of applying mathematical modelling to data.
 
 \section{Theoretical Approaches to Content Moderation}
-In her ground-breaking book `Behind the Screen: Content moderation in the shadows of social media', Sarah T. Roberts~\citeyear{Roberts:2019} defines Commercial Content Moderation (CCM) as professionals who are employed to `evaluate and adjudicate online content generated by users and decide if it can stay up or must be deleted' \citep[p. 1]{Roberts:2019}, in other words, to ``clean'' internet platforms for content is unwanted by the platforms.
-Roberts argues, CCMs are often outsourced to call centres in the global south and boutique firms in North America, with a minority work force held in-house by social media companies \citep{Roberts:2019}.
-For outsourced workers, the work is frequently poorly paid and has steep psychological costs to the workers undertaking the job of keeping social media companies.
-As one interviewee states `Horror movies are ineffective at this point.
-I have seen all that stuff in real life' \citep[p. 122]{Roberts:2019}.
-Moreover, she argues that large companies reproduce colonial logics by creating special `ecozones' in Manila, developed in part to respond to the needs for `uninterrupted electricity, the capacity for large scale bandwidth for data transfer, and so on' \citep[p. 183]{Roberts:2019}.
+In her ground-breaking book `Behind the Screen: Content moderation in the shadows of social media', Sarah T. Roberts~\citeyearpar{Roberts:2019} defines Commercial Content Moderation (CCM) as professionals who are employed to `evaluate and adjudicate online content generated by users and decide if it can stay up or must be deleted' \citep[p. 1]{Roberts:2019}, in other words, to ``clean'' internet platforms for content that is unwanted by the platforms.
+Roberts argues that CCMs are often outsourced to call centres in the global south and boutique firms in North America, with a minority work force held in-house by social media companies \citep{Roberts:2019}.
+For outsourced workers, the work is frequently poorly paid and has steep psychological costs to the workers undertaking the job of keeping social media companies \ZTedit{palatable to their core audiences}.
+As one interviewee states ``Horror movies are ineffective at this point.
+I have seen all that stuff in real life'' \citep[p. 122]{Roberts:2019}.
+Moreover, she argues that large companies reproduce colonial logics by creating special `ecozones' in Manila, developed in part to respond to the needs for ``uninterrupted electricity, the capacity for large scale bandwidth for data transfer, and so on'' \citep[p. 183]{Roberts:2019}.
 In these zones, call centre workers are increasingly given higher targets and smaller workforces \citep[p. 178]{Roberts:2019} due to the increased competition from other companies in other parts of Asia.
 Thus, large social media companies establish their own colonies of exploitation in such ecozones where workers' rights are competing with the risk of companies outsourcing to a different company in a different part of Asia.
 
 %\zw{Add page numbers to the quotes} - LEFT IN COMMENT
-In her work on theories of social pollution, Mary Douglas \citeyear{Douglas:1966} examines how meaning and community are made through the positive reordering of the environment to separate the subjects and objects that belong and those that do not, i.e.
+In her work on theories of social pollution, Mary Douglas \citeyearpar{Douglas:1966} examines how meaning and community are made through the positive reordering of the environment to separate the subjects and objects that belong and those that do not, i.e.
 what is not and what is dirt.
-She argues that `dirt is the by-product of a systematic ordering and classification of matter, in so far as ordering involves rejecting inappropriate elements' \citep{Douglas:1966}.
-Dirt is then not an independent attribute of an object or subject, but a `residual category rejected from our normal scheme of classifications' \citep{Douglas:1966}.
+She argues that ``dirt is the by-product of a systematic ordering and classification of matter, in so far as ordering involves rejecting inappropriate elements'' \citep{Douglas:1966}.
+Dirt is then not an independent attribute of an object or subject, but a ``residual category rejected from our normal scheme of classifications'' \citep{Douglas:1966}.
 This classification between what is dirt and what is not, practised through rituals and habits that create coherence within communities, helps establish borders between what and who belongs in a group and what does not.
 As communities reject the impure, members of the collective, or in fact society, form a shared meaning.
 Through these processes of meaning-making the collective can maintain its integrity.
@@ -149,7 +148,7 @@ Dirt then becomes something communities avoid in order to prevent the breakdown 
 Thus to \citet{Douglas:1966}, the avoidance and removal of dirt are not negative processes of removal, they are a `positive effort to organize the environment' \citep{Douglas:1966} of the community in which the removals takes place.
 Further she argues that we seek to re-order our environment to make it conform to an idea.
 
-As the identification, demarcation, and expulsion of dirt are collective actions, the definitions and understandings of what constitutes dirt is a subjective in nature and meaning can only be attributed within a given system: `no single item is dirty apart from a particular system of classification in which it does not fit' \citep{Douglas:1966}.
+As the identification, demarcation, and expulsion of dirt are collective actions, the definitions and understandings of what constitutes dirt is subjective in nature and meaning can only be attributed within a given system: `no single item is dirty apart from a particular system of classification in which it does not fit' \citep{Douglas:1966}.
 Further, in her conceptualisation dirt is an encompassing label for `all events which blur, smudge, contradict or otherwise confuse accepted definitions' \citep{Douglas:1966}.
 Dirt is then contextual, and what is dirty in one situation may not be dirty in another.
 She exemplifies this through the mundane: food is not necessarily dirty, `but it is dirty to leave cooking utensils in the bedroom' \citep{Douglas:1966}.
@@ -166,20 +165,22 @@ Indeed, \citet{Hall:1997} similarly ties the classification of dirt and the clea
 
 By investigating the question of power relationships and commercial content moderation \citet{Lepawsky:2019} extends \citet{Douglas:1966} framework into digital spaces, arguing that such work can help us understand online communities as systems that must constitute themselves through removal, for which human and automated content moderation systems act as the filters that allow for such constitution.
 
-In Hall's \citeyear{Hall:1997}, theory of encoding and decoding, it is argued that expressions are written, or encoded, with a specific understanding which may differ when it is interpreted by the reader from one of three positions: dominant, negotiated, or oppositional.
+In Hall's \citeyearpar{Hall:1997}, theory of encoding and decoding, it is argued that expressions are written, or encoded, with a specific understanding which may differ when it is interpreted by the reader from one of three positions: dominant, negotiated, or oppositional.
 These moments of interpretation create a space for uncertainty and instability.
 Where things have been encoded with one meaning, they can be decoded with a different meaning, e.g.
-a semi-colon followed by a close parenthesis may be encoded as an indicator of sarcasm, but decoded as either ungrammatical.
+a semi-colon followed by a close parenthesis may be encoded as an indicator of sarcasm, but decoded as ungrammatical.
 Such oppositional reading can give space for subcultural communities, that stabilise their own meaning-making process such that the community understands a semi-colon followed by a close parenthesis as indicating happiness.
 
 In considering \citet{Hall:1997} and \citet{Lepawsky:2019}, the logics of dirt cannot be disconnected from the oppression experienced by marginalised people.
-As \citet{Risam:2015} notes toxic `has become cultural code for irritants and pollutants that disrupt our lived experience'.
+As \citet{Risam:2015} notes, toxic `has become cultural code for irritants and pollutants that disrupt our lived experience'.
 \citet{Risam:2015} argues that discourses of toxicity are invoked in cultural conversation between hegemonic and marginalised bodies, and are weaponised against marginalised bodies through an engagement in `toxic slippage'.
 Toxic slippage denotes when, in response to `toxic' behaviour, users, or this dissertation theorises, computational methods, engage in toxic behavioural patterns.
 Camp theory, as \citet{Schaffer:2015} argues, can offer a ``useful mode of reading for \textit{any} field of study marked by questionable binaries''.
-As the question of `toxic'/'non-toxic', `abuse'/`non-abuse', and `hate'/`not-hate' provide such questionable binaries between the desired and undesirable, camp theory's focus on re-evaluating a culture's `trash' offers well-established theoretical frame to re-articulating such concepts, complicating the ways in which content ``can blur and transgress and cover in glitter those boundaries between waste and not-waste [...] without pretending that waste has stopped being waste''\citep{Schaffer:2015}.
-As camp provides a mode of queering the understanding of waste from the discarded to the celebrated, it can be read as a ``queer way of knowing, one that emphasises reader relations over any inherent meaning of a cultural object'.
-A camp reading of content moderation systems and the decisions produced by them, would then centralise the experiences of the marginalised individual faced with consequences of toxic slippage how dirt must apply to them, fortifying the centrality of the subjective positionality of the individual in relation to the subjective positionalities of the content moderation system.
+As the question of `toxic'/'non-toxic', `abuse'/`non-abuse', and `hate'/`not-hate' provide such questionable binaries between the desired and undesirable, camp theory's focus on re-evaluating a culture's `trash' offers a well-established theoretical frame to re-articulating such concepts, complicating the ways in which content ``can blur and transgress and cover in glitter those boundaries between waste and not-waste [...] without pretending that waste has stopped being waste''\citep{Schaffer:2015}.
+As camp provides a mode of queering the understanding of waste from the discarded to the celebrated, it can be read as a ``queer way of knowing, one that emphasises reader relations over any inherent meaning of a cultural object''.
+\ZTcomment{Split up}
+A camp reading of content moderation systems and the decisions produced by them, would centralise the experiences of the marginalised individual faced with consequences of toxic slippage and how dirt must apply to them.
+\ZTedit{Such a reading would fortify} the centrality of the subjective positionality of the individual in relation to the subjective positionalities of the content moderation system.
 
 % \subsection{Pseudonymity and Anonymity in Social Media}\label{sec:pseudonymity}
 %
@@ -200,7 +201,7 @@ A camp reading of content moderation systems and the decisions produced by them,
 % The internet is a public place. You are posting naked pictures of yourself on the internet[$\ldots$] If you want to be as anonymous as possible, take the following precautions.
 % 1. Make a throwaway reddit account.
 %
-% 2. Don't include your face in your photos. If you must, blur or blackout your features.
+% 2. Don't include your face in your photos. If you must, blur or Blackout your features.
 %
 % 3. Take pictures against difficult-to-identify backgrounds. Plain walls or colours work well.
 % \end{citequote}
@@ -250,7 +251,7 @@ For instance, a group of bloggers angered by pro-Muslim content on YouTube start
 In this coordinated attack, coordinating users created lists of YouTube videos for other users to flag as `promotes terrorism' \citep{Crawford:2016}.
 Here flagging campaigns are used to reinforce social hegemonies.
 
-On the other hand, when platforms remove content that is socially acceptable to a large majority, there are strong backlash against the platforms.
+On the other hand, when platforms remove content that is socially acceptable to a large majority, there can be strong backlashes against the platforms.
 In one such event, Facebook removed an image of two male actors kissing on the television show EastEnders.
 Following this removal there was a large outrage, accusing Facebook for perpetuating homophobia as images of straight couples had not been subject to removal.
 Following this controversy, Facebook reversed their decision to remove the image and apologised for the removal \citep{Crawford:2016}.
@@ -262,17 +263,12 @@ Many of these have similar phrasing on the acceptance of abusive language,\footn
 
 These excerpts highlight how platforms envision what prohibited content appears on their platforms and which priorities that they have.
 For instance, in Facebook's policy (see \cref{fig:fb_pol}) they make a brief mention of real-world harms, however incitement to violence is omitted from their guidelines.
-Twitter on the other hand (see \cref{fig:twitter_pol}) provide a much less clear in what is prohibited and what is allowed through the ambiguity that they use \citep{Kirtz:2022}.
-It is, for example unclear what constitutes are ``direct attack'' on a diffuse concepts such as demographic groups.
+Twitter on the other hand (see \cref{fig:twitter_pol}) provide a much less clear in terms of what is prohibited and what is allowed through the ambiguity that they use \citep{Kirtz:2022}.
+It is, for example unclear what constitutes are ``direct attack'' on diffuse concepts such as demographic groups.
 Lastly, Reddit (see \cref{fig:reddit_pol}) very succinctly describe the kind of content that is prohibited on the platform, so succinct that considerations around hate speech are entirely omitted.
 
-In all three excerpts of the policies, there is a prohibition of content which attacks others, Reddit's policy on encouraging and inciting violence they further outline that users should not post content that\footnote{for the full policy see \url{https://www.reddithelp.com/en/categories/rules-reporting/account-and-community-restrictions/do-not-post-violent-content}}
-
-\begin{quote}
-  [\dots] that encourages, glorifies, incites, or calls for violence or physical harm against an individual or a group of people
-\end{quote}
-
-Establishing similar outlines for acceptable conduct as seen on Twitter and Facebook. Facebook note in their Community Standards Enforcement Report\footnote{See report here: \url{https://transparency.facebook.com/community-standards-enforcement\#hate-speech}} that they acted on $4$ million items for hate speech and $2.8$ million items for bullying and harassment in the period of January to March 2019. The report does not detail the number of user reports received, nor the amount of content which was not removed.\footnote{Acted on here means acknowledging that the content does violate community standards and an action was taken by Facebook.} Considering the scale of the items which have actions taken for different kinds of abuse, there is an incentive to allow for some automation to guide the attentions of human moderators or decrease the volume of content that moderators need to consider.\footnote{The Community Standards Enforcement Report details that automated systems are deployed but do not detail the performances of the system in terms of accuracy, precision, or recall.}
+In all three excerpts of the policies, there is a prohibition of content which attacks others, in Reddit's policy on encouraging and inciting violence they further outline that users should not post content that ``that encourages, glorifies, incites, or calls for violence or physical harm against an individual or a group of people''\footnote{for the full policy see \url{https://www.reddithelp.com/en/categories/rules-reporting/account-and-community-restrictions/do-not-post-violent-content}}
+establishing similar outlines for acceptable conduct as seen on Twitter and Facebook. Facebook note in their Community Standards Enforcement Report\footnote{See report here: \url{https://transparency.facebook.com/community-standards-enforcement\#hate-speech}} that they acted on $4$ million items for hate speech and $2.8$ million items for bullying and harassment in the period of January to March 2019. The report does not detail the number of user reports received, nor the amount of content which was not removed.\footnote{Acted on here means acknowledging that the content does violate community standards and an action was taken by Facebook.} Considering the scale of the items which have actions taken for different kinds of abuse, there is an incentive to allow for some automation to guide the attentions of human moderators or decrease the volume of content that moderators need to consider.\footnote{The Community Standards Enforcement Report details that automated systems are deployed but do not detail the performances of the system in terms of accuracy, precision, or recall.}
 
 While Facebook report high numbers of removals, the performance of their (human and automated) moderation practices have been the source of criticism as a number of activists have reported being temporarily banned for speaking about racial discrimination while abuse and discrimination received is not addressed \citep{Sharif:2019}.
 Moreover, users have been noting that simply talking about race may mean that their post is removed, particularly if the poster is not white \citep{Guynn:2019}. A report from Pro Publica details that the policies of Facebook in determining whether a post violates community guidelines, by seeking global standards, effectively ``protect the people who least need it and take it away from those who really need it.'' \citep{Angwin:2017}
@@ -282,14 +278,14 @@ Moreover, users have been noting that simply talking about race may mean that th
 \begin{figure}[!htb]
   \centering
     \includegraphics[width=0.7\textwidth]{Chapter2/Figs/Facebook.png}
-    \caption{Excerpt of Facebook Policy on prohibited content and hate speech.}
+    \caption{Excerpt of Facebook policy on prohibited content and hate speech.}
     \label{fig:fb_pol}
 \end{figure}
 
 \begin{figure}[!htb]
 \centering
     \includegraphics[width=\textwidth]{Chapter2/Figs/Twitter.png}
-    \caption{Excerpt of Twitter Policy on prohibited content and hate speech.}
+    \caption{Excerpt of Twitter policy on prohibited content and hate speech.}
     \label{fig:twitter_pol}
 \end{figure}
 
@@ -306,7 +302,7 @@ Developing guidelines for machine learning systems on the basis of such policies
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=\textwidth]{Chapter2/Figs/Reddit.png}
-  \caption{Excerpts of policy on prohibited content and hate speech from \ZTdelete{Facebook, Twitter, and} Reddit.}
+  \caption{Excerpts of Reddit policy on prohibited content and hate speech.}
   \label{fig:reddit_pol}
 \end{figure}
 % }
@@ -324,15 +320,19 @@ Building on this, the European Union is currently considering regulation on diss
 \ZTdelete{In their opinion, t}\ZTedit{T}he FRA suggest that the proposed regulation should provide a clear definition of terrorist content\ZTedit{,} which \ZTdelete{limits it}\ZTedit{is limited} to inciting or promoting terrorist activities\ZTedit{,} or providing instructions \ZTdelete{on the making or use of weapons}\ZTedit{for making or using weapons} \citep{FRA:2019}.
 \ZTdelete{A key point of the regulation states that the platforms must remove content within $1$ hour of receiving notice from a trusted authority.}
 
-\ZTComment{Add references on intermediary liability law}
-\ZTedit{In contrast to developments in Europe, the governance surrounding the moderation of online content in the United States of America is centred around section 230 of the Communications Decency Act of 1996 (CDA) \citep{CDA_230:1996}.
+\ZTcomment{Add references on intermediary liability law}
+\ZTedit{In contrast to developments in Europe, the governance surrounding the moderation of online content in the United States of America is centred around section 230 of the Communications Decency Act of 1996 \citep{CDA_230:1996}.
 Relating to the moderation of online content, Section 230(c) of the Communications Decency Act specifies that ``No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider'' \citep{CDA_230:1996}, thus specifying that service providers, e.g. social media networks are not liable for the content that is created by others and hosted on their platform.
 The over-arching goal of Section 230 has been to ensure that service providers are not liable for hosting content that is beyond their control.
-However, sub-paragraph 2(a) notes that ``No provider or user of an interactive computer service shall be held liable on account of—any action voluntarily taken in good faith to restrict access to or availability of material that the provider or user considers to be obscene, lewd, lascivious, filthy, excessively violent, harassing, or otherwise objectionable, whether or not such material is constitutionally protected,'' thus allowing social media networks to remove and moderate content from their platforms. 
+However, sub-paragraph 2(a) notes that 
+\begin{quote}
+    No provider or user of an interactive computer service shall be held liable on account of—any action voluntarily taken in good faith to restrict access to or availability of material that the provider or user considers to be obscene, lewd, lascivious, filthy, excessively violent, harassing, or otherwise objectionable, whether or not such material is constitutionally protected.
+\end{quote}
+Thus allowing social media networks to remove and moderate content from their platforms. 
 Section 230 has been central to the evolution of social media networks and their content moderation infrastructures, as many such networks are founded and legally based in the United States of America and therefore subject to its laws.\footnote{This seeming tension between not being liable while being given authority to exercise content moderation is also at odds with the highly permissible notion of Freedom of Speech that is institutionalised in the United States of America's law.
 In the law of the United States of America, the concept of freedom of speech has very few limits, in contrast to the European notion of freedom of speech, which has much greater restrictions \citep{Banks:2016.}}
-\footnote{I note here that although the CDA only applies to the legal territories of the United States of America, it is often used as the guiding principle from which content moderation decisions are motivated.}
-Section 230, its consequences, and potentials are at the deeply complex. 
+\footnote{I note here that although the Commnications Decency Act only applies to the legal territories of the United States of America, it is often used as the guiding principle from which content moderation decisions are motivated.}
+Section 230, its consequences, and potentials are the deeply complex. 
 Providing a detailed overview of the issue is therefore beyond the scope of this thesis.
 Interested parties can see research and organisations that more specifically deal with the legal landscape for online intermediaries \citet[e.g.]{...} and section 230 specifically \citet[e.g.]{EFF:n.d.;Defterderian_2009;Goldman_2018;Sheridan_1997;Ardia_2010;Leary_2018}.
 }
@@ -347,16 +347,16 @@ More widely, there are three main implications of the bills:
 \ZTdelete{While the critiques of the bills are numerous for flaws in their conceptualisations \citep{Romano:2018}, impact on criminal investigative work \citep{Q:2018} and the consequences for sex workers - including missing persons and deaths of sex workers \citep{Blue:2018,Simon:2018}, the implications of the bills are far greater in three aspects:}
 
 \begin{enumerate}
-  \item{The bills \ZTdelete{weaken}\ZTedit{seek to undermine} \citep{Romano:2018,Stryker:2018} \ZTdelete{in} Section 230 of the Communications Decency Act (CDA) by holding \ZTdelete{ - which holds that computer service providers are not publishers and thus not liable for content on the platform \citep{EFF:230}},}
+  \item{The bills \ZTdelete{weaken}\ZTedit{seek to undermine} \citep{Romano:2018,Stryker:2018} \ZTdelete{in} Section 230 of the Communications Decency Act (CDA) by holding \ZTdelete{ - which holds} that computer service providers are not publishers and thus not liable for content on the platform \citep{EFF:230}},
   \item{the bills are effective retroactively \citep{Stryker:2018}, therefore necessitating moderation of both new and historic content, and}
   \item{the bills do not require a request to remove content prior to potential consequences for not upholding the laws.}
 \end{enumerate}
 
 \ZTedit{While enforcing more regulation and shifting liability for content on platforms onto the online social networks is in line with the European and German regulations, the consequences of SESTA and FOSTA go a step further, as the bills are retroactively effective, for which reason online online platforms sought to remove all sexual content to avoid the risk of fines at the cost of people's freedom of speech.
-In contrast, the German and European efforts on the other hand largely allow for content to remain, as platforms only need to react if and when content is reported - moreover, they are not retroactively effective, meaning that platforms did not need to perform sweeping removals.
+In contrast, the German and European efforts largely allow for content to remain, as platforms only need to react if and when content is reported - moreover, they are not retroactively effective, meaning that platforms did not need to perform sweeping removals.
 The contrasts between the European approach and the approach taken by the United States of America, have strong implications for how online platforms develop technology for content moderation.
 For instance, the European approach incentivises social media networks to implement robust content moderation infrastructures, that somewhat evenly balance precision and recall.
-The approach taken by the United States of America, on the other hand incentivises a much less precise method, as platforms have greater risk from retaining content than simply remove it all.
+The approach taken by the United States of America on the other hand, incentivises a much less precise method, as platforms have greater risk from retaining content than simply remove it all.
 As a consequence, several platforms removed entire sections of content created by users that \textit{may} have had a \textit{perceived} risk to the platform.
 One such platform was Tumblr which removed a large section of historical and new content produced by queer communities, due to the risk that any content related to sexuality may also have been solicitation.
 The work in this thesis thus more closely aligns with the European approach, seeking not to remove content from entire communities but rather identify specific instances of content to be removed.
@@ -369,7 +369,7 @@ These differences strongly encourage the use of machine learning to be applied w
 \ZTedit{
 \section{Ethical Considerations}
 When dealing with a subject like online abuse and content moderation, there are a number of ethical issues that are necessary to bear in mind, from the anonymisation of already-existing data to the methods of collecting new data.
-These issues are further complicated by the strength with which identity intersects with whether something is offensive, as some things are only visible as offensive, or non-offensive, when one has intimate knowledge and familiarity the target.
+These issues are further complicated by the strength with which identity intersects with whether something is offensive, as some things are only visible as offensive, or non-offensive, when one has intimate knowledge and familiarity with the target.
 What is the ground truth then becomes subject to the particular subjectivities of an individual who is involved in the communicative act.
 }
 
@@ -381,7 +381,7 @@ One alternative to such publication of data is for data of a sensitive nature, i
 An imaginable configuration for this could be that data is never released, however researchers can submit models and code to train and evaluate on the dataset.
 Such a governance model however comes with several drawbacks: 1) it is not possible for researchers to analyse the kinds of mistakes that machine learning models make, 2) the governance model severely inhibits who has access to data, and 3) it renders invisible analysis and drawbacks of the datasets, something which is of vital importance as our understanding of abuse and hate speech continuously grows.}
 
-\ZTedit{Turning now to concerns around creating datasets.
+\ZTedit{Developing new resources for abuse detection also provide concerns and challenges.
 Creating a dataset for online abuse requires designating \textit{someone} to look at a large volume of data, in which abusive content will likely appear without warning.
 Being situated in such a context can have mental health concerns due to the exposure to vicarious trauma, i.e. trauma occurring from witnessing traumatic events.
 As \citet{Roberts:2019} notes, the human workers who deal with moderating content for large tech companies often experience severe mental health issues as a consequence to their job.
