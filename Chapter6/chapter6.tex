@@ -143,7 +143,7 @@ While the impacts of moral sentiments on the \textit{Offence} dataset are likely
 \paragraph{Hate Expert}
 Finally, as learned from \cref{chap:liwc}, some datasets for abusive language appear to be more closely related to others.
 For this reason, I include the \textit{Hate Expert} dataset as an auxiliary task dataset to verify this finding and to provide a dataset to help address the poor representation of hate speech in the classes.
-In \cref{chap:liwc} I binarise this dataset, here \ztdelete{on the other hand} I retain all $4$ classes in the dataset.
+In \cref{chap:liwc} I binarise this dataset, here \ZTdelete{on the other hand} I retain all $4$ classes in the dataset.
 In the expert annotated data, the four classes have a highly imbalanced distribution, the largest class being the negative class consuming $84\%$ of the data, while the second largest class `sexism' consumes $13\%$ of the data, the `racist' class consuming $1.4\%$ of the data and the final class, `both racist and sexist' contributing with $0.7\%$ of the data.
 
 Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ documents means less than $50$ documents are labelled for the minority class, and given that I create stratified splits for the training ($80\%$), validation ($10\%$), and evaluation ($10\%$) sets, less than $40$ documents remain in the training set.
@@ -914,12 +914,12 @@ Finally, in my experimental models I do not use pre-trained embedding layers in 
 \ZTedit{
   In this chapter, I have sought to examine Multi-Task Learning as a method to incorporate greater context into machine learning models than what is provided in only datasets for abuse.
   Thus, I have attempted to address \textit{RQ II} by examining which auxiliary tasks provide for useful contextualisation for abuse detection.
-  That is, I have sought to answer \textit{RQ 3}: How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?
+  That is, I have sought to answer \textit{RQ 3}: How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}
 
-  From my experiments, I find that Multi-Task Learning can be a useful technique for abuse detection due to the joint representation of multiple tasks that is encoded in the model.
-  I further find that selecting the appropriate auxiliary tasks is heavily dependent on the primary task dataset and the goals the authors had in developing the resource.
+  \ZTedit{From my experiments, I find that Multi-Task Learning can be a useful technique for abuse detection due to the joint representation of multiple tasks that is encoded in the model.
+  I further find that selecting the appropriate auxiliary tasks is heavily dependent on the primary task dataset and the goals the authors had in developing the resource.}
 
-  These findings make clear the potential for contemporaneous machine learning techniques to more closely embody the subjectivities of an individual.
+  \ZTedit{These findings make clear the potential for contemporaneous machine learning techniques to more closely embody the subjectivities of an individual.
   Returning briefly to the infrastructure of content moderation and content moderation as a third party reader, the proximity between the values held by the third party reader and the recipient is strongly indicative of the abilities of content moderation infrastructures to more accurately represent a given recipient.
   Multi-Task Learning for hate speech detection, and more generally abuse detection, then offers a means through which practitioners can begin to develop machine learning models that more closely represent the readers whose behalf they are purported to act on behalf of.
 }
