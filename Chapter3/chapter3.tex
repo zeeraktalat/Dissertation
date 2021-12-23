@@ -14,8 +14,8 @@ This chapter introduces related work in Natural Language Processing (NLP) and th
 % Introduce the field of abusive language detection
 In recent years, the computational study of online abuse has seen a rapid increase in the number of papers dedicated starting with a handful of papers prior to $2016$ to a thriving research field with numerous papers, shared tasks, and workshops \citep{Vidgen:2020}. 
 In spite of the growth in research dedicated to the detection of online abuse, the research field is still in its infancy with a number of open questions, including questions around definition of the task, annotation guidelines, and modelling techniques.
-\ZTedit{Due to the relative infancy of the field, the ``early'' and ``recent'' work overlap each other in time.
-I use ``early'' and ``recent'' work to distinguish ``early'' from ``recent'' by conceptualising ``early'' as work which laid the foundations of the field and ``recent'' as work that develops, or critiques, these foundations.}
+\ZTedit{Due to the relative infancy of the field, the `early' and `recent' work overlap each other in time.
+I use `early' and `recent' work to distinguish `early' from `recent' by conceptualising `early' as work which laid the foundations of the field and `recent' as work that develops, or critiques, these foundations.}
 The earliest work in the field sought to address questions of cyber-bullying \citep{Chen:2012,Cho:2013,Reynolds:2011} and profanity \citep{Sood:profanity:2012,Sood:2013} with sparing focus on demographically specified abuse, such as racism, sexism, and anti-Semitism \citep{Warner:2012}. 
 More recently, work on demographically specified abuse has surfaced as an independent task \citep{Tulkens:2015,Waseem:2016,Waseem-Hovy:2016,Park:2017,Samghabadi:2017,Karan:2018,Gorrell:2018,Stoop:2019,Meyer:2019,Palmer:2020,Vidgen:2020}. 
 As a consequence of increased visibility of hate speech and abuse on online platforms, the academic inquiry into the computational detection has grown along with the regulatory responses \citep{NetzDG:2017,EUCommission:2016}.
@@ -23,14 +23,14 @@ As a consequence of increased visibility of hate speech and abuse on online plat
 Early, and contemporary computational work, has seen a great deal of focus to central questions around the task: how do we annotate and create datasets \citep{Waseem-Hovy:2016,Waseem:2017,Vidgen:2020} and understanding annotator interaction and performance \citep{Ross:2016,Waseem:2016,Vidgen_learning:2020}.
 Early work focused on questions of marginalisation and oppression, for instance through the work of \citet{Waseem-Hovy:2016} who base their annotation on works in gender studies and critical race theory, and collect data based on gendered and racialised abuse; more recently data collection and annotation processes have moved towards a demographically blind process. 
 Such early work was inspired by the marginalisation of certain bodies and the desire to develop computational tools to protect marginalised people \citep{Warner:2012}.
-More recent work has instead directed its focus to demographically blind approaches to data collection and annotation, succumbing to ``marginalisation-blind'' annotation processes and guidelines. 
+More recent work has instead directed its focus to demographically blind approaches to data collection and annotation, succumbing to `marginalisation-blind' annotation processes and guidelines. 
 Although processes that do not take marginalisation into account, but instead seek to treat every group equally provide an allure of fairness, they also encode dominant discourse on abuse with the subsequent result of the resistance to oppression and marginalisation being treated the same as marginalisation. 
 In concert with the growing evidence of racially biased content moderation tools \citep{Waseem:2018,Davidson:2019}, demographically blind annotation criteria and data curation pose a threat to the goal of developing tools that aid in ensuring people from the right from persecution. 
-One such example is presented by \citet{Salminen:2018} who develop a taxonomy that includes ``anti-white'' as a target of hate on par with anti-Black hate in spite of whiteness as a hegemonic entity that marginalises \citep{McIntosh:1988}.
+One such example is presented by \citet{Salminen:2018} who develop a taxonomy that includes `anti-white' as a target of hate on par with anti-Black hate in spite of whiteness as a hegemonic entity that marginalises \citep{McIntosh:1988}.
 A result of this are egregious annotation choice, such as ``The  white  will  always  steal;  FUCK  YOU  TO  ALL  WHITES  RACIST'' labelled as hate speech \citep{Salminen:2018}, in spite of the comment speaking to ongoing racism and the historical exploitation enacted by white societies (e.g. the theft of cultural artefacts from colonised territories \citep{Frost:2019}, the numerous genocides committed by imperialistic colonial states \citep{Weisbord:2003}, and the theft of bodies in the transatlantic slave trade). 
 Moreover, and perhaps of even greater concern, the annotation and curation processes of \citet{Salminen:2018} result in data responding to the abuse of authority committed by police as hate, in one such example they identify the following comment as hate ``did to that poor guy. 10 s of pepper spray directly into the face, run over foot etc. equal it up a little bit, except for the detail of having a fucking stroke. So it still wouldn’t be exactly what the guy went through. Fucking discusting. They get a hard on power tripping others. They are just fucking cowards'', in all likelihood due to the aggressive nature of the comment.
 
-Through such demographically uninformed processes of curating and making data, a danger of erasure of past and ongoing marginalisation and responses to it as well as critical responses to the violent abuse of authority as ``hate speech'' that should be subject to content moderation. 
+Through such demographically uninformed processes of curating and making data, a danger of erasure of past and ongoing marginalisation and responses to it as well as critical responses to the violent abuse of authority as `hate speech' that should be subject to content moderation. 
 The question of automated hate speech detection thus, for works such as \citet{Salminen:2018} is no longer ensuring the right to not be persecuted but instead insuring that processes of marginalisation remain unchallenged.
 For these reasons, I use the datasets released in early work, specifically I use the \textit{Offence} dataset \citep{Davidson:2017}, \textit{Toxicity} dataset \citep{Wulczyn:2017}, and \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016} in all computational chapters. 
 For \autoref{chap:liwc} which examines the influence and generalisability of vocabulary manipulation, I also use the \textit{Hate Expert} \citep{Waseem:2016} and the \textit{StormFront} \citep{Garcia:2019} datasets. 
@@ -71,7 +71,7 @@ The definitions of hate speech and offensive content that are used in the machin
 Here, I want to make clear the distinctions between these to schools of thought.
 The primary difference in the critical and computer scientist reading of hate speech and abuse is the consideration of social circumstance and systems of power.
 Critical race theory, gender studies, and feminist science and technology studies all consider how social constructs, such as race and gender influence our experience of the world.
-Turning this consideration of social constructs and power structures towards the question of racism, sexism, and hate speech in general, these fields then distinguish how targets are situated in terms of power when considering whether something is hate speech or not \citep{...}.
+Turning this consideration of social constructs and power structures towards the question of racism, sexism, and hate speech in general, these fields then distinguish how targets are situated in terms of power when considering whether something is hate speech or not \citep{Ging_Siapera_2018}.
 For instance, should two people with different identities be targeted with the same abusive statement, the impacts of that abuse will differ and speak into different histories.
 Should one of these people have a hegemonic identity while the other belongs to an oppressed group, e.g. one is a man and the other a woman, then the abuse will speak into histories of power and marginalisations, respectively.
 Following this line of thinking, abuse then is also a matter of structural power. 
@@ -82,30 +82,31 @@ It is important to note here that the distinguishing factor is not whether there
 \ZTedit{The computer scientist and machine learning literature however largely disengages with questions of power structures.
 Instead, the literature tends to focus in on micro-instances of conflict and to a large degree disconnects the identities of the target with the abuse.
 For instance, in the conceptualisation of \citet{Davidson:2017} and \citet{Wulczyn:2017} the \textit{offensive}, \textit{hate}, and \textit{toxic} are entirely focused on the conversational moment and the presumed intent of the speakers.\footnote{Presumed by annotators.}
-This approach also is divorced from the systemic reading of hate speech which makes the impact central, rather than the intent of the speaker \citep{...}.
+This approach also is divorced from the systemic reading of hate speech which makes the impact central, rather than the intent of the speaker \citep{Ging_Siapera_2018}.
 The computer scientific approach to hate, is a comparatively simplistic approach which collapses important distinctions such as how people live at the intersection of multiple identities, i.e. queer brown men or working-class white women.
 }
 
 \ZTedit{In the following chapters, I consider the readings which are most appropriate for the content of the chapters.
-In \cref{chap:dirt}, I consider consequences of the simplistic view computer science takes on hate speech.
+In \cref{chap:filter}, I consider consequences of the simplistic view computer science takes on hate speech.
 In the next two chapters, \cref{chap:liwc} and \cref{chap:mtl}, I focus on the computer scientific notions of the superset \textit{abuse} and its subsets: \textit{Hate speech, toxicity, and offense}.
 Finally, in \cref{chap:disembodied} I return to the notion of hate speech in the systemic sense, as I consider the wider implications of the processes through which we develop machine learning technologies.
 }
 
 \subsection{Datasets}\label{sec:datasets}
 
-Here I provide an overview of the different datasets that are used throughout this dissertation. 
+Here I provide an overview of the different datasets that are used throughout this dissertation.\ZTedit{\footnote{I only provide examples from datasets that are not annotated for abuse, as adding more than the minimum number of examples provides little additional value.
+Moreover, as all datasets are publicly available, examples are readily available for perusal for interested readers.}}
 For each dataset, I introduce the curation rationale, the source of the datasets, the annotation guidelines, annotator selection, and finally how each of these dimensions influence the resulting dataset. 
 In \autoref{sub:abuse_data} I describe the datasets annotated for hate speech and abuse and then in \autoref{sec:mtl_data}, I turn to the datasets used for the auxiliary tasks for \autoref{chap:mtl}.
 
 \subsubsection{Hate Speech and Abuse Datasets}\label{sub:abuse_data}
 \ZTedit{
   To perform any machine learning modelling of abusive language it is necessary to use some datasets.
-  However, as we saw in \cref{sec:abuse}, many of the datasets that exist at the time of writing suffer from a number of issues, including mislabelling of African American English and sampling issues \citep{Wiegand:2017}.
-  Similarly, many more recent datasets suffer from critical flaws, e.g. the dataset proposed by \citet{Salminen:2018} which treats responses to physical abuse and the abuse of power as ``abusive''.
+  However, as we saw in \cref{sec:abuse}, many of the datasets that exist at the time of writing suffer from a number of issues, including mislabelling of African American English and sampling issues \citep{Wiegand:2019}.
+  Similarly, many more recent datasets suffer from critical flaws, e.g. the dataset proposed by \citet{Salminen:2018} which treats responses to physical abuse and the abuse of power as `abusive'.
   The more recent datasets have not been subject to the same level of critical inquiry as the early datasets, in spite of many of similar issues being apparent upon inspection.
   As the limitations of early datasets are well known within the field, and their results can be interpreted within the context of their limitations, I find that these are most appropriate for use for the work in this thesis.
-  }
+}
   
 \ZTedit{
   I also make use of two datasets that I have developed and published before starting my doctoral research, the \textit{Hate Speech} and \textit{Hate Expert} datasets.
@@ -115,7 +116,7 @@ In \autoref{sub:abuse_data} I describe the datasets annotated for hate speech an
 \paragraph*{Hate Speech} Published as the first publicly available dataset for hate speech and abusive language detection, \citet{Waseem-Hovy:2016} developed a dataset for detecting abuse towards gendered and racialised minorities.
 In an interview in the Let's Chat Ethics Podcast, Zeerak Waseem shared that the initial motivation for developing the dataset was the somewhat na{\"i}ve hope to address online harassment as experienced by women during \#GamerGate, a harassment campaign against female game developers and games journalists \citep{Massanari:2015}.
 This aim of developing tools that can protect marginalised people is apparent in the data sampling and the source of data.
-As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as ``sexist'', ``racist'', and ``neither''.
+As a large amount of the GamerGate abuse occurred on Twitter, \citet{Waseem-Hovy:2016} use Twitter as a source of their data, collecting $16,914$ tweets labelled as `sexist', `racist', and `neither'.
 In efforts to ensure that their collected and annotated sample contains gendered and racialised abuse, they bootstrap their corpus collection by first search for common slurs against women, ethnic minorities, religious minorities, and sexual minorities to identify the salient terms and users for scraping.
 To annotate this dataset, with the target group in mind, \citet{Waseem-Hovy:2016} develop $11$ questions to test whether a comment is hateful or not.
 This set of questions focuses on breadth in the types of hate expressed rather than depth in each type. 
@@ -127,29 +128,29 @@ Moreover, as salient terms were sampled for annotation, some terms (i.e. the has
 In spite of these issues, the annotations in this dataset are \textit{embodied} within the context of critical race and gender studies perspectives on abuse.
 
 \paragraph*{Hate Expert} In an extension of the dataset proposed by \citet{Waseem-Hovy:2016}, \citet{Waseem:2016} sample $6,909$ tweets from the original scrape and have it annotated by two groups, in efforts to understand the influence of annotator biases. 
-The first group consisted of ``feminist and anti-racism activists'' \citep{Waseem:2016} who annotate the sample of the dataset with one of four labels ``racist'', ``sexist'', ``both'', and ``neither''.
+The first group consisted of ``feminist and anti-racism activists'' \citep{Waseem:2016} who annotate the sample of the dataset with one of four labels `racist', `sexist', `both', and `neither'.
 The second group of annotators were recruited from CrowdFlower to re-annotate the sample annotated by the first group.\footnote{CrowdFlower has since been renamed Appen.}
-The label set was expanded by \citet{Waseem:2016} to include the category ``both'', in acknowledgement that marginalisation can be expressed across multiple dimensions, in an \textit{Intersectional} manner. 
+The label set was expanded by \citet{Waseem:2016} to include the category `both', in acknowledgement that marginalisation can be expressed across multiple dimensions, in an \textit{Intersectional} manner. 
 Comparing models optimised on each group of annotators, \citet{Waseem:2016} find that models that use the annotations of the first group consistently outperform models optimised on the second.
 \citet{Waseem:2016} argue that the reason for this difference is that \ZTedit{the} models \ZTedit{that are} optimised on the former group benefit from similarities in the understanding of hate speech\ZTdelete{,}\ZTedit{.}
 \ZTdelete{whereas the distinct subjective positionalities of the latter group, that does not have a salient unifying characteristic beyond their work on a crowd-sourcing platform, produces internally inconsistencies in labelling that render it harder for models to consistently identify patterns that they can learn from.}
-\ZTedit{On the other hand, the only salient unifying characteristic for the latter is that they perform work on a micro-work platform, which produces internal inconsistencies in labelling that renders it harder for models to consistently identify patterns that they can learn from.} 
+\ZTedit{On the other hand, the only salient unifying characteristic for the latter is that they perform work on a micro-work platform, which produces internal inconsistencies in labelling that renders it harder for models to consistently identify patterns that they can optimise on.} 
 
 In presenting this dataset, \citet{Waseem:2016} propose that ideologues can take similar positions on a topic, given their subjective positionalities. 
 They argue that only through a principled understanding of hate speech is it possible to annotate reliably for hate speech and that crowd-sourced annotations for hate speech display inconsistencies that to some degree erases the meaning of the term.
 In using this dataset for this dissertation, I use the annotations provided by the feminist and anti-racist activists.
 
-\paragraph*{Offence} Departing from the question of forms of hate speech and gender studies and critical race theory based annotation guidelines, \citet{Davidson:2017} turn instead to ask where the distinction between simply ``offensive'' speech and ``hate speech'' lies.
+\paragraph*{Offence} Departing from the question of forms of hate speech and gender studies and critical race theory based annotation guidelines, \citet{Davidson:2017} turn instead to ask where the distinction between simply `offensive' speech and `hate speech' lies.
 Using a list of terms from Hatebase to identify $33,458$ users whose tweets they sample.\footnote{Hatebase.org is a website that crowd-sources slurs and insulting turns of phrase. Due to marginalised people being disproportionately targeted, there is a distributional skew towards terms that target marginalised people in the number of terms.}
 From these users, they randomly sample $25,000$ tweets for annotation by CrowdFlower workers, resulting in $24,802$ annotated tweets. 
-The crowd-workers were given guidelines to aid them in distinguishing between ``offensive content'', ``hateful content'' or ``neither offensive or hateful'', selecting only one for each tweet. 
+The crowd-workers were given guidelines to aid them in distinguishing between `offensive content', `hateful content' or `neither offensive or hateful', selecting only one for each tweet. 
 \citet{Davidson:2017} instruct their annotators that hate speech is speech that ``is used in reference to certain groups that expresses hatred towards the group or is intended to be derogatory, to humiliate, or to insult the members of the group''. 
 Moreover, they provide examples of such content which includes the straightforward ``Need to send these w******s back to their country''\footnote{Censoring of the slur is mine.} and the more conflicted ``I hate white trash''. 
 The conflict in the latter stems from it being unclear whether the emphasis is on class-based hate or if it is targeting white people. 
 While the former is less contentious, the latter would imply that white people too are targets of marginalisation on the basis of their race. 
 However, as numerous scholars have argued, whiteness is the hegemonic force that marginalises \citep{benjamin_race_2019,Noble:2018}.
-``Offensive'' content is provided as an alternative, less serious form of potentially unwanted content. 
-This group is defined in contrast to the hateful class ``[o]ffensive content might use some of the same words we associate with hate speech but do not \textit{necessarily} constitute hate speech because the words are not used in the same context as ``hate speech````.\footnote{Emphasis added.}
+`Offensive' content is provided as an alternative, less serious form of potentially unwanted content. 
+This group is defined in contrast to the hateful class ``[o]ffensive content might use some of the same words we associate with hate speech but do not \textit{necessarily} constitute hate speech because the words are not used in the same context as `hate speech'''.\footnote{Emphasis added.}
 From this definition it's clear that in spite of the instruction to select only one category, \citet{Davidson:2017} acknowledge that there is a potential overlap between offensive language and hate speech. 
 Moreover, unlike the annotation guidelines proposed by \citet{Waseem-Hovy:2016}, the definition of offensive draws in the question of context. 
 Illustrating this point, \citet{Davidson:2017} provide the following example ``Oh shush you know I love you f****t''. 
@@ -163,7 +164,7 @@ However, as the dataset is labelled for a multi-class classification problem, wh
 Departing from the early tradition of using Twitter as a source of data, \citet{Wulczyn:2017} consider the Wikipedia editor discussion pages. 
 Taking a narrow view of behaviours that inhibits participation in conversations, \citet{Wulczyn:2017} focus on personal attacks and harassment, specifically asking their annotators whether which entity (the participant or a third party) is the subject of the attack. 
 As a last positive category, they include whether it is ``[a]nother kind of attack or harassment'', thus relegating all forms of harassment that are not directed at specific individuals to a residual category. 
-The dataset thus is comprised of ``personal attacks'' and ``other forms of harassment''. 
+The dataset thus is comprised of `personal attacks' and `other forms of harassment'. 
 As the study is specifically grounded in identifying personal attacks, this categorisation of various forms of personal attacks and a residual category as positive instances is in line with the aims of the data, if not the description.
 \ZTedit{
   Using this definition, \citet{Wulczyn:2017} select a random sample of $37,611$ comments that are labelled by $10$ annotators for personal attacks.
@@ -188,17 +189,44 @@ The decision for using StormFront as a source of data was motivated by the preva
 Moreover, this dataset further distinguishes itself from prior datasets by annotating on a sentence level.
 The authors argue that annotating on a sentence level can reduce the confounding factors by only addressing content which is explicitly hateful.
 While this may, in some instances have little effect as the surrounding sentences bear no impact on whether a sentence is hateful. This particularly holds for explicit hate speech.
-However, for subtle forms of hate speech, conducting sentence level annotation may obscure hate that is only apparent when considering a post in its entirety rather than its sentence level components. In order to address this issue, \citet{Garcia:2019} introduce a ``related'' tag which is to be used when individual sentences do not convey hate but the combination of several sentences in sequence do convey hate.
+However, for subtle forms of hate speech, conducting sentence level annotation may obscure hate that is only apparent when considering a post in its entirety rather than its sentence level components. In order to address this issue, \citet{Garcia:2019} introduce a `related' tag which is to be used when individual sentences do not convey hate but the combination of several sentences in sequence do convey hate.
 This method for mitigation does not account for longer sequences of sentences that convey hate, as is often the case for subtle forms of hate speech and dog whistles.
 Moreover, as \citet{Garcia:2019} take a very conservative position on what constitutes hate, for instance, the use of a derogatory term, on a white supremacist web-forum, ``cannot be said to be a deliberate attack, taken without any more context, despite it likely being offensive.'' For this reason, \citet{Garcia:2019} argue that simply the occurrence of slurs weaponised against marginalised communities cannot be said to be hateful.
 Thus, while initially side-stepping the issue of marginalisation-blind definitions by sourcing data from a white supremacist web-forum, it is softly reintroduced by taking a conservative stance on what constitutes hate.
 
 \subsubsection{Non-abuse Datasets}\label{sec:mtl_data}
+\afterpage{
+\begin{landscape}
+\begin{table}[]
+\resizebox{1.4\textwidth}{!}{%
+\begin{tabular}{ll}
+Document                                                                                                                                                                    & Label                  \\ \hline
+``But what about the married couple who know right up front they do not intend to have children, don't even intend to try? Do we ban them from marriage to?''               & Not Sarcasm            \\
+``wow! i've never thought about it like that. you've given that a lot of thought ;)''                                                                                       & Sarcasm                \\ \hline
+``She had plenty of choice in the matter. She should have chosen to keep the kid. Even if she lost all her money because of this it would have been the right thing to do'' & Feeling-based Argument \\
+``Mutation is not always via radiation.. there also can be inaccurate duplication of dna. As for new species happening, it has been observed in nature.''                   & Fact-based Argument    \\ \hline
+``Holy muther Sandy is no joke Sending the love and good vibes''                                                                                                            & Care                   \\
+``Your desire to make sacrifices for humanity are in vain if you're going to kill human beings in the proces''                                                              & Harm                   \\
+``Methinks Obama hearts Sandy Gives him plausible excuse to avoid all questions related to Benghazi''                                                                       & Subversion             \\
+``\#BlackLivesMatter of course they do but so do \#AllLivesMatter. Protests are silly and simply bully tactics. Respect police and get respect''                            & Authority              \\
+``I'll follow any fellow servicemen and loyal AT\_USER supporters''                                                                                                         & Loyalty                \\
+``\#AllLivesDidntMatter when ppl failed to show support \& empathy by denigrating \#BlackLivesMatter to \#AllLivesMatter''                                                  & Betrayal               \\
+``\#PrayersForBaltimore \#AllLivesMatter \#StopTheViolence \#FreddieGray and all the other families deserve justice \#NoJusticeNoPeace''                                    & Fairness               \\
+``People who take advantage of crises like Sandy to harm deceive or otherwise be a dick to those in need you re going to THE SPECIAL HELL''                                 & Cheating               \\
+``Prayer is the only means of bringing about orderliness and peace and repose in our daily lives''                                                                          & Purity                 \\
+``Everyone should unfollow AT\_USER immediately Making hurricane jokes is pathetic and insensitive and disgusting sandy''                                                   & Degradation            \\
+``5 Leadership Priorities During Times of Crises \#BaltimoreRiots \#leadership''                                                                                            & Non-Moral             
+\end{tabular}%
+}
+\caption{Examples of documents in each class of the \extit{Sarcasm, Argument Basis,} and \textit{Moral Sentiments} datasets.}
+\label{tab:examples}
+\end{table}
+\end{landscape}
+}
 
-\ZTcomment{Add examples of each dataset}
 \paragraph*{Sarcasm} \citet{Oraby_sarcasm:2016} develop a dataset for sarcasm detection in dialogues. The dataset was developed in order to address the lack annotation for subtypes of sarcasm, i.e. rhetorical questions and hyperbole, at scale in previous datasets.
 Sourcing their data from the Internet Argument Corpus (IAC) \citep{Abbott:2016}, \citet{Oraby_sarcasm:2016} annotate their data for ``generic sarcasm, rhetorical questions, and hyperbole''.
-In order to generate a dataset from the IAC, \citet{Oraby_sarcasm:2016} optimise a ``weakly-supervised pattern learner'' \citep{Oraby_sarcasm:2016} to identify a set of $30,000$ posts, filtering two thirds of the posts that don't contain any ``not-sarcastic'' cues and annotate the remaining $11,040$ posts in quote-response pairs for annotation on Amazon Mechanical Turk.
+In order to generate a dataset from the IAC, \citet{Oraby_sarcasm:2016} optimise a `weakly-supervised pattern learner' \citep{Oraby_sarcasm:2016} to identify a set of $30,000$ posts, filtering two thirds of the posts that don't contain any `not-sarcastic' cues and annotate the remaining $11,040$ posts in quote-response pairs for annotation on Amazon Mechanical Turk.
 Similarly to the abusive language datasets annotated on CrowdFlower, this choice of annotators can introduce biases stemming from the subjective embodiments of the human annotators and the geo-cultural contexts in which they exist.
 Following the annotation process a dataset of $6,520$ posts (with a $50\%$ split of sarcastic and not-sarcastic posts) is obtaned and released.
 Examining the dataset for suitability for machine learning experiments, \citet{Oraby_sarcasm:2016} optimise a linear SVM with Stochastic Gradient Descent (SGD) optimisation and L2 regularisation obtaining F1-score of $0.74$ using features derived from Word2Vec \citep{Mikolov:2010}.
@@ -234,16 +262,16 @@ A common criticism of many current computational methods for abuse detection is 
 In the pursuit of models that generalise well onto other datasets, researchers have proposed a variety of architectures. As an initial investigation into the question of generalisability, \citet{Waseem:2016} note that the best performing classifier on the dataset they propose does not generalise well onto the \textit{Hate Speech} dataset, noting that the performance of their classifier drops by more than a $25\%$.
 Using Multi-Task Learning (MTL),\footnote{Multi-task learning allows for optimising models using multiple different datasets, for distinct machine learning tasks, where one (main) task is given higher priority and all other tasks are treated as auxiliary tasks.} \citet{Waseem:2018} address the issue of poor generalisability between the \textit{Hate Speech} and \textit{Hate Expert} (combined into a single dataset) and the \textit{Offence} dataset, showing that a MTL framework can be used for optimising models that can generalise onto from one cultural context onto another. Moreover, considering the results posted by \citet{Waseem:2018}, it appears that there is a trade-off between well-performing in-domain models and well-performing cross-domain models, where cross-domain improvements appear to come at the cost of in-domain performance, where out-of-domain performance is computed by mapping the classes in the in-domain datasets to the out-of-domain dataset.
 
-\citet{Karan:2018} further explore the question of cross-dataset generalisability using a linear SVM model. \citet{Karan:2018} approach the task of out-of-dataset performance as a classical domain adaptation task, finding that without significant procedures for domain adaptation, there is poor generalisability. Similarly to \citet{Waseem:2018}, \citet{Karan:2018} find that cross-domain performance comes at the cost of in-domain performances but with large out-of-domain improvements. One difference between \citet{Karan:2018} and the previously described studies is that \citet{Karan:2018} reduce the learning task to a binary classification task of ``abusive'' and ``non-abusive'' documents.
+\citet{Karan:2018} further explore the question of cross-dataset generalisability using a linear SVM model. \citet{Karan:2018} approach the task of out-of-dataset performance as a classical domain adaptation task, finding that without significant procedures for domain adaptation, there is poor generalisability. Similarly to \citet{Waseem:2018}, \citet{Karan:2018} find that cross-domain performance comes at the cost of in-domain performances but with large out-of-domain improvements. One difference between \citet{Karan:2018} and the previously described studies is that \citet{Karan:2018} reduce the learning task to a binary classification task of `abusive' and `non-abusive' documents.
 
 The last approach to generalisation I consider is the work by \citet{Fortuna:2021}. In this paper, the authors compare four different models for out-of-domain classification: a Bag-of-Words SVM model, a Continuous Bag-of-Words FastText model, a BERT model \citep{Devlin:2019}, and an ALBERT model \cite{Lan:2020}. The latter two being transformer-based language-models that are fined-tuned to the task of predicting abuse.
-\citet{Fortuna:2021} propose a different class organisation to past studies, first they propose as generalised class organisation that collapse classes across datasets into a smaller, generalised subset that maps across datasets. For instance, the ``sexist'' class provided by \citet{Waseem-Hovy:2016} and the ``misogyny'' class provided by \citet{Fersini:2018} into a ``misogyny-sexism'' class. Each of the generalised classes are binarised to allow models optimised with other standardised labels to predict on them.
+\citet{Fortuna:2021} propose a different class organisation to past studies, first they propose as generalised class organisation that collapse classes across datasets into a smaller, generalised subset that maps across datasets. For instance, the `sexist' class provided by \citet{Waseem-Hovy:2016} and the `misogyny' class provided by \citet{Fersini:2018} into a `misogyny-sexism' class. Each of the generalised classes are binarised to allow models optimised with other standardised labels to predict on them.
 Using these generalised classes, \citet{Fortuna:2021} show that by using methods that capture more complex word-interactions, out-of-domain performance generally improves within and out of domain, subject to the classification task.
 Specifically, they find that when classes have significant overlaps across datasets in their rationalisation of what the are to represent then models optimised on those classes will map well onto the rest.
 Conversely, when the classes have a little overlap, the models will generalise poorly onto the new dataset.
 Moreover, \citet{Fortuna:2021} identify that some dataset combinations produce poor generalisation between each other regardless of the models used.
 This, in concert with their conclusion that dataset overlap and out-of-domain similarities are drivers of model generalisation has two implications.
-First, current computational models can, to some degree, adapt onto new distributions and samples but models using words as input are poorly suited for learning general trends of a wide variety of abuse, including closely related concepts such as ``toxicity'' and ``severe toxicity'' \citep{Fortuna:2021}.
+First, current computational models can, to some degree, adapt onto new distributions and samples but models using words as input are poorly suited for learning general trends of a wide variety of abuse, including closely related concepts such as `toxicity' and `severe toxicity' \citep{Fortuna:2021}.
 Second, as models do not generalise onto other concepts, even if closely related, research in the detection of online abuse must either develop methods that can generalise onto studying different objects and perspectives of online abuse, or datasets must be annotated following highly similar annotation guidelines at the cost of the depth and breadth of concepts that can be explored.
 
 \ZTdelete{\section{Models}}
@@ -264,11 +292,11 @@ Byte-Pair Encodings were introduced to the NLP comunity by \cite{Sennrich:2016} 
 In efforts to obtain a sub-word representation, \citet{Sennrich:2016} initialise their algorithm initially with a vocabulary consisting of each unique character token in the dataset and then count all symbol pairs (e.g. character co-occurrences) and merge the most frequently occurring pairs and adding it to the vocabulary. This merging process is repeated a number of times, where the total number of merge operations is a hyper-parameter set by the designer of the sub-word representation. The size of the vocabulary following this process will be the size of the original vocabulary plus the number of merge operations that are set by the designers \citep{Sennrich:2016}
 In terms of language, using sub-words to represent documents can minimise the number of out-of-vocabulary tokens in the validation and evaluation sets of a dataset, as the likelihood of a word not being represented decreases as it is broken down into its subwords.
 
-In this dissertation, I use the pre-trained Byte-Pair Embeddings (BPE) developed by \citet{Heinzerling:2018}. These embeddings were optimised for $275$ languages using the Wikipedia pages in each language as the source of data. \citet{Heinzerling:2018} provide embeddings for $1,000,\, 3,000,\, 5,000,\, 10,000,\, 25,000,\, 50,000,\, 100,000$, and $200,000$ merge operations with dimensions $25,\, 50,\, 100,\, 200$, and $300$. For all chapters in this dissertation, I choose the $300$ dimensional embeddings that have been subject to $200,000$ merge operations as these embeddings are likely to offer good representations of the data that used in this dissertation.
+In this dissertation, I use the \ZTdelete{pre-trained}\ZTedit{pre-optimised} Byte-Pair Embeddings (BPE) developed by \citet{Heinzerling:2018}. These embeddings were optimised for $275$ languages using the Wikipedia pages in each language as the source of data. \citet{Heinzerling:2018} provide embeddings for $1,000,\, 3,000,\, 5,000,\, 10,000,\, 25,000,\, 50,000,\, 100,000$, and $200,000$ merge operations with dimensions $25,\, 50,\, 100,\, 200$, and $300$. For all chapters in this dissertation, I choose the $300$ dimensional embeddings that have been subject to $200,000$ merge operations as these embeddings are likely to offer good representations of the data that used in this dissertation.
 
 \subsection{Strategies Against Over-fitting}\label{sec:anti-overfit}
 
-Machine learning models are prone to identify salient patterns in the training data with the result that they perform poorly on evaluation sets and out-of-domain data. In order to address this issue, I use a number of different techniques depending on the type of model used.
+Machine learning models are prone to identify salient patterns in the optimisation data with the result that they perform poorly on evaluation sets and out-of-domain data. In order to address this issue, I use a number of different techniques depending on the type of model used.
 For linear models, I experiment with three different regularisers: L1 regularisation, L2 regularisation, and Elasticnet.
 For neural networks, that by virtue of their ability to identify and represent complex interaction patterns are prone to overfit, I use two different techniques, namely early stopping and dropout.
 
@@ -278,8 +306,8 @@ For neural networks, that by virtue of their ability to identify and represent c
 
 \paragraph*{Elastic Net} Elastic Net seeks to combine $L1$ and $L2$ regularisation into a single regularisation function \citep{Goldberg:2017}. Thus, elastic net seeks to both zero out uninformative features and minimise the weight of all features to reduce variance between them. Elastic Net is particularly fitting in modelling contexts where there is a high dimensionality in the data, for which reason it is desirable to reduce the size of the feature space while retaining a maximum number of features that are informative towards the prediction task.
 
-\paragraph*{Dropout} In order to prevent neural networks from over-fitting on training data, \citet{Goldberg:2017} introduce the notion of dropout. Dropout refers to randomly zeroing out some values of a model's internal representation between different layers. The idea behind dropout is that models may over-fit to individual tokens or interaction patterns between tokens, thus to prevent the model from learning such patterns, one can randomly zero out values in the internal representations of a document as it is passed through the layers of the model.
-Such zeroing out forces the model to adapt to different representations for a given document each time it is passed through the model and, hopefully, learn general patterns rather than ones that occur from spurious correlations in the data.
+\paragraph*{Dropout} In order to prevent neural networks from over-fitting on optimisation data, \citet{Goldberg:2017} introduce the notion of dropout. Dropout refers to randomly zeroing out some values of a model's internal representation between different layers. The idea behind dropout is that models may over-fit to individual tokens or interaction patterns between tokens, thus to prevent the model from learning such patterns, one can randomly zero out values in the internal representations of a document as it is passed through the layers of the model.
+Such zeroing out forces the model to adapt to different representations for a given document each time it is passed through the model and, hopefully, identify general patterns rather than ones that occur from spurious correlations in the data.
 
 \paragraph*{Early Stopping} A second method for addressing over-fitting in neural network models is the idea of early stopping \citep{Prechelt:1998}. Early stopping, in terms of neural networks, means to end a optimisation cycle before it passed over the data for the number of epochs specified by the researcher. The idea behind early stopping is that a model may identify an optimal representation before the maximum number of epochs has been reached. Any further optimisation processes on the model representation are thus likely to have a detrimental effect to a model's performance on the evaluation set.
 In this dissertation I trigger early stopping by considering the development of model loss. Specifically, if the model loss monotonically increases for a set number of epochs, I trigger early stopping as this indicates that the model has already identified a representation that minimises the loss.
@@ -327,7 +355,7 @@ Thus, \texttt{NLL} addresses the model's certainty rather than the prediction it
 \subsubsection{Non-linearities}
 
 In the experiments conducted in this dissertation I use two different non-linear functions that I subject various layers in the neural network models to. 
-The role of non-linearities in neural networks is to allow for models to learn non-linear functions rather than linear ones. 
+The role of non-linearities in neural networks is to allow for models to optimise non-linear functions rather than linear ones. 
 The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
 
 The \texttt{hyperbolic tangent}, or \texttt{Tanh}, function (see \cref{eq:tanh} for its mathematical definition) is a non-linear activation function that element wise transforms the values of the tensor representation of the model into a real valued space between $[-1, 1]$.
@@ -493,7 +521,7 @@ In this dissertation, all F1-scores reported are macro-F1 scores as this has bee
 As I explore different experimental research questions, I optimise different machine learning algorithm for detecting abusive language. 
 Each of the model types that I use rely on different methods of operationalising data to obtain internal representations of the different classes. 
 Here $X$ is to mean the processed input to the model, $Y$ is to denote the corresponding ground truth labels, and $\hat{Y}$ denote the set of model predictions. 
-For all models, the aim is to learn a function $f(X|Y)$ that can delineate between each class $y_i\in Y$.
+For all models, the aim is to optimise a function $f(X|Y)$ that can delineate between each class $y_i\in Y$.
 
 \paragraph{Logistic Regression}
 The first linear model that I use in this dissertation is Logistic Regression (LR), which has previously been used widely in NLP tasks. 
@@ -530,7 +558,7 @@ Although many different kernels exist for SVM classifiers, I use a linear kernel
 \paragraph{Multi-Layered Perceptron}
 The Multi-Layered Perceptron (MLP) is perhaps the simplest form of neural network. 
 This neural network is an extension of the Perceptron algorithm by chaining several Perceptron units into a single layer, A Perceptron is updated given the update rule in \autoref{eq:perceptron_update}. 
-Moreover, rather than consisting of a single Perceptron that learns weights of the training data, MLPs are formed of multiple layers of chained Perceptron units. 
+Moreover, rather than consisting of a single Perceptron that learns weights of the optimisation data, MLPs are formed of multiple layers of chained Perceptron units. 
 An MLP requires at least three layers, an input layer, at least one hidden layer, and an output layer.
 Similar to the linear models described in the past sections, MLPs also have an independence assumption coded in, as they assume that each input token is independent from each other.
 
@@ -538,7 +566,7 @@ Similar to the linear models described in the past sections, MLPs also have an i
   \begin{equation}\label{eq:perceptron_update}
     w_{i+1} = w_i(t) + \epsilon (y_i - \hat{y_i}(t))x_{i})
   \end{equation}
-  \caption[The Perceptron weight update function.]{The Perceptron weight update function for binary classification. Where $t$ is the time-step, $\epsilon$ is the learning rate, $x_i$ is the training example, $y_i$ and $\hat{y_i}(t)$ are the ground truth and the model prediction at time-step $t$, respectively.}
+  \caption[The Perceptron weight update function.]{The Perceptron weight update function for binary classification. Where $t$ is the time-step, $\epsilon$ is the learning rate, $x_i$ is the optimisation example, $y_i$ and $\hat{y_i}(t)$ are the ground truth and the model prediction at time-step $t$, respectively.}
 \end{figure}
 
 Finally, the Perceptron, similarly SVM and LR classifiers is a classifier operates on the data in a one-directional, that is a feed-forward manner. 
@@ -560,10 +588,10 @@ In practice however, RNNs aren't well suited for long-range dependencies, as all
 Additionally, some information occurring at an earlier time-step may not be relevant to all subsequent time-steps.
 To address this issue, \citet{Hochreiter:1997} propose the Long-Short Term Memory (LSTM) network, which is a special form of RNNs.
 LSTMs differ from vanilla RNNs by introducing the concepts of gates. 
-Namely, \citet{Hochreiter:1997} introduce a ``forget'' gate and an ``input'' gate in each cell of the LSTM. 
+Namely, \citet{Hochreiter:1997} introduce a `forget' gate and an `input' gate in each cell of the LSTM. 
 Each gate in the LSTM cell can modify the cell state.
 First, the input at time-step $h_t$ receives the output from the cell at state $h_{t-1}$ and a sigmoid function that determines what information from the cell state at $h_{t-1}$ is retained, given $x_t$.
-Next, the ``input'' gate decides which values will be stored in the cell state. 
+Next, the `input' gate decides which values will be stored in the cell state. 
 This decision is made by first selecting the values that are to be updated and how much they are to be updated, and then creating a vector of candidate values to be added.
 Having computed which values to forget, store, and update, it is now a simple matter of performing the updates to the cell state at $h_{t-1}$. 
 First modifying the cell-state to only retain the values that are to be remembered. 
@@ -656,8 +684,8 @@ In general, work in the field operates along three different strands
 
 A number of papers have sought to map limitations in prior work and proposed methods for future works to document ethical risks and ramifications.
 In early work, \citet{Hovy-Spruit:2016} design a taxonomy of ethical risks of NLP systems from over generalisation to dual use of models and from exclusion of demographies of people in datasets to over- and under-exposure of topics to a model.
-Following with considerations of datasets, \citet{Bender-Friedman:2018} and \citet{Gebru:2018} propose ``data statements'' and ``data sheets'', respectively, to documenting the processes with which datasets for machine learning experiments are created and the logics that they draw on for their creation, and shortly thereafter \citet{Mitchell:2019} propose an analogous ``model card'' framework for describing the design rationales for machine learning models.
-More recently, \citet{Blodgett:2020} surveyed $146$ papers addressing questions of bias in NLP, and identify that in spite of the large body of work, the notion of ``bias'' is often under-specified to a point that ``techniques [for addressing bias] are poorly matched to their motivations, and are not comparable to one another'' \citep[p. 5455]{Blodgett:2020}.
+Following with considerations of datasets, \citet{Bender-Friedman:2018} and \citet{Gebru:2018} propose `data statements' and `data sheets', respectively, to documenting the processes with which datasets for machine learning experiments are created and the logics that they draw on for their creation, and shortly thereafter \citet{Mitchell:2019} propose an analogous `model card' framework for describing the design rationales for machine learning models.
+More recently, \citet{Blodgett:2020} surveyed $146$ papers addressing questions of bias in NLP, and identify that in spite of the large body of work, the notion of `bias' is often under-specified to a point that ``techniques [for addressing bias] are poorly matched to their motivations, and are not comparable to one another'' \citep[p. 5455]{Blodgett:2020}.
 
 \subsection{Quantifying Harms}
 
@@ -666,17 +694,17 @@ Here, the authors develop a method to quantify biases that may stem from the dat
 Moving away from a laboratory setting, \citet{Buolamwini:2018} identify how commercial facial recognition systems perform and fail for people. 
 They find that there is a correlation between a facial recognition system's ability to identify faces and the gender and skin-tone of the subject. 
 They find that, in general the systems surveyed tend to perform worse on darker skin-tones and women, with the ability to detect dark-skinned women.
-Turning to language, \citet{Gonen:2019} highlight that many methods for addressing bias in word embeddings leave traces of stereotypes that allow for reconstruction of gendered spaces in word embeddings that have been treated for gender bias.\footnote{Although bias treatment is often termed ``debiasing'', I resist convention as the term ``debias'' is a red-herring for ``acceptable bias''. As I address in greater detail in \cref{chap:disembodied}, such language obscure how methods treated for bias exist and are politicised.}
+Turning to language, \citet{Gonen:2019} highlight that many methods for addressing bias in word embeddings leave traces of stereotypes that allow for reconstruction of gendered spaces in word embeddings that have been treated for gender bias.\footnote{Although bias treatment is often termed `debiasing', I resist convention as the term `debias' is a red-herring for `acceptable bias'. As I address in greater detail in \cref{chap:disembodied}, such language obscure how methods treated for bias exist and are politicised.}
 In a different conceptualisation and operationalisation of bias, \citet{Waseem:2016} examine how different annotator groups label hate speech. 
 While many of the previous methods seek to eliminate, document, or redress biases in datasets and models, \citet{Waseem:2016} proposes to instead accept that social biases are an inevitable force that cannot simply be removed. 
 Instead, they propose that one can lean into this issue by specifically biasing data towards a specific position. 
-\citet{Waseem:2016} argue that by such deviation from requiring a ``debiased'' or ``global'' position, it is possible to optimise models that outperform systems that are based on data that reflects the quest for a global consensus.
+\citet{Waseem:2016} argue that by such deviation from requiring a `debiased' or `global' position, it is possible to optimise models that outperform systems that are based on data that reflects the quest for a global consensus.
 
 \subsection{Harm Reduction}
 At least two broad conceptualisations of bias can be found in the large body of work dedicated to this question \citep[e.g.][]{Agarwal:2018,Romanov:2019,Kulynych:2020,Bolukbasi:2016,Zhao:2017}.
 In the first conceptualisation, bias can be imagined as a finite and countable quantity in a model. 
 Being a countable quantity, it can also be minimised and reduced out of the model or data representation.
-The aims of this work, is not only to minimise the discriminatory social biases that exist in the models but also maintain ``good'' performance on the primary task.
+The aims of this work, is not only to minimise the discriminatory social biases that exist in the models but also maintain `good' performance on the primary task.
 Thus, this line of work accepts a premise that models and data representations that have been treated for bias must still be useful for their intended purpose instead of proposing that models that cannot function without encoding social biases cease to have a valid justification for their existence.
 The second conceptualisation of harm reduction accepts that machine learning models, and optimisation systems more generally, are subject to social biases and instead of direct reductions to the model, seek to identify methods that can externally counteract marginalisation.
 

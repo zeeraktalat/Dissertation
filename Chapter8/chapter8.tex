@@ -14,7 +14,7 @@
 
 In this thesis I have sought to explore the content moderation infrastructures that are built for classifying textual abuse in online spaces.
 The contributions of the thesis are structured around four central themes:
-How the notions of ``healthy'' and ``toxic'' content are operationalised, the implications of such operationalisation and how these come to embody hegemonic imaginaries on respectability;
+How the notions of `healthy' and `toxic' content are operationalised, the implications of such operationalisation and how these come to embody hegemonic imaginaries on respectability;
 how large vocabulary reductions, that represent the mental and emotional states of speakers rather than their words influence the ability of models to classify in-domain and out-of-domain data;
 how different, apparently related, tasks can be used to jointly optimise model representations to gain models that more closely come to reflect the contexts a given speaker is operating in when speaking;
 and finally, how the subjective embodiments of data subjects and modellers alike are embodied in the machine learning pipeline and how these collectively come to privilege hegemonic discourses.
@@ -47,7 +47,7 @@ In efforts to answer \textit{RQ I} and \textit{RQ II}, I formulate sub-questions
 \begin{minipage}{0.9\textwidth}
 \vspace{5mm}
     \begin{enumerate}[start=1, label={\textbf{RQ \arabic*}}]
-        \item{\textit{\ZTedit{How are notions of ``toxicity'' operationalised and modelled, and what are their socio-political implications for content moderation systems?}}}
+        \item{\textit{\ZTedit{How are notions of `toxicity' operationalised and modelled, and what are their socio-political implications for content moderation systems?}}}
         \item{\textit{\ZTedit{What are the modelling implications of using LIWC to substitute the use of words and sub-words as input tokens?}}}
         \item{\textit{\ZTedit{How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}}}
         \item{\textit{\ZTedit{How are the subjective embodiments embedded in the machine learning pipelines?}}}
@@ -70,16 +70,16 @@ In efforts to answer \textit{RQ I} and \textit{RQ II}, I formulate sub-questions
 \end{center}
 
 In \cref{chap:filter}, I address research question $1$.
-In addressing \textit{RQ 1}, I critique of how notions of ``toxicity'' are operationalised and employed through a consideration of of Mary \citet{Douglas:1966} work on social pollution.
-I argue that notions of ``toxic'' and ``healthy'' are operationalised within several socio-cultural contexts: \ZTdelete{that}\ZTedit{the context} of the designers of the task, the contexts of the annotators, and the contexts of distinct modelling techniques.
+In addressing \textit{RQ 1}, I critique of how notions of `toxicity' are operationalised and employed through a consideration of of Mary \citet{Douglas:1966} work on social pollution.
+I argue that notions of `toxic' and `healthy' are operationalised within several socio-cultural contexts: \ZTdelete{that}\ZTedit{the context} of the designers of the task, the contexts of the annotators, and the contexts of distinct modelling techniques.
 These contexts, however are not reflected on in the process of developing automated content moderation tools, instead they are assumed to have little influence, resulting in models that collapse each of these contexts into a single entity that embodies them.
-Such embodiment is predicated on efforts towards obtaining a global understanding of ``toxic'' and ``healthy'' content, thus reproducing racialised and gendered positions on respectability.
-As such, the content moderation systems that I examine, engage in toxic slippage, where they simultaneously over-police the content produced by people inhabiting marginalised positions while also failing to protect these groups from ``toxic'' content.
+Such embodiment is predicated on efforts towards obtaining a global understanding of `toxic' and `healthy' content, thus reproducing racialised and gendered positions on respectability.
+As such, the content moderation systems that I examine, engage in toxic slippage, where they simultaneously over-police the content produced by people inhabiting marginalised positions while also failing to protect these groups from `toxic' content.
 
 \ZTdelete{I address RQ 2 by examining the model development process and the choices that are made in this.}
 \ZTedit{Moreover,} I argue that the model development process exhibits three prominent avenues that lead to models that maintain pre-existing, hegemonic power structures.
-First, through the training data, which is likely to more frequently have occurrences of some identity terms in the positive class than in the negative class, e.g. ``black'', ``gay'', and ``woman''.
-Thus, a model is likely to learn identity terms have a greater association to ``toxic'' content.
+First, through the optimisation data, which is likely to more frequently have occurrences of some identity terms in the positive class than in the negative class, e.g. `Black', `gay', and `woman'.
+Thus, a model is likely to embody that identity terms have a greater association to `toxic' content.
 \ZTdelete{Moreover}\ZTedit{Further}, I argue that even when several datasets with competing definitions of abuse are used, \ZTedit{the optimisation procedures result in models better representing the overlaps of data and labels, at the expense of where the datasets or labels diverge from one another.}
 \ZTdelete{models will come to better represent the overlaps in the datasets and labels than the data which is separate.}
 Second, \ZTedit{models come to embody discriminatory norms} through the use of \ZTdelete{pre-trained}\ZTedit{pre-optimised} embeddings that take a distributional perspective on language production and are known to harbour harmful social biases against minoritised groups \citep{Speer:2017}.
@@ -87,8 +87,8 @@ Lastly, I argue that the models themselves are likely to exacerbate hegemonic po
 These findings have an impact on future work for computational modellers as they provide theoretical scaffolding for why and how marginalised communities come to suffer under abuse classification models.
 Thus, the contributions here begin to forge a path towards abuse detection models that are centred around the experiences of those who are most likely to suffer harms from misclassifications.
 
-\ZTedit{One challenge that is raised in \cref{chap:dirt} is the notion of the pluralist model that Opt Out develop.
-While a pluralist model does allow for people embed their own subjectivities into the modelling process, they are not exempt from the critiques made in \cref{chap:dirt}.
+\ZTedit{One challenge that is raised in \cref{chap:filter} is the notion of the pluralist model that Opt Out develop.
+While a pluralist model does allow for people embed their own subjectivities into the modelling process, they are not exempt from the critiques made in \cref{chap:filter}.
 In fact, as we see in the chapter, Opt Out incorrectly moderates \cref{fig:flash_hoe} due to the uses of the \textit{b-word} and references to sexual promiscuity.
 Moreover, as pluralist models also need some centralisation for optimising the machine learning model, they are similarly subject to the risks of optimising towards hegemonic positions.
 This risk may be slightly decreased as the pluralist model is only be applicable to a single person at a time. 
@@ -174,10 +174,10 @@ Moreover, an implication of this work is that models that embody desired subject
 \ZTdelete{Returning to the guiding questions of how the human fits into abusive language technologies and how machine learning models for moderating online abuse expressed through text, the findings in this thesis suggest that at the current stage, people are not well represented by the models that the field have produced and is on track to produce.}
 Moreover, content moderation technologies for online abuse expressed through text at present have largely not sought \ZTdelete{to model }to closely represent the subjective experiences of users.
 Particularly, they have failed to represent the perspectives and experiences of those who stand to be harmed most by content moderation technologies, instead focusing on goals such as having models that take a global perspective on abuse.
-These issues are the result of a computing culture that seeks to abstract away subjectivity in search of, if not ``objective truths'', global consensus on inherently subjective questions.
+These issues are the result of a computing culture that seeks to abstract away subjectivity in search of, if not `objective truths', global consensus on inherently subjective questions.
 However, as I show in this thesis, there is vast, and largely unexplored, space for developing models that more closely seeks to represent the people and thus better make space for peoples subjective experiences.
 For instance, in \cref{chap:liwc}, we see how using modelling that seeks to encode the mental and emotional state of the author yields \ZTedit{for improved performances on out-of-domain data, when the annotation goals of the in-domain and out-of-domain data align, thus providing space for generalising specific perspectives.}
-Moreover, as observed in \cref{chap:mtl} the use of Multi-Task Learning can allow for models to learn representations of related auxiliary tasks, such as whether a comment is sarcastic or the expressed moral sentiments, can allow for deeper engagements with the intentions of the speaker, thus moving modelling to more closely represent the speakers and their intentions.
+Moreover, as observed in \cref{chap:mtl} the use of Multi-Task Learning can allow for models to optimise representations of related auxiliary tasks, such as whether a comment is sarcastic or the expressed moral sentiments, can allow for deeper engagements with the intentions of the speaker, thus moving modelling to more closely represent the speakers and their intentions.
 
 \ZTedit{In seeking answers to the guiding questions, my work in this thesis both fails to achieve the research goals and manages to fulfil them.
 My work fails to achieve these goals by not fully engaging with the questions in more depth and in the same vein achieves these research goals by providing a step into these questions.
@@ -197,7 +197,7 @@ A core limitation that applies to all aspects of this thesis is that the work is
 For all aspects of this thesis, future work would be well suited to develop on the work presented here by centring specific contexts in the global economic south, where content moderation, or the lack thereof has had disastrous consequences.
 }
 \ZTedit{ % Dirt
-  Moreover, my chapter on content moderation and social pollution (see \cref{chap:dirt}) provides a next step, expanding on \citet{Liboiron:2018}.
+  Moreover, my chapter on content moderation and social pollution (see \cref{chap:filter}) provides a next step, expanding on \citet{Liboiron:2018}.
   While this chapter extends a general theoretical framework, it is centred around how content moderations deals with race and gender, and to a lesser degree sexuality in the global economic north.
   A limitation here is then that the considerations and how they apply to other contexts, i.e. the global economic south are not included.
   Future work could then think more deeply about the specificities with which our framework requires extension for specific contexts and that of content moderation in the global economic south.

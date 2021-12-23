@@ -39,7 +39,7 @@ The Linguistic Inquiry and Word Count dictionary and software was initially deve
 In order to minimise such costs, \citet{Pennebaker:2001} turned to computationally counting words that were in $80$ ``psychology-relevant categories'' in order to gain an understanding of the emotional states and cognition of the speakers at the time of writing.
 By passing over a large body of text within a single document, e.g. personal essays, \citet{Pennebaker:2001} compute the percentage occurrence of each invoked category.
 While there are some examples that appear clear cut, e.g. the categorisation of articles such as `a' and `the', other word classes, such as ``emotion word categories'' are more clearly subjective and require deeper human consideration \citep{Tausczik:2010}.
-Though LIWC was initially developed using long form texts, the version of the dictionary that I use in this dissertation is an expanded version that also used Twitter and ``blogs'' in the development of the dictionary \citep{Pennebaker:2015}.
+Though LIWC was initially developed using long form texts, the version of the dictionary that I use in this dissertation is an expanded version that also used Twitter and `blogs' in the development of the dictionary \citep{Pennebaker:2015}.
 As such, though not originally intended for the use on short-form messages, LIWC has evolved with the rise of new forms of communication in efforts for the dictionary to accurately reflect language use in short-form documents.
 As LIWC was originally developed using long-form documents in the United States of America, the language that is reflected in the dictionary is predominately white American English and thus it excludes other languages and many dialects within American English.
 By such exclusion, the dictionary does not accommodate for different forms of communicating, in particular it is likely to only insufficiently cover the language use of a variety of marginalised communities.
@@ -113,7 +113,7 @@ All features must be weighted, either through raw counts or their relative frequ
 One such frequently used weighting scheme is TF-IDF which weights features by their relative frequency in the corpus \citep{Fortuna:2018}, assigning higher weight to the features that are rare corpus-wide and lower weights to those that common.
 As such, TF-IDF can be a useful measure to address the dominance of high-frequency tokens.
 At the same time, TF-IDF also increases the capacity for models to over-fit to the corpus and generalise poorly, as tokens that are unique to a corpus may not exist in other data or even be common to other data.
-The use of n-grams as features provides a similar double-edged benefit, where models learn sequences of words \ZTedit{that may be very differently distributed in each class}.
+The use of n-grams as features provides a similar double-edged benefit, where models optimise on sequences of words \ZTedit{that may be very differently distributed in each class}.
 In abuse detection the most common n-grams are unigrams, bi-grams, and trigrams.
 Such word-sequences can be helpful for models in uncovering patterns of language use in the corpus but are also vulnerable to vocabulary changes that occur across datasets.
 For instance \citet{Waseem-Hovy:2016} optimise a logistic regression classifier and identify that character n-grams of innocuous words such as `Islam' and `Muslim' rank as some of the most predictive features due to the disproportionate occurrences of such terms in the hateful classes.
@@ -129,18 +129,18 @@ However, this approach is a laborious one as it requires the researchers to manu
 }
 \ZTedit{
   Reducing the dimensionality of data has been approached from a number of different avenues in prior literature.
-  A large body of work is dedicated to the mathematical \ZTedit{and algorithmic} induction of what features to retain and which to omit \citep[e.g.]{May_2010,Witschel_2005}.
+  A large body of work is dedicated to the mathematical \ZTedit{and algorithmic} induction of what features to retain and which to omit \citep[e.g.]{Witschel_2006}.
   The object of the mathematical \ZTedit{and algorithmic} approaches is to identify which features provide the most \ZTedit{and least} information about the distinctions between each class\ZTdelete{ and which features provide the least information, and therefore can be omitted when optimising a machine learning model}.
   Another body of work has been dedicated to dimensionality reduction through semantic replacements.
   One approach to such a reduction is the use of clustering algorithms, e.g. Brown Clustering \citep{Derczynski_2015}.
   Another, more recent approach is to perform partial replacements in documents, only replacing some tokens.
   This method has been used in recent studies on abuse detection by using the HurtLex resource \citep{Bassignana_Basile_Patti_2018}.
-  HurtLex is a multi-lingual lexicon that seeks to map ``offensive'' words into three macro categories, and seventeen fine-grained categories.
+  HurtLex is a multi-lingual lexicon that seeks to map `offensive' words into three macro categories, and seventeen fine-grained categories.
 }
 
 \ZTedit{
   Several papers have approached the task of abuse detection across multiple languages by using HurtLex to perform a reduction in the feature space of offensive words in the lexicon.
-  For instance, \citet{Pamungkas_2020} use HurtLex to create a feature vector for each of the fine-grained categories to be used for training and classification, as a way to separate out profanities and hateful terms.
+  For instance, \citet{Pamungkas_2020} use HurtLex to create a feature vector for each of the fine-grained categories to be used for optimisation and classification, as a way to separate out profanities and hateful terms.
   \citet{Chiril_2019} use HurtLex across English and French tweets to count the number of times each of the fine-grained categories are invoked.
   They optimise their models using the length of the tweets along with the number of times each fine-grained category is invoked in a tweet.
   Others have used HurtLex in combination with deep learning methods by creating onehot encodings \citep{Pamungkas_2019} and using the encoding to create a HurtLex embedding layer \citep{Koufakou_2020}.
@@ -174,7 +174,7 @@ Second, \citet{Kolhatkar:2020} only acts on documents tokenised into words and p
 
 As CNNs build feature mappings by passing over the data using filters, they come with certain assumptions built into them.
 As researchers define the number of filters and the stride size, they also define the range, in terms of token order, within which the model is given leave to identify token interactions.
-The implication of this is that there will likely be some, potentially overlapping ranges that the models learn patterns from.
+The implication of this is that there will likely be some, potentially overlapping ranges that the models identify patterns from.
 Depending on how researchers define these, the models will develop feature mappings corresponding to the ranges provided.
 
 Another frequently used architecture is LSTMs \citep{Badjatiya:2017,Kolhatkar:2020,Meyer:2019}.
@@ -223,10 +223,10 @@ In this chapter I use the \textit{StormFront} dataset~\citep{Garcia:2019}, the \
 
 \subsubsection{StormFront}
 First, I use the \textit{StormFront} dataset which was collected from the white supremacist web forum of the same name by \citet{Garcia:2019}.
-The data consists of $2,392$ documents, split into $1,531$ training documents, $383$ documents for validation, and $478$ test documents.
+The data consists of $2,392$ documents, split into $1,531$ optimisation documents, $383$ documents for validation, and $478$ test documents.
 While the full dataset published consists of $10,000$ documents annotated as `hate' and `not-hate', with a large class imbalance towards non-hateful comments, I choose to use a balanced subset of the data provided by the authors.
 \ZTedit{I choose this subset as it allows for testing}\ZTdelete{to test} how LIWC-based models perform when optimised on a a) small dataset and b) balanced data distribution.
-The dataset is initially split into a training and evaluation set, I \ZTedit{further} create a validation set by extracting a stratified sample from the training data, retaining the class balance from the balanced subset.
+The dataset is initially split into an optimisation and evaluation set, I \ZTedit{further} create a validation set by extracting a stratified sample from the optimisation data, retaining the class balance from the balanced subset.
 
 \subsubsection{Offence}
 The second dataset \ZTedit{that I use}\ZTdelete{used} to optimise and evaluate my models is the \textit{Offence} dataset collected from Twitter by \citet{Davidson:2017}.
@@ -234,7 +234,7 @@ This dataset was collected to disambiguate offensive tweets from hateful ones.
 This dataset is distinguished from all other datasets in that the positive classes, i.e. `offensive' and `hateful' accounting for $1,430$ documents and $19,190$ documents, respectively.
 This leaves only $4,163$ documents in the negative class.
 Once binarised, the dataset consists of $4,163$ documents in the negative class and $20,620$ documents in the positive class.
-The dataset is provided by the authors as a single file containing all documents, so I create stratified splits of the data into a training set ($80\%$ or $19,826$ documents), a validation set ($10\%$ or $2,478$ documents), and a evaluation set ($10\%$ or $2,479$ documents), retaining the class distribution in each split.
+The dataset is provided by the authors as a single file containing all documents, so I create stratified splits of the data into an optimisation set ($80\%$ or $19,826$ documents), a validation set ($10\%$ or $2,478$ documents), and a evaluation set ($10\%$ or $2,479$ documents), retaining the class distribution in each split.
 Using this dataset further allows for an investigation into how sensitive LIWC-based modelling is to dataset skews.
 
 \subsubsection{Hate Speech}
@@ -247,14 +247,14 @@ The primary function \ZTedit{that} this dataset serves in this chapter is to all
 \subsubsection{Expert Hate}
 The \textit{Expert Hate} dataset proposed by \citet{Waseem:2016} contains $6,909$ documents and is also collected from Twitter, and it is also designed as a multi-class classification task.
 In this dataset the positive classes consist of `sexism' ($13\%$ or $898$ documents), `racism' ($1.41\%$ or $97$ documents) and `both' ($0.70\%$ or $48$ documents) while the negative class consists of $84.19\%$ of the dataset.
-I reduce this down to a binary classification task and split the dataset into a training set ($80\%$ or $5,527$ documents), a validation set ($10\%$ or $690$ documents), and an evaluation set ($10\%$ or $692$ documents) ensuring that binary the class distribution is retained.
+I reduce this down to a binary classification task and split the dataset into an optimisation set ($80\%$ or $5,527$ documents), a validation set ($10\%$ or $690$ documents), and an evaluation set ($10\%$ or $692$ documents) ensuring that binary the class distribution is retained.
 This dataset is annotated following the annotation guidelines proposed by \citet{Waseem-Hovy:2016}, however it is annotated using intersectional feminist activists as \ZTdelete{crowd-workers}\ZTedit{annotators}.
 This dataset then allows for testing the influence of LIWC-based models on data annotated by experts.
 
 \subsubsection{Toxicity}
 Finally, I use the \textit{Toxicity} dataset published by \citet{Wulczyn:2017}.
 This dataset was collected from Wikipedia editor discussion pages and annotated as `toxic' and `not-toxic', and it is the largest dataset with $159,686$ documents.
-These documents are provided split into a training set consisting of $95,692$ documents, a validation set with $32,128$ documents and a evaluation set containing $31,866$ documents.
+These documents are provided split into an optimisation set consisting of $95,692$ documents, a validation set with $32,128$ documents and a evaluation set containing $31,866$ documents.
 Similarly to the \textit{Hate Speech} and \textit{Expert Hate} datasets, this dataset is highly imbalanced with the positive class accounting for $~16\%$ of the entire dataset.
 I use this dataset to gain an understanding of how large scale datasets can influences the performance, size, and optimisation time of LIWC-based models.
 
@@ -292,7 +292,7 @@ No further processing is done for experiments using word tokens as input.
     \textit{Hate Speech} & $14,730$        & $14,834$       & $849$           \\
     \textit{StormFront}  & $5,566$         & $5,510$        & $622$
   \end{tabular}
-  \caption{Vocabulary sizes for each input type and the training set for each dataset.}
+  \caption{Vocabulary sizes for each input type and the optimisation set for each dataset.}
   \label{tab:vocab_sizes}
 \end{table}
 
@@ -402,30 +402,30 @@ Second, observing the differences between LIWC vocabulary distributions (see \cr
 \ZTdelete{For instance,}\ZTedit{This means that} as the vast majority of tokens are shared between \ZTdelete{both}\ZTedit{the} classes, there are fewer potential signals for models to over-fit to.
 \ZTedit{Disregarding token interactions, a word-based model optimised on the \textit{Toxicity} dataset may overfit to $72,929$ unique tokens ($76.3\%$ of all unique tokens in the dataset).
 Similarly disregarding token interactions, a LIWC-based model is only provided with $136$ unique tokens ($13.3\%$ of all unique tokens in the dataset) to which it can overfit to.}
-\ZTdelete{For instance, where a word-based model optimised on the \textit{Toxicity} dataset may have at least $72,979$ unique tokens across the classes, that is $76.3\%$ of all unique tokens in the dataset that the model can potentially learn spurious correlations on.
+\ZTdelete{For instance, where a word-based model optimised on the \textit{Toxicity} dataset may have at least $72,979$ unique tokens across the classes, that is $76.3\%$ of all unique tokens in the dataset that the model can potentially identify and embody spurious correlations on.
 Conversely, a LIWC-based model is only provided with $136$ unique tokens across the classes, or $13.3\%$ of all unique tokens, that it is likely to over-fit to.\footnote{In both instances disregarding the possibility of over-fitting to the patterns of occurrences between different tokens.}}
 Similarly to n-gram character-based modelling, a smaller set of unique tokens is likely to result in a matrix that is, in places, more dense, allowing for a model to identify patterns based on the interaction of tokens rather than individual tokens.
 This particular case is likely for LIWC-based models as the vast majority (between $64\%$ and $86\%$) of tokens are shared between both classes.
 
 \subsection{Linear Baseline Models}\label{sec:baseline_models}
-For the linear baseline models, I optimise several different linear models (i.e. Logistic Regression models and SVM models) that function as baselines using the scikit-learn python library \citet{Pedregosa:2011}.
+For the linear baseline models, I optimise several different linear models (i.e. Logistic Regression models and SVM models) that function as baselines using the Scikit-Learn python library \citet{Pedregosa:2011}.
 For each algorithm, I develop three different models: a) surface token-based model that uses sentences tokenised into words, b) models on the Byte-Pair encoded representation, and c) models that use the LIWC-based representation as their input data.
 For all baseline models, I only use token unigrams as features, as these provide competitive baselines for many of the datasets.
 To ensure that the baseline models use the most appropriate \ZTedit{parameters}, I perform a cross-validated grid-search (as implemented by \citet{Pedregosa:2011}) over the possible settings of the model parameters for each model.
 For both SVM and Logistic Regression models, I explore values of the strength of the regularisation ($[0.1, 0.2, 0.3, \ldots, 0.9]$) to examine the strength of regularisation and the regulariser ($\{L1, L2\}$).
 For Logistic Regression, I also set the parameter search to consider \textit{Elasticnet} as a third regulariser option.
 
-In the optimisation procedure for the linear models, I first fit a count vectoriser on the training data and then optimise a model on the vectorised training data.
-For prediction on other datasets, all datasets are passed through vectoriser \ZTedit{that is} fitted to the training data.
-This ensures that all datasets are processed and indexed in accordance to the vocabulary of the training dataset and the model.
-A notable difference between the optimisation of linear models and their neural network counterparts is that linear models are only provided with the dataset once for each cross-validation set and the order of the documents in the dataset is not randomised whereas the neural network models iterate multiple times over the training dataset where the order of the documents in the dataset is \ZTedit{randomly} shuffled between each iteration.
+In the optimisation procedure for the linear models, I first fit a count vectoriser on the optimisation data and then optimise a model on the vectorised optimisation data.
+For prediction on other datasets, all datasets are passed through vectoriser \ZTedit{that is} fitted to the optimisation data.
+This ensures that all datasets are processed and indexed in accordance to the vocabulary of the optimisation dataset and the model.
+A notable difference between the optimisation of linear models and their neural network counterparts is that linear models are only provided with the dataset once for each cross-validation set and the order of the documents in the dataset is not randomised whereas the neural network models iterate multiple times over the optimisation dataset where the order of the documents in the dataset is \ZTedit{randomly} shuffled between each iteration.
 
 \subsection{Neural Models}\label{sec:redux_neural}
 I implement three different neural network model types using PyTorch~\citep{Paszke:2019} and perform a hyper-parameter search on each model type for every dataset and input type.
 Specifically, I implement a Multi-Layered Perceptron model, a Long-Short Term Memory network, and a Convolutional Neural Network.
 I choose to implement an MLP as it is the simplest form of neural networks and it can provide insights into the applicability of neural network-based architectures.
 As the LIWC tokens are distributed such that the vast majority of tokens are shared by both classes, I also develop a LSTM network to take long-range dependencies into account.
-I choose a LSTM over a basic RNN model as unknown tokens are likely to occur frequently in the LIWC-based data due to the small size of the dictionary and resulting vocabularies, and it may be desirable for any recurrent model trained on the data to be afforded the ability to forget sequences of unknown tokens.
+I choose a LSTM over a basic RNN model as unknown tokens are likely to occur frequently in the LIWC-based data due to the small size of the dictionary and resulting vocabularies, and it may be desirable for any recurrent model optimised on the data to be afforded the ability to forget sequences of unknown tokens.
 Finally, I develop a CNN model as this model type has been frequently applied in the previous work.
 
 In order to focus on the utility of the different document representations, I optimise models that have simple architectures.
@@ -444,7 +444,7 @@ This process is repeated for the assigned maximum number of epochs, or \ZTedit{u
 Once a model has finished optimising, performance in terms of macro \texttt{F1-score}, \texttt{precision}, \texttt{recall} and \texttt{accuracy} are computed on the validation set and evaluation sets.
 To be able to speak to the optimisation time, I start a timer when the model optimisation procedure is initiated and stop the timer when the model has fully completed its optimisation, but prior to any inference made using the model.
 I repeat this process for at least $200$ unique trials for each model and dataset combination and use the \texttt{F1-score} on the validation set to identify the best configuration of hyper-parameters.
-Once the best hyper-parameters are selected, I rerun the models with $5$ different random seeds and obtain these models' performance on all evaluation sets, that is the in-domain test for the dataset the models are trained on and the out-of-domain evaluation sets from the remaining datasets.
+Once the best hyper-parameters are selected, I rerun the models with $5$ different random seeds and obtain these models' performance on all evaluation sets, that is the in-domain test for the dataset the models are optimised on and the out-of-domain evaluation sets from the remaining datasets.
 
 In efforts to identify the best hyper-parameters without performing a grid-search of all possible combinations, I turn towards Bayesian Hyper-Parameter Tuning \citep{Neal:1996}.
 Briefly, Bayesian Optimisation allows for estimating the best hyper-parameters for a model through a series of trials with different hyper-parameter settings.
@@ -714,7 +714,7 @@ E.g. in \cref{tab:linear_hateExp_baselines} a word token model achieves a high p
 Third, many of the LIWC-based models post strong performances on in-domain data, suggesting that simple linear models may be highly appropriate for the LIWC-based input.
 Moreover, these strong in-domain performances also provide a weak suggestion that neural network architectures may be \ZTedit{well} suited for the task, as most of the of the datasets that are under consideration are small datasets.
 Fourth, an interesting trend of the models optimised on the \textit{Offence} and the \textit{Toxicity} datasets obtain surprisingly good scores on each other.
-Two potential reasons for this trend are, 1) the two datasets are the largest in datasets so more general patterns may be learned, 2) as the notion of ``offensive'' as constructed by \citet{Davidson:2017} bears strong similarities with the notion of ``toxicity'' constructed by \citet{Wulczyn:2017}, \ZTedit{they may yield}\ZTdelete{yielding in} subsets of the datasets that strongly share similarities with each other.
+Two potential reasons for this trend are, 1) the two datasets are the largest in datasets so more general patterns may be learned, 2) as the notion of `offensive' as constructed by \citet{Davidson:2017} bears strong similarities with the notion of `toxicity' constructed by \citet{Wulczyn:2017}, \ZTedit{they may yield}\ZTdelete{yielding in} subsets of the datasets that strongly share similarities with each other.
 
 \begin{table}
     \centering
@@ -984,7 +984,7 @@ Thus, for these two datasets, the governing question is not necessarily the prot
 In contrast, the \textit{Hate Expert} and \textit{Hate Speech} datasets seek to identify communications that are harmful to marginalised communities.
 Thus, it's no surprise that the out-of-domain performances for models optimised on these two datasets perform reasonably well with each other.
 However here it is also clear that there is \ZTdelete{an influence of dataset size}\ZTedit{a relationship between dataset size and out-of-domain performance}.
-\ZTedit{The models trained on the larger dataset (i.e. \textit{Hate Speech} with $~16,000$ documents) have better performance on the evaluation set of the smaller (the \textit{Hate Expert} dataset with $~7,000$ documents) than the other way around.}
+\ZTedit{The models optimised on the larger dataset (i.e. \textit{Hate Speech} with $~16,000$ documents) have better performance on the evaluation set of the smaller (the \textit{Hate Expert} dataset with $~7,000$ documents) than the other way around.}
 \ZTdelete{Where the \textit{Hate Speech} dataset consists of $~16,000$ documents, the \textit{Hate Expert} dataset consists of $~7,000$ documents, which is also apparent from the fact that the models optimised on the \textit{Hate Speech} dataset perform better on the \textit{Hate Expert} evaluation set than the models optimised on the \textit{Hate Expert} dataset perform on the \textit{Hate Speech} dataset.}
 
 The \textit{StormFront} dataset on the other hand is annotated to identify deliberate attacks against ``specific group[s] of people'' on the basis of their group membership or characteristics of group's identities \citep{Garcia:2019}.
@@ -1232,28 +1232,28 @@ Similarly to the Perspective API, the LIWC-based model take a top-down approach 
 Specifically, the use of similar neural network-based models are based on similar foundations, where my models deviate is through the use of LIWC \cite{Pennebaker:2001} to transform the input data to the LIWC categories that are invoked, where the Perspective API uses surface level representations of tokens without substantial transformations or modifications.
 Further, the LIWC-based models, \ZTdelete{like}\ZTedit{similarly to} the Perspective API, do not take into consideration the context within which documents exist, as such they are similarly disembodied from the context they purport to model.
 The LIWC-based model, that I have developed in this chapter further share a fixed data characteristic with Perspective.
-This characteristic keeps training data static, without the use of responses to data, or additional data to further optimise or correct the models.
+This characteristic keeps optimisation data static, without the use of responses to data, or additional data to further optimise or correct the models.
 Thus, the key question and distinction between the LIWC-based model and the Perspective API lies in the transformation of data into LIWC tokens and the Perspective APIs use of pre-optimised word embeddings.
-To ensure comparability of the LIWC-based model developed in this dissertation with the Perspective API, I use the model that is trained on the dataset published by \citet{Wulczyn:2017} with the highest macro F1-score performance on the test set from \citet{Wulczyn:2017}.
+To ensure comparability of the LIWC-based model developed in this dissertation with the Perspective API, I use the model that is optimised on the dataset published by \citet{Wulczyn:2017} with the highest macro F1-score performance on the test set from \citet{Wulczyn:2017}.
 I choose this configuration as this dataset is a part of the data that the Perspective API is optimised on \citep{Perspective:Github}.
 
 In my use of LIWC to transform the input data into a smaller vocabulary that represents higher level cognition of abuse detection, resulting in tokens such as 'Reich' and `genderqueer' not being recognised.
 On the other hand, the model used in the Perspective API is unlikely to treat many such words as out-of-vocabulary instances as the Perspective API is optimised on a) the full dataset and vocabulary and b) relies on pre-optimised embeddings which further introduce social biases into the world of the model.
 Thus, the Perspective API seeks to broaden the world of the model to include richer information about tokens and their relations whereas my approach seeks to limit the world-understanding of the model to a smaller set of tokens that reveal information about higher level cognitive functions.
 My approach thus limits the notion of dirt while the Perspective API seeks to broaden it.
-Such a narrowing and broadening can be observed through the respective vocabulary sizes in the models on the basis of the same training data \citep{Wulczyn:2017}.\footnote{This data only represents a subset of the training data that the Perspective API is optimised on. However, as training data sizes increase, so do the unique tokens encountered in the training data.}
+Such a narrowing and broadening can be observed through the respective vocabulary sizes in the models on the basis of the same optimisation data \citep{Wulczyn:2017}.\footnote{This data only represents a subset of the optimisation data that the Perspective API is optimised on. However, as optimisation data sizes increase, so do the unique tokens encountered in the optimisation data.}
 The dataset both models are optimised on contains $95,710$ unique tokens after normalising for elongations.
-The LIWC vocabulary on the other hand contains $19,353$ unique tokens and only $1,024$ are encountered in the training data.\footnote{Some tokens in the LIWC dictionary are wild-card tokens that are used to capture all inflections of a stem, e.g. `abus*'.}
+The LIWC vocabulary on the other hand contains $19,353$ unique tokens and only $1,024$ are encountered in the optimisation data.\footnote{Some tokens in the LIWC dictionary are wild-card tokens that are used to capture all inflections of a stem, e.g. `abus*'.}
 Any token that is unrecognised by the LIWC dictionary will then be relegated to a placeholder for unknown tokens.
 %\zw{Double check skew of UNK when doing analysis of LIWC influence on datasets}
 Given the heavy imbalance of the dataset, with the vast majority of cases being non-toxic, the distribution of unknown tokens is similarly skewed and disproportionately occurs in the negative class.
-Models that rely on tokens transformed by the LIWC dictionary, are thus likely to learn a stronger association between the negative class and the placeholder for unknown tokens.
+Models that rely on tokens transformed by the LIWC dictionary, are thus likely to embody a stronger association between the negative class and the placeholder for unknown tokens.
 
 Each approach comes with a set of opportunities and risks.
 For instance, as language use evolves, so can the embeddings that the Perspective API rely on be re-optimised.
 A LIWC-based approach on the other hand requires significant human effort, filtering, annotation, and reasoning to create a new set of words to include.
 Such a process is both slower and more limited in what will ultimately be included in the LIWC dictionary.
-On the other hand, pre-optimised embeddings will also learn hegemonic social biases \citep{Bender:2021} whereas the LIWC-based approaches only learn a subset of the social biases that are present in the original dataset, due to the vast majority of tokens present in a large dataset, e.g. \citep{Wulczyn:2017}, not being known to the LIWC token.
+On the other hand, pre-optimised embeddings will also embody hegemonic social biases \citep{Bender:2021} whereas the LIWC-based approaches only embody a subset of the social biases that are present in the original dataset, due to the vast majority of tokens present in a large dataset, e.g. \citep{Wulczyn:2017}, not being known to the LIWC token.
 However, the social biases that are present in the dataset that rely on identity terms will remain in the model, should the identity terms also exist within the LIWC vocabulary, i.e. where identity terms are used as slurs or the use of an identity term is unevenly distributed in the classes.
 
 \begin{table}[]
@@ -1295,7 +1295,7 @@ The question at hand is then whether signals, can stand in replacement of signs,
 
 To address this question of signs and signals, I turn to the tests of cultural and social biases in the Perspective API proposed by Jessamyn West (see \autoref{fig:jessamyn}) and David Auerbach (see \autoref{fig:auerbach}) in \autoref{tab:LIWC-Perspective}.
 Though a direct comparison cannot be made between the Perspective API and our model, as the former produces percentages of how many people `would consider the comment to be toxic' \citep{Perspective:Github} whereas the LIWC-based model produces binary labels of \texttt{toxic} or \texttt{not-toxic}.
-Considering first the identity-based tests proposed by Jessamyn West, the Perspective API incrementally increases its toxicity score as identities deviate from `man', at a $50\%$ threshold, where half of all people would find the comment toxic, all statements asides from `I am a man' and `I am a woman' would be considered toxic.
+Considering first the identity-based tests proposed by Jessamyn West, the Perspective API incrementally increases its toxicity score as identities deviate from `man', at a $50\%$ threshold, where half of all people would find the comment toxic, all statements asides from ``I am a man'' and ``I am a woman'' would be considered toxic.
 As the statements gravitate towards queer black people, so does the score increase.
 The predictions produced by the LIWC on the other hand do not reproduce differential results on the basis of race, however the differential results are maintained and consistent for anyone with a queer identity (see documents $1$-$14$ in \autoref{tab:LIWC-Perspective}).
 It is thus fair to say that the LIWC model does not, at first glance, appear to be hold anti-Black biases yet it maintains strongly anti-LGTBQ+ sentiments, an issue that also holds for the Perspective API \citep{Dias:2021}.
@@ -1319,8 +1319,8 @@ In addition, I examine how a reduction in the vocabulary size can affect the tim
 Through the use of LIWC, I perform a vocabulary reduction of up to $98.9\%$ of the surface-form vocabulary and show that in spite of such a reduction, reasonable in-domain and out-of-domain model performances can be achieved.
 In particular, I find that out-of-domain model performances are contingent on similarities in the data sampling process \ZTdelete{or}\ZTedit{and} the goals of objectives of annotating data.
 For instance, the \textit{Toxicity} dataset and the \textit{Offence} dataset are sampled from two different sources, Wikipedia editor discussion pages and Twitter, respectively.
-However, the goal of the annotation tasks for both datasets share similarities in the operationalisation of ``toxic'' and ``offensive'' allowing for models to generalise onto the out-of-domain evaluation sets.
-By using simple neural network architectures, I show how LIWC-based models can learn similar levels of performance as surface token-based models.
+However, the goal of the annotation tasks for both datasets share similarities in the operationalisation of `toxic' and `offensive' allowing for models to generalise onto the out-of-domain evaluation sets.
+By using simple neural network architectures, I show how LIWC-based models can optimise to similar levels of performance as surface token-based models.
 In this chapter, I do not make use of pre-optimised embedding layers \citep{Park:2017,Kolhatkar:2020} in my model or language models (e.g. BERT \citep{Devlin:2019}) that are fine-tuned to a specific task that many contemporary models make use of \citet[e.g.]{Vidgen_learning:2020,Isaksen:2020}.
 I avoid these as they are not compatible with the LIWC vocabulary and thus would not be applicable to the core questions in this chapter.
 
