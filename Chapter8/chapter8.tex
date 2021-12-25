@@ -98,7 +98,7 @@ Specifically, if a person's model comes to embody positions that are tailored to
 For instance, should people who believe in the genocide of other people be afforded the ability to determine that calls for genocide is acceptable content while resistance to such calls is deemed as unacceptable?
 If such minimal notions of acceptability are to be set, further questions around who is to determine them and what exceptions should be made to this remain as vital questions.}
 
-In \cref{chap:liwc}, I turn towards research questions $2$\ZTdelete{-$5$}.
+In \cref{chap:LIWC}, I turn towards research questions $2$\ZTdelete{-$5$}.
 Starting with \textit{RQ \ZTdelete{3}\ZTedit{2}}, I optimise three different neural network models and two baselines for five different datasets, each experimenting with 3 different data representations: Word tokens, sub-words, and LIWC encoded documents.
 I find that using LIWC encoded documents to optimise machine learning models can obtain competitive results with linear models and neural networks \ZTedit{that are} optimised on word tokens and sub-word representations alike.
 Specifically, I find that for linear models, LIWC-based models can obtain classification performances that are as good or better than models optimised on the other two representations, though for some dataset and model combinations there is a significant drop in performance.
@@ -176,8 +176,8 @@ Moreover, content moderation technologies for online abuse expressed through tex
 Particularly, they have failed to represent the perspectives and experiences of those who stand to be harmed most by content moderation technologies, instead focusing on goals such as having models that take a global perspective on abuse.
 These issues are the result of a computing culture that seeks to abstract away subjectivity in search of, if not `objective truths', global consensus on inherently subjective questions.
 However, as I show in this thesis, there is vast, and largely unexplored, space for developing models that more closely seeks to represent the people and thus better make space for peoples subjective experiences.
-For instance, in \cref{chap:liwc}, we see how using modelling that seeks to encode the mental and emotional state of the author yields \ZTedit{for improved performances on out-of-domain data, when the annotation goals of the in-domain and out-of-domain data align, thus providing space for generalising specific perspectives.}
-Moreover, as observed in \cref{chap:mtl} the use of Multi-Task Learning can allow for models to optimise representations of related auxiliary tasks, such as whether a comment is sarcastic or the expressed moral sentiments, can allow for deeper engagements with the intentions of the speaker, thus moving modelling to more closely represent the speakers and their intentions.
+For instance, in \cref{chap:LIWC}, we see how using modelling that seeks to encode the mental and emotional state of the author yields \ZTedit{for improved performances on out-of-domain data, when the annotation goals of the in-domain and out-of-domain data align, thus providing space for generalising specific perspectives.}
+Moreover, as observed in \cref{chap:mtl} the use of MTL can allow for models to optimise representations of related auxiliary tasks, such as whether a comment is sarcastic or the expressed moral sentiments, can allow for deeper engagements with the intentions of the speaker, thus moving modelling to more closely represent the speakers and their intentions.
 
 \ZTedit{In seeking answers to the guiding questions, my work in this thesis both fails to achieve the research goals and manages to fulfil them.
 My work fails to achieve these goals by not fully engaging with the questions in more depth and in the same vein achieves these research goals by providing a step into these questions.
@@ -204,7 +204,7 @@ For all aspects of this thesis, future work would be well suited to develop on t
 }
 
 \ZTedit{ % LIWC
-  In terms of computational limitations, the work in \cref{chap:liwc} is limited to English as the LIWC dictionary is only defined for English.
+  In terms of computational limitations, the work in \cref{chap:LIWC} is limited to English as the LIWC dictionary is only defined for English.
   Moreover, using LIWC is most appropriate for content written in mainstream American English, as this is the only variant of English that it is defined for.
   Finally, the use of psychometrics has deep-rooted issues, a reliance on any psychometrics carries a risk of reproducing harmful and hegemonic reductions of psychological constructs.
   Future work could then consider other forms of low-vocabulary representations that are not rooted in such problematic histories.
@@ -213,9 +213,9 @@ For all aspects of this thesis, future work would be well suited to develop on t
 }
 
 \ZTedit{ % MTL
-  Similarly to the limitations of \cref{chap:liwc}, the work I have performed on Multi-Task Learning would benefit greatly from centring other languages than English and other populations and nations beyond that of the United States of America.
-  Moreover, although there are improvements on the baselines in this chapter, there is ample space for considering how Multi-Task Learning could be used to improve results further.
-  This space also includes considerations of wider computational architectures, e.g. the inclusion of pre-optimised technologies as internal layers of the model, or directly experiment with Multi-Task Learning using solely large language models.
+  Similarly to the limitations of \cref{chap:LIWC}, the work I have performed on Multi-Task Learning would benefit greatly from centring other languages than English and other populations and nations beyond that of the United States of America.
+  Moreover, although there are improvements on the baselines in this chapter, there is ample space for considering how MTL could be used to improve results further.
+  This space also includes considerations of wider computational architectures, e.g. the inclusion of pre-optimised technologies as internal layers of the model, or directly experiment with MTL using solely large language models.
   Although I perform an extensive investigation of tasks, several more tasks could be considered for exploration including rumour detection and sentiment analysis.}
 
 \ZTedit{

@@ -33,7 +33,7 @@ Moreover, and perhaps of even greater concern, the annotation and curation proce
 Through such demographically uninformed processes of curating and making data, a danger of erasure of past and ongoing marginalisation and responses to it as well as critical responses to the violent abuse of authority as `hate speech' that should be subject to content moderation. 
 The question of automated hate speech detection thus, for works such as \citet{Salminen:2018} is no longer ensuring the right to not be persecuted but instead insuring that processes of marginalisation remain unchallenged.
 For these reasons, I use the datasets released in early work, specifically I use the \textit{Offence} dataset \citep{Davidson:2017}, \textit{Toxicity} dataset \citep{Wulczyn:2017}, and \textit{Hate Speech} dataset \citep{Waseem-Hovy:2016} in all computational chapters. 
-For \autoref{chap:liwc} which examines the influence and generalisability of vocabulary manipulation, I also use the \textit{Hate Expert} \citep{Waseem:2016} and the \textit{StormFront} \citep{Garcia:2019} datasets. 
+For \autoref{chap:LIWC} which examines the influence and generalisability of vocabulary manipulation, I also use the \textit{Hate Expert} \citep{Waseem:2016} and the \textit{StormFront} \citep{Garcia:2019} datasets. 
 Each of these datasets share the common attributes that they are collected either from spaces that are hateful towards marginalised groups or have considerations of marginalisation encoded into the annotation guidelines. 
 In \autoref{chap:mtl} I also use three datasets that are labelled for abuse but instead to tasks that are seemingly related. 
 First, I use the \textit{Argument Base} dataset \citep{Oraby_factfeel:2015}, the second dataset (\textit{Sarcasm}) is developed for sarcasm detection \citep{Oraby_sarcasm:2016}, and the final dataset, \textit{Moral Sentiment}, examines the moral sentiments expressed in tweets \citep{Hoover:2019}.
@@ -61,7 +61,7 @@ Modelling for automated hate speech detection has also undergone a development f
 Early work was primarily focused on feature-based modelling \citep[e.g.][]{Waseem-Hovy:2016,Waseem:2016,Davidson:2017,Sahlgren:2018} whereas subsequent work has directed a greater attention to neural network based approaches \citep[e.g.][]{Kolhatkar:2020,Waseem:2018,Gamback:2017,Badjatiya:2017}. 
 In this dissertation I follow a similar pattern of developing baseline models from feature-based models and suggest neural network architectures as extensions and improvements on these. 
 In early work, Logistic Regression (LR) and Support Vector Machines (SVM) were the most frequently used models.
-As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks and Long-Short Term Memory networks.
+As the scholarship has developed, specific types of neural networks have come to dominate the modelling, namely Convolutional Neural Networks (CNN) and Long-Short Term Memory (LSTM) networks.
 In each chapter, I perform the review of the models that are pertinent to the work in the chapter. 
 Here instead I provide a theoretical overview of the models, their components (e.g. dropout and activation functions) and their intended functionalities (i.e. the kind of data that they are designed to operate on and which assumptions are built into the model architectures).
 
@@ -88,7 +88,7 @@ The computer scientific approach to hate, is a comparatively simplistic approach
 
 \ZTedit{In the following chapters, I consider the readings which are most appropriate for the content of the chapters.
 In \cref{chap:filter}, I consider consequences of the simplistic view computer science takes on hate speech.
-In the next two chapters, \cref{chap:liwc} and \cref{chap:mtl}, I focus on the computer scientific notions of the superset \textit{abuse} and its subsets: \textit{Hate speech, toxicity, and offense}.
+In the next two chapters, \cref{chap:LIWC} and \cref{chap:mtl}, I focus on the computer scientific notions of the superset \textit{abuse} and its subsets: \textit{Hate speech, toxicity, and offense}.
 Finally, in \cref{chap:disembodied} I return to the notion of hate speech in the systemic sense, as I consider the wider implications of the processes through which we develop machine learning technologies.
 }
 
@@ -218,7 +218,7 @@ Document                                                                        
 ``5 Leadership Priorities During Times of Crises \#BaltimoreRiots \#leadership''                                                                                            & Non-Moral             
 \end{tabular}%
 }
-\caption{Examples of documents in each class of the \extit{Sarcasm, Argument Basis,} and \textit{Moral Sentiments} datasets.}
+\caption{Examples of documents in each class of the \textit{Sarcasm, Argument Basis,} and \textit{Moral Sentiments} datasets.}
 \label{tab:examples}
 \end{table}
 \end{landscape}
@@ -258,9 +258,9 @@ Developing models for each individual language, and in particular resources that
 
 
 \subsection{Generalisable Machine Learning Models for Abusive Language Detection}
-A common criticism of many current computational methods for abuse detection is that they have poor generalisability onto other datasets. Although this issue of non-generalisability poses a serious issue for the abuse community, it has received relatively little attention \citep{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019,Swamy:2019,Fortuna:2021} in comparison to single-dataset classifier performance. In each of the computational chapters (see \cref{chap:liwc,chap:mtl}), I also provide consideration of how well the optimised models perform on out-of-domain datasets.
+A common criticism of many current computational methods for abuse detection is that they have poor generalisability onto other datasets. Although this issue of non-generalisability poses a serious issue for the abuse community, it has received relatively little attention \citep{Waseem:2016,Waseem:2018,Karan:2018,Wiegand:2019,Swamy:2019,Fortuna:2021} in comparison to single-dataset classifier performance. In each of the computational chapters (see \cref{chap:LIWC,chap:mtl}), I also provide consideration of how well the optimised models perform on out-of-domain datasets.
 In the pursuit of models that generalise well onto other datasets, researchers have proposed a variety of architectures. As an initial investigation into the question of generalisability, \citet{Waseem:2016} note that the best performing classifier on the dataset they propose does not generalise well onto the \textit{Hate Speech} dataset, noting that the performance of their classifier drops by more than a $25\%$.
-Using Multi-Task Learning (MTL),\footnote{Multi-task learning allows for optimising models using multiple different datasets, for distinct machine learning tasks, where one (main) task is given higher priority and all other tasks are treated as auxiliary tasks.} \citet{Waseem:2018} address the issue of poor generalisability between the \textit{Hate Speech} and \textit{Hate Expert} (combined into a single dataset) and the \textit{Offence} dataset, showing that a MTL framework can be used for optimising models that can generalise onto from one cultural context onto another. Moreover, considering the results posted by \citet{Waseem:2018}, it appears that there is a trade-off between well-performing in-domain models and well-performing cross-domain models, where cross-domain improvements appear to come at the cost of in-domain performance, where out-of-domain performance is computed by mapping the classes in the in-domain datasets to the out-of-domain dataset.
+Using MTL,\footnote{Multi-Task Learning allows for optimising models using multiple different datasets, for distinct machine learning tasks, where one (main) task is given higher priority and all other tasks are treated as auxiliary tasks.} \citet{Waseem:2018} address the issue of poor generalisability between the \textit{Hate Speech} and \textit{Hate Expert} (combined into a single dataset) and the \textit{Offence} dataset, showing that a MTL framework can be used for optimising models that can generalise onto from one cultural context onto another. Moreover, considering the results posted by \citet{Waseem:2018}, it appears that there is a trade-off between well-performing in-domain models and well-performing cross-domain models, where cross-domain improvements appear to come at the cost of in-domain performance, where out-of-domain performance is computed by mapping the classes in the in-domain datasets to the out-of-domain dataset.
 
 \citet{Karan:2018} further explore the question of cross-dataset generalisability using a linear SVM model. \citet{Karan:2018} approach the task of out-of-dataset performance as a classical domain adaptation task, finding that without significant procedures for domain adaptation, there is poor generalisability. Similarly to \citet{Waseem:2018}, \citet{Karan:2018} find that cross-domain performance comes at the cost of in-domain performances but with large out-of-domain improvements. One difference between \citet{Karan:2018} and the previously described studies is that \citet{Karan:2018} reduce the learning task to a binary classification task of `abusive' and `non-abusive' documents.
 
@@ -281,9 +281,9 @@ In this section I provide an introduction to the different modelling techniques 
 \subsection{Data Encoding}
 
 In order for models to read the data, it is necessary to provide the models with machine readable representations of the data. The first step to creating such machine readable representations is to provide each unique token with a numerical index.
-The numerical index, and what it represents is a matter of how the data is pre-processed. For instance, in \cref{chap:liwc}, I represent tokens in three different ways.
-First, I represent tokens using their surface form, that is each word is represented in its entirety following a tokenisation process where all words are lower-cased and punctuation markers are split from the word (see \cref{chap:liwc} for further pre-processing steps). Second, I take the surface forms of tokens computed and represent them as the categories of the Linguistic Inquiry and Word Count (LIWC) categories each token induces (see \cref{chap:liwc} for further detail). Finally, in \cref{chap:liwc,chap:mtl} I represent tokens as the subwords that they consist of. 
-In this section, the sub-word forms while omitting the surface-token and LIWC-token forms as these rely on simple pre-processing and mapping steps that are described in more detail in \cref{chap:liwc}.
+The numerical index, and what it represents is a matter of how the data is pre-processed. For instance, in \cref{chap:LIWC}, I represent tokens in three different ways.
+First, I represent tokens using their surface form, that is each word is represented in its entirety following a tokenisation process where all words are lower-cased and punctuation markers are split from the word (see \cref{chap:LIWC} for further pre-processing steps). Second, I take the surface forms of tokens computed and represent them as the categories of the Linguistic Inquiry and Word Count (LIWC) categories each token induces (see \cref{chap:LIWC} for further detail). Finally, in \cref{chap:LIWC,chap:mtl} I represent tokens as the subwords that they consist of. 
+In this section, the sub-word forms while omitting the surface-token and LIWC-token forms as these rely on simple pre-processing and mapping steps that are described in more detail in \cref{chap:LIWC}.
 
 \subsubsection{Byte-Pair Embeddings}
 
@@ -317,7 +317,7 @@ In this dissertation I trigger early stopping by considering the development of 
 %
 \subsection{Optimisation Techniques}
 
-Optimising a neural network requires a host of different techniques for optimisation, such that the model can identify optimal minima. Among these are the loss function, the activation function and pooling functions for Convolutional Neural Networks (CNN). Further, in order to identify optimal minima, it may be necessary to optimise the model with a number of different values for the hyper-parameters (i.e. model parameters such as embedding sizes and parameters for the optimisation functions such as the learning rate) which is also a process that can be subject to optimisation itself. Here, I describe the different optimisation techniques that I use in this dissertation.
+Optimising a neural network requires a host of different techniques for optimisation, such that the model can identify optimal minima. Among these are the loss function, the activation function and pooling functions for CNNs. Further, in order to identify optimal minima, it may be necessary to optimise the model with a number of different values for the hyper-parameters (i.e. model parameters such as embedding sizes and parameters for the optimisation functions such as the learning rate) which is also a process that can be subject to optimisation itself. Here, I describe the different optimisation techniques that I use in this dissertation.
 
 Across all neural network models optimised for the experiments in this dissertation, I use a \texttt{softmax} function to produce output values representing the likelihood for each class based on the model representations. The \texttt{softmax} function operates by taking a vector and producing a value of $[0,1]$ of the vector by computing the normalised exponential function of all the units in the layers (see \cref{eq:softmax} for a mathematical definition for \texttt{softmax}).
 
@@ -358,25 +358,25 @@ In the experiments conducted in this dissertation I use two different non-linear
 The role of non-linearities in neural networks is to allow for models to optimise non-linear functions rather than linear ones. 
 The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
 
-The \texttt{hyperbolic tangent}, or \texttt{Tanh}, function (see \cref{eq:tanh} for its mathematical definition) is a non-linear activation function that element wise transforms the values of the tensor representation of the model into a real valued space between $[-1, 1]$.
+The \texttt{hyperbolic tangent}, or \texttt{Tanh}, function (see \cref{eq:Tanh} for its mathematical definition) is a non-linear activation function that element wise transforms the values of the tensor representation of the model into a real valued space between $[-1, 1]$.
 \texttt{Tanh} is a monotonically increasing function that is symmetrical around $0$ due to which there is a risk of the issue of vanishing gradients for the model \citep{Teuwen:2020}.
 Vanishing gradients refers to the issue where the gradients of the models become increasingly small, to the point of no longer having an effect on the parameter updates, due to being centred around $0$.
 
 \begin{figure}[h]
-  \begin{equation}\label{eq:tanh}
+  \begin{equation}\label{eq:Tanh}
     \tanh{x} = \dfrac{e^{2x} - -1}{e^{2x} + 1} 
   \end{equation}
   \caption{Equation for \texttt{Tanh} \citep{Goldberg:2017}.}
 \end{figure}
 
-One way to address the potential issue of vanishing gradients is to use a \texttt{Rectified Linear Unit} (\texttt{ReLU}) as the activation function (see \cref{eq:relu} for the mathematical definition of \texttt{ReLU}). 
-Unlike the \texttt{tanh} function, \texttt{ReLU} is not a symmetrical function, but instead relies on a binary evaluation of each element in a vector. 
+One way to address the potential issue of vanishing gradients is to use a \texttt{Rectified Linear Unit} (\texttt{ReLU}) as the activation function (see \cref{eq:relu} for the mathematical definition of \texttt{ReLU}).
+Unlike the \texttt{Tanh} function, \texttt{ReLU} is not a symmetrical function, but instead relies on a binary evaluation of each element in a vector.
 If the weight of the element under consideration $w_x < 0$, then the value computed is $\mathit{ReLU}(x) = 0$. 
 On the other hand, when the value $w_x > 0$, then the value computed is $\mathit{ReLU}(x) = 1 \cdot w_x$ \citep{Teuwen:2020}.
 
 \begin{figure}[h]
 \begin{equation}\label{eq:relu}
-  \mathit{ReLU (x)} = \max{(0, x)} = 
+  \mathit{ReLU (x)} = \max{(0, x)} =
   \begin{cases}
    0 & \text{if } x < 0\\
    x & \text{otherwise}
@@ -601,7 +601,7 @@ Finally, a version of the cell-state, filtered by a sigmoid function to control 
 For my experiments using LSTMs, I use the implementation offered by \citet{Paszke:2019} which uses the variation of LSTMs proposed by \citet{Sak:2014}.
 
 \paragraph{Convolutional Neural Network}
-Convolutional Neural Networks (CNN) are a type of neural network that were initially proposed for computer vision tasks.
+Convolutional Neural Networks are a type of neural network that were initially proposed for computer vision tasks.
 Like all other forms of neural networks, CNNs have an input, an output layer, and some hidden layers.
 The hidden layers of CNNs contain \textit{convolutional layers}. 
 These layers apply a series of convolutions, or sliding windows over a matrix of features and compute a summary of those features.
@@ -612,7 +612,7 @@ The operation of using convolutions that consider multiple features can be liken
 However, unlike traditional n-grams that are processed directly, convolutional layers are subject to the non-linearity and the pooling operation, the latter of which summarises the identified features and creates a modified representation of the learned feature maps.
 
 \subsection{Multi-Task Learning}\label{sub:mtl}
-The Multi-task Learning (MTL) framework was initially proposed by \citet{Caruana:1993} as a way to optimise a model for a specific primary task by leveraging that (multiple) tasks may be related.
+The Multi-Task Learning framework was initially proposed by \citet{Caruana:1993} as a way to optimise a model for a specific primary task by leveraging that (multiple) tasks may be related.
 Choosing a primary task, one or more tasks can be chosen as auxiliary tasks that can provide inductive biases for the model to take advantage of to perform better performance for the main task.
 MTL models can be optimised in two different ways, through hard parameter sharing or soft parameter sharing.
 Hard parameter sharing models are optimised by having (some) hidden layers that are shared by all tasks and some layers that are individual to each task.
@@ -628,16 +628,16 @@ On the other hand, models that are optimised using soft parameter sharing do not
 %  \begin{minipage}{0.5\linewidth}
 %    \centering
 %    \includegraphics[scale=0.75]{Figs/multitask_hard.jpg}
-%    \caption{Depiction of Multi-task learning framework using hard parameter sharing.}
+%    \caption{Depiction of Multi-Task Learning framework using hard parameter sharing.}
 %    \label{fig:mtl_hard}
 %  \end{minipage}
 %  \begin{minipage}{0.5\linewidth}
 %    \centering
 %     \includegraphics[scale=0.75]{Figs/multitask_soft.jpg}
-%    \caption{Depiction of Multi-task learning framework using soft parameter sharing.}
+%    \caption{Depiction of Multi-Task Learning framework using soft parameter sharing.}
 %    \label{fig:mtl_soft}
 %  \end{minipage}
-%  \caption{Parameter sharing strategies for Multi-task learning.}
+%  \caption{Parameter sharing strategies for Multi-Task Learning.}
 %  \label{fig:mtl_types}
 % \end{figure}
 
