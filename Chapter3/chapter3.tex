@@ -229,7 +229,7 @@ Sourcing their data from the Internet Argument Corpus (IAC) \citep{Abbott:2016},
 In order to generate a dataset from the IAC, \citet{Oraby_sarcasm:2016} optimise a `weakly-supervised pattern learner' \citep{Oraby_sarcasm:2016} to identify a set of $30,000$ posts, filtering two thirds of the posts that don't contain any `not-sarcastic' cues and annotate the remaining $11,040$ posts in quote-response pairs for annotation on Amazon Mechanical Turk.
 Similarly to the abusive language datasets annotated on CrowdFlower, this choice of annotators can introduce biases stemming from the subjective embodiments of the human annotators and the geo-cultural contexts in which they exist.
 Following the annotation process a dataset of $6,520$ posts (with a $50\%$ split of sarcastic and not-sarcastic posts) is obtaned and released.
-Examining the dataset for suitability for machine learning experiments, \citet{Oraby_sarcasm:2016} optimise a linear SVM with Stochastic Gradient Descent (SGD) optimisation and L2 regularisation obtaining F1-score of $0.74$ using features derived from Word2Vec \citep{Mikolov:2010}.
+Examining the dataset for suitability for machine learning experiments, \citet{Oraby_sarcasm:2016} optimise a linear SVM with Stochastic Gradient Descent (SGD) optimisation and L2 regularisation obtaining \textit{F1-score} of $0.74$ using features derived from Word2Vec \citep{Mikolov:2010}.
 
 \paragraph*{Argument Basis} Investigating the characteristics of factual and emotional argumentation styles, \citet{Oraby_factfeel:2015} also draw on the IAC as the source of data. Considering quote-response pairs, each response is annotated for whether the argument presented in the response based primarily in fact or feeling.
 \citet{Oraby_factfeel:2015} present $10,003$ from the IAC for annotation by $5-7$ crowd-workers on Amazon Mechanical Turk for annotation selecting a value ranging from $-5$ to $5$ to indicate whether the response is a feeling or fact-based argument, where negative values indicate that the argument basis is dominated by an emotional argumentation style and positive values indicate a fact-based argument.
@@ -480,7 +480,7 @@ For instance, if a dataset has a heavy class imbalance, a model that only predic
 
 \paragraph{Precision}
 \texttt{Precision} provides an estimate of how well a model predicts into the positive class.
-Specifically precision asks to which degree classifications into positive class are correct classifications into the class (see \cref{eq:prec}). 
+Specifically \textit{precision} asks to which degree classifications into positive class are correct classifications into the class (see \cref{eq:prec}). 
 Thus, one can ascertain to which degree a model can be trusted when it predicts a positive label.
 
 \begin{figure}[h]
@@ -512,9 +512,9 @@ The \texttt{F1-score} provides exactly such a balancing by computing the harmoni
   \caption{Equation for the \textit{F1-score}.}
 \end{figure}
 
-For abuse detection, the macro average of the F1-score is often used. 
-The macro averaged F1-score, or macro F1-score, sum the F1-score for each class and computes their mean, thus providing insight into the performance of models across the different classes.
-In this dissertation, all F1-scores reported are macro-F1 scores as this has been widely used in the abusive language detection field \citep{Fortuna:2021}.
+For abuse detection, the macro average of the \textit{F1-score} is often used. 
+The macro averaged \textit{F1-score}, or macro \textit{F1-score}, sum the \textit{F1-score} for each class and computes their mean, thus providing insight into the performance of models across the different classes.
+In this dissertation, all \textit{F1-scores} reported are macro \textit{F1-scores} as this has been widely used in the abusive language detection field \citep{Fortuna:2021}.
 
 \subsection{Machine Learning Models}
 

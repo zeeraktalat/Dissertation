@@ -469,7 +469,7 @@ Finally, Some version of the stochastic gradient descent optimisation algorithm 
 
 Turning to the performances of the best performing models on the validation data.
 The results presented in the first 6 rows of \cref{tab:mtl_dev_wh,tab:mtl_dev_davidson,tab:mtl_dev_wulczyn} guide decision for which auxiliary task datasets to experiment with.
-The decision in which auxiliary task datasets to select is guided by two different objectives: 1) selecting auxiliary task data that outperform the MLP baselines in terms of Macro F1 score and 2) selecting auxiliary tasks that can aid in outperforming the best-performing baseline.
+The decision in which auxiliary task datasets to select is guided by two different objectives: 1) selecting auxiliary task data that outperform the MLP baselines in terms of macro \textit{F1 score} and 2) selecting auxiliary tasks that can aid in outperforming the best-performing baseline.
 I separate these two objectives as not all MLP baselines outperform the linear SVMs (please refer back to \cref{tab:baseline_dev_wh,tab:baseline_dev_davidson,tab:baseline_dev_wulczyn} for the results on the validation sets).
 Thus, the first objective provides insight into the utility of using MTL as a modelling approach can be observed through the ability of MTL-based models to out-perform their single-task counterparts.
 However, in the interest of identifying auxiliary tasks that contribute towards improved models for different forms of abusive language detection, I set up the second objective of identifying auxiliary tasks that most positively contribute towards the prediction of abusive language.
@@ -848,9 +848,9 @@ In the performances of all three main tasks, auxiliary task configurations that 
 This may be because forms and phrasings in abusive, and non-abusive, text that are infrequently occurring in the main task can be aided by the data provided in the abusive auxiliary tasks.
 This is particularly evidenced through the improvements along the \texttt{precision} score, meaning that using abusive language detection auxiliary tasks can minimise the number of false negatives that the model predicts.
 These increases in the \texttt{precision} scores also positively affect the \texttt{F1-score}s, although these are often hampered by a lower \texttt{recall} score.
-\ZTedit{The lower performance in terms of recall is somewhat surprising, as one might imagine that the inclusion of more abusive data would often mean that there is an improvement along the lines of recall.
-However, as I retain the class distribution in the different splits of the dataset and shuffle the order of batches between each epoch, it may be that the same batches are frequently chosen and that when distinct batches are chosen, they do not, on aggregate, provide for enough new examples of abuse to provide a boost in terms of recall.
-Moreover, the weighting of each auxiliary task may provide an additional cause for this pattern, as each auxiliary task has an equal probability of being selected in a given configuration and not enough abusive samples are provided to the model to improve recall.
+\ZTedit{The lower performance in terms of \textit{recall} is somewhat surprising, as one might imagine that the inclusion of more abusive data would often mean that there is an improvement along the lines of \textit{recall}.
+However, as I retain the class distribution in the different splits of the dataset and shuffle the order of batches between each epoch, it may be that the same batches are frequently chosen and that when distinct batches are chosen, they do not, on aggregate, provide for enough new examples of abuse to provide a boost in terms of \textit{recall}.
+Moreover, the weighting of each auxiliary task may provide an additional cause for this pattern, as each auxiliary task has an equal probability of being selected in a given configuration and not enough abusive samples are provided to the model to improve \textit{recall}.
 Finally, this may also be due to using several different forms of abuse with distinct definitions of what constitutes abuse.
 Such disparate definitions and forms of abuse may provide competing signals to models on documents with a high degree of textual similarity.
 }
@@ -861,7 +861,7 @@ In the setting where only one auxiliary task is used, both post comparative perf
 When two auxiliary tasks are used and these auxiliary tasks are used together, they produce results that are lower across all metrics asides from \texttt{recall} than when only one of the tasks are used.
 When both auxiliary abuse detection tasks are used, then adding a at least one more auxiliary task that is not abuse detection has a slightly beneficial impact on the model performance.
 
-The non-abusive auxiliary tasks may at first seem to contribute less towards improved model performances than the abuse detection auxiliary tasks, however for two out of three different main tasks, the best \texttt{F1-score}s are obtained by the combination of abuse detection tasks and auxiliary tasks that are not addressing the question of abuse.
+The non-abusive auxiliary tasks may at first seem to contribute less towards improved model performances than the abuse detection auxiliary tasks, however for two out of three different main tasks, the best \texttt{F1-scores} are obtained by the combination of abuse detection tasks and auxiliary tasks that are not addressing the question of abuse.
 The non-abuse related auxiliary tasks, when used in conjunction with abuse detection tasks offer modelling improvements across all metrics.
 However, some non-abusive tasks appear to be more applicable in general, specifically the \textit{Sarcasm} auxiliary task appears across all three main tasks while the \textit{Argument Basis} and \textit{Moral Sentiment} auxiliary tasks appear for two different main task settings.
 Moreover, all three auxiliary tasks appear in the best performing auxiliary task configurations and in the setting where only one auxiliary task is used, they achieve competitive performances with the models that use an abuse detection auxiliary task.
