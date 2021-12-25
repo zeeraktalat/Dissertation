@@ -355,7 +355,7 @@ Thus, \texttt{NLL} addresses the model's certainty rather than the prediction it
 \subsubsection{Non-linearities}
 
 In the experiments conducted in this dissertation I use two different non-linear functions that I subject various layers in the neural network models to. 
-The role of non-linearities in neural networks is to allow for models to optimise non-linear functions rather than linear ones. 
+The role of non-linearities in neural networks is to allow for models to optimise non-linear functions rather than linear ones.
 The two non-linearities that I experiment with are \texttt{Tanh} and \texttt{ReLU}.
 
 The \texttt{hyperbolic tangent}, or \texttt{Tanh}, function (see \cref{eq:tanh} for its mathematical definition) is a non-linear activation function that element wise transforms the values of the tensor representation of the model into a real valued space between $[-1, 1]$.
@@ -369,14 +369,14 @@ Vanishing gradients refers to the issue where the gradients of the models become
   \caption{Equation for \texttt{Tanh} \citep{Goldberg:2017}.}
 \end{figure}
 
-One way to address the potential issue of vanishing gradients is to use a \texttt{Rectified Linear Unit} (\texttt{ReLU}) as the activation function (see \cref{eq:relu} for the mathematical definition of \texttt{ReLU}). 
-Unlike the \texttt{tanh} function, \texttt{ReLU} is not a symmetrical function, but instead relies on a binary evaluation of each element in a vector. 
-If the weight of the element under consideration $w_x < 0$, then the value computed is $\mathit{ReLU}(x) = 0$. 
+One way to address the potential issue of vanishing gradients is to use a \texttt{Rectified Linear Unit} (\texttt{ReLU}) as the activation function (see \cref{eq:relu} for the mathematical definition of \texttt{ReLU}).
+Unlike the \texttt{tanh} function, \texttt{ReLU} is not a symmetrical function, but instead relies on a binary evaluation of each element in a vector.
+If the weight of the element under consideration $w_x < 0$, then the value computed is $\mathit{ReLU}(x) = 0$.
 On the other hand, when the value $w_x > 0$, then the value computed is $\mathit{ReLU}(x) = 1 \cdot w_x$ \citep{Teuwen:2020}.
 
 \begin{figure}[h]
 \begin{equation}\label{eq:relu}
-  \mathit{ReLU (x)} = \max{(0, x)} = 
+  \mathit{ReLU (x)} = \max{(0, x)} =
   \begin{cases}
    0 & \text{if } x < 0\\
    x & \text{otherwise}
