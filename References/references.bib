@@ -66,7 +66,6 @@
 	010)},
   journal = {Proceedings of Interspeech},
   volume = {2010},
-  number = {9},
   year = {2010},
   location = {Makuhari, Chiba, JP},
   publisher = {International Speech Communication Association},
@@ -352,14 +351,6 @@
   year   = {2018},
   note   = {Accessed: 15/06/2019},
   url    = {https://www.teenvogue.com/story/fosta-sesta-anti-sex-trafficking-bill}
-}
-
-@misc{EFF:230,
-  title  = {Section 230 of the Communications Decency Act},
-  author = {{Electronic Frontier Foundation}},
-  year   = {n.d.},
-  note   = {No Date. Accessed: 15/06/2019},
-  url    = {https://www.eff.org/issues/cda230}
 }
 
 @misc{Sharif:2019,
@@ -2624,7 +2615,7 @@ month       = {Dec},}
 }
 
 
-@conference{Szegedy:2014,
+@inproceedings{Szegedy:2014,
   title = "Intriguing properties of neural networks",
   abstract = "Deep neural networks are highly expressive models that have recently achieved state of the art performance on speech and visual recognition tasks. While their expressiveness is the reason they succeed, it also causes them to learn uninterpretable solutions that could have counter-intuitive properties. In this paper we report two such properties. First, we find that there is no distinction between individual high level units and random linear combinations of high level units, according to various methods of unit analysis. It suggests that it is the space, rather than the individual units, that contains the semantic information in the high layers of neural networks. Second, we find that deep neural networks learn input-output mappings that are fairly discontinuous to a significant extent. We can cause the network to misclassify an image by applying a certain hardly perceptible perturbation, which is found by maximizing the network{\textquoteright}s prediction error. In addition, the specific nature of these perturbations is not a random artifact of learning: the same perturbation can cause a different network, that was trained on a different subset of the dataset, to misclassify the same input.",
   author = "Christian Szegedy and Wojciech Zaremba and Ilya Sutskever and Joan Bruna and Dumitru Erhan and Ian Goodfellow and Rob Fergus",
@@ -2632,6 +2623,7 @@ month       = {Dec},}
   month = jan,
   day = "1",
   language = "English (US)",
+  booktitle = "Proceedings of the 2nd International Conference on Learning Representations",
   note = "2nd International Conference on Learning Representations, ICLR 2014 ; Conference date: 14-04-2014 Through 16-04-2014",
 }
 
@@ -3432,7 +3424,7 @@ month       = {Dec},}
 	keywords = {Computer Science - Computation and Language, Computer Science - Information Retrieval, Computer Science - Machine Learning, Computer Science - Computers and Society}
 }
 
-@InProceedings{Mitchell_2019,
+@InProceedings{Mitchell:2019,
 	address = {Atlanta, GA, USA},
 	series = {{FAT}* '19},
 	title = {Model {Cards} for {Model} {Reporting}},
@@ -3658,16 +3650,21 @@ month       = {Dec},}
 }
 
 
-@InProceedings{Bender:2021,
-	address = {Virtual, Canada},
-	title = {On the {Dangers} of {Stochastic} {Parrots}:{Can} {Language} {Models} {Be} {Too} {Big}?},
-	url = {https://faculty.washington.edu/ebender/papers/Stochastic_Parrots.pdf},
-	abstract = {The past 3 years of work in NLP have been characterized by thedevelopment and deployment of ever larger language models, es-pecially for English. BERT, its variants, GPT-2/3, and others, mostrecently Switch-C, have pushed the boundaries of the possible both through architectural innovations and through sheer size. Using these pretrained models and the methodology of fine-tuning them for specific tasks, researchers have extended the state of the arton a wide array of tasks as measured by leaderboards on specific benchmarks for English. In this paper, we take a step back and ask: How big is too big? What are the possible risks associated with this technology and what paths are available for mitigating those risks? We provide recommendations including weighing the environmental and financial costs first, investing resources into curating andcarefully documenting datasets rather than ingesting everything onthe web, carrying out pre-development exercises evaluating howthe planned approach fits into research and development goals andsupports stakeholder values, and encouraging research directionsbeyond ever larger language models.},
-	urldate = {2021-08-02},
-	publisher = {ACM},
-	author = {Bender, Emily M. and Gebru, Timnit and McMillan-Major, Angelina and Shmitchell, Shmargett},
-	month = mar,
-	year = {2021}
+@inproceedings{Bender:2021,
+author = {Bender, Emily M. and Gebru, Timnit and McMillan-Major, Angelina and Shmitchell, Shmargaret},
+title = {On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? ��},
+year = {2021},
+isbn = {9781450383097},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3442188.3445922},
+doi = {10.1145/3442188.3445922},
+abstract = {The past 3 years of work in NLP have been characterized by the development and deployment of ever larger language models, especially for English. BERT, its variants, GPT-2/3, and others, most recently Switch-C, have pushed the boundaries of the possible both through architectural innovations and through sheer size. Using these pretrained models and the methodology of fine-tuning them for specific tasks, researchers have extended the state of the art on a wide array of tasks as measured by leaderboards on specific benchmarks for English. In this paper, we take a step back and ask: How big is too big? What are the possible risks associated with this technology and what paths are available for mitigating those risks? We provide recommendations including weighing the environmental and financial costs first, investing resources into curating and carefully documenting datasets rather than ingesting everything on the web, carrying out pre-development exercises evaluating how the planned approach fits into research and development goals and supports stakeholder values, and encouraging research directions beyond ever larger language models.},
+booktitle = {Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency},
+pages = {610–623},
+numpages = {14},
+location = {Virtual Event, Canada},
+series = {FAccT '21}
 }
 
 @InProceedings{Bender-Koller:2020,
@@ -4110,7 +4107,7 @@ eprint = {
 	booktitle = {Representation: {Cultural} representations and signifying practices},
 	author = {Hall, Stuart},
 	year = {1997},
-	note = {Publisher: Sage London},
+	Publisher = {Sage London},
 	file = {Hall_(1997)_The_spectacle_of_the_other.pdf:/Users/zeerakw/Zotero/storage/NKVDKAYX/Hall_(1997)_The_spectacle_of_the_other.pdf:application/pdf}
 }
 
@@ -5441,7 +5438,6 @@ Disclaimer: we might have gone off topic and got political again..},
 	booktitle = {Neural {Networks}: {Tricks} of the {Trade}},
 	publisher = {Springer Berlin Heidelberg},
 	author = {Prechelt, Lutz},
-	editor = {Goos, Gerhard and Hartmanis, Juris and van Leeuwen, Jan and Orr, Genevieve B. and Müller, Klaus-Robert},
 	year = {1998},
 	doi = {10.1007/3-540-49430-8_3},
 	note = {Series Title: Lecture Notes in Computer Science},
@@ -5710,11 +5706,10 @@ Disclaimer: we might have gone off topic and got political again..},
   title={Early Stopping - But When?}, 
   volume={1524}, 
   ISBN={978-3-540-65311-0},
-  url={http://link.springer.com/10.1007/3-540-49430-8_3}, DOI={10.1007/3-540-49430-8_3}, 
+  url={http://link.springer.com/10.1007/3-540-49430-8_3}, DOI={10.1007/3-540-49430-8_3},
   booktitle={Neural Networks: Tricks of the Trade},
   publisher={Springer Berlin Heidelberg}, 
   author={Prechelt, Lutz},
-  editor={Orr, Genevieve B. and Müller, Klaus-Robert},
   year={1998},
   pages={55–69}, 
   collection={Lecture Notes in Computer Science} 
@@ -5740,7 +5735,8 @@ Disclaimer: we might have gone off topic and got political again..},
   pages={1–6} 
 }
 
-@inproceedings{Bowman_Dahl_2021, place={Online},
+@inproceedings{Bowman_2021, 
+  place={Online},
   title={What Will it Take to Fix Benchmarking in Natural Language Understanding?},
   url={https://www.aclweb.org/anthology/2021.naacl-main.385},
   DOI={10.18653/v1/2021.naacl-main.385},
@@ -5751,7 +5747,8 @@ Disclaimer: we might have gone off topic and got political again..},
   pages={4843–4855}
 }
 
-@book{Carmi_2020, place={New York},
+@book{Carmi_distortion:2020, 
+  place={New York},
  series={Digital formations},
  title={Media distortions: understanding the power behind spam, noise, and other deviant media},
  ISBN={978-1-4331-6691-4},
@@ -5759,19 +5756,46 @@ Disclaimer: we might have gone off topic and got political again..},
  publisher={Peter Lang},
  author={Carmi, Elinor},
  year={2020},
- collection={Digital formations} }
+ collection={Digital formations} 
+}
 
-@inproceedings{Chiril_Benamara Zitoune_Moriceau_Coulomb-Gully_Kumar_2019,
+@article{Banks_2010, 
+ title={Regulating hate speech online}, 
+ volume={24}, 
+ ISSN={1360-0869, 1364-6885}, 
+ DOI={10.1080/13600869.2010.522323}, 
+ number={3}, 
+ journal={International Review of Law, Computers & Technology}, 
+ author={Banks, James}, 
+ year={2010}, 
+ month={Nov}, 
+ pages={233–239} 
+}
+
+
+@inproceedings{Chiril_2019,
   place={Toulouse, France},
   title={Multilingual and Multitarget Hate Speech Detection in Tweets},
   url={https://aclanthology.org/2019.jeptalnrecital-court.21},
   abstractNote={Social media networks have become a space where users are free to relate their opinions and sentiments which may lead to a large spreading of hatred or abusive messages which have to be moderated. This paper proposes a supervised approach to hate speech detection from a multilingual perspective. We focus in particular on hateful messages towards two different targets (immigrants and women) in English tweets, as well as sexist messages in both English and French. Several models have been developed ranging from feature-engineering approaches to neural ones. Our experiments show very encouraging results on both languages.},
-  booktitle={Actes de la Conférence sur le Traitement Automatique des Langues Naturelles (TALN) PFIA 2019. Volume II : Articles courts},
+  booktitle={Actes de la Conférence sur le Traitement Automatique des Langues Naturelles (TALN) PFIA 2019. Volume II: Articles courts},
   publisher={ATALA},
   author={Chiril, Patricia and Benamara Zitoune, Farah and Moriceau, Véronique and Coulomb-Gully, Marlène and Kumar, Abhishek},
   year={2019},
   month={Jul},
   pages={351–360}
+}
+
+@inbook{Parisi, 
+  place={Basingstoke [England]; New York}, 
+  title={Techno ecologies of sensation}, 
+  ISBN={978-0-230-52744-7}, 
+  booktitle={Deleuze/Guattari \& ecology}, 
+  publisher={Palgrave Macmillan}, 
+  author={Parisi, Luciana},
+  chapter = {10},
+  pages = {182--197},
+  year={2009} 
 }
 
 @article{Costanza-Chock_2018,
@@ -5794,7 +5818,7 @@ Disclaimer: we might have gone off topic and got political again..},
   year={2009},
   pages={563–592} 
 }
-  @inproceedings{Derczynski_Chester_Bøgh_2015, 
+  @inproceedings{Derczynski_2015, 
   place={Hissar, Bulgaria},
   title={Tune Your Brown Clustering, Please},
   url={https://aclanthology.org/R15-1016},
@@ -5805,16 +5829,18 @@ Disclaimer: we might have gone off topic and got political again..},
   month={Sep},
   pages={110–117} 
 }
-  @misc{Electronic Frontier Foundation_n.d., 
+
+@misc{EFF:n.d., 
   title={Section 230 of the Communications Decency Act},
   url={https://www.eff.org/issues/cda230},
   abstractNote={47 U.S.C. § 230, a Provision of the Communication Decency Act Tucked inside the Communications Decency Act (CDA) of 1996 is one of the most valuable tools for protecting freedom of expression and innovation on the Internet: Section 230. This comes somewhat as a surprise, since the original purpose of the legislation was to restrict free speech on the Internet. The Internet community as a whole objected strongly to the Communications Decency Act, and with EFF’s help, the anti-free speech provisions were struck down by the Supreme Court. But thankfully, CDA 230 remains and in the years since has far outshone the rest of the law. Section 230 says that “No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider” (47 U.S.C. § 230). In other words, online intermediaries that host or republish speech are protected against a range of laws that might otherwise be used to hold them legally responsible for what others say and do. The protected intermediaries include not only regular Internet Service Providers (ISPs), but also a range of “interactive computer service providers,” including basically any online service that publishes third-party content. Though there are important exceptions for certain criminal and intellectual property-based claims, CDA 230 creates a broad protection that has allowed innovation and free speech online to flourish. This legal and policy framework has allowed for YouTube and Vimeo users to upload their own videos, Amazon and Yelp to offer countless user reviews, craigslist to host classified ads, and Facebook and Twitter to offer social networking to hundreds of millions of Internet users. Given the sheer size of user-generated websites (for example, Facebook alone has more than 1 billion users, and YouTube users upload 100 hours of video every minute), it would be infeasible for online intermediaries to prevent objectionable content from cropping up on their site. Rather than face potential liability for their users’ actions, most would likely not host any user content at all or would need to protect themselves by being actively engaged in censoring what we say, what we see, and what we do online. In short, CDA 230 is perhaps the most influential law to protect the kind of innovation that has allowed the Internet to thrive since 1996. Click here for our infographic about the importance of CDA 230. CDA 230 also offers its legal shield to bloggers who act as intermediaries by hosting comments on their blogs. Under the law, bloggers are not liable for comments left by readers, the work of guest bloggers, tips sent via email, or information received through RSS feeds. This legal protection can still hold even if a blogger is aware of the objectionable content or makes editorial judgments. The legal protections provided by CDA 230 are unique to U.S. law; European nations, Canada, Japan, and the vast majority of other countries do not have similar statutes on the books. While these countries have high levels of Internet access, most prominent online services are based in the United States. This is in part because CDA 230 makes the U.S. a safe haven for websites that want to provide a platform for controversial or political speech and a legal environment favorable to free expression. EFF works to ensure strong legal protections for Internet intermediaries and endeavors to fight threats that would weaken such protections for intermediaries and users. We realize that a combination of technology policy and law protecting intermediaries ultimately helps uphold freedom of speech online. NOTE: This summary of CDA 230 isn’t a substitute for, nor does it constitute, legal advice. Only an attorney who knows the details of your particular situation can provide the kind of advice you need if you’re being threatened with a lawsuit. The goal of these pages is to give you a basic roadmap to the legal issues surrounding the interactive computer services covered by CDA 230.},
+  note   = {No Date. Accessed: 15/06/2019},
   journal={Electronic Frontier Foundation},
   author={Electronic Frontier Foundation},
   year={n.d.}
 } 
 
-@book{European Union Agency for Fundamental Rights_2019,
+@book{FRA_2019,
   title={Proposal for a Regulation on preventing the dissemination of terrorist content online and its fundamental rights implications: Opinion of the European Union Agency for Fundamental Rights},
   institution={European Union Agency for Fundamental Rights},
   author={European Union Agency for Fundamental Rights},
@@ -5891,7 +5917,7 @@ Disclaimer: we might have gone off topic and got political again..},
   pages={102360}
 }
 
- @inproceedings{Pamungkas2019,
+ @inproceedings{Pamungkas_2019,
    place={Florence, Italy},
    title={Cross-domain and Cross-lingual Abusive Language Detection: A Hybrid Approach with Deep Learning and a Multilingual Lexicon},
    url={https://www.aclweb.org/anthology/P19-2051}, 
@@ -5903,7 +5929,7 @@ Disclaimer: we might have gone off topic and got political again..},
    pages={363–370} 
  }
  
- @inproceedings{Park_Shin_Fung_2018, 
+ @inproceedings{Park_2018, 
    place={Brussels, Belgium}, 
    title={Reducing Gender Bias in Abusive Language Detection},
    url={http://aclweb.org/anthology/D18-1302},
@@ -5948,7 +5974,7 @@ Disclaimer: we might have gone off topic and got political again..},
    pages={204–231}
  }
 
- @inproceedings{Witschel_Biemann_2006, 
+ @inproceedings{Witschel_2006, 
    place={Joensuu, Finland}, 
    title={Rigorous dimensionality reduction through linguistically motivated feature selection for text categorization}, 
    url={https://aclanthology.org/W05-1729}, 
@@ -5960,8 +5986,144 @@ Disclaimer: we might have gone off topic and got political again..},
    pages={210–217} 
  }
  
- @book{Communications Decency Act of 1996_1996, 
-  chapter={230}, 
-  volume={47}, 
-  journal={U.S.C.},
-  year={1996} }
+@misc{CDA_230:1996,
+  author = {{Communications Decency Act of 1996}},
+  howpublished={47 U.S.C. § 230},
+  year = {1996}
+}
+
+@inproceedings{Koufakou_2020, 
+  place={Online}, 
+  title={HurtBERT: Incorporating Lexical Features with BERT for the Detection of Abusive Language}, 
+  url={https://www.aclweb.org/anthology/2020.alw-1.5}, 
+  DOI={10.18653/v1/2020.alw-1.5},
+  booktitle={Proceedings of the Fourth Workshop on Online Abuse and Harms}, 
+  publisher={Association for Computational Linguistics}, 
+  author={Koufakou, Anna and Pamungkas, Endang Wahyu and Basile, Valerio and Patti, Viviana}, 
+  year={2020}, 
+  pages={34–43} 
+}
+ @article{Whitson_2017, 
+   title={Painting Pictures of Ourselves: Researcher Subjectivity in the Practice of Feminist Reflexivity}, 
+   volume={69}, 
+   ISSN={0033-0124, 1467-9272}, 
+   DOI={10.1080/00330124.2016.1208510}, 
+   number={2}, 
+   journal={The Professional Geographer}, 
+   author={Whitson, Risa}, 
+   year={2017}, 
+   month={Apr}, 
+   pages={299–306} 
+}
+
+@article{Nadar_2014, 
+  title={“Stories are data with Soul” – lessons from black feminist epistemology},
+  volume={28}, 
+  ISSN={1013-0950, 2158-978X}, 
+  DOI={10.1080/10130950.2014.871838}, 
+  number={1}, 
+  journal={Agenda}, 
+  author={Nadar, Sarojini}, 
+  year={2014}, 
+  month={Jan}, 
+  pages={18–28} 
+}
+
+@book{Hill_Collins_2002, 
+  edition={0}, 
+  title={Black Feminist Thought}, 
+  ISBN={978-1-135-96014-8}, 
+  url={https://www.taylorfrancis.com/books/9781135960148}, 
+  DOI={10.4324/9780203900055}, 
+  publisher={Routledge}, 
+  author={Hill Collins, Patricia}, 
+  year={2002},
+  month={Jun} 
+}
+
+@book{hooks_1989, 
+  place={Toronto, Ont., Canada}, 
+  edition={1st ed}, 
+  title={Talking back: thinking feminist, thinking black}, 
+  ISBN={978-0-921284-08-6}, 
+  publisher={Between the Lines}, 
+  author={hooks, bell}, 
+  year={1989} 
+}
+
+@book{Diaz_Hecht-Felella_2021, 
+  place={New York}, 
+  title={Double Standards in Social Media Content Moderation},
+  url={https://www.brennancenter.org/our-work/research-reports/double-standards-social-media-content-moderation}, 
+  institution={Brennan Center for Justice at New York University School of Law},
+  author={D{\'\i}az, {\'A}ngel and Hecht, Laura}, 
+  year={2021}, 
+  pages={40} 
+}
+
+@inproceedings{Qian_2019,
+    title = "A Benchmark Dataset for Learning to Intervene in Online Hate Speech",
+    author = "Qian, Jing  and
+      Bethke, Anna  and
+      Liu, Yinyin  and
+      Belding, Elizabeth  and
+      Wang, William Yang",
+    booktitle = "Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-1482",
+    doi = "10.18653/v1/D19-1482",
+    pages = "4755--4764",
+    abstract = "Countering online hate speech is a critical yet challenging task, but one which can be aided by the use of Natural Language Processing (NLP) techniques. Previous research has primarily focused on the development of NLP methods to automatically and effectively detect online hate speech while disregarding further action needed to calm and discourage individuals from using hate speech in the future. In addition, most existing hate speech datasets treat each post as an isolated instance, ignoring the conversational context. In this paper, we propose a novel task of generative hate speech intervention, where the goal is to automatically generate responses to intervene during online conversations that contain hate speech. As a part of this work, we introduce two fully-labeled large-scale hate speech intervention datasets collected from Gab and Reddit. These datasets provide conversation segments, hate speech labels, as well as intervention responses written by Mechanical Turk Workers. In this paper, we also analyze the datasets to understand the common intervention strategies and explore the performance of common automatic response generation methods on these new datasets to provide a benchmark for future research.",
+}
+
+@inbook{Appelman_2021, 
+  title={Access to Digital Justice: In Search of an Effective Remedy for Removing Unlawful Online Content},
+  url={https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3961390}, 
+  note={To be published as Chapter 14 in X. Kramer et al., Frontiers of Civil Justice (Edward Elgar, forthcoming 2022)}, 
+  booktitle={Frontiers of Civil Justice}, 
+  publisher={Edward Elgar}, 
+  author={Appelman, Naomi and Duin, Joanna M.L. van and Fahy, Ronan and Hoboken, Joris van and Helberger, Natali and Zarouali, Brahim}, 
+  chapter = {14},
+  year={2021} 
+}
+
+@article{Drakulich_2020, 
+  title={Race and policing in the 2016 presidential election: Black lives matter, the police, and dog whistle politics}, 
+  volume={58}, 
+  ISSN={0011-1384, 1745-9125}, 
+  DOI={10.1111/1745-9125.12239}, 
+  number={2}, 
+  journal={Criminology}, 
+  author={Drakulich, Kevin and Wozniak, Kevin H. and Hagan, John and Johnson, Devon},
+  year={2020}, 
+  month={May}, 
+  pages={370–402} 
+}
+
+@article{Boeckmann_2002, 
+  title={Hate Speech: Asian American Students’ Justice Judgments and Psychological Responses}, 
+  volume={58}, 
+  ISSN={0022-4537, 1540-4560}, 
+  DOI={10.1111/1540-4560.00265}, 
+  number={2}, 
+  journal={Journal of Social Issues}, 
+  author={Boeckmann, Robert J. and Liew, Jeffrey}, 
+  year={2002}, 
+  month={Jan}, 
+  pages={363–381} 
+}
+
+@article{Ging_Siapera_2018, 
+  title={Special issue on online misogyny}, 
+  volume={18}, ISSN={1468-0777, 1471-5902}, 
+  DOI={10.1080/14680777.2018.1447345}, 
+  number={4}, 
+  journal={Feminist Media Studies}, 
+  author={Ging, Debbie and Siapera, Eugenia}, 
+  year={2018}, 
+  month={Jul}, 
+  pages={515–524} 
+}

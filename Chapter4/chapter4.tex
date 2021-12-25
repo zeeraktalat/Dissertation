@@ -10,7 +10,7 @@
 \ZTdelete{Throughout}\ZTedit{In} this dissertation, I \ZTdelete{have worked}\ZTedit{will work} with notions of `toxicity' and `abuse' without deeply considering the implications that the designations have or the political constructs they live within.
 Here, I turn a critical gaze on the implications of the political economies that these terms live within and how content moderation infrastructures define toxic content.
 \ZTedit{That is, I examine the narrow understandings of `toxic' as it is constructed in the computer scientific literature and consider its implications through the lens of structural marginalisation, as constructed within the social sciences.
-This chapter then seeks to illuminate \textit{RQ I} by asking what the socio-political implications are of the ways in which ``toxicity'' is operationalised in content moderation infrastructures (see \textit{RQ 1} in \cref{chap:intro}).}
+This chapter then seeks to illuminate \textit{RQ I} by asking what the socio-political implications are of the ways in which `toxicity' is operationalised in content moderation infrastructures (see \textit{RQ 1} in \cref{chap:intro}).}
 
 Through an examination of \ZTdelete{three}\ZTedit{two} content moderation tools, the Perspective API and Opt Out, I argue that content moderation's historical reliance on static categories, which are embedded in social systems of racism and patriarchy, embeds content moderation technologies in structures that risk reproducing social inequalities, subsequently encoding white supremacist ideologies.
 I choose the \ZTdelete{three}\ZTedit{two} technologies to illustrate the differences between top-down and bottom-up approaches to content moderation and the distinct ways in which they embed meaning to `toxic' and `abuse', and the cultural filtering work that content moderation has come to do.
@@ -43,7 +43,7 @@ It follows then, that indeterminability can cause harm to social order \cite{Hal
 In the setting of content moderation, we must add an intermediary in Hall's \cite{Hall:1997} setting of encoding-decoding framework as the content moderation system itself must decode and adjudicate a decision: Should this content be actioned or not? 
 Through answering this question, the meaning made in the decoding process of the content moderation system then becomes the final decision on its meaning, regardless of its intended encoding or the decoding of the reader.
 
-Understanding these meaning-making processes and positions of power allows us to recognise that some content might be flagged as problematic because of its `inability to be assimilated into existing socio-cultural categories and systems' \cite{Rafi:2019}. 
+Understanding these meaning-making processes and positions of power allows us to recognise that some content might be flagged as problematic because of its ``inability to be assimilated into existing socio-cultural categories and systems'' \cite{Rafi:2019}. 
 In handling content for which multiple concurrent and contradictory meanings are made, content moderation should be a relative practice that constantly oscillates among the meanings encoded and decoded according to the context in which the actions happens. 
 Moreover, as cultural systems can change quickly, so can the meanings of symbols. 
 What was once accepted practice e.g. racist jokes can suddenly be considered harmful and socially transgressive; similarly what was once taboo can become acceptable practice.
@@ -61,7 +61,7 @@ In fact, such work rarely takes into account that through their search for patte
 The fact that human, machine, and hybrid content moderation systems reproduce such social inequities has been the object of both scholarly work \cite{Davidson:2019,Sap:2019,Dixon:2018,Dias:2021} and public criticism \cite{Guynn:2019}.
 Indeed the excessive policing of marginalised communities has given rise to the use of Protective Optimisation Technologies (POTs) \cite{Kulynych:2020} in efforts to circumvent such policing through a number of tactics including phonetic spelling (e.g. the use of `wypipo' instead of `white people') \cite{Guynn:2019}. 
 These methods of circumventing content moderation systems come from the experience of negative removals \cite{Guynn:2019}. 
-Examples of such negative removals include the removal of content oppositional to racism and sexism or simply documenting the lived experiences of marginalisation \citep{Kirtz:2021}.
+Examples of such negative removals include the removal of content oppositional to racism and sexism or simply documenting the lived experiences of marginalisation \citep{Kirtz:2022}.
 Considering, for instance, content moderation of AAE, the content moderation filters may reproduce racialised logics and thus excessively reject content written in AAE as particularly dirt-like \cite{Waseem:2018}. 
 At other times, the system may fail to capture the semantic richness of AAE. 
 For many content moderation systems, the working assumption embedded in the systems  \cite{Davidson:2019} that is curated through labelled data \cite{Waseem:2018} is that any mention of the \textit{n-word} invokes a negative stereotyping. 
@@ -89,10 +89,10 @@ The function of Perspective, phrased in terms of dirt is then to distinguish bet
 \vspace{5mm}
 
 In its description, as well as in the labelling choices, Perspective conceptualises toxic in opposition to healthy, or in terms of \citet{Douglas:1966}: dirty and clean. 
-However, unlike many other datasets, the training data underpinning Perspective is not only optimised on found objects that are then annotated, the dataset also consists of crowdsourced abusive comments that were generated by antagonist users trying the system \cite{Marvin:2019}.
+However, unlike many other datasets, the optimisation data underpinning Perspective is not only optimised on found objects that are then annotated, the dataset also consists of crowdsourced abusive comments that were generated by antagonist users trying the system \cite{Marvin:2019}.
 \vspace{5mm}
 
-The Perspective team note that ``initial testing revealed major blind spots and algorithmic bias'' \cite{Marvin:2019} which were then addressed, however as librarian Jessamyn West discovered such biases had not been fully addressed (see \autoref{fig:jessamyn}); examples such as `I am a man' produced a toxicity score of only $0.20$ while `I am a gay black woman' scored $0.87$, that is just below the threshold of being deemed as toxic by the system.
+The Perspective team note that ``initial testing revealed major blind spots and algorithmic bias'' \cite{Marvin:2019} which were then addressed, however as librarian Jessamyn West discovered such biases had not been fully addressed (see \autoref{fig:jessamyn}); examples such as ``I am a man'' produced a toxicity score of only $0.20$ while ``I am a gay black woman'' scored $0.87$, that is just below the threshold of being deemed as toxic by the system.
 
 \begin{figure}[!ht]
   \centering
@@ -102,7 +102,7 @@ The Perspective team note that ``initial testing revealed major blind spots and 
 \end{figure}
 
 Similarly, writer David Auerbach found issues with regard to religion and persecution (see \autoref{fig:auerbach}). 
-For instance, he found that the model predicted a toxicity score of $0.73$ for the statement `whites and blacks are not inferior to one another', $0.70$ for `hitler was an anti-semite', and only $0.18$ for ``some races are inferior to others', $0.06$ for `Hitler's biggest mistake was not getting the job done' , and $0.05$ for `14/88' a common neo-Nazi symbol.\footnote{Please see https://www.adl.org/education/references/hate-symbols/14-words and https://www.adl.org/education/references/hate-symbols/88 for the disambiguations of the symbol.}
+For instance, he found that the model predicted a toxicity score of $0.73$ for the statement ``whites and blacks are not inferior to one another'', $0.70$ for ``hitler was an anti-semite'', and only $0.18$ for ``some races are inferior to others'', $0.06$ for ``Hitler's biggest mistake was not getting the job done'', and $0.05$ for ``14/88'', a common neo-Nazi symbol.\footnote{Please see https://www.adl.org/education/references/hate-symbols/14-words and https://www.adl.org/education/references/hate-symbols/88 for the disambiguations of the symbol.}
 
 \begin{figure}[!ht]
   \centering
@@ -112,22 +112,22 @@ For instance, he found that the model predicted a toxicity score of $0.73$ for t
 \end{figure}
 
 Such discrepancies in toxicity scores reproduce oppressive gendered, racial, and sexual hegemonies which assign negative attributes to deviations from straight, male, and white identities while assigning neutral or, in the worst and most likely case, positive values to maintaining such hegemonies even at the cost of promoting fascist views. 
-Why did Perspective then learn such oppressive logics of racism, anti-Semitism,, sexuality, and gender? The answer is likely to be found in the data the model is optimised on as well as how the machine learning model is likely to function.
+Why did Perspective then embody such oppressive logics of racism, anti-Semitism,, sexuality, and gender? The answer is likely to be found in the data the model is optimised on as well as how the machine learning model is likely to function.
 \vspace{5mm}
 
-Computationally, I delineate between three different causes: 1) the training data, 2) the word-embeddings used for the model, and 3) the model architecture itself.
-First, the training data is likely to consists of imbalanced distributions of identity words in the different classes. 
-t is highly likely that terms such as `black', `gay', and `woman' more frequently occur in the positive classes than in the negative class, for this reason the model is likely to learn stronger correlations between those identity terms and the positive classes than `white' and `man' \citep{Dixon:2018}.
+Computationally, I delineate between three different causes: 1) the optimisation data, 2) the word-embeddings used for the model, and 3) the model architecture itself.
+First, the optimisation data is likely to consists of imbalanced distributions of identity words in the different classes. 
+t is highly likely that terms such as `Black', `gay', and `woman' more frequently occur in the positive classes than in the negative class, for this reason the model is likely to embody stronger correlations between those identity terms and the positive classes than `white' and `man' \citep{Dixon:2018}.
 The occurrence of the terms documented by Jessamyn West in a document parsed by the API is then more likely to produce the label `toxic'.
 Conversely, content that uses `civilised' language while arguing for positions that more profoundly disturb the social order are a) less likely to be labelled as toxic by virtue of their `civilised' language and b) less frequent in the data overall, leaving seemingly benign words used in a context the model has rarely seen, and will therefore not know that it is in fact `toxic' language that needs `cleaning up' \cite{Dias:2021}.
 
-Second, through the application of GloVe word embeddings \cite{Pennington:2014} the model can take advantage of knowledge held outside of the training data.
+Second, through the application of GloVe word embeddings \cite{Pennington:2014} the model can take advantage of knowledge held outside of the optimisation data.
 Several works have identified that severe social biases against marginalised communities are apparent in word embeddings \cite{Speer:2017,Bolukbasi:2016,Nissim:2020,Zhao:2017,Zhao:2020}, moreover even once such embedding spaces have been treated for social biases they continue to exhibit social biases \cite{Gonen:2019}.
 Thus, the external knowledge that the model relies in is then also likely to exhibit characteristics of oppressive racial, sexual, and gendered social structures.
 
 Finally, the model architecture itself is a likely culprit of amplifying the biases held within the dataset and word embeddings \cite{Zhao:2017}.
 As machine learning models seek to identify decision boundaries between the different classes, between the dirt and the clean, the models seek to determine boundaries in the contextual and indeterminable.
-Therefore, the models learn strong correlations with what is most frequently in the positive classes, what is most frequently in the negative classes, and what is frequently in both positive and negative classes.
+Therefore, the models embody strong correlations with what is most frequently in the positive classes, what is most frequently in the negative classes, and what is frequently in both positive and negative classes.
 It is in the final space that the decision boundaries are drawn, however social biases are likely to be seen in spaces further away from the decision boundaries, more towards the positive and negative classes respectively. 
 It is in the `civilized' language production tending towards the negative classes that some socially disturbing content is found, and it is towards the space of the positive classes that find strong correlations with mentions of marginalised identities.
 \vspace{5mm}
@@ -138,7 +138,7 @@ However, at the time of writing w find that the phrase ‘black queer women’ s
 \subsection{Opt Out}\label{sub:optout}
 The second case study is Opt Out, an open-source Firefox browser extension founded by Theresa Ingram.
 The extension, which was launched on the 8th of March, 2020, focuses on detecting misogyny. 
-Opt Out define misogyny as `any verbal, visual or physical harassment and abuse rooted in misogyny that is threatened, carried out and/or amplified online' \cite{Ingram:2020}. 
+Opt Out define misogyny as ``any verbal, visual or physical harassment and abuse rooted in misogyny that is threatened, carried out and/or amplified online'' \cite{Ingram:2020}. 
 Unlike the Perspective's aim to address content moderation at the platform level, the aim of Opt Out is to empower individual users to address the torrent of misogyny from their own timeline. 
 Thus, while Perspective aims to provide a globally prescriptive understanding of `toxic', Opt Out aims to adjust to each individual's tolerance of misogyny, under a global understanding of what constitutes misogyny. 
 The downstream impacts of this distinction includes how power is distributed. 
@@ -181,7 +181,7 @@ However, as the developers of the extension have shared, balancing the different
 As machine learning systems rely on consistency in data and annotation to identify decision boundaries between different bodies of labelled data, there are seemingly spurious inconsistencies in what the model deems harmful, which has a downstream effect on the users who may experience what appear to be random effectiveness of the model in removing misogyny from their streams. 
 Opt Out's use of multiple datasets and competing definitions of misogyny then penalises the dataset underpinning the model's positive class as the different datasets have different annotation schemes and define misogyny in closely related, yet distinct ways.
 Considered through \citet{Douglas:1966} framework, we can understand this inconsistency, or noise less as a technical problem to be optimised for or solved, but instead as a fundamental cultural question of boundary setting and tolerance for ambiguity.
-Ambiguity in the training data can create competing signals for the model, as the model seeks out correlations to rely on to identify misogyny. 
+Ambiguity in the optimisation data can create competing signals for the model, as the model seeks out correlations to rely on to identify misogyny. 
 Further, as the model is optimised on multiple competing definitions, it is limited in the nuances of any single operationalisation of misogyny; consequently a sparse modelling space is made more sparse, as less data remains at the centre and more is pushed to the margins of the space. The data, and correlations that remain at the centre then tend to consist of highly normative understandings of what is and what is not dirt.
 
 \section{Concluding Remarks}\label{sec:filter_conclusion}
@@ -204,8 +204,8 @@ Consequently, human and technical content moderation systems systematically dise
 These issues of disenfranchisement and marginalisation will continue to permeate content moderation infrastructures, unless they are given the necessary social, technical and human capital that can allow for developing practices and tools that begin with marginalised communities at the centre instead of the margins.
 \ZTedit{
 \section{Summary}
-In this chapter, I have examined how ``toxicity'' and related categories are operationalised in content moderation technologies.
-Specifically I have sought to answer \textit{RQ I}: How are notions of ``toxicity'' operationalised and modelled, and what are their socio-political implications for content moderation systems?
+In this chapter, I have examined how `toxicity' and related categories are operationalised in content moderation technologies.
+Specifically I have sought to answer \textit{RQ I}: How are notions of `toxicity' operationalised and modelled, and what are their socio-political implications for content moderation systems?
 }
 
 \ZTedit{Social networks seek to sanitise digital spaces in efforts to make them appear appropriate for a desired online community.
@@ -221,7 +221,7 @@ This is of particular importance to algorithmic content moderation, as these soc
 
 \ZTedit{Through an analysis of two machinic content moderation systems, I have argued that the ways in which computer scientific work operationalises ``hate'' and ``toxicity'' comes at the cost of systematically excluded and marginalised communities and peoples.
 This cost, i.e. the right to freedom of speech for marginalised communities, is incurred through the development pipeline for machine learning.
-Specifically, these issues are incurred from the very conceptualisation of the notions of ``toxicity''; the annotation process, i.e. the annotators identities and operationalisations of the annotation guidelines; the choice of model components, e.g. the use of pre-optimised objects that hold assumptions and hegemonic correlations, such as word embeddings; and the choice of model model architecture.
+Specifically, these issues are incurred from the very conceptualisation of the notions of `toxicity'; the annotation process, i.e. the annotators identities and operationalisations of the annotation guidelines; the choice of model components, e.g. the use of pre-optimised objects that hold assumptions and hegemonic correlations, such as word embeddings; and the choice of model model architecture.
 Collectively, each of these, at times minute decisions come to have large scale harmful impacts to the equal access of online spaces.
 }
 
