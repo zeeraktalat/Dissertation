@@ -26,7 +26,7 @@ Specifically, I explore the use of four tasks labelled for different forms of ab
 The auxiliary tasks that are not labelled for abuse are: sarcasm detection \citep{Oraby_sarcasm:2016}, predicting moral sentiments \citep{Hoover:2019}, and predicting whether an argument is primarily based in facts or feelings \citep{Oraby_factfeel:2015}.
 As each task may be related only in terms of the abstraction required to understand the meaning of a given text, creating mappings between different classes from different tasks\ZTdelete{, e.g. sarcastic and abusive,} is a complex task that in some cases may not be possible, as one class may not conveniently fit others, e.g. mapping \ZTdelete{moral sentiments}\ZTedit{sarcasm} to abuse and vice versa.
 Moreover, data for each task may be collected from different sources, at different times, from different populations that use different vocabularies resulting in models that may optimise to recognise spurious patterns in the data that are not trivial to identify and address.
-Thus modelling abuse using distinct tasks can be approached in two distinct manners. Either all documents are collapsed into a single dataset without creating maps between the different classes or each task remains a distinct task and model architectures such as Multi-Task Learning (MTL) and Ensemble methods are explored.
+Thus modelling abuse using distinct tasks can be approached in two distinct manners. Either all documents are collapsed into a single dataset without creating maps between the different classes or each task remains a distinct task and model architectures such as MTL and Ensemble methods are explored.
 Here I take the latter approach, developing a MTL model that \ZTdelete{considers each task simultaneously and distinctly from all other tasks}\ZTedit{jointly optimises models for each task that share a unified layer} (see \cref{sub:mtl} for more details on how MTL functions).
 I select a MTL modelling approach over an ensemble approach as optimising an ensemble requires optimising \ZTdelete{$n$ entirely distinct models}\ZTedit{a distinct model for each task}\ZTdelete{, one for each task}, and a final model that considers the outputs of each model. 
 MTL models on the other hand can be optimised such that a single model is optimised to perform on its primary task, treating all auxiliary tasks as secondary.
@@ -34,7 +34,7 @@ Moreover, as I use a hard-parameter sharing design for my MTL models, an additio
 \ZTedit{Thus, I seek to partially address \textit{RQ II} by asking \textit{RQ 3}: How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}
 
 Through the use of of MTL models, I find that non-abusive tasks as auxiliary can be beneficial to detecting all forms of abuse examined.
-In line with the results in \cref{chap:liwc}, there is a difference in how helpful different abusive language datasets are for each other.
+In line with the results in \cref{chap:LIWC}, there is a difference in how helpful different abusive language datasets are for each other.
 However, in spite of benefits from using MTL over some single-task baselines, some baseline models still out-perform some of the MTL models, suggesting that while there are measurable effects of using MTL, there is still room for improvements.
 Moreover, I find that the combinations of auxiliary tasks for abuse detection with auxiliary task of related tasks occupy the space for the models that show most improvements over the baselines.
 
@@ -49,19 +49,19 @@ Considering that I use datasets that are entirely in English, I only consider th
 \citet{Waseem:2018} show that the cultural gaps that exist between different datasets, as a result of their collection strategies and annotation procedures, could be addressed \ZTedit{using MTL}.
 Using a hard parameter sharing strategy, they develop a MTL model that uses two different tasks for optimisation.
 In their model, sampling of the batches is chosen at random, with one of the tasks set as the main task and a manual mapping between the distinct classes is performed.
-The machine learning model chosen by \citet{Waseem:2018} for their MTL experiment is a back-propagated MLP with a TanH activation function and Adam as their optimisation function.
+The machine learning model chosen by \citet{Waseem:2018} for their MTL experiment is a back-propagated MLP with a Tanh activation function and Adam as their optimisation function.
 For the input representations \citet{Waseem:2018} experiment with a Bag-of-Words model that uses the $5,000$ most frequent terms and model that uses Byte-Pair encoded input data.
 Similarly to \citet{Waseem:2018}, \citet{Rajamanickam:2020} show that using hard parameter sharing strategy for MTL with an auxiliary task can aid in the detection of hate speech.
 Rather than using a different task coded for abuse as \citet{Waseem:2018} do, \citet{Rajamanickam:2020} instead ask whether jointly learning which emotions are invoked in a given task can aid in the detection of abuse.
 Moreover, the architectures of the two different approaches diverge from one another.
-\citet{Rajamanickam:2020} implement a double encoder model in which the primary and auxiliary share an encoder and each have a stacked Bi-directional Long-Short Memory Network that generate a second encoding.
+\citet{Rajamanickam:2020} implement a double encoder model in which the primary and auxiliary share an encoder and each have a stacked Bi-directional LSTM that generate a second encoding.
 The primary and auxiliary task models developed by \citet{Rajamanickam:2020} diverge at this point. 
-The auxiliary task model directly passes the second encoding to a Bi-directional Long-Short Memory Network, the output of which is subject to an attention layer and finally passed through to a linear layer and subject to an activation function before producing the prediction of the model.
+The auxiliary task model directly passes the second encoding to a Bi-directional LSTM, the output of which is subject to an attention layer and finally passed through to a linear layer and subject to an activation function before producing the prediction of the model.
 The primary task model sums the encodings obtained from the stacked Bi-directional LSTM networks for the primary and auxiliary task, passing this on to a Bi-directional Long Short Term Memory network.
 The resulting representation is then passed through an attention layer and passed through an output layer generating the prediction.
 A key difference between the hard parameter sharing models of \citet{Waseem:2018} and \citet{Rajamanickam:2020} is that the latter use a weighting parameter to distinguish between the primary and auxiliary task.
 \citet{Waseem:2018} only distinguish between the primary and auxiliary tasks through the validation set.
-The reason for this discrepancy is that \citet{Waseem:2018} seek to use Multi-Task Learning to optimise a model that is capable of dealing with cross-cultural data, that is a model that is able to perform on both tasks.
+The reason for this discrepancy is that \citet{Waseem:2018} seek to use MTL to optimise a model that is capable of dealing with cross-cultural data, that is a model that is able to perform on both tasks.
 \citet{Rajamanickam:2020} on the other hand seek to improve classification performance on the primary task, thus considering any performance gains on the auxiliary a side-benefit.
 This discrepancy is the result of a natural prioritisation question, as the goal of \citet{Rajamanickam:2020} is to improve classification performance for abuse on a single dataset whereas \citet{Waseem:2018} seek to identify a classifier that can generalise beyond beyond the single dataset.
 
@@ -69,9 +69,9 @@ The work described in this chapter follows \citet{Rajamanickam:2020} in their fo
 For this reason, I choose auxiliary tasks that have been hypothesised as relevant to the question of detecting different forms of online abuse (see \cref{sec:mtl_data} for an overview of the auxiliary datasets).
 
 \subsection{Learning Tasks}\label{sec:mtl_tasks}
-Multi-Task Learning, as the name of the framework implies, requires distinct tasks for learning, where each unique auxiliary task asks how learning representations from that task influences model performance on the primary task.
-We saw in \cref{chap:liwc}, the optimised models for each abusive dataset has different applications onto other datasets in the case of binary classification. Therefore, I choose to use three different tasks for abusive language as main tasks.
-In contrast to the method in \cref{chap:liwc}, I do not binarise, or otherwise modify the classes in from those proposed by the authors of the datasets.
+MTL, as the name of the framework implies, requires distinct tasks for learning, where each unique auxiliary task asks how learning representations from that task influences model performance on the primary task.
+We saw in \cref{chap:LIWC}, the optimised models for each abusive dataset has different applications onto other datasets in the case of binary classification. Therefore, I choose to use three different tasks for abusive language as main tasks.
+In contrast to the method in \cref{chap:LIWC}, I do not binarise, or otherwise modify the classes in from those proposed by the authors of the datasets.
 This provides for the more challenging tasks of predicting the type of abuse in addition to whether content is abusive or not.
 A further consequence of not binarising the label sets for the main tasks is that the classes don't directly map onto other datasets.
 This means that I preclude considerations of generalisability onto other datasets for abuse without further reduction of the predicted labels into a binarised label space.
@@ -99,7 +99,7 @@ The \textit{Toxicity} dataset \citep{Wulczyn:2017} provides a special case.
 For one, it is the largest dataset consisting of $159,686$ labelled comments split into an optimisation set of $95,692$ comments, a validation set of $32,128$ comments, and an evaluation set of $31,866$ comments.
 In total, this dataset has over than $100,000$ more comments than the \textit{Toxicity} and \textit{Hate Speech} datasets.
 Second, the dataset proposes a binary classification of `toxic' and `not toxic'.
-Thus, the results from the MTL models optimised for this dataset can be directly compared with the results obtained in \cref{chap:liwc}, unlike the models where the main task is \textit{Offence} or \textit{Hate Speech}.
+Thus, the results from the MTL models optimised for this dataset can be directly compared with the results obtained in \cref{chap:LIWC}, unlike the models where the main task is \textit{Offence} or \textit{Hate Speech}.
 Thus, I use this dataset to anchor the performances of the MTL models within the context of the preceding chapter and to show the impact of using a large scale dataset for abuse for MTL modelling.
 
 \subsubsection{Auxiliary Task Datasets}
@@ -130,7 +130,7 @@ To model the hypothesis that high emotionality may influence the production of a
 This dataset was developed using the same underlying data source as the \textit{Sarcasm} dataset, however rather than annotating the dataset for the occurrence of sarcasm, \citet{Oraby_factfeel:2015} annotate $5,848$ comments as being based in either fact or emotion.
 The dataset is slightly imbalanced with $59\%$ of the dataset labelled as primarily fact-based and $41\%$ labelled as primarily based in feelings.
 MTL models for abuse can take advantage of this dataset by learning a joint representation of the basis of an argument along with the main task in question.
-Thus, this auxiliary task can provide insight into the question of whether learning such a joint representation is beneficial to detecting abuse and implicitly provide another signal into the feasibility of more deeply considering the emotional and mental state of the author when writing, e.g. through the use of LIWC in \cref{chap:liwc}.
+Thus, this auxiliary task can provide insight into the question of whether learning such a joint representation is beneficial to detecting abuse and implicitly provide another signal into the feasibility of more deeply considering the emotional and mental state of the author when writing, e.g. through the use of LIWC in \cref{chap:LIWC}.
 
 \paragraph{Moral Sentiments}
 The \textit{Moral Sentiments} dataset is annotated for the vices and virtues represented along five different `factors': \texttt{Loyalty/betrayal}, \texttt{care/harm},\\ \texttt{fairness/cheating}, \texttt{authority/subversion} and \texttt{purity/degradation} \citep{Hoover:2019}.
@@ -141,9 +141,9 @@ To explore this further, I use this dataset as an auxiliary task.
 While the impacts of moral sentiments on the \textit{Offence} dataset are likely beneficial, using this auxiliary task on other datasets allows for examining whether representing moral sentiments has a positive impact on other datasets labelled for abuse.
 
 \paragraph{Hate Expert}
-Finally, as learned from \cref{chap:liwc}, some datasets for abusive language appear to be more closely related to others.
+Finally, as learned from \cref{chap:LIWC}, some datasets for abusive language appear to be more closely related to others.
 For this reason, I include the \textit{Hate Expert} dataset as an auxiliary task dataset to verify this finding and to provide a dataset to help address the poor representation of hate speech in the classes.
-In \cref{chap:liwc} I binarise this dataset, here \ZTdelete{on the other hand} I retain all $4$ classes in the dataset.
+In \cref{chap:LIWC} I binarise this dataset, here \ZTdelete{on the other hand} I retain all $4$ classes in the dataset.
 In the expert annotated data, the four classes have a highly imbalanced distribution, the largest class being the negative class consuming $84\%$ of the data, while the second largest class `sexism' consumes $13\%$ of the data, the `racist' class consuming $1.4\%$ of the data and the final class, `both racist and sexist' contributing with $0.7\%$ of the data.
 
 Focusing our attention on the smallest class for a moment, $0.7\%$ of $6,909$ documents means less than $50$ documents are labelled for the minority class, and given that I create stratified splits for the optimisation ($80\%$), validation ($10\%$), and evaluation ($10\%$) sets, less than $40$ documents remain in the optimisation set.
@@ -161,13 +161,13 @@ It is therefore of great importance for the research field of abuse detection to
 
 \section{Modelling}\label{sec:mtl_modelling}
 For the experiments conducted, I only use one form of tokens to allow for an examination of the impact of the auxiliary tasks rather than the impact of tokenisation.
-I choose to represent all documents by their Byte-Pair encoded representations as these minimise the number of out-of-vocabulary tokens \ZTdelete{as this representation retains}\ZTedit{while retaining} competitive performances in \cref{chap:liwc}.
+I choose to represent all documents by their Byte-Pair encoded representations as these minimise the number of out-of-vocabulary tokens \ZTdelete{as this representation retains}\ZTedit{while retaining} competitive performances in \cref{chap:LIWC}.
 To this end, I pre-process all documents using a $200$ dimensional Byte-Pair Embedding \citep{Heinzerling:2018}.
-The pre-processing here follows the same method as in \cref{chap:liwc}, that is each document is lower-cased, all hyper-links are replaced with a `<URL>' token, all usernames are replaced with a `<USER>' token, and all hashtags are replaced with a `<HASHTAG>' token.
+The pre-processing here follows the same method as in \cref{chap:LIWC}, that is each document is lower-cased, all hyper-links are replaced with a `<URL>' token, all usernames are replaced with a `<USER>' token, and all hashtags are replaced with a `<HASHTAG>' token.
 Then each document is passed through the Byte-Pair Embeddings to produce the Byte-Pair encoded representations, that is their sub-word units.
 
 I develop three different types of baseline models: a linear single-task model where the model is optimised and evaluated on the same task, a non-linear single-task model, and a linear ensemble model where a model is optimised on the basis of outputs from the auxiliary task models.
-In terms of experimental models, I follow \citet{Waseem:2018} in designing a multi-task Multi-Layered Perceptron implemented in PyTorch \citep{Paszke:2019}. I select an MLP over more complex neural networks architectures like Convolutional Neural Networks and Long-Short Term Memory networks due to the speed with which MLPs are optimised along with their general performance in \cref{chap:liwc}.
+In terms of experimental models, I follow \citet{Waseem:2018} in designing a Multi-Task Multi-Layered Perceptron implemented in PyTorch \citep{Paszke:2019}. I select an MLP over more complex neural networks architectures like CNNs and LSTMs due to the speed with which MLPs are optimised along with their general performance in \cref{chap:LIWC}.
 
 I perform parameter and hyper-parameter optimisation for the linear and non-linear models, respectively.
 For the non-linear models I use the Weights and Biases library \citep{Wandb} to perform Bayesian Hyper-Parameter Optimisation.
@@ -208,7 +208,7 @@ I also include a dropout layer and a non-linear activation function, where I tre
 
 My architecture of the Multi-task MLP deviates from the architecture proposed by \citet{Waseem:2018} in two ways: the choice of input layer and the choice of activation function.
 Where I use an embedding layer as the input layer for each task, \citet{Waseem:2018} use a onehot encoded input layer and they use a \texttt{Tanh} activation function for all of their experiments.
-Following the experimental approach in \cref{chap:liwc}, I keep the embedding layer randomly initialised rather than using a \ZTdelete{pre-trained}\ZTedit{pre-optimised} embedding layer.
+Following the experimental approach in \cref{chap:LIWC}, I keep the embedding layer randomly initialised rather than using a \ZTdelete{pre-trained}\ZTedit{pre-optimised} embedding layer.
 The motivation for optimising the embedding layer, even with sparse data, is that \ZTdelete{pre-trained}\ZTedit{pre-optimised} embeddings have been shown to harbour significant social biases against marginalised communities, a behaviour that is directly oppositional to the aims of abuse detection.
 
 The optimisation procedure for the Multi-task MLP deviates significantly from the optimisation procedures associated with the baseline models.
@@ -244,7 +244,7 @@ I then construct experiments with all combinations of the selected auxiliary tas
 
 \subsection{Baseline Models}
 
-In \cref{tab:linear_singletask_params,tab:mlp_singletask_params,tab:ensemble_params} I present the best identified hyper-parameters for each model type.
+In \cref{tab:linear_singletask_params,tab:MLP_singletask_params,tab:ensemble_params} I present the best identified hyper-parameters for each model type.
 Focusing on the regulariser, all linear models prefer an $L2$ regulariser, likely because it redistributes the weights of equally important features rather than zeroing any of them out.
 Moreover, as observed in \cref{tab:linear_singletask_params} all models prefer a low regularisation strength when a linear single-task classifier is optimised.
 
@@ -315,7 +315,7 @@ Observing the vocabulary sizes in \cref{tab:aux_vocab_sizes}, it appears that vo
   \label{tab:ensemble_params}
 \end{table}
 
-Turning to the hyper-parameters for the non-linear baseline in \cref{tab:mlp_singletask_params}, the number of similar and shared values across models optimised for each dataset decreases to share only one parameter, the batch size.
+Turning to the hyper-parameters for the non-linear baseline in \cref{tab:MLP_singletask_params}, the number of similar and shared values across models optimised for each dataset decreases to share only one parameter, the batch size.
 The models optimised for the larger datasets, the \textit{Offence} and \textit{Toxicity} dataset also share a preference for using ReLU as their non-linearity.
 Moreover, the baseline models optimised for these two datasets also prefer a higher learning rate compared to the model optimised for the smaller \textit{Hate Speech} dataset.
 
@@ -330,7 +330,7 @@ Moreover, the baseline models optimised for these two datasets also prefer a hig
   \end{tabular}%
   }
   \caption{Best hyper parameters for non-linear single task model for each main task dataset.}
-  \label{tab:mlp_singletask_params}
+  \label{tab:MLP_singletask_params}
 \end{table}
 
 \subsubsection{Validation Data Performances}
@@ -452,7 +452,7 @@ Similarly to its' performances on the validation data, the MLP is competitive wi
 Meanwhile, the MLP baseline outperforms all other models in terms of \texttt{recall} however the poor performance in terms of \texttt{precision} results in a \texttt{F1-score} that is not competitive with the other baseline models.
 
 \subsection{Experimental Model Performances}
-As the experimental models are MLP models that have been adapted for Multi-Task Learning, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
+As the experimental models are MLP models that have been adapted for MTL, the experimental models are expected to \textit{at least} out-perform the MLP baselines as they share a similar architecture.
 The best hyper-parameter settings for each of the experimental settings for each main task are shown in \cref{tab:mtl_params_wh,tab:mtl_params_davidson,tab:mtl_params_wulczyn}.\footnote{Note that the `Aux Task Weight' column only contains a single value as each auxiliary task is given the same weight.}
 In these tables, I show the best hyper-parameter settings for the models with one auxiliary task and each of the subsequent dataset configurations selected based.
 The dataset configurations are chosen on the basis of their \texttt{F1-score} performance on the validation data where only the main task and a single auxiliary task (see further detail on dataset combination selection in \cref{sub:aux_task_selection}).
@@ -698,7 +698,7 @@ This performance gain is obtained through an increase in the experimental model'
 Although, on their own, none of the non-abusive tasks obtain the highest performances out of all auxiliary task configurations, they frequently post highly competitive scores with the all other configurations.
 This suggests that some of the improvements obtained when using multiple auxiliary tasks is obtained through the \ZTdelete{information}\ZTedit{use} of non-abusive information encoded into the shared layer of the model.
 
-Aligning with the insights on dataset mappings identified in \cref{chap:liwc}, the \textit{Hate Expert} dataset provides for boosted predicted power when used in conjunction with a non-abusive auxiliary task.
+Aligning with the insights on dataset mappings identified in \cref{chap:LIWC}, the \textit{Hate Expert} dataset provides for boosted predicted power when used in conjunction with a non-abusive auxiliary task.
 Somewhat surprisingly, the \textit{Offence} auxiliary task equally provides boosts in performance.
 These improvements in performance indicate that the source domain of the data offer greater inductive biases, that can be optimised, than the size, as evidenced by the \textit{Toxicity} dataset not being selected for further experimentation.
 The selection of the \textit{Hate Expert} auxiliary task also suggests that an alignment of dataset goals, and the processes to achieve those goals, also have a positive factor.
@@ -819,7 +819,7 @@ Comparing the MTL models to the SVM baseline, all auxiliary task settings models
 
 The final task that I explore experimentally through MTL is the \textit{Toxicity} detection task.
 This task is the task that has the most auxiliary tasks that are explored experimentally with five out of six tasks explored, the only task that is note explored is the \textit{Hate Expert} task.
-Moreover, this is also the task with the largest dataset available and the only binary task, meaning that this is the only task where the results are directly comparable with the results obtained in \cref{chap:liwc}.
+Moreover, this is also the task with the largest dataset available and the only binary task, meaning that this is the only task where the results are directly comparable with the results obtained in \cref{chap:LIWC}.
 
 Observing experimental model results in \cref{tab:mtl_test_wulczyn} with the performances of the baseline models in \cref{tab:baseline_test_wulczyn}, we see that no setting of the auxiliary tasks outperform the SVM baseline in terms of \texttt{F1-score} or \texttt{accuracy}.
 However, all task configurations outperform the SVM in terms of \texttt{recall} and are competitive in terms of the \texttt{accuracy} score with the worst performing configuration, one that uses the \textit{Sarcasm} and the \textit{Hate Speech} auxiliary tasks scoring $0.0635$ below the SVM baseline and $0.045$ lower the MLP baseline.
@@ -836,8 +836,8 @@ Although no auxiliary task setting outperforms the best performing baseline, the
 The best performing auxiliary task setting uses the \textit{Hate Speech} and the \textit{Offence} auxiliary tasks, that is all of the abusive language detection tasks under consideration and it outperforms the MLP baseline by $0.0905$.
 The worst performing auxiliary task setting outscores the MLP baseline by $0.0438$ and uses the \textit{Sarcasm} and the \textit{hate Speech} auxiliary tasks.
 
-In relation to the classification scores achieved by the best model for the \textit{Toxicity} dataset in \cref{chap:liwc}, the best performing model selected by highest \texttt{F1-score} is a LSTM model that uses word tokens as its input\ZTdelete{, score,} obtains $0.9510$ in \texttt{accuracy}, $0.8047$ in \texttt{precision}, $0.9058$ in \texttt{recall}, and $0.8357$ in \texttt{F1-score}.\footnote{The scores here are the mean score over five different configurations of the random seeds.}
-Thus, the model from \cref{chap:liwc} is outperformed, in terms of \texttt{accuracy}, \texttt{precision} and \texttt{F1-score}, as the best performing auxiliary task settings, ranked by \texttt{F1-score}.
+In relation to the classification scores achieved by the best model for the \textit{Toxicity} dataset in \cref{chap:LIWC}, the best performing model selected by highest \texttt{F1-score} is a LSTM model that uses word tokens as its input\ZTdelete{, score,} obtains $0.9510$ in \texttt{accuracy}, $0.8047$ in \texttt{precision}, $0.9058$ in \texttt{recall}, and $0.8357$ in \texttt{F1-score}.\footnote{The scores here are the mean score over five different configurations of the random seeds.}
+Thus, the model from \cref{chap:LIWC} is outperformed, in terms of \texttt{accuracy}, \texttt{precision} and \texttt{F1-score}, as the best performing auxiliary task settings, ranked by \texttt{F1-score}.
 This further demonstrating the space for MTL models to improve performance on single-task models.
 
 \paragraph{Auxiliary Task Patterns}
@@ -869,7 +869,7 @@ Moreover, all three auxiliary tasks appear in the best performing auxiliary task
 \section{Conclusions}
 
 Automated detection of abuse occurring in online spaces is a complex problem that is contingent on the ability to contextualise comments made by authors with the intentions of the authors, how the comments are perceived by readers, and situating the comments within the contexts of the authors.
-In this chapter, I attempt to address the issue of contextualisation through the use of Multi-Task Learning.
+In this chapter, I attempt to address the issue of contextualisation through the use of MTL.
 Using MTL, I examine how different auxiliary tasks impact in-domain classification of abuse detection.
 Specifically, I examine how the use of datasets developed for the purpose of optimising machine learning models for abuse as auxiliary tasks can impact the in-domain performances of different forms of abuse detection.
 I contrast the use of these resources with resources that are developed for classifying the basis of an argument, the moral sentiments displayed in messages, and the use of sarcasm and examine how these impact the ability of MTL models to classify abuse, when the resources are used as auxiliary tasks.
@@ -877,7 +877,7 @@ Finally, I examine whether there are synergies between datasets developed for de
 
 Through the use of MTL, I show that machine learning models developed for detecting abuse can benefit from using auxiliary task datasets.
 In studying \ZTdelete{the first question,} how other abuse detection datasets impact performance on the main task when they are used as auxiliary tasks, I find that datasets that 1) share in the goals of the main task dataset, or 2) are sampled from the same data source, even with disparate dataset goals positively influence the performance of neural machine learning models on the main task.
-The former condition further provides support for the findings in \cref{chap:liwc} where I identified that common dataset goals allow for better generalisation.
+The former condition further provides support for the findings in \cref{chap:LIWC} where I identified that common dataset goals allow for better generalisation.
 Rather than provide for better generalisation from one task to another, I find in this chapter that different datasets with similar goals can provide be used in a multi-task setting to improve the in-domain classification results for one another.
 The latter observation can be understood through the aims and purposes of the MTL framework.
 MTL operates with the express notion that distinct tasks may share inherent latent information that can be represented in a machine learning model through joint optimisation of the tasks.
@@ -916,10 +916,10 @@ Finally, in my experimental models I do not use \ZTdelete{pre-trained}\ZTedit{pr
   Thus, I have attempted to address \textit{RQ II} by examining which auxiliary tasks provide for useful contextualisation for abuse detection.
   That is, I have sought to answer \textit{RQ 3}: How do the individual and combinatory use of abuse classification and non-abusive tasks impact classification of specific forms of abuse?}
 
-  \ZTedit{From my experiments, I find that Multi-Task Learning can be a useful technique for abuse detection due to the joint representation of multiple tasks that is encoded in the model.
+  \ZTedit{From my experiments, I find that MTL can be a useful technique for abuse detection due to the joint representation of multiple tasks that is encoded in the model.
   I further find that selecting the appropriate auxiliary tasks is heavily dependent on the primary task dataset and the goals the authors had in developing the resource.}
 
   \ZTedit{These findings make clear the potential for contemporaneous machine learning techniques to more closely embody the subjectivities of an individual.
   Returning briefly to the infrastructure of content moderation and content moderation as a third party reader, the proximity between the values held by the third party reader and the recipient is strongly indicative of the abilities of content moderation infrastructures to more accurately represent a given recipient.
-  Multi-Task Learning for hate speech detection, and more generally abuse detection, then offers a means through which practitioners can begin to develop machine learning models that more closely represent the readers whose behalf they are purported to act on behalf of.
+  MTL for hate speech detection, and more generally abuse detection, then offers a means through which practitioners can begin to develop machine learning models that more closely represent the readers whose behalf they are purported to act on behalf of.
 }

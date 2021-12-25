@@ -14,7 +14,7 @@ What does it mean when the tools of a racist patriarchy are used to examine the 
 \end{citequote}
 
 In each of the previous chapters we have identified different areas of concern for the use of models and data.
-From the constraints of document transformation in \autoref{chap:liwc} to the influence of multiple data sources and prediction tasks in \autoref{chap:mtl}.
+From the constraints of document transformation in \autoref{chap:LIWC} to the influence of multiple data sources and prediction tasks in \autoref{chap:mtl}.
 \ZTedit{
   In each of these chapters, I sought to find means to make computational methods more closely come to represent the subjectivities and contexts of speakers from within frames of existing computational methods.
   As the chapters collectively point to, there is an inherent limitation to what is achievable within computational pipelines in which the entire process, from dataset creation to modelling, is not developed while respecting human subjectivities.
@@ -27,7 +27,7 @@ From the constraints of document transformation in \autoref{chap:liwc} to the in
 In this chapter, I then theorise over the core sources of these issues: the context within which models and exist, the models and the data.
 To describe these issues, I invoke the metaphor of the body in three different ways: first, pertaining to the physical material \textit{human body} that we each possess; second, to signify a collection of observations and data points \textit{created by humans}; and third, to refer subjective embodiments, that is how \textit{social and cultural meaning} is embedded in the human experience and derivatives of it, i.e. data created by humans.
 \ZTdelete{Through a consideration of both data generation processes and the modelling stages of the machine learning pipeline, I apply my theory to the models that I have described in this dissertation in addition to providing a critique of these technologies.}
-\ZTedit{I then apply my theory to the computational models in \cref{chap:liwc,chap:mtl} and apply a critique of these techologies through a consideration of the data generation process and the modelling stages of the machine learning pipeline.}
+\ZTedit{I then apply my theory to the computational models in \cref{chap:LIWC,chap:mtl} and apply a critique of these techologies through a consideration of the data generation process and the modelling stages of the machine learning pipeline.}
 Finally, I discuss the implications of current practices in machine learning and argue that for machine learning for social prediction tasks to achieve their goals, we must radically reconsider current approaches to better align with the stated aims.
 
 \section{Disembodied Machine Learning}
@@ -127,7 +127,7 @@ The underlying assumption that machine learning models make is that the data pro
 It is then up to the designer to discern whether the decision boundaries drawn are truly meaningful or they represent spurious correlations.
 Making this decision however has proven to be large a challenge as recent research on the challenges of benchmarking, that is evaluating the performance of machine learning models has shown \citep{Kiela_2021,Bowman_2021}.
 }
-\ZTdelete{Second, as the designer of the model themselves are frequently removed from the contexts within which the body of data are created, they determine how the data are to be represented through a choice of features, setting limits on vocabularies (see \autoref{chap:intro}), transforming the input (as seen in \autoref{chap:liwc}), and the choice of models with their requirements of representing data.
+\ZTdelete{Second, as the designer of the model themselves are frequently removed from the contexts within which the body of data are created, they determine how the data are to be represented through a choice of features, setting limits on vocabularies (see \autoref{chap:intro}), transforming the input (as seen in \autoref{chap:LIWC}), and the choice of models with their requirements of representing data.
 Third, as machine learning models step through disembodied data and embody it within itself, the model itself manipulates the representations of data to identify discernible boundaries between the limbs of data.
 In this process, the models further disembody the data from the data itself, operating within an assumption that datum consist of the sum of its parts.
 }
@@ -352,10 +352,10 @@ Considered through the lens of abusive language detection, harmful patterns of m
 
 \subsubsection{Manually Constructed Features}
 A large body of work surrounding hate speech detection has investigated the question of which manual features are useful to the task of automated detection \citep{Waseem:2016,Chiril:2019,Fortuna:2018,Stankovic:2020}.
-Similarly, in \autoref{chap:liwc} I explore whether rationalising over content using LIWC can have beneficial influences for machine learning approaches for abusive language detection.
+Similarly, in \autoref{chap:LIWC} I explore whether rationalising over content using LIWC can have beneficial influences for machine learning approaches for abusive language detection.
 Clearly, there is an interest in providing scaffolding for computational models to identify and address hate speech detection.
 
-Through the use of higher level cognition, designers embed preconceived notions of what information computational models should deem relevant, for instance in \autoref{chap:liwc}, I consider whether higher level cognitive information about the function of language can influence modelling \ZTedit{and performance}.
+Through the use of higher level cognition, designers embed preconceived notions of what information computational models should deem relevant, for instance in \autoref{chap:LIWC}, I consider whether higher level cognitive information about the function of language can influence modelling \ZTedit{and performance}.
 The assumption is that while words may provide ample space for over-fitting models to specific instances and patterns that are do not generalise beyond the data provided, \ZTedit{other sources of information, i.e. the LIWC dictionary, may be less prone to over-fitting in such a way}.
 By limiting the feature space to a much smaller discrete space of possible inputs, I argue that it is possible to achieve performance gains on out-of-domain data, relative to the input.
 Another frequently used modelling assumption is that computational models can benefit from considering words in some context, generally obtained using n-gram representations of the text \citep{Waseem-Hovy:2016,Davidson:2017,Chiril:2019}.
@@ -430,12 +430,12 @@ Within this goal lies an assumption that there exist a `universal' and  `objecti
 That is, \citet{Wulczyn:2016} and \citet{Kshirsagar:2018} assume the existence of a global understanding of what \ZTedit{constitutes} abuse, in addition to an imagined average user that is disembodied from all facets of human life.
 
 \section{Dissertation Models}
-Here I consider the two model types that I have developed in \autoref{chap:liwc} and \autoref{chap:mtl}.
+Here I consider the two model types that I have developed in \autoref{chap:LIWC} and \autoref{chap:mtl}.
 I document the considerations and assumptions each model type reveals throughout the machine learning pipeline.
 Rather than go through the entire pipeline, I begin my analysis at the entry points, that is the choices of datasets and the modelling choices, as I only make use of previously published datasets.
 
 \subsection{Vocabulary Reduction}\label{sub:vocab_redux}
-In \autoref{chap:liwc}, I optimised the machine learning models using the datasets published by \citet{Davidson:2017}, \citet{Wulczyn:2016}, \citet{Waseem:2016}, \citet{Waseem-Hovy:2016}, and \citet{Garcia:2018}.
+In \autoref{chap:LIWC}, I optimised the machine learning models using the datasets published by \citet{Davidson:2017}, \citet{Wulczyn:2016}, \citet{Waseem:2016}, \citet{Waseem-Hovy:2016}, and \citet{Garcia:2018}.
 The decision to use these datasets as optimisation data stems from these datasets originating from three distinct sources: Twitter; StormFront, a white nationalist internet forum; and Wikipedia editor discussions.
 To be able to measure the generalisability of the models optimised on \citet{Davidson:2017}, \citet{Waseem:2016}, and \citet{Waseem-Hovy:2016}, I reduce the multi-class classification tasks to binary classification tasks.
 Through this reduction in classes, I enforce a normative choice that the detection of abuse has greater value than the identification of the specific type of abuse.
@@ -459,13 +459,13 @@ For this reason, I use LSTMs as they can capture long interactions between words
 In addition, a number of past studies having shown the efficacy of CNNs for abuse detection \citep{Park:2017, Mitchell:2019,Kolhatkar:2020,Rizwan:2020,Safaya:2020,Gamback:2017}.
 I \ZTedit{therefore use CNNs} \ZTdelete{use such models,} due to the influence of past work on the topic of hate speech and abuse detection.
 
-The models described in \autoref{chap:liwc} that only use words or byte-pair encoded words as input rely entirely on the optimisation data to optimise for patterns in data.
+The models described in \autoref{chap:LIWC} that only use words or byte-pair encoded words as input rely entirely on the optimisation data to optimise for patterns in data.
 \ZTedit{It is thus}\ZTdelete{its} apparent that those models fall towards the very extreme of the globalised end of the \ZTedit{model} spectrum\ZTdelete{that I propose}.
 On the other hand, while still towards the globalised end of the spectrum, the models that rely on LIWC as the input come are shifted more to the localised end of the spectrum, as the LIWC dictionary \ZTdelete{that is used to map from words to LIWC categories} is informed by considering data external to the data the models rely on.
 
 %{\color{green!80!black}
 %\zw{If there is time to add pre-trained embeddings + LIWC embedding layer}
-%All models described in \autoref{chap:liwc} fall towards the globalised end of the spectrum, however some further to the extreme ends than others. All linear models that use words or byte-pair encoded data as input represent the extreme globalised-end of the spectrum, as these models only rely on the training data. The linear models that use LIWC categories, and those that use words/BPE in addition to LIWC categories shift slightly towards the localised end of the spectrum by virtue of the LIWC dictionary being developed using external data to inform the creation of the categories.
+%All models described in \autoref{chap:LIWC} fall towards the globalised end of the spectrum, however some further to the extreme ends than others. All linear models that use words or byte-pair encoded data as input represent the extreme globalised-end of the spectrum, as these models only rely on the training data. The linear models that use LIWC categories, and those that use words/BPE in addition to LIWC categories shift slightly towards the localised end of the spectrum by virtue of the LIWC dictionary being developed using external data to inform the creation of the categories.
 %As all neural network models use pre-trained word or BPE embeddings, they can be placed further towards the localised end of the spectrum. Similarly to the use of LIWC for linear models, the use of LIWC as additional input shifts the models further towards the localised end of the spectrum.
 %}
 
@@ -473,10 +473,10 @@ The motivation for using Byte-Pair encoding is reflected in a) my own personal a
 Briefly, to minimise the number of out-of-vocabulary items, I use BPE to deconstruct the optimisation data into smaller word-parts, that allow for deconstructing words to minimise the influence of intentional obfuscations (e.g. `mooslim women`) of tokens, as I have \ZTdelete{frequently noted}\ZTedit{observed} and been subject to abuse that seeks to obscure \ZTedit{itself}.
 \ZTedit{Furthermore, the choice to BPE is likely to} better \ZTdelete{handling of}\ZTedit{handle} unknown tokens for the computational models.
 
-\ZTedit{Although some of the} models \ZTedit{are positioned further towards the localised end of the spectrum than others, all the models used in \cref{chap:liwc} are on the globalised end of the model spectrum.
+\ZTedit{Although some of the} models \ZTedit{are positioned further towards the localised end of the spectrum than others, all the models used in \cref{chap:LIWC} are on the globalised end of the model spectrum.
 Their globalised position derives from the fact that none of the data representations take local subjective positionalities of individuals in the data into account.
 Instead, all of the models rely on some abstraction away from the self through processes of disembodiment.}
-\ZTdelete{find themselves further towards the localised end of the spectrum than others, all models that I use in \autoref{chap:liwc} are positioned in the globalised end of the spectrum as none of the data representations take into account the local subjective positionality of the individuals in the data, instead they all rely on some abstraction away from the subjective self through processes of disembodiment.}
+\ZTdelete{find themselves further towards the localised end of the spectrum than others, all models that I use in \autoref{chap:LIWC} are positioned in the globalised end of the spectrum as none of the data representations take into account the local subjective positionality of the individuals in the data, instead they all rely on some abstraction away from the subjective self through processes of disembodiment.}
 
 \subsection{Multi-Task Learning}\label{sub:mtl_inchap}
 %\zw{If we use current methods}
@@ -484,9 +484,9 @@ In \autoref{chap:mtl} I turn to the question of which \ZTedit{constructs would b
 \ZTedit{Specifically, I examine whether jointly learning representations of sarcasm \citep{Oraby_sarcasm:2016}, whether an argument is based in fact or feelings \citep{Oraby_factfeel:2015}, the moral sentiments elicited \citep{Hoover:2019}, and related notions of hate speech and offensive language \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} improves classification performance.}
 \ZTdelete{, in terms of social constructs such as sarcasm \citep{Oraby_sarcasm:2016}, the basis of an argument (i.e. whether it is based in feelings or facts) \citep{Oraby_factfeel:2015}, moral foundation \citep{Hoover:2019}, and conceptualisations of hate speech and offensive language \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} would be helpful for a classification model for abuse detection in improving performance on the associated test set.}
 
-For this task, I reuse the BPE representations of documents from \autoref{chap:liwc}.
+For this task, I reuse the BPE representations of documents from \autoref{chap:LIWC}.
 Therefore some of the embodiments of the models, with regard to text representation remain \ZTedit{the same as described in \cref{sub:vocab_redux}}.
-Here I focus on \ZTedit{the factors from \cref{chap:mtl} that are distinct from \cref{chap:liwc}.}\ZTdelete{those that change for the models described in \autoref{chap:mtl}.}
+Here I focus on \ZTedit{the factors from \cref{chap:mtl} that are distinct from \cref{chap:LIWC}.}\ZTdelete{those that change for the models described in \autoref{chap:mtl}.}
 \ZTdelete{Due to the reuse of BPE representations, the analysis of those modelling choices remain the same \autoref{sub:vocab_redux}.}
 \ZTdelete{However, as}\ZTedit{As} I include more datasets into consideration, I also implicitly invite the question `why those datasets'?
 To answer this question, it's necessary to revisit the aims of each dataset.
@@ -514,19 +514,19 @@ For this task, I do not reduce the question of detecting to a binary task, inste
 However, my subjective positioning does not change from what is detailed in \autoref{sub:vocab_redux}.
 
 Similarly for the choices in developing the data and textual representations, my own subjective embodiments and experiences are a factor in the modelling decisions (see \cref{sub:vocab_redux}).
-This is particularly true for multi-task learning, where I specifically set the weights for how much each task is to contribute to the main task through the frequency of selection.
+This is particularly true for MTL, where I specifically set the weights for how much each task is to contribute to the main task through the frequency of selection.
 Such a weighting relies on my own consideration of how important each task is to the overall task of identifying abuse \ZTedit{and to which degree auxiliary tasks should be afforded space to influence the model representations for abuse}.
 The specific architecture of the model is influenced by its usefulness in prior work \citep{Bingel:2018} in addition to seeking an to answer the question of how more complex models would influence the performance on the task.
 
-Using the multi-task learning framework has strong implications for where on the localisation spectrum the model is positioned\ZTdelete{can exist within}.
+Using the MTL framework has strong implications for where on the localisation spectrum the model is positioned\ZTdelete{can exist within}.
 For instance, the use multiple different datasets to influence a single model precludes the extreme ends of the modelling spectrum.
 \ZTedit{Jointly optimising multiple tasks in a shared internal model layer explicitly shifts models away from the extreme of the globalised spectrum by providing using datasets that are external to the main task dataset and by contextualising the main task with the representations obtained from the auxiliary tasks.
 Similarly, the localised extreme of the model spectrum is also precluded using this method, as the auxiliary tasks do not afford embedding the subjectivities and embodiments of individuals.
-On a demographic level, however, multi-task learning does hold potential for shifting towards the localised extrema, if and only if all auxiliary tasks also come from the demographic that the main task is concerned with.}
+On a demographic level, however, MTL does hold potential for shifting towards the localised extrema, if and only if all auxiliary tasks also come from the demographic that the main task is concerned with.}
 \ZTdelete{However, such an optimisation regime also precludes the extremely localised end of the spectrum for the same reason.}
-\ZTedit{Moreover, as}\ZTdelete{As} each auxiliary task will work, if as nothing else, as a regulariser for the main task, \ZTedit{multi-task learning will shift the model away away from the extremes of the spectrum.}
-\ZTedit{In my use of multi-task learning for abusive language detection with the auxiliary tasks that I have chosen, the models that I have developed are shifted away from the globalised extrema towards a more localised position on the model spectrum.}
-\ZTdelete{As I use multi-task learning to contextualise the task of abusive language detection within the frame of tasks that have been indicated in prior literature as relevant to the task of abusive language detection, the model is both drawn to a more localised position.}
+\ZTedit{Moreover, as}\ZTdelete{As} each auxiliary task will work, if as nothing else, as a regulariser for the main task, \ZTedit{MTL will shift the model away away from the extremes of the spectrum.}
+\ZTedit{In my use of MTL for abusive language detection with the auxiliary tasks that I have chosen, the models that I have developed are shifted away from the globalised extrema towards a more localised position on the model spectrum.}
+\ZTdelete{As I use MTL to contextualise the task of abusive language detection within the frame of tasks that have been indicated in prior literature as relevant to the task of abusive language detection, the model is both drawn to a more localised position.}
 However, as I do not optimise my models on any tasks that seek to make predictions on users, and the distinct datasets do not originate from the same demographic, the model does not cross entirely into the space of localised models.
 Instead the models that I produce, by virtue of learning considerations on tone, argument basis, sarcasm, and moral sentiment optimise for some representations of the faculties that I believe of importance to the task.
 These auxiliary tasks then provide an avenue for the models to be more closely situated within the how each individual person can be represented as a function of how they express themselves.

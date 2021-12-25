@@ -132,7 +132,7 @@ To address such issues, I suggest that content moderation should move beyond the
 Chapter \ref{chap:filter} is written on the basis of a collaborative research project with Nanna Bonde Thylstrup (Copenhagen Business School) and a paper has been accepted in a special issue of the journal First Monday.
 In this chapter, I expand on the considerations of the research project in each section and particularly further develop \cref{sec:filter_models,sec:filter_conclusion}.
 
-\ZTedit{Next,} in \cref{chap:liwc}, I turn to the technical development of new content moderation systems for abusive text.
+\ZTedit{Next,} in \cref{chap:LIWC}, I turn to the technical development of new content moderation systems for abusive text.
 Here, I address the issue of model generalisability, over-fitting and efficiency by representing documents through the Linguistic Inquiry and Word Count (LIWC) categories invoked by the contents of the documents.
 LIWC is a software, and an associated dictionary, that maps a set of words to their `psychology relevant' categories, that can allow its users to computationally analyse \ZTedit{proxies to} the mental states of speakers.
 Thus, by representing documents through the LIWC categories each word invokes, it is possible to gain \ZTedit{some} insight into the mental and emotional state of the speaker \citep{Pennebaker:2001}.
@@ -148,7 +148,7 @@ Using LIWC, the vocabulary sizes are minimise by up to $99\%$ which also introdu
 Moreover, the reduction in vocabulary sizes and the fact that LIWC categories act as proxies to the mental and emotional states of speakers, I experiment with the out-of-domain generalisability of models optimised on documents represented through their LIWC categories.
 \ZTdelete{Finally, I analyse the temporal impacts on using LIWC-based documents representation for modelling.}
 
-The research questions addressed in \cref{chap:liwc} are thus:
+The research questions addressed in \cref{chap:LIWC} are thus:
 
 \begin{center}
 \begin{minipage}{0.9\textwidth}
@@ -256,7 +256,7 @@ This distinction is made to highlight the inhuman nature of the underlying techn
 }
 \ZTedit{
 Second, I do not make use of \ZTdelete{pre-trained}\ZTedit{pre-optimised} embedding layers or fine-tuned language models in my work.
-Although both techniques have been shown to improve performances of machinic abuse detection \citep{Fortuna:2018}, they are not compatible with some experiments in \cref{chap:liwc} and thus influence comparability between the experiments conducted in the chapter.
+Although both techniques have been shown to improve performances of machinic abuse detection \citep{Fortuna:2018}, they are not compatible with some experiments in \cref{chap:LIWC} and thus influence comparability between the experiments conducted in the chapter.
 For the chapters in which their use would not limit direct comparability, these methods carry a range of social biases and norms that are beyond the scope of this thesis to examine.
 Thus I avoid using them as a way to ensure that the claims I make in this thesis are a result of the models and modelling decisions, rather than spurious correlations.
 }
@@ -283,7 +283,7 @@ In this chapter, I have introduced the different research questions that I will 
 In \cref{chap:socialscience}, I introduce some of the foundational concepts and theories that I rely on that have been developed in primarily non-computational fields.\\
 In \cref{chap:nlp}, I turn to lay the computational foundation for the work conducted, introducing the various modelling aspects that I rely on.\\
 In \cref{chap:filter}, I examine how notions of `toxic' and `healthy' are operationalised and the implications these have on machine learning models and their outcomes.\\
-In \cref{chap:liwc}, I focus on questions of model generalisability and the impacts of data representations.\\
+In \cref{chap:LIWC}, I focus on questions of model generalisability and the impacts of data representations.\\
 In \cref{chap:mtl}, I examine how abuse detection tasks and other tasks related to abusive language detection can be used in a Multi-Task Learning setting to improve in-domain classification performances.\\
 In \cref{chap:disembodied}, I consider how machine learning models rely on the illusion of objectivity to disembody themselves, and the developers, from the subjective contexts they are embedded in.\\
 Finally, in \cref{chap:conclusion}, I conclude on the insights from the different chapters and suggest avenues of future research that take these insights into account.
