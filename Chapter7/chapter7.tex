@@ -392,155 +392,145 @@ Within this goal lies an assumption that there exist a `universal' and  `objecti
 That is, \citet{Wulczyn:2016} and \citet{Kshirsagar:2018} assume the existence of a global understanding of what constitutes abuse for an imagined average user, that is disembodied from all facets of human life.
 
 \section{Dissertation Models}
-Here I consider the two model types that I have developed in \autoref{chap:LIWC} and \autoref{chap:mtl}.
-I document the considerations and assumptions each model type reveals throughout the machine learning pipeline.
-Rather than go through the entire pipeline, I begin my analysis at the entry points, that is the choices of datasets and the modelling choices, as I only make use of previously published datasets.
+Here I consider the two model types that I have developed for this dissertation, described in in \autoref{chap:LIWC} and \autoref{chap:mtl}, respectively.
+I document the considerations and assumptions that each model type reveals, and its implications for the machine learning pipeline.
+Rather than go through the entire pipeline, I begin my analysis at the entry points in the thesis, i.e., the choices of datasets and the modelling choices, as I exclusively use previously published datasets.
 
 \subsection{Vocabulary Reduction}\label{sub:vocab_redux}
-In \autoref{chap:LIWC}, I optimised the machine learning models using the datasets published by \citet{Davidson:2017}, \citet{Wulczyn:2016}, \citet{Waseem:2016}, \citet{Waseem-Hovy:2016}, and \citet{Garcia:2018}.
-The decision to use these datasets as optimisation data stems from these datasets originating from three distinct sources: Twitter; StormFront, a white nationalist internet forum; and Wikipedia editor discussions.
+In \autoref{chap:LIWC}, I optimised the machine learning models using the datasets published by \citet{Davidson:2017}, \citet{Waseem:2016}, \citet{Waseem-Hovy:2016}, \citet{Wulczyn:2016}, and \citet{Garcia:2018}.
+The decision to use these datasets as optimisation data stems from these datasets originating from three distinct sources: Twitter; StormFront, Wikipedia editor discussions; and a white nationalist internet forum, respectively.
 To be able to measure the generalisability of the models optimised on \citet{Davidson:2017}, \citet{Waseem:2016}, and \citet{Waseem-Hovy:2016}, I reduce the multi-class classification tasks to binary classification tasks.
-Through this reduction in classes, I enforce a normative choice that the detection of abuse has greater value than the identification of the specific type of abuse.
+Through this reduction in classes, I enforce a normative choice that the detection of abuse has greater value than the identification of the specific type of abuse, e.g., sexism or racism.
 My own experiences of hate speech and racialised abuse are at the heart of such a prioritisation, that is having been subject to such abuse I am more concerned with the ability to detect abuse than identifying which specific type of abuse it is.
-Further, the modelling choice of how to represent data are also subject to my subjectivities .
-While on one hand the reduction of the input space to a much smaller input space means that the size of the subsequent models, and by extension the complexity of the models.\footnote{I appreciate that even with a reduction of the model size and complexity, neural networks are still too complex to be readily understood without the aid of additional tools.}
+Further, the modelling choice of how to represent data are also subject to my subjectivities.
+While on one hand the reduction of the input space to a much smaller input space means that the size of the subsequent models, and by extension the complexity of the models, is greatly reduced.\footnote{I appreciate that even with a reduction of the model size and complexity, neural networks are still too complex to be readily understood without the aid of additional tools.}
 On the other hand, through such a reduction in the vocabulary, a large majority of words will no longer be represented by the text in the models.
-Here, my own beliefs that abuse detection models that rely too strongly on the occurrence of specific tokens ultimately provide an issue towards the goal of achieving models that can protect marginalised people from abuse, is at the centre of my decision.
+Here, my belief that abuse detection models rely to strongly on token occurrences, ultimately impeding the goal of developing models that can protect marginalised people from abuse, is at the centre of my decision.
 On the other end of the vocabulary size spectrum, I use byte-pair encoded documents.
-Due to the nature of generating sub-words, this increases the size of the vocabulary, in comparison to simply using the existing word.
-I use sub-words and byte-pair encoding to minimise issues of out-of-vocabulary items on the basis of intentional obfuscation of words, e.g. through inserting spaces or punctuation in the middle of words \citep{Rottger:2021}.
-Moreover, it is motivated by my own lived experiences belonging to a target demographics of abuse and observations I have made of other groups, where people using intentional obfuscation of words, often targets to circumvent simple content filtering techniques, i.e. `moslems' instead of `Muslims'.
+Due to the nature of generating sub-words, this increases the size of the vocabulary in comparison to simply using the existing word.
+I use sub-words and byte-pair encoding to minimise issues of out-of-vocabulary items which may occur due to intentional obfuscation of words, e.g. through inserting spaces or punctuation in the middle of words \citep{Rottger:2021}.
+This is also motivated by my lived experiences and observations of abuse towards others, where peple intentionally obfuscate words to circumvent the simple content filtering techniques, e.g., writing `moslems' instead of `Muslims'.
 While the modality I work with is text, such obfuscations also occur in the spoken word through intentional mispronunciation.
 
-In the use of linear models as baseline models, the underlying assumption \ZTedit{that I make is} is that simple correlations of word occurrences with labels\ZTdelete{, as are found with linear models,} do not capture the complex interactions between words in text required to make qualified judgements on abuse.
+In the use of linear models as baseline models, the underlying assumption that I make is is that simple correlations of word occurrences with labels, are insufficient to capture the complex interactions between words that are required to make qualified judgements of abuse.
 This assumption too is influenced by my own positionality as a brown Muslim who grew up in a predominately white country where brown people, and in particular Muslims, are vilified for their existence.
-As I am often wont to recount, growing up and watching the news Danish police bulletins for wanted persons frequently used the description `Muslim looking' to describe brown men.
-Such experiences have made it clear to me that social norms surrounding the use of tokens cannot be readily understood from the words \ZTedit{using simple correlations}\ZTdelete{, or multi word expressions} without greater contextualisation.
+One such example were the police bulletins in Danish news while I was growing up.
+In these, the description `Muslim looking' were routinely used to describe Brown men.
+Such experiences have made it clear to me that social norms surrounding the use of tokens cannot be readily understood from the words using simple correlations without greater contextualisation.
 For this reason, I use LSTMs as they can capture long interactions between words and are less directly reliant on the occurrence of individual patterns.
-In addition, a number of past studies having shown the efficacy of CNNs for abuse detection \citep{Park:2017, Mitchell:2019,Kolhatkar:2020,Rizwan:2020,Safaya:2020,Gamback:2017}.
-I \ZTedit{therefore use CNNs} \ZTdelete{use such models,} due to the influence of past work on the topic of hate speech and abuse detection.
+I also use CNNs as a number of past studies having shown the efficacy of CNNs for abuse detection \citep{Park:2017, Mitchell:2019,Kolhatkar:2020,Rizwan:2020,Safaya:2020,Gamback:2017}.
 
 The models described in \autoref{chap:LIWC} that only use words or byte-pair encoded words as input rely entirely on the optimisation data to optimise for patterns in data.
-\ZTedit{It is thus}\ZTdelete{its} apparent that those models fall towards the very extreme of the globalised end of the \ZTedit{model} spectrum\ZTdelete{that I propose}.
-On the other hand, while still towards the globalised end of the spectrum, the models that rely on LIWC as the input come are shifted more to the localised end of the spectrum, as the LIWC dictionary \ZTdelete{that is used to map from words to LIWC categories} is informed by considering data external to the data the models rely on.
+Therefore, those models fall towards the very extreme of the globalised end of the model spectrum.
+The models that rely on the LIWC representations, although still on the globalised end of the spectrum, are further towards the localised end, as the LIWC dictionary is informed by considering data that is external to the optimisation data.
 
 The motivation for using Byte-Pair encoding is reflected in a) my own personal assumptions about the importance of textual representations and b) computational considerations.
-Briefly, to minimise the number of out-of-vocabulary items, I use BPE to deconstruct the optimisation data into smaller word-parts, that allow for deconstructing words to minimise the influence of intentional obfuscations (e.g. `mooslim women`) of tokens, as I have \ZTdelete{frequently noted}\ZTedit{observed} and been subject to abuse that seeks to obscure \ZTedit{itself}.
-\ZTedit{Furthermore, the choice to BPE is likely to} better \ZTdelete{handling of}\ZTedit{handle} unknown tokens for the computational models.
+I use BPE to minimise hte number of out-of-vocabulary items, as BPE deconstructs words in the optimisation data into smaller sub-words.
+This deconstruction affords minimising the influence of intentional obfuscations.
+Furthermore, the choice to BPE can aid the models in handling unknown tokens better.
 
-\ZTedit{Although some of the} models \ZTedit{are positioned further towards the localised end of the spectrum than others, all the models used in \cref{chap:LIWC} are on the globalised end of the model spectrum.
+Although some of the models are positioned further towards the localised end of the spectrum than others, all the models used in \cref{chap:LIWC} are on the globalised end of the model spectrum.
 Their globalised position derives from the fact that none of the data representations take local subjective positionalities of individuals in the data into account.
-Instead, all of the models rely on some abstraction away from the self through processes of disembodiment.}
-\ZTdelete{find themselves further towards the localised end of the spectrum than others, all models that I use in \autoref{chap:LIWC} are positioned in the globalised end of the spectrum as none of the data representations take into account the local subjective positionality of the individuals in the data, instead they all rely on some abstraction away from the subjective self through processes of disembodiment.}
+Instead, all of the models rely on some abstraction away from the self through processes of disembodiment.
 
 \subsection{Multi-Task Learning}\label{sub:mtl_inchap}
-In \autoref{chap:mtl} I turn to the question of which \ZTedit{constructs would be helpful for machine learning models to embody in aims of improving performance for a given abusive language detection task.}\ZTdelete{embodiments}
-\ZTedit{Specifically, I examine whether jointly learning representations of sarcasm \citep{Oraby_sarcasm:2016}, whether an argument is based in fact or feelings \citep{Oraby_factfeel:2015}, the moral sentiments elicited \citep{Hoover:2019}, and related notions of hate speech and offensive language \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} improves classification performance.}
-\ZTdelete{, in terms of social constructs such as sarcasm \citep{Oraby_sarcasm:2016}, the basis of an argument (i.e. whether it is based in feelings or facts) \citep{Oraby_factfeel:2015}, moral foundation \citep{Hoover:2019}, and conceptualisations of hate speech and offensive language \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} would be helpful for a classification model for abuse detection in improving performance on the associated test set.}
+In \autoref{chap:mtl} I turn to the question of which constructs, in terms of machine learning tasks, would be helpful for machine learning models to embody to improve performance for a given abusive language detection task.
+Specifically, I examine whether jointly learning representations of sarcasm \citep{Oraby_sarcasm:2016}, whether an argument is based in fact or feelings \citep{Oraby_factfeel:2015}, the moral sentiments elicited in tweets \citep{Hoover:2019}, and related notions of hate speech and offensive language \citep{Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016} improves classification performance.
 
 For this task, I reuse the BPE representations of documents from \autoref{chap:LIWC}.
-Therefore some of the embodiments of the models, with regard to text representation remain \ZTedit{the same as described in \cref{sub:vocab_redux}}.
-Here I focus on \ZTedit{the factors from \cref{chap:mtl} that are distinct from \cref{chap:LIWC}.}\ZTdelete{those that change for the models described in \autoref{chap:mtl}.}
-\ZTdelete{Due to the reuse of BPE representations, the analysis of those modelling choices remain the same \autoref{sub:vocab_redux}.}
-\ZTdelete{However, as}\ZTedit{As} I include more datasets into consideration, I also implicitly invite the question `why those datasets'?
+Therefore some of the embodiments of the models, with regard to text representation remain the same as described in \cref{sub:vocab_redux}.
+Here I focus on the factors from \cref{chap:mtl} that are distinct from \cref{chap:LIWC}.
+As I include more datasets into consideration, I also implicitly invite the question `why these datasets'?
 To answer this question, it's necessary to revisit the aims of each dataset.
 
-One frequently identified issue with computational modelling of abuse is the issue of sarcasm \citep{Rottger:2021} and I use \ZTedit{the dataset labelled for sarcasm that was proposed by }\citet{Oraby_sarcasm:2016}.
-In this choice lay two assumptions: first, that computational models for abuse detection can benefit from better understanding what constitutes \ZTdelete{abuse}\ZTedit{sarcasm}.
-Second, that there does exist some line between \ZTdelete{in which} sarcasm \ZTedit{and abuse} that \ZTdelete{mimics}\ZTedit{could appear as} abuse \ZTdelete{is not also abuse}\ZTedit{but is sarcasm or is both sarcastic and abusive}.
+One frequently identified issue with computational modelling of abuse is the issue of sarcasm \citep{Rottger:2021} and I use the dataset labelled for sarcasm that was proposed by \citet{Oraby_sarcasm:2016}.
+In this choice lay two assumptions: First, that computational models for abuse detection can benefit from better understanding what constitutes sarcasm.
+Second, that there does exist some overlap between sarcasm and abuse, where what appears to be abuse is in fact sarcastic.
 Both assumptions are the result of years of researching online abuse, and in particular exposing myself to the abuse that occurs in online spaces.
 While I may have become desensitised to abuse through the disproportionate amounts I am exposed to through my research, I frequently see that online abuse, and responses to it are expressed through humour, in particular sarcasm.\footnote{By responses I mean general reactions and responses to abuse beyond the direct responses to a perpetrator of abuse.}
 
 The second dataset, asks the question of whether an argument is made in the basis of feeling or on the basis of facts \citep{Oraby_factfeel:2015}.
-As a majority of people who perpetrate online abuse do so infrequently \citep{Waseem-Hovy:2016}, an underlying cause for being abusive may well be due to being impassioned, and thus being able to determine whether an argument is made with a basis in feelings or fact may be possible to help improve performance for abuse detection.
+As a majority of people who perpetrate online abuse do so infrequently \citep{Waseem-Hovy:2016}, an underlying cause for being abusive may be being impassioned, and thus being able to determine whether an argument is made with a basis in feelings or fact may be possible to help improve performance for abuse detection.
 
 I also use a dataset annotated for moral foundation \citep{Hoover:2019}.
 In this dataset, each document is labelled for which moral foundations it invokes in the annotators.
-Moral foundations and online abuse can be thought of as concepts that are orthogonal to each other. 
-\ZTedit{Moral foundations, as annotated in the dataset, provide for a higher level cognition about the content that is read, in which abusive content is likely to elicit the moral sentiments that comprise the moral foundations framework \citep{Hoover:2019}.
+Moral foundations and online abuse can be thought of as orthogonal concepts.
+Moral foundations, as annotated in the dataset, provide for a higher level cognition about the content that is read, in which abusive content is likely to elicit the moral sentiments that comprise the moral foundations framework \citep{Hoover:2019}.
 I therefore believe that machine learning models jointly embodying abuse and moral foundations can aid with improving performance of machine learning classifiers for abuse detection.
 My own experiences of racialised abuse and observations of abuse in online spaces combined with the apparent desire of abusers to inflict harm upon their target are central to my inclusion of this task.
-}
-\ZTdelete{as moral foundations provide for a higher level of cognition about content that is read, I believe that using such a dataset can aid in optimising a multi-task classifier for the primary task.
-Here, my own experiences of the harms that occur from being subject to racialised abuse and the apparent desire to inflict such harm from the perpetrators lead me to include this as an auxiliary task.}
+
 Finally, I use a number of datasets for online abuse \citep{Garcia:2018,Waseem:2016,Waseem-Hovy:2016,Davidson:2017,Wulczyn:2016}.
 For this task, I do not reduce the question of detecting to a binary task, instead I use the auxiliary task datasets as a means to provide the model with more conceptualisations of abuse.
 However, my subjective positioning does not change from what is detailed in \autoref{sub:vocab_redux}.
 
-Similarly for the choices in developing the data and textual representations, my own subjective embodiments and experiences are a factor in the modelling decisions (see \cref{sub:vocab_redux}).
+Similarly for the choices in developing the data and textual representations, my own subjective embodiments and experiences are a key factor in the modelling decisions (see \cref{sub:vocab_redux}).
 This is particularly true for MTL, where I specifically set the weights for how much each task is to contribute to the main task through the frequency of selection.
-Such a weighting relies on my own consideration of how important each task is to the overall task of identifying abuse \ZTedit{and to which degree auxiliary tasks should be afforded space to influence the model representations for abuse}.
+Such a weighting relies on my own consideration of how important each task is to the overall task of identifying abuse and, subsequently, the degree to which each auxiliary task should be afforded space to influence the model representations for abuse.
 The specific architecture of the model is influenced by its usefulness in prior work \citep{Bingel:2018} in addition to seeking an to answer the question of how more complex models would influence the performance on the task.
 
-Using the MTL framework has strong implications for where on the localisation spectrum the model is positioned\ZTdelete{can exist within}.
+Using the MTL framework has strong implications for where on the localisation spectrum the model is positioned.
 For instance, the use multiple different datasets to influence a single model precludes the extreme ends of the modelling spectrum.
-\ZTedit{Jointly optimising multiple tasks in a shared internal model layer explicitly shifts models away from the extreme of the globalised spectrum by providing using datasets that are external to the main task dataset and by contextualising the main task with the representations obtained from the auxiliary tasks.
+Jointly optimising multiple tasks in a shared internal model layer explicitly shifts models away from the extreme of the globalised spectrum, by providing using datasets that are external to the main task dataset and by contextualising the main task with the representations obtained from the auxiliary tasks.
 Similarly, the localised extreme of the model spectrum is also precluded using this method, as the auxiliary tasks do not afford embedding the subjectivities and embodiments of individuals.
-On a demographic level, however, MTL does hold potential for shifting towards the localised extrema, if and only if all auxiliary tasks also come from the demographic that the main task is concerned with.}
-\ZTdelete{However, such an optimisation regime also precludes the extremely localised end of the spectrum for the same reason.}
-\ZTedit{Moreover, as}\ZTdelete{As} each auxiliary task will work, if as nothing else, as a regulariser for the main task, \ZTedit{MTL will shift the model away away from the extremes of the spectrum.}
-\ZTedit{In my use of MTL for abusive language detection with the auxiliary tasks that I have chosen, the models that I have developed are shifted away from the globalised extrema towards a more localised position on the model spectrum.}
-\ZTdelete{As I use MTL to contextualise the task of abusive language detection within the frame of tasks that have been indicated in prior literature as relevant to the task of abusive language detection, the model is both drawn to a more localised position.}
-However, as I do not optimise my models on any tasks that seek to make predictions on users, and the distinct datasets do not originate from the same demographic, the model does not cross entirely into the space of localised models.
-Instead the models that I produce, by virtue of learning considerations on tone, argument basis, sarcasm, and moral sentiment optimise for some representations of the faculties that I believe of importance to the task.
+On a demographic level, however, MTL does hold potential for shifting towards the localised extrema, if and only if all auxiliary tasks also come from the demographic that the main task is concerned with.
+Moreover, as each auxiliary task will work, if as nothing else, as a regulariser for the main task, MTL will shift the model away away from the extremes of the spectrum.
+In my use of MTL for abusive language detection, with the auxiliary tasks that I have chosen, the models that I have developed are shifted away from the globalised extrema towards a more localised position on the model spectrum.
+However, as I do not optimise my models on any tasks that seek to make predictions on users, and the distinct datasets do not originate from the same demographic, the model remains a globalised model.
+Instead the models that I produce, by virtue of learning considerations on tone, argument basis, sarcasm, and moral sentiment, optimise for some representations of the faculties that I believe of importance to the task.
 These auxiliary tasks then provide an avenue for the models to be more closely situated within the how each individual person can be represented as a function of how they express themselves.
 Thus, while further towards being a localised end of the spectrum than the LIWC models, the models fall short of significantly situating the modelling of individuals within the context and lived experiences of that individual.
 
 \section{Discussion}
-Given that subjective choices and biases masquerading as disembodied `objective' positions permeate through the machine learning pipeline, the quest for objectivity and bias-free machine learning becomes redundant.
-\ZTedit{This redundancy is made apparent as all choices in the machine learning development pipeline embody the subjective experiences of all people who are a part of the pipeline, from people whose data is gathered, to annotators and the designers of the pipelines.
-As these experiences are embedded in the system, so slips away the illusion of `objectivity' and `neutrality' of the machine learning technologies.}
+Given that subjective choices and biases masquerading as disembodied `objective' positions permeate the machine learning pipeline, the quest for objectivity and bias-free machine learning becomes redundant.
+This redundancy is made apparent as all choices in the machine learning development pipeline embody the subjective experiences of all who are a part of the pipeline, from the people whose data is seized, to annotators and the designers of the pipelines.
+As these experiences are embedded in the system, so slips away the illusion of `objectivity' and `neutrality' of the machine learning technologies.
 In fact, the search for objectivity in the pipeline creates a veneer of social progress that may cause further harm to already marginalised communities by obscuring and entrenching the dominance of certain bodies over others.
-\ZTedit{Such harm is instituted by providing a veneer of more just, or fair, machine learning technologies that nonetheless perform institutional violences upon all who are externalised by the development process and the subjective experiences that lie at the heart of them.}
+Such harm is instituted by providing a veneer of more just, or fair, machine learning technologies that nonetheless perform institutional violence upon all who are externalised by the development process and the subjective experiences that lie at the heart of them.
 Without taking the unique embodiments of all data subjects into account, this imaginary of fair only serves as a justification of maintaining oppressive structures that are inherently harmful and reductive.
 
-Considering the \ZTdelete{question}\ZTedit{task} of hate speech detection, developing automated tools that are applied to a general population makes inherent decisions on behalf of the user-group.
-\ZTedit{The decisions made by the third party judge, i.e. content moderation technologies, embed subjective experiences of the data subjects whose data has been stripped from the context it was created in, the annotators, and the designers of the technologies.}
-\ZTedit{However, as}\ZTdelete{As} such decisions are codified through the machine learning pipeline, they are presented as disembodied and objective decisions on what constitutes hate speech.
-\ZTedit{In this way, machine learning technologies embed normative socio-political positions on respectability and acceptability as I argued in \cref{chap:filter}.
+Considering the task of hate speech detection, developing automated tools, that are applied to a general population, makes inherent decisions on behalf of the user-group.
+The decisions made by the third party adjudicator, i.e. content moderation technologies, embed subjective experiences of the data subjects whose data has been stripped from the context it was created in, the annotators, and the designers of the technologies.
+Such decisions are codified through the machine learning pipeline, and are presented as disembodied and objective decisions on what constitutes hate speech.
+In this way, machine learning technologies embed normative socio-political positions on respectability and acceptability.
 These normative values come to be presented as `objective' through the disembodiments that occur in the machine learning pipeline.
 However, such notions of objectivity merely provide a thin veil over the subjective embodiments of the designers and annotators.
-With the vast majority of research on abusive language detection being developed for English in the global economic north \citep{Vidgen-Derczynski:2020}, the notions of respectability that are normative with respect white majoritarian countries and cultures.}
-Through such codification of white perspectives on respectability \ZTedit{masqueraded as objective}, attempts to address `bias' \ZTedit{in machine learning technologies for content moderation} only serve to justify existing oppressive structures \ZTedit{by further obscuring the subjectivities embedded in the systems}.
+With the vast majority of research on abusive language detection being developed for English in the global north \citep{Vidgen-Derczynski:2020}, the notions of respectability that are embedded in the technologies are normative for white majoritarian countries and cultures.
+Through such codification of white perspectives on respectability masqueraded as objective, attempts to address `bias' in machine learning technologies for content moderation only serve to justify existing oppressive structures by further obscuring the subjectivities and norms embedded in the systems.
 
-As data permeates through the machine learning pipeline, a consideration of how data is embodied can empower the designer to answer specific questions that are embodied and mired in context.
-Such considerations allow designers to interrogate the contexts within which data are created and meaning is made at each step in the dataset creation process.
-It is through such recognition of context and embodiment that one can realise that as context change, so does the applicability data.
+A consideration of how data is embodied can empower designers of machine learning systems by allowing them to reflect on what is embodied and how it is mired in context.
+Such considerations allow designers to interrogate the contexts within which data are created, and how meaning is made at each step in the dataset creation process.
+It is through such recognition of context and embodiment that one can realise that as contexts change, so does the applicability data.
 Further, only by such recognition of the deeply complex nature of embodiment and data can one hope to ask and ascertain which views the models privilege and which are subjugated.
-For building content moderation systems for hate speech and abuse, the designers of machine learning pipelines can ask how their own embodiments prejudice them to selectively sanction some speech patterns.
+For building content moderation systems for the detection of hate speech and abuse, the designers of machine learning pipelines can ask how their own embodiments prejudice them to selectively sanction some speech patterns.
 Moreover, designers may want to ask themselves how such sanctions create downstream implications for the speech that is sanctioned.
 
 Although there are methods with which we can move towards more localised machine learning models, what positions are given space remains a political question.
 It is only through wholly representing the context and embodiments of the data creator and the datum that one can hope to arrive at sufficiently localised models.
 Thus, rather than asking how to eliminate bias and subjective experiences from machine learning in the pursuit of objectivity, shifting the question to consider embodiments would ask us to reflect on the subjective experiences that are given voice.
-For hate speech detection, such reflections would have designers ask which groups to base their understanding of abuse and the subsequent annotations and models that are derived from it.
-Such a shift would then require us to ask and reflect upon which bodies' subjective experiences we need to account for to give voice to socially, and computationally, marginalised groups.
+For hate speech detection, such reflections would have designers ask which groups understandings of abuse it is most appropriate to ground their definitions, and subsequently annotations and models, in.
+Such a shift would then require us to ask and reflect upon which bodies' subjective experiences we need to account for, such that we give voice to socially, and computationally marginalised groups.
 
-Only by recognising the positionality of the designers \ZTedit{and annotators} of machine learning models \ZTedit{and data} can one account for what (and whom) ones own position, and the models derived from it privilege and sanction, and the political ramifications of these.
-\ZTedit{For these reasons, it is imperative that machine learning moves away from consolidating power in the designers and move towards development practices that are rooted in the participation of the people who will be subject to the models, i.e. the intended users of the models.
+Only by recognising the positionality of the designers and annotators of machine learning models and data, can one account for what (and whom) ones own position, and the models derived from it privilege and sanction, give space for and the political ramifications of this.
+For these reasons, it is imperative that machine learning moves away from consolidating power in the designers and move towards development practices that are rooted in the participation of the people who will be subject to the models, i.e. the intended users of the models.
 Participatory design practices however can quickly turn predatory if the turn to participatory design principles does not also provide for a redistribution of power \citep{Kelly_2019}.
-Here, Sasha Costanza-Chock's \citeyearpar{Costanza-Chock_2018} work on design justice can provide a guide towards developing participatory design practices for machine learning systems.
-\citet{Costanza-Chock_2018} argue for design practices that centre the experiences and needs of the communities for whom the design practice is taking place.
+Here, Sasha Costanza-Chock's \citeyearpar{Costanza-Chock_2018} work on design justice can provide a guide towards developing participatory design practices for machine learning.
+\citet{Costanza-Chock_2018} argues for design practices that centre the experiences and needs of the communities for whom the design practice is taking place.
 Specifically, \citet{Costanza-Chock_2018} argues that design practices should have ``sustainable, community-led and -controlled outcomes.''
-By working towards such goals, machine learning research can come develop processes and technologies that specifically cater to the communities for whom we are developing our technologies.}
+By working towards such goals, machine learning research can come develop processes and technologies that specifically address the needs of the communities for whom we are developing our technologies.
 
-\ZTedit{
-\section{Summary}}
-\ZTedit{
-  In this chapter, I have sought to examine how subjective embodiments permeate through the machine learning pipeline in efforts examine the machine learning infrastructures that underpin contemporary content moderation technologies.
-  Thus, in this chapter I seek to examine \textit{RQ I} by examining how subjective embodiments are embedded into machine learning infrastructures and what the consequences of this are.
-  In this chapter, I then provide a reading of machine learning against the grain by critically examining how subjective embodiments become embedded within the machine learning infrastructure.
-  By performing this reading, I have used this chapter to examine the ways in which machine learning systems come to produce socially biased outcomes, such that machine learning research can move beyond the discriminatory practices that we have developed.}
+\section{Summary}
+In this chapter, I have sought to examine how subjective embodiments permeate through the machine learning pipeline in efforts examine the machine learning infrastructures that underpin contemporary content moderation technologies.
+Thus, in this chapter I seek to examine \textit{RQ I} by examining how subjective embodiments are embedded into machine learning infrastructures and what the consequences of this are.
+In this chapter, I then provide a reading of machine learning against the grain by critically examining how subjective embodiments become embedded within the machine learning infrastructure.
+By performing this reading, I have used this chapter to examine the ways in which machine learning systems come to produce socially biased outcomes, such that machine learning research can move beyond the discriminatory practices that we have developed.
 
-  \ZTedit{
-  Identifying processes for developing machine learning technologies that are not discriminatory is of particular importance to content moderation technologies, as these technologies currently produce discriminatory outputs in terms of censorship of marginalised communities (see \cref{chap:filter} for further details).
-  The work that I have performed in this chapter, identifies specific ways in which machine learning, and machine learning for content moderation encodes the subjectivities that are widely read as social biases.
-  To address this concern, I propose that researches be aware of the specific ways in which they embed their subjectivities throughout the machine learning pipeline and consciously make decisions in the development process to ensure that the subjectivities that are embedded within the systems reflect the aims and the subjectivities of the people who that the content moderation systems are to be applied to.
-  Specifically, I suggest that researchers are mindful of their own subjectivities and the desired outcomes of the technologies and that research engages in a genuine efforts for participatory design by collaborating with the communities that technologies are developed for.
-  Moreover, I argue that the universalist notions applied in machine learning, and for the algorithmic detection of abusive language, contribute strongly to the ongoing marginalisation that machine learning systems perpetuate.
-  Finally, I argue that it is only by taking steps away from such universalist notions and towards co-developing systems with communities that are community-led and community-controlled that we can hope to overcome the issues of discriminatory systems and, in the case of content moderation, systems that do not censor marginalised communities.
-  systems that are community-led and -controlled that
-}
+Identifying processes for developing machine learning technologies that are not discriminatory is of particular importance to content moderation technologies, as these technologies currently produce discriminatory outputs in terms of censorship of marginalised communities (see \cref{chap:filter} for further details).
+The work that I have performed in this chapter, identifies specific ways in which machine learning, and machine learning for content moderation encodes the subjectivities that are widely read as social biases.
+To address this concern, I propose that researches be aware of the specific ways in which they embed their subjectivities throughout the machine learning pipeline and consciously make decisions in the development process to ensure that the subjectivities that are embedded within the systems reflect the aims and the subjectivities of the people who that the content moderation systems are to be applied to.
+Specifically, I suggest that researchers are mindful of their own subjectivities and the desired outcomes of the technologies and that research engages in a genuine efforts for participatory design by collaborating with the communities that technologies are developed for.
+Moreover, I argue that the universalist notions applied in machine learning, and for the algorithmic detection of abusive language, contribute strongly to the ongoing marginalisation that machine learning systems perpetuate.
+Finally, I argue that it is only by taking steps away from such universalist notions and towards co-developing systems with communities that are community-led and community-controlled that we can hope to overcome the issues of discriminatory systems and, in the case of content moderation, systems that do not censor marginalised communities.
+systems that are community-led and -controlled that
 %
 % \section{Machine Learning as a Conservative Practice}
 % \zw{Write about dominant and subjugated discourses for machine learning here; bring in that ML is a conservative practice}
